@@ -3,12 +3,30 @@ body, html{
   padding: 0;
 }
 body{
+  /*background: url(../images/background_image.png);
+  background-size: auto;
+  background-color: #2c3e50;*/
   background: url(../images/background.jpg) no-repeat center center fixed;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
 }
+.App-logo {
+  background-image: url(../images/app_logo.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 300px;
+  height: 200px;
+}
+
+.App-logo-header{
+  background-image: url(../images/app_logo.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 83px;
+  height: 50px;
+}
+
 .App-content{
   display: flex;
   flex-direction: row;
@@ -16,10 +34,9 @@ body{
   margin-top: 5%;
 }
 #App-header{
-  padding: 20px;
-  padding-left: 300px;
+  padding: 8px 40px 8px 300px;
   background-color: rgb(51, 51, 51);
-  box-shadow: 1px 1px 25px 0 black;
+  box-shadow: 1px 1px 10px 0 black;
   color: white;
   display: flex;
   flex-direction: row;
@@ -31,15 +48,16 @@ body{
   margin: 0;
 }
 .App-enterDiv{
-  display: flex;
   width: 700px;
+  display: flex;
   padding: 30px;
   background-color: rgb(51, 51, 51);
   flex-direction: column;
-  box-shadow: 1px 3px 35px 1px black;
+  box-shadow: 1px 3px 5px 1px black;
   margin: 0 5%;
   border-radius: 3px;
 }
+/*Buttons*/
 #signUpBtn{
   background-color: #e0e0e0;
   border: 0;
@@ -50,17 +68,55 @@ body{
   padding: 12px;
 }
 #signInBtn{
+  height: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+#signOutBtn{
+  height: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+#addExpertBtn{
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  padding: 0;
+  font-size: 20px;
+  color: white;
+  width: 50px;
+  height:50px;
+  margin-right: 8px;
+}
+#profileBtn{
   background-color: rgba(255, 255, 255, 0);
   border: 0;
   color: white;
   font-weight: bold;
-  border-radius: 3px;
   padding: 0;
-  height:30px;
+  height:50px;
+  margin-left: 24px;
+  font-size: 18px;
 }
-#signInBtn:hover, #signUpBtn:hover{
+#homeBtn{
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  color: white;
+  font-weight: bold;
+  padding: 0;
+}
+#signInBtn:hover, #signUpBtn:hover, #signOutBtn:hover,
+#addExpertBtn:hover, #profileBtn:hover, #homeBtn:hover{
   cursor: pointer;
 }
+
+
 .App-enterDiv-labels{
   color: white;
   text-align: left;
@@ -94,4 +150,10 @@ body{
   padding-left: 300px;
   padding-right: 50px;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.App-contentText-p1{
+  width: 500px;
 }

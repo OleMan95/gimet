@@ -1,0 +1,28 @@
+#Home-header{
+  padding: 8px 40px 8px 300px;
+  background-color: rgb(51, 51, 51);
+  box-shadow: 1px 1px 25px 0 black;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.Home-header-buttons{
+  width:200px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+.Home-header-content{
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+.Home-content{
+  width: 90%;
+  height: 800px;
+  background-color: white;
+  margin: auto;
+}

@@ -1,0 +1,89 @@
+body, html{
+  margin: 0;
+  padding: 0;
+}
+/*Header*/
+.SignIn-header{
+  background-color: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+.SignIn-logo-header{
+  background-image: url(../images/app_logo.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 175px;
+  height: 100px;
+}
+/*Form*/
+.SignIn-content{
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+.SignIn-enter{
+  display: flex;
+  width: 300px;
+  padding: 30px;
+  background-color: rgb(51, 51, 51);
+  flex-direction: column;
+  box-shadow: 1px 3px 5px 1px black;
+  margin: 0 5%;
+  border-radius: 3px;
+}
+.SignIn-enter-labels{
+  color: white;
+  text-align: left;
+  padding: 4px;
+}
+.SignIn-enter-inputs{
+  padding: 8px;
+  margin-bottom: 8px;
+}
+.SignIn-enter-inputs:last-of-type{
+  padding: 8px;
+  margin-bottom: 0;
+}
+.SignIn-enter-p1{
+  color: white;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.SignIn-pass{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.SignIn-forgotPass{
+  text-decoration: none;
+  color: white;
+  font-size: 12px;
+}
+.SignIn-forgotPass:hover{
+  cursor: pointer;
+}
+
+/*Buttons*/
+#SignIn-signInBtn{
+  background-color: #e0e0e0;
+  border: 0;
+  font-weight: bold;
+  color: #546e7a;
+  border-radius: 3px;
+  margin-top: 16px;
+  padding: 12px;
+}
+#SignIn-homeBtn{
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+  color: white;
+  font-weight: bold;
+  padding: 0;
+}
+#signInBtn:hover, #SignIn-homeBtn:hover{
+  cursor: pointer;
+}
