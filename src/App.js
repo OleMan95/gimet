@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, NavLink} from 'react-router-dom';
+
 import StartPage from './components/StartPage';
 import SignIn from './components/SignIn';
 import './css/App.css';
@@ -30,7 +31,7 @@ class App extends Component {
     });
   }
   render() {
-    let isAuth = false;
+    // let isAuth = false;
     let header;
     // if (!isAuth) {
     //   this.setState({
@@ -73,7 +74,6 @@ class App extends Component {
     );
   }
 }
-
 
 
 export default App;

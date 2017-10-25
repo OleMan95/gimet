@@ -1,22 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import configureStore from './store/configureStore.js';
 
-function reducer(state =[]) {
-  return state;
-} //reducer
+import App from './App';
+import './index.css';
 
-const store = createStore(reducer); //create application store
 
-console.log(store.getState());
+const store = configureStore(); //creating the application store
 
-store.subscribe(()=>{ //subscribe on store changing and put it in log
-  console.log(),
-  store.getState();
-});
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+  , document.getElementById('root'));
 registerServiceWorker();

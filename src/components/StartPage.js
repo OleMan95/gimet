@@ -1,20 +1,48 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 // import logo from './logo.svg';
 import '../css/App.css';
-import Header from './Header';
 
 class StartPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count:0
+      usernameValue:'',
+      emailValue:'',
+      passwordValue:'',
     };
   }
   onClickHandler=()=>{
-    alert("Click!");
+    console.log(
+      'usernameValue: ', this.state.usernameValue,
+      '|| emailValue: ', this.state.emailValue,
+      '|| passwordValue: ', this.state.passwordValue,
+    );
+  }
+  handleInputChange=(event)=>{
+    switch (event.target.name) {
+      case 'username':
+        this.setState({
+          usernameValue: event.target.value,
+        });
+        break;
+      case 'email':
+        this.setState({
+          emailValue: event.target.value,
+        });
+        break;
+      case 'password':
+        this.setState({
+          passwordValue: event.target.value,
+        });
+        break;
+      default:
+    }
+
   }
   render() {
-    // <Header/>
     return (
       <div>
         <div className="Start">
@@ -27,20 +55,29 @@ class StartPage extends Component {
               <p className="Start-contentBody-text2">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-
             </div>
+
             <div className="Start-signUpDiv">
               <div className="Start-signUpDiv-form">
                 <label className="Start-signUpDiv-labels">Username</label>
-                <input type="text" name="username" value="" placeholder="Pick a username" className="Start-signUpDiv-inputs"/>
+                <input type="text" name="username" placeholder="Pick a username" className="Start-signUpDiv-inputs"
+                  ref={(input)=>{this.usernameInput = input}}
+                  onChange={this.handleInputChange}
+                  value={this.state.value}/>
                 <label className="Start-signUpDiv-labels">Email</label>
-                <input type="text" name="email" value="" placeholder="you@example.com" className="Start-signUpDiv-inputs"/>
+                <input type="text" name="email" placeholder="you@example.com" className="Start-signUpDiv-inputs"
+                  ref={(input)=>{this.usernameInput = input}}
+                  onChange={this.handleInputChange}
+                  value={this.state.value}/>
                 <label className="Start-signUpDiv-labels">Password</label>
-                <input type="text" name="password" value="" placeholder="Create a password" className="Start-signUpDiv-inputs"/>
+                <input type="text" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
+                  ref={(input)=>{this.usernameInput = input}}
+                  onChange={this.handleInputChange}
+                  value={this.state.value}/>
                 <p>Use at least one letter, one numeral, and seven characters.</p>
               </div>
 
-              <button type="button" name="signUpBtn" id="signUpBtn">Sign up</button>
+              <button type="button" name="signUpBtn" id="signUpBtn" onClick={this.onClickHandler}>Sign up</button>
             </div>
           </div>
 
@@ -67,5 +104,12 @@ class StartPage extends Component {
 }
 
 
+export default withRouter(connect(
+  state=>({
+    store: state,
+  }),
+  dispatch=>({})
+)(StartPage));
 
-export default StartPage;
+
+// export default StartPage;
