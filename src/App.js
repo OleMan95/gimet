@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import StartPage from './components/StartPage';
 import SignIn from './components/SignIn';
 import './css/App.css';
@@ -44,19 +44,20 @@ class App extends Component {
       case "SignIn":
         header = (
             <header className="SignIn-header">
-              <Link to="/" id="SignIn-homeBtn" onClick={()=>this.onHomeClick()}>
+              <NavLink to="/" id="SignIn-homeBtn" onClick={()=>this.onHomeClick()}>
                 <div className="SignIn-logo-header"></div>
-              </Link>
+              </NavLink>
             </header>
         );
         break;
       default:
         header = (
-          <header id="App-header">
-            <Link to="/">
-              <div className="App-logo-header"></div>
-            </Link>
-            <Link to="/home" id="signInBtn" onClick={()=>this.onSignIn()}>Sign in</Link>
+          <header id="Start-header" >
+            <NavLink to="/" activeClassName="Start-header-logo-active" className="Start-header-logo">
+              <div className="Start-header-logo-img"></div>
+              <p className="Start-header-logo-title">GIMET</p>
+            </NavLink>
+            <NavLink to="/home" id="signInBtn" onClick={()=>this.onSignIn()}>Sign in</NavLink>
           </header>
         );
     }

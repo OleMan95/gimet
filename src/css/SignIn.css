@@ -10,12 +10,13 @@ body, html{
   padding-top: 50px;
 }
 .SignIn-logo-header{
-  background-image: url(../images/app_logo.png);
+  background-image: url(../images/app_logo_round_white.png);
   background-repeat: no-repeat;
   background-size: contain;
-  width: 175px;
+  width: 100px;
   height: 100px;
 }
+
 /*Form*/
 .SignIn-content{
   display: flex;
@@ -26,7 +27,7 @@ body, html{
   display: flex;
   width: 300px;
   padding: 30px;
-  background-color: rgb(51, 51, 51);
+  background-color: #333333;
   flex-direction: column;
   box-shadow: 1px 3px 5px 1px black;
   margin: 0 5%;
@@ -72,7 +73,7 @@ body, html{
   background-color: #e0e0e0;
   border: 0;
   font-weight: bold;
-  color: #546e7a;
+  color: #263238;
   border-radius: 3px;
   margin-top: 16px;
   padding: 12px;

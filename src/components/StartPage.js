@@ -16,27 +16,52 @@ class StartPage extends Component {
   render() {
     // <Header/>
     return (
-      <div className="App">
-        <div className="App-content">
-          <div className="App-contentText">
-              <div className="App-logo"></div>
-              <p className="App-contentText-p1">is a platform for creating the expert systems.</p>
+      <div>
+        <div className="Start">
+          <div className="Start-content">
+            <div className="Start-contentBody">
+              <div className="Start-contentBody-div1">
+                <div className="Start-contentBody-logo"></div>
+              </div>
+              <h3 className="Start-contentBody-text1">Expert systems for everybody.</h3>
+              <p className="Start-contentBody-text2">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+
+            </div>
+            <div className="Start-signUpDiv">
+              <div className="Start-signUpDiv-form">
+                <label className="Start-signUpDiv-labels">Username</label>
+                <input type="text" name="username" value="" placeholder="Pick a username" className="Start-signUpDiv-inputs"/>
+                <label className="Start-signUpDiv-labels">Email</label>
+                <input type="text" name="email" value="" placeholder="you@example.com" className="Start-signUpDiv-inputs"/>
+                <label className="Start-signUpDiv-labels">Password</label>
+                <input type="text" name="password" value="" placeholder="Create a password" className="Start-signUpDiv-inputs"/>
+                <p>Use at least one letter, one numeral, and seven characters.</p>
+              </div>
+
+              <button type="button" name="signUpBtn" id="signUpBtn">Sign up</button>
+            </div>
           </div>
-          <div className="App-enterDiv">
-            <label className="App-enterDiv-labels">Username</label>
-            <input type="text" name="username" value="" placeholder="Pick a username" className="App-enterDiv-inputs"/>
 
-            <label className="App-enterDiv-labels">Email</label>
-            <input type="text" name="email" value="" placeholder="you@example.com" className="App-enterDiv-inputs"/>
+        </div>
+        <div>
+          <div className="Start-signUpDiv-720">
+            <div className="Start-signUpDiv-720-form">
+              <label className="Start-signUpDiv-720-labels">Username</label>
+              <input type="text" name="username" value="" placeholder="Pick a username" className="Start-signUpDiv-720-inputs"/>
+              <label className="Start-signUpDiv-720-labels">Email</label>
+              <input type="text" name="email" value="" placeholder="you@example.com" className="Start-signUpDiv-720-inputs"/>
+              <label className="Start-signUpDiv-720-labels">Password</label>
+              <input type="text" name="password" value="" placeholder="Create a password" className="Start-signUpDiv-720-inputs"/>
+              <p>Use at least one letter, one numeral, and seven characters.</p>
+            </div>
 
-            <label className="App-enterDiv-labels">Password</label>
-            <input type="text" name="password" value="" placeholder="Create a password" className="App-enterDiv-inputs"/>
-            <p>Use at least one letter, one numeral, and seven characters.</p>
             <button type="button" name="signUpBtn" id="signUpBtn">Sign up</button>
           </div>
         </div>
-
       </div>
+
     );
   }
 }
