@@ -194,6 +194,10 @@ body{
   .Start-contentBody-logo {
     margin-bottom: 16px;
   }
+  .header{
+    width: device-width;
+    padding: 8px 5% 8px 5%;
+  }
 }
 @media screen and (max-width: 720px) {
   .Start-signUpDiv{
@@ -204,8 +208,11 @@ body{
   }
 
   .Start-content{
-    padding: 5% 24px 150px 24px;
+    padding: 5% 16px 150px 16px;
   }
-
+  .header{
+    width: device-width;
+    padding: 8px 8px;
+  }
 
 }

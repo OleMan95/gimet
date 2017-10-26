@@ -116,6 +116,7 @@
 /*Content body*/
 .Home-content-body{
   width: 100%;
+  min-width: 400px;
   padding-right: 5%;
 }
 .content-body-header{
@@ -156,8 +157,35 @@
   border-top: solid 1px #989898;
 
 }
-
 .content-body-header-text1:hover, .content-body-header-text2:hover{
   cursor: pointer;
   background-color: #e0e0e0;
+}
+
+
+@media screen and (max-width: 1080px) {
+  .Home-content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 24px 5% 50px 5%;
+  }
+  .Home-content-experts{
+    order: 1;
+    margin-bottom: 24px;
+    min-width: 300px;
+  }
+  .Home-content-body{
+    order: 2;
+    min-width: 300px;
+  }
+  .header-userName{
+    display: none;
+  }
+}
+@media screen and (max-width: 720px) {
+  .Home-content{
+    padding: 24px 8px 50px 8px;
+  }
 }
