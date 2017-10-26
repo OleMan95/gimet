@@ -96,7 +96,7 @@
   border-radius: 5px;
   padding: 6px 10px;
 }
-.addExpertBtn:hover ul{
+.addExpertBtn:hover{
   background-color: white;
   color: #2ecc71;
   cursor: pointer;
