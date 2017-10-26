@@ -14,15 +14,15 @@ body{
   width: device-width;
   height: calc(100vh-66px);
   min-height: 550px;
-  background-color: #263238;
+  background-color: #3c485e;
   position: relative;
   z-index: 1;
 }
 /*Header*/
-#Start-header{
+.header{
   width: device-width;
   padding: 8px 15% 8px 15%;
-  background-color: #333333;
+  background-color: #2d323b;
   box-shadow: 1px 1px 10px 0 black;
   color: white;
   display: flex;
@@ -31,25 +31,27 @@ body{
   position:relative;
   z-index: 2;
 }
-.Start-header-logo{
+.header-logo{
   display: flex;
   flex-direction: row;
   text-decoration: none;
+  color: white;
+  padding: 0 4px;
 }
 .Start-header-logo:active{
-  background-color: white;
+
 }
 .Start-header-logo:visited{
-  background-color: white;
+
 }
-.Start-header-logo-img{
+.header-logo-img{
   background-image: url(../images/app_logo_round.png);
   background-repeat: no-repeat;
   background-size: contain;
   width: 50px;
   height: 50px;
 }
-.Start-header-logo-title{
+.header-logo-title{
   color: #e0e0e0;
   margin:0 0 0 0.5em;
   font-size: 30px;
@@ -104,8 +106,8 @@ body{
   min-width: 310px;
   height: 290px;
   padding: 30px;
-  background-color: #333333;
-  box-shadow: 1px 3px 5px 1px black;
+  background-color: #2d323b;
+  box-shadow: 1px 1px 2px 1px black;
   margin: 0;
   border-radius: 3px;
   display: flex;
@@ -130,7 +132,7 @@ body{
 }
 .Start-signUpDiv p{
   color: white;
-  font-size: 10px;
+  font-size: 11px;
   margin: auto;
   margin-top: 2px;
   margin-bottom: 8px;
@@ -145,72 +147,35 @@ body{
 
 /*Buttons*/
 #signUpBtn{
-  background-color: #e0e0e0;
+  background-color: #2ecc71;
   border: 0;
-  font-weight: bold;
-  color: #263238;
+  color: white;
   border-radius: 3px;
   margin-top: 16px;
   padding: 12px;
+  font-size: 20px;
 }
 #signInBtn{
   height: 50px;
   text-decoration: none;
-  font-weight: bold;
   color: white;
   display: flex;
   align-items: center;
+  padding: 0 4px;
 }
-#signOutBtn{
-  height: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  color: white;
-  display: flex;
-  align-items: center;
-}
-#addExpertBtn{
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  padding: 0;
-  font-size: 20px;
-  color: white;
-  width: 50px;
-  height:50px;
-  margin-right: 8px;
-}
-#profileBtn{
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  color: white;
-  font-weight: bold;
-  padding: 0;
-  height:50px;
-  margin-left: 24px;
-  font-size: 18px;
-}
-#homeBtn{
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  color: white;
-  font-weight: bold;
-  padding: 0;
-}
-#signInBtn:hover, #signUpBtn:hover, #signOutBtn:hover,
-#addExpertBtn:hover, #profileBtn:hover, #homeBtn:hover{
+
+#signInBtn:hover{
   cursor: pointer;
 }
-
-
-@media screen and (max-width: 720px) {
-  .Start-signUpDiv{
-    display: none;
-  }
-  .Start-signUpDiv{}
-
-
-
+#signUpBtn:hover{
+  background-color: #e0e0e0;
+  color: #2ecc71;
+  cursor: pointer;
+  border: solid 1px white;
 }
+
+
+
 @media screen and (max-width: 1080px) {
   .Start-content{
     flex-direction: column;
@@ -229,4 +194,18 @@ body{
   .Start-contentBody-logo {
     margin-bottom: 16px;
   }
+}
+@media screen and (max-width: 720px) {
+  .Start-signUpDiv{
+    min-width: 0;
+    background-color: inherit;
+    box-shadow: 0 0 0 0;
+    padding: 0;
+  }
+
+  .Start-content{
+    padding: 5% 24px 150px 24px;
+  }
+
+
 }

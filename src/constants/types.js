@@ -1,1 +1,1 @@
-export const ADD_TO_STORE = 'ADD_TO_STORE';
+export const NEW_EXPERT = 'NEW_EXPERT';

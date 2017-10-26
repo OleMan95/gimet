@@ -1,4 +1,4 @@
-import {ADD_TO_STORE} from '../constants/types.js';
+import {NEW_EXPERT} from '../constants/types.js';
 
 const initialState = [];
 
@@ -8,7 +8,7 @@ export default function reducer(state = initialState, action){
   console.log(action);
 
   switch (action.type) {
-    case ADD_TO_STORE:
+    case NEW_EXPERT:
       return [
         ...state,
         action.payload
