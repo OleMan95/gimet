@@ -127,7 +127,6 @@
   height: 40px;
 }
 .content-body-header-text1{
-  /*background-color: #e0e0e0;*/
   background-color: inherit;
   display: flex;
   align-items: center;
@@ -162,6 +161,49 @@
   background-color: #e0e0e0;
 }
 
+/*Expert Room*/
+.header-expertRoom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  border: solid 1px #989898;
+  border-radius: 5px;
+}
+.header-expertRoom-btns{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+}
+.header-expertRoom-btns button{
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  border: 0;
+  border-left: solid 1px #989898;
+  border-bottom: 0;
+  height: 40px;
+  padding: 0 8px;
+}
+.header-expertRoom-btns button:hover{
+  cursor: pointer;
+  background-color: #e0e0e0;
+}
+.header-expertRoom-btns button h3{
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+.header-expertRoom-expertName{
+  padding: 0 8px;
+  height: 40px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+.expertRoom-body{
+}
 
 @media screen and (max-width: 1080px) {
   .Home-content{

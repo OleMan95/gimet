@@ -3,11 +3,26 @@ import {connect} from 'react-redux';
 import {BrowserRouter, Route, NavLink, withRouter } from 'react-router-dom';
 import '../css/App.css';
 import '../css/Home.css';
+import ExpertRoom from './ExpertRoom';
 
 
 var count = 0;
-const Home=({store, dispatchNewExpert})=>{
-  console.log('store: ',store);
+const Home=({store, dispatchNewExpert, getHomeBody})=>{
+  // console.log('store: ',store);
+  const browseActivity=(
+	  <div className="Home-content-body">
+  		<div className="content-body-header">
+  		  <button className="content-body-header-text1">
+  			<h3>Browse activity</h3>
+  		  </button>
+  		  <button className="content-body-header-text2">
+  			<h3>Find an expert</h3>
+  		  </button>
+  		</div>
+  		<div className="content-body">
+  		</div>
+	  </div>
+  );
 
   let onNewExpertClick=()=>{
     console.log(count);
@@ -15,23 +30,20 @@ const Home=({store, dispatchNewExpert})=>{
     dispatchNewExpert('Expert '+count);
   }
 
+
+  const onExpertClick=(id)=>{
+    //Передаем компонент ExpertRoom для отображения его
+    // вместо browseActivity (по умолчанию) по нажатию на эксперта
+    getHomeBody(<ExpertRoom id={id}/>);
+  }
+
+
   return (
     <div>
       {Header}
       <div className="Home">
         <div className="Home-content">
-          <div className="Home-content-body">
-            <div className="content-body-header">
-              <button className="content-body-header-text1">
-                <h3>Browse activity</h3>
-              </button>
-              <button className="content-body-header-text2">
-                <h3>Find an expert</h3>
-              </button>
-            </div>
-            <div className="content-body">
-            </div>
-          </div>
+        {store.homeBodyHandler[0]?store.homeBodyHandler[0]:browseActivity}
           <div className="Home-content-experts">
             <div className="content-experts-header">
               <div className="experts-header-title">
@@ -46,7 +58,7 @@ const Home=({store, dispatchNewExpert})=>{
             <div className="content-experts">
               <ul className="content-experts-list">
                 {store.expertsReducer.map((expert,index)=>
-                  <li key={index} className="content-experts-listItems">{expert}</li>
+                  <li key={index} id={expert} onClick={(li)=>{onExpertClick(li.target.id)}} className="content-experts-listItems">{expert}</li>
                 )}
               </ul>
             </div>
@@ -86,9 +98,9 @@ export default withRouter(connect(
   dispatch=>({
     dispatchNewExpert: (expert)=>{
       dispatch({type:'NEW_EXPERT',payload: expert});
+    },
+    getHomeBody: (id)=>{
+      dispatch({type:'GET_HOME_BODY',payload: id});
     }
   })
 )(Home));
-
-
-// export default StartPage;
