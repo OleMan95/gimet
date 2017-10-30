@@ -6,7 +6,7 @@ import '../../css/App.css';
 import '../../css/Home.css';
 import QuestionsBody from './QuestionsBody';
 
-const InitBody=({store, questions, getConfigBody, newExpert, getQuestions})=>{
+const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updateExpert})=>{
   let expertnameInput = '';
   let descriptionInput = '';
   let expertnameValue = '';
@@ -29,8 +29,7 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions})=>{
     for (var i = 0; i < questions.length; i++) {
       arr.push(<li key={i}>{questions[i].question}</li>);
     }
-    console.log('arr: ',arr);
-    getQuestions(arr);
+    // getQuestions(arr);
   }
 
   const onNextClick=()=>{
@@ -38,8 +37,8 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions})=>{
        name:expertnameValue,
        description: descriptionValue,
        questions:[],
+       conditions:[]
     }
-    newExpert(expert);
     getQuestionsArray();
     getConfigBody(<QuestionsBody expert={expert}/>);
   }
@@ -63,24 +62,16 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions})=>{
     </div>
   );
 }
-// <input type="text" name="description" placeholder="Text..." className="CNE-initDiv-inputs"
-//   ref={(input)=>{descriptionInput = input}}
-//   onChange={handleInputChange}/>
+
+
 export default withRouter(connect(
   state=>({
     store: state,
     questions: state.accountReducer[0].experts[0].questions,
-    // questions: state.accountReducer[0].experts[state.accountReducer[0].experts.length-1].questions,
   }),
   dispatch=>({
-    newExpert: (expert)=>{
-      dispatch({type:'NEW_EXPERT',payload: expert});
-    },
     getConfigBody: (component)=>{
       dispatch({type:'GET_CONFIG_BODY',payload: component});
-    },
-    getQuestions: (questions)=>{
-      dispatch({type:'GET_CONFIG_BODY',payload: questions});
     }
   })
 )(InitBody));

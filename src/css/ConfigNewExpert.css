@@ -32,7 +32,7 @@
   padding: 8px;
   border: solid 1px #2ecc71;
 }
-#CNE-initDiv-nextBtn, #CNE-questionDiv-addBtn{
+#CNE-initDiv-nextBtn{
   width: 100px;
   background-color: #2ecc71;
   color: white;
@@ -45,24 +45,26 @@
   text-align: center;
   align-self: flex-end;
 }
-#CNE-initDiv-nextBtn:hover, #CNE-questionDiv-addBtn:hover{
+#CNE-initDiv-nextBtn:hover, #CNE-questionDiv-nextBtn:hover,
+ #CNE-questionDiv-finalBtn:hover{
   background-color: white;
   color: #2ecc71;
   cursor: pointer;
   border: solid 1px #989898;
   padding: 8px 0;
 }
-
 .CNE-list{
   width: 100%;
   padding: 0;
+  color:#333333;
+}
+.CNE-listDiv-line{
+  height: 1px;
+  width:100%;
+  color: #989898;
+  margin: 0;
+}
 
-}
-.CNE-listDiv{
-  background-color: red;
-  padding: 24px 15% 50px 15%;
-  height: 200px;
-}
 /*QuestionDiv*/
 .CNE-questionDiv{
   width: 600px;
@@ -70,11 +72,180 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
-
 }
 .CNE-questionDiv-labels{
   padding: 8px;
 }
 .CNE-questionDiv-inputs{
   padding: 8px;
+}
+#CNE-questionDiv-btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+#CNE-questionDiv-addBtn{
+  width: 100px;
+  margin-top: 16px;
+  padding: 8px;
+  border: solid 1px #989898;
+  border-radius: 5px;
+  font-size: 20px;
+  text-decoration: none;
+  text-align: center;
+  margin-left: 16px;
+}
+#CNE-questionDiv-addBtn:hover,
+ #CNE-conditionDiv-selectors-plusBtn:hover{
+  background-color: #e0e0e0;
+}
+#CNE-questionDiv-nextBtn{
+  width: 200px;
+  background-color: #2ecc71;
+  color: white;
+  margin-top: 16px;
+  padding: 8px;
+  border: solid 1px #2ecc71;
+  border-radius: 5px;
+  font-size: 20px;
+  text-decoration: none;
+  text-align: center;
+  margin-left: 16px;
+}
+.CNE-questionListDiv{
+  padding: 8px 15% 50px 15%;
+}
+.CNE-questionListDiv-list{
+  overflow-y:scroll;
+  height:300px;
+  border: solid 1px #989898;
+  margin: 0;
+  padding: 8px 24px;
+}
+.CNE-questionListDiv-listItem{
+  list-style: none;
+}
+.CNE-questionListDiv-listItem p{
+  margin: 0;
+  margin-bottom: 8px;
+  padding-left: 16px;
+}
+.CNE-questionListDiv-listItem h3{
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+.CNE-questionListDiv-listItem mark{
+  color: #3498db;
+  background-color: inherit;
+}
+
+/*ConditionDiv*/
+.CNE-main{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 15%;
+}
+.CNE-conditionDiv{
+  width: 600px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  overflow-x: hidden;
+}
+#CNE-conditionDiv-finalBtn{
+  width: 200px;
+  background-color: #2ecc71;
+  color: white;
+  margin-top: 16px;
+  padding: 8px;
+  border: solid 1px #2ecc71;
+  border-radius: 5px;
+  font-size: 20px;
+  text-decoration: none;
+  text-align: center;
+  margin-left: 16px;
+}
+.CNE-conditionDiv-labels{
+  padding: 8px;
+}
+.CNE-conditionDiv-selectors{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  margin-left: 16px;
+  margin-bottom: 8px;
+  justify-content: space-between;
+}
+.CNE-conditionDiv-selectors select{
+  width: 45%;
+  height: 40px;
+}
+.CNE-conditionDiv-selectors p,
+ .CNE-conditionDiv-resultSelector p{
+  margin: 0 8px;
+}
+#CNE-conditionDiv-selectors-plusBtn{
+  width: 40px;
+  height: 40px;
+  border: solid 1px #989898;
+  border-radius: 5px;
+  font-size: 20px;
+  /*text-decoration: none;*/
+  text-align: center;
+  justify-content: center;
+  margin-left: 16px;
+  margin-right:  12px;
+  margin-top: 8px;
+  align-self: flex-end;
+}
+.CNE-conditionDiv-result{
+  color: #3498db;
+}
+.CNE-conditionDiv-resultSelector{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  margin-left: 16px;
+  justify-content: flex-start;
+}
+.CNE-conditionDiv-selectorsBlock{
+  overflow-y: scroll;
+  max-height: 250px;
+  width: 100%;
+  padding-right: 30px;
+}
+.CNE-conditionDiv-questionList{
+  display: flex;
+  width: 400px;
+  height:500px;
+}
+.CNE-conditionDiv-questionList-list{
+  overflow-y:scroll;
+  width: 100%;
+  height:100%;
+  border: solid 1px #989898;
+  margin: 0;
+  padding: 8px 24px;
+}
+.CNE-conditionDiv-questionListDiv-listItem{
+  list-style: none;
+}
+.CNE-conditionDiv-questionListDiv-listItem p{
+  margin: 0;
+  margin-bottom: 8px;
+  padding-left: 4px;
+  font-size: 12px;
+}
+.CNE-conditionDiv-questionListDiv-listItem h3{
+  margin-bottom: 8px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+.CNE-conditionDiv-questionListDiv-listItem mark{
+  color: #3498db;
+  background-color: inherit;
 }

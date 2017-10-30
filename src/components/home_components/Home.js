@@ -31,7 +31,7 @@ const Home=({store, getHomeBody, newExpert})=>{
        questions:[],
     }
 
-    newExpert(expert);
+    // newExpert(expert);
   }
 
 

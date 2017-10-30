@@ -12,7 +12,6 @@ export default function reducer(state = initialState, action){
       if (state.payload === null) return [];
 
       state=initialState;
-
       return [
         ...state,
         action.payload
