@@ -1,2 +1,5 @@
 export const NEW_EXPERT = 'NEW_EXPERT';
 export const GET_HOME_BODY = 'GET_HOME_BODY';
+export const GET_CONFIG_BODY = 'GET_CONFIG_BODY';
+export const ADD_QUESTION = 'ADD_QUESTION';
+export const GET_CONFIG_QUESTIONS = 'GET_CONFIG_QUESTIONS';

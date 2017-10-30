@@ -7,10 +7,6 @@ import configureStore from './store/configureStore.js';
 import App from './App';
 import './index.css';
 
-const initialState = [
-  'Test 1',
-  'Test 2'
-];
 
 const store = configureStore(); //creating the application store
 

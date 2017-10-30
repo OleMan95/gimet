@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {BrowserRouter, Route, NavLink, withRouter } from 'react-router-dom';
 
 
-// import logo from './logo.svg';
 import '../css/App.css';
-import SignIn from './SignIn';
-import Home from './Home';
+import Home from './home_components/Home';
+
 
 const StartPage = () => { //все this.props мы получем как аргументы функции
   let signInInput = '';       //тут обьявляются все this.state
@@ -14,11 +13,6 @@ const StartPage = () => { //все this.props мы получем как арг�
   let emailValue = '';
   let passwordValue = '';
 
-  const onClickHandler=()=>{
-    console.log('usernameValue: ', usernameValue);
-    console.log('emailValue: ', emailValue);
-    console.log('passwordValue: ', passwordValue);
-  }
   const handleInputChange=(event)=>{
     switch (event.target.name) {
       case 'username':
@@ -50,11 +44,11 @@ const StartPage = () => { //все this.props мы получем как арг�
                 ref={(input)=>{signInInput = input}}
                 onChange={handleInputChange}/>
               <label className="Start-signUpDiv-labels">Email</label>
-              <input type="text" name="email" placeholder="you@example.com" className="Start-signUpDiv-inputs"
+              <input type="email" name="email" placeholder="you@example.com" className="Start-signUpDiv-inputs"
                 ref={(input)=>{signInInput = input}}
                 onChange={handleInputChange}/>
               <label className="Start-signUpDiv-labels">Password</label>
-              <input type="text" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
+              <input type="password" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
                 ref={(input)=>{signInInput = input}}
                 onChange={handleInputChange}/>
               <p>Use at least one letter, one numeral, and seven characters.</p>

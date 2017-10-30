@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, NavLink} from 'react-router-dom';
+import { BrowserRouter, Route} from 'react-router-dom';
 
 import StartPage from './components/StartPage';
-import SignIn from './components/SignIn';
-import Home from './components/Home';
-  
+import Home from './components/home_components/Home';
+import ConfigNewExpert from './components/config_new_expert/ConfigNewExpert';
+
 
 class App extends Component {
   constructor(props) {
@@ -13,29 +13,14 @@ class App extends Component {
       context:''
     };
   }
-  onSignIn=()=>{
-    this.setState({
-      context:"SignIn",
-    });
-  }
-  onSignOut=()=>{
-    this.setState({
-      context:"StartPage",
-    });
-  }
-  onHomeSignInClick=()=>{
-    this.setState({
-      context:"StartPage",
-    });
-  }
-  render() {
-    let header;
 
+  render() {
     return (
       <BrowserRouter basename="/">
         <div>
           <Route exact path={"/"} component={StartPage}/>
           <Route path={"/home"} component={Home}/>
+          <Route path={"/config_new_expert"} component={ConfigNewExpert}/>
         </div>
       </BrowserRouter>
     );

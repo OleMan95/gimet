@@ -92,9 +92,10 @@
 .addExpertBtn{
   background-color: #2ecc71;
   color: white;
-  border: 0;
+  border: solid 1px #2ecc71;
   border-radius: 5px;
   padding: 6px 10px;
+  text-decoration: none;
 }
 .addExpertBtn:hover{
   background-color: white;
@@ -203,6 +204,7 @@
   align-items: center;
 }
 .expertRoom-body{
+  padding: 0 8px;
 }
 
 @media screen and (max-width: 1080px) {

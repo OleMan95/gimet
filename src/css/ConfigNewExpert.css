@@ -1,0 +1,80 @@
+.CNE{
+  padding-top:24px;
+}
+.CNE-initDiv{
+  width: 400px;
+  margin: 0 auto;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+}
+.CNE-initDiv-labels{
+  padding: 8px;
+}
+.CNE-initDiv-input{
+  margin-bottom: 8px;
+  padding: 8px;
+}
+.CNE-initDiv-textarea{
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 5px;
+  border: solid 1px #989898;
+  min-width: 382px;
+  max-width: 382px;
+  max-height: 182px;
+}
+.CNE-initDiv-textarea:focus, .CNE-initDiv-input:focus,
+.CNE-questionDiv-inputs:focus{
+  border-radius: 5px;
+  padding: 8px;
+  border: solid 1px #2ecc71;
+}
+#CNE-initDiv-nextBtn, #CNE-questionDiv-addBtn{
+  width: 100px;
+  background-color: #2ecc71;
+  color: white;
+  margin-top: 16px;
+  padding: 8px;
+  border: solid 1px #2ecc71;
+  border-radius: 5px;
+  font-size: 20px;
+  text-decoration: none;
+  text-align: center;
+  align-self: flex-end;
+}
+#CNE-initDiv-nextBtn:hover, #CNE-questionDiv-addBtn:hover{
+  background-color: white;
+  color: #2ecc71;
+  cursor: pointer;
+  border: solid 1px #989898;
+  padding: 8px 0;
+}
+
+.CNE-list{
+  width: 100%;
+  padding: 0;
+
+}
+.CNE-listDiv{
+  background-color: red;
+  padding: 24px 15% 50px 15%;
+  height: 200px;
+}
+/*QuestionDiv*/
+.CNE-questionDiv{
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+}
+.CNE-questionDiv-labels{
+  padding: 8px;
+}
+.CNE-questionDiv-inputs{
+  padding: 8px;
+}

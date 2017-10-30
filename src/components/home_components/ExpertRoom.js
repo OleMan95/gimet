@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter, Route, NavLink, withRouter } from 'react-router-dom';
-import '../css/App.css';
-import '../css/Home.css';
+import {NavLink, withRouter } from 'react-router-dom';
+import '../../css/App.css';
+import '../../css/Home.css';
 
 
-var count = 0;
-const ExpertRoom=({store, dispatchNewExpert, id, getHomeBody})=>{
-  console.log('store: ',store);
+const ExpertRoom=({store, dispatchNewExpert, name, getHomeBody, description})=>{
 
   const onCloseExpertClick=(id)=>{
     //Параметр null знатит то, что должно отобразится окно
@@ -19,7 +17,7 @@ const ExpertRoom=({store, dispatchNewExpert, id, getHomeBody})=>{
     <div className="Home-content-body">
   		<div className="header-expertRoom">
         <div>
-          <h3 className="header-expertRoom-expertName">{id}</h3>
+          <h3 className="header-expertRoom-expertName">{name}</h3>
         </div>
         <div className="header-expertRoom-btns">
           <button className="header-expertRoom-configureExpert">
@@ -31,6 +29,7 @@ const ExpertRoom=({store, dispatchNewExpert, id, getHomeBody})=>{
         </div>
   		</div>
   		<div className="expertRoom-body">
+        <p>{description}</p>
   		</div>
     </div>
   );
