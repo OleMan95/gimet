@@ -21,6 +21,15 @@ const initialState = [
             question:'question 2',
             answer:'value 1, value 2',
           }
+        ],
+        conditions:[
+          {
+            pairs:[
+              ["key",'val'],
+              ["key2","val2"]
+            ],
+            result:'res'
+          }
         ]
       },
       {
@@ -35,9 +44,6 @@ const initialState = [
         ]
       },
     ]
-  },
-  {
-    questionsList:[],
   }
 ];
 

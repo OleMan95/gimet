@@ -4,6 +4,7 @@ import {NavLink, withRouter, Prompt } from 'react-router-dom';
 import '../../css/App.css';
 import '../../css/Home.css';
 import ConditionsBody from './ConditionsBody';
+import * as firebase from 'firebase';
 
 
 class QuestionsBody extends React.Component{
@@ -13,6 +14,7 @@ class QuestionsBody extends React.Component{
     answersValue:'',
     keyValue:'',
     questions:[],
+    allAnswers:[],
   }
 
   handleInputChange=(event)=>{
@@ -37,11 +39,23 @@ class QuestionsBody extends React.Component{
   }
 
   onAddClick=()=>{
+    let a = this.state.answersValue;
+    let newAnswers = a.split(","); //разделяем все значения по комам
+
+    for (var i = 0; i < newAnswers.length; i++) {
+      let str = newAnswers[i];
+      newAnswers[i] = str.trim();
+    }//убираем пробелы по краям у каждого элемента массива
+
+    this.state.allAnswers.push(...newAnswers);
+    newAnswers = this.state.allAnswers;
     let question={
       key:this.state.keyValue,
       question:this.state.questionValue,
-      answers:this.state.answersValue,
+      answersString:this.state.answersValue,
+      answers:newAnswers,
     };
+
     let newQuestions = this.state.questions;
     newQuestions.push(question);
 
@@ -50,6 +64,7 @@ class QuestionsBody extends React.Component{
     this.setState({
       questions:newQuestions,
       count:newCount,
+      answers:newAnswers,
     });//обновляем массив с вопросами и счётик
 
     this.questionInput.value=''; //чистим поля для ввода текста
@@ -57,11 +72,21 @@ class QuestionsBody extends React.Component{
     this.keyInput.value='';
   }
 
+  writeExpert=(expertId, expert)=> {
+    firebase.database().ref('experts/' + expertId).set({
+      name: expert.name,
+      description: expert.description,
+      questions: expert.questions,
+      conditions: expert.conditions
+    });
+  }
+
   onNextClick=()=>{
     let newExpert = this.props.expert;
     newExpert.questions = this.state.questions; //обновляем эксперта
-    console.log('QuestionsBody: ',this.props.expert);
-    this.props.getConfigBody(<ConditionsBody expert={newExpert}/>);
+    this.writeExpert(newExpert.name, newExpert);
+
+    this.props.getConfigBody(<ConditionsBody expert={newExpert} answers={this.state.answers}/>);
   }
 
   render() {
@@ -99,7 +124,7 @@ class QuestionsBody extends React.Component{
                 <h3>Question #{index+1}:</h3>
                 <p><mark>key</mark>: {question.key}</p>
                 <p><mark>question</mark>: {question.question}</p>
-                <p><mark>answers</mark>: {question.answers}</p>
+                <p><mark>answers</mark>: {question.answersString}</p>
               </li>)}
           </ul>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter } from 'react-router-dom';
+import * as firebase from 'firebase';
 
 import '../../css/App.css';
 import '../../css/Home.css';
@@ -24,26 +25,31 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
     }
   }
 
-  const getQuestionsArray=()=>{
-    let arr = new Array();
-    for (var i = 0; i < questions.length; i++) {
-      arr.push(<li key={i}>{questions[i].question}</li>);
-    }
-    // getQuestions(arr);
+  const writeExpert=(expertId, expert)=> {
+    firebase.database().ref('experts/' + expertId).set({
+      name: expert.name,
+      description: expert.description,
+      questions: expert.questions,
+      conditions: expert.conditions
+    });
   }
+
+
 
   const onNextClick=()=>{
     var expert = {
        name:expertnameValue,
        description: descriptionValue,
-       questions:[],
-       conditions:[]
+       questions:{},
+       conditions:{
+         pairs:[],
+         result:''
+       }
     }
-    getQuestionsArray();
+    writeExpert(expert.name, expert);
     getConfigBody(<QuestionsBody expert={expert}/>);
   }
 
-  // <NavLink to="/home" type="button" name="nextBtn" id="CNE-initDiv-nextBtn" onClick={onInitNextClick}>Next</NavLink>
   return (
     <div className="CNE-initDiv">
       <h2>1. Begin</h2>

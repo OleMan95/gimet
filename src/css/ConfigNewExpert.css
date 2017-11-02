@@ -170,36 +170,51 @@
 .CNE-conditionDiv-labels{
   padding: 8px;
 }
-.CNE-conditionDiv-selectors{
+.CNE-conditionDiv-pairs{
+  overflow-y: scroll;
+  max-height: 250px;
+  width: 100%;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+}
+.CNE-conditionDiv-pair{
   display:flex;
   flex-direction: row;
   align-items: center;
   height: 40px;
-  margin-left: 16px;
-  margin-bottom: 8px;
+  width:100%;
+  margin-left: 12px;
+  margin-top: 8px;
   justify-content: space-between;
 }
-.CNE-conditionDiv-selectors select{
-  width: 45%;
-  height: 40px;
+.CNE-conditionDiv-pair input{
+  width: 43%;
+  height: 30px;
+  padding: 4px 8px;
 }
-.CNE-conditionDiv-selectors p,
+.CNE-conditionDiv-pairs p,
  .CNE-conditionDiv-resultSelector p{
   margin: 0 8px;
 }
-#CNE-conditionDiv-selectors-plusBtn{
+#CNE-conditionDiv-plusBtn{
   width: 40px;
   height: 40px;
   border: solid 1px #989898;
   border-radius: 5px;
   font-size: 20px;
-  /*text-decoration: none;*/
-  text-align: center;
-  justify-content: center;
-  margin-left: 16px;
-  margin-right:  12px;
   margin-top: 8px;
+  text-align: center;
+  justify-content: flex-end;
   align-self: flex-end;
+}
+#CNE-conditionDiv-deleteBtn{
+  width: 40px;
+  height: 40px;
+  border: solid 1px #989898;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-left:8px;
 }
 .CNE-conditionDiv-result{
   color: #3498db;
@@ -212,12 +227,8 @@
   margin-left: 16px;
   justify-content: flex-start;
 }
-.CNE-conditionDiv-selectorsBlock{
-  overflow-y: scroll;
-  max-height: 250px;
-  width: 100%;
-  padding-right: 30px;
-}
+
+
 .CNE-conditionDiv-questionList{
   display: flex;
   width: 400px;
@@ -248,4 +259,9 @@
 .CNE-conditionDiv-questionListDiv-listItem mark{
   color: #3498db;
   background-color: inherit;
+}
+
+/* DropDownList */
+.DropDownList{
+  height: 40px;
 }
