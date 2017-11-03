@@ -25,8 +25,14 @@ const initialState = [
         conditions:[
           {
             pairs:[
-              ["key",'val'],
-              ["key2","val2"]
+              {
+                key:'key',
+                answer:'val'
+              },
+              {
+                key:'key2',
+                answer:'val2'
+              }
             ],
             result:'res'
           }

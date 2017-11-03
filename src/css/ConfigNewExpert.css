@@ -96,7 +96,8 @@
   margin-left: 16px;
 }
 #CNE-questionDiv-addBtn:hover,
- #CNE-conditionDiv-selectors-plusBtn:hover{
+ #CNE-conditionDiv-selectors-plusBtn:hover,
+ #CNE-conditionDiv-plusBtn:hover{
   background-color: #e0e0e0;
 }
 #CNE-questionDiv-nextBtn{
@@ -154,7 +155,7 @@
   padding: 16px;
   overflow-x: hidden;
 }
-#CNE-conditionDiv-finalBtn{
+#CNE-conditionDiv-finishBtn{
   width: 200px;
   background-color: #2ecc71;
   color: white;
@@ -166,6 +167,11 @@
   text-decoration: none;
   text-align: center;
   margin-left: 16px;
+}
+#CNE-conditionDiv-finishBtn:hover{
+  background-color: white;
+  color: #2ecc71;
+  border: solid 1px #989898;
 }
 .CNE-conditionDiv-labels{
   padding: 8px;
@@ -198,7 +204,7 @@
   margin: 0 8px;
 }
 #CNE-conditionDiv-plusBtn{
-  width: 40px;
+  /* width: 40px; */
   height: 40px;
   border: solid 1px #989898;
   border-radius: 5px;
@@ -215,6 +221,12 @@
   border-radius: 5px;
   font-size: 20px;
   margin-left:8px;
+  display: none;
+}
+#CNE-conditionDiv-deleteBtn:hover{
+  background-color: #e74c3c;
+  color: white;
+  border: solid 1px white;
 }
 .CNE-conditionDiv-result{
   color: #3498db;
@@ -226,6 +238,10 @@
   height: 40px;
   margin-left: 16px;
   justify-content: flex-start;
+}
+.CNE-conditionDiv-conditionHint{
+  color: #989898;
+  padding-left: 2px;
 }
 
 
@@ -261,7 +277,3 @@
   background-color: inherit;
 }
 
-/* DropDownList */
-.DropDownList{
-  height: 40px;
-}

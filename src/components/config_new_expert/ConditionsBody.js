@@ -8,49 +8,62 @@ import '../../css/Home.css';
 
 class ConditionsBody extends React.Component{
   state = {
-    conditions:{
+    conditions:[],
+    tempCondition:{
       pairs:[],
       result:''
     },
     count:1,
-    selectGroups:[
-      (
-        <div className="CNE-conditionDiv-pair" key="0">
-          <input type="text" id="key0" onChange={(input)=>{this.handleChange(input)}}/>
-          <p>=</p>
-          <input type="text" id="answer0" onChange={(input)=>{this.handleChange(input)}}/>
-          <button type="button" name="deleteBtn" id="CNE-conditionDiv-deleteBtn" onClick={this.onDeleteClick}>x</button>
-        </div>
-      )
+    selectGroups: [
+      <div className="CNE-conditionDiv-pair" key='-1'>
+        <p className="CNE-conditionDiv-conditionHint">The condition list is empty, create a new condition.</p>
+      </div> 
     ],
+    selectGroupsHelper: true,
     questions:[],
     pairsCount:0,
-    keyTargetId:'key0',
-    answerTargetId:'answer0',
+    keyTargetId:'',
+    answerTargetId:'',
     keyTargetValue:'',
     answerTargetValue:'',
+    resultValue:'',
   }
 
   setPair=()=>{
     if (this.state.keyTargetValue==="" && this.state.answerTargetValue==="") {
       return;
     }
-    let pair = [this.keyTargetValue, this.answerTargetValue];
-    let newConditions = this.state.conditions;
-    newConditions.pairs.push(pair);
+
+    console.log('setPair: ',this.state.keyTargetValue);
+    console.log('setPair: ',this.state.answerTargetValue);
+    
+    let pair = {
+      key: this.state.keyTargetValue,
+      answer: this.state.answerTargetValue
+    };
+
+    
+    let tempCondition = this.state.tempCondition;
+    tempCondition.pairs.push(pair);
     
     this.setState({
-      conditions:newConditions,
+      tempCondition: tempCondition,
     });
-    console.log('setPair: ',newConditions);
+    
+    console.log('setPair conditions: ',this.state.tempCondition);
+
+    document.getElementById(this.state.keyTargetId).style.borderColor = '#2ecc71';
+    document.getElementById(this.state.answerTargetId).style.borderColor = '#2ecc71';
+    document.getElementById(this.state.answerTargetId).nextElementSibling.style.display = 'block';
 
   }
 
   onPlusClick=()=>{
+
+
     this.setPair();
 
     let pairsCount = this.state.pairsCount;
-    pairsCount++;
     
     let keyTargetId = 'key'+pairsCount;
     let answerTargetId = 'answer'+pairsCount;
@@ -63,16 +76,25 @@ class ConditionsBody extends React.Component{
 
     let selectGroup = (
       <div className="CNE-conditionDiv-pair" key={pairsCount}>
-        <input type="text" id={keyTargetId} onChange={(input)=>{this.handleChange(input)}} />
+        <input type="text" placeholder="Enter key" id={keyTargetId} onChange={(input)=>{this.handleChange(input)}} />
         <p>=</p>
-        <input type="text" id={answerTargetId} onChange={(input)=>{this.handleChange(input)}} />
+        <input type="text" placeholder="Enter answer" id={answerTargetId} onChange={(input)=>{this.handleChange(input)}} />
         <button type="button" name="deleteBtn" id="CNE-conditionDiv-deleteBtn" onClick={this.onDeleteClick}>x</button>
-        
       </div>
     );
-    
-    let newSelectGroups = [...this.state.selectGroups, selectGroup];
+    let newSelectGroups;
+    if(this.state.selectGroupsHelper === true){
+      newSelectGroups = [selectGroup];
+            
+      this.setState({
+        selectGroupsHelper:false
+      });
+    }else{
+      newSelectGroups = [...this.state.selectGroups, selectGroup];
+    }
 
+    pairsCount++;
+    
     this.setState({
       selectGroups:newSelectGroups,
       pairsCount: pairsCount,
@@ -82,6 +104,37 @@ class ConditionsBody extends React.Component{
   onDeleteClick=()=>{}
 
   onAddClick=()=>{
+
+   
+    let tempCondition = this.state.tempCondition;
+    tempCondition.result = this.state.resultValue;
+    
+    let newConditions = this.state.conditions;
+    newConditions.push(tempCondition);
+
+    this.setState({
+      conditions: newConditions,
+      tempCondition:{
+        pairs:[],
+        result:''
+      },
+      selectGroups: [
+        <div className="CNE-conditionDiv-pair" key='-1'>
+          <p className="CNE-conditionDiv-conditionHint">The condition list is empty, create a new condition.</p>
+        </div> 
+      ],
+      selectGroupsHelper: true,
+      pairsCount:0,
+      keyTargetId:'',
+      answerTargetId:'',
+      keyTargetValue:'',
+      answerTargetValue:'',
+    });
+
+    document.getElementById('resultInput').value = '';
+
+    console.log('onAddClick: ', this.state.conditions);
+
   }
 
   onFinishClick=()=>{
@@ -93,14 +146,18 @@ class ConditionsBody extends React.Component{
       this.setState({
         keyTargetValue:input.target.value,
       });
-      console.log('handleSelectChange: ',input.target.value);
     }
 
     if (input.target.id === this.state.answerTargetId) {
       this.setState({
         answerTargetValue:input.target.value,
       });
-      console.log('handleSelectChange: ',input.target.value);
+    }
+
+    if (input.target.id === 'resultInput') {
+      this.setState({
+        resultValue:input.target.value,
+      });
     }
 
   }
@@ -121,20 +178,19 @@ class ConditionsBody extends React.Component{
         <div className="CNE-conditionDiv-pairs">
             {this.state.selectGroups}
         </div>
-        <button type="button" name="addBtn" id="CNE-conditionDiv-plusBtn" onClick={this.onPlusClick}>+</button>
+        <button type="button" name="addBtn" id="CNE-conditionDiv-plusBtn" onClick={this.onPlusClick}>New condition</button>
 
         <label className="CNE-conditionDiv-labels">then</label>
         <div className="CNE-conditionDiv-resultSelector">
           <p className="CNE-conditionDiv-result">result</p>
           <p>=</p>
-          <input type="text" name="question" placeholder="Enter result here" className="CNE-questionDiv-inputs"
-            ref={(input)=>{this.questionInput = input}}
-            onChange={this.handleInputChange}/>
+          <input type="text" name="question" id="resultInput" placeholder="Enter result here" className="CNE-questionDiv-inputs"
+            onChange={(input)=>{this.handleChange(input)}}/>
         </div>
 
         <div id="CNE-questionDiv-btns">
           <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" onClick={this.onAddClick}>Add</button>
-          <button type="button" name="nextBtn" id="CNE-conditionDiv-finalBtn" onClick={this.onFinishClick}>Finish</button>
+          <button type="button" name="nextBtn" id="CNE-conditionDiv-finishBtn" onClick={this.onFinishClick}>Finish</button>
         </div>
       </div>
 
