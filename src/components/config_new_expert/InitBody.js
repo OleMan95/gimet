@@ -46,7 +46,7 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
          result:''
        }
     }
-    writeExpert(expert.name, expert);
+    // writeExpert(expert.name, expert);
     getConfigBody(<QuestionsBody expert={expert}/>);
   }
 

@@ -72,20 +72,9 @@ class QuestionsBody extends React.Component{
     this.keyInput.value='';
   }
 
-  writeExpert=(expertId, expert)=> {
-    firebase.database().ref('experts/' + expertId).set({
-      name: expert.name,
-      description: expert.description,
-      questions: expert.questions,
-      conditions: expert.conditions
-    });
-  }
-
   onNextClick=()=>{
     let newExpert = this.props.expert;
     newExpert.questions = this.state.questions; //обновляем эксперта
-    this.writeExpert(newExpert.name, newExpert);
-
     this.props.getConfigBody(<ConditionsBody expert={newExpert} answers={this.state.answers}/>);
   }
 
@@ -138,9 +127,6 @@ export default withRouter(connect(
     store: state
   }),
   dispatch=>({
-    newExpert: (expert)=>{
-      dispatch({type:'NEW_EXPERT',payload: expert});
-    },
     getConfigBody: (component)=>{
       dispatch({type:'GET_CONFIG_BODY',payload: component});
     }

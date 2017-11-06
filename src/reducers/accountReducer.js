@@ -1,4 +1,4 @@
-import {NEW_EXPERT, ADD_QUESTION, UPDATE_EXPERT} from '../constants/types.js';
+import {NEW_EXPERT, UPDATE_EXPERT} from '../constants/types.js';
 
 
 const initialState = [
@@ -65,32 +65,8 @@ export default function reducer(state = initialState, action){
 
       state[0].experts = experts;
 
-      console.log('NEW_EXPERT: ',state);
+      console.log('NEW_EXPERT: ', state);
       return state;
-
-    case ADD_QUESTION:
-      let id=state[0].experts.length-1;
-
-
-      // var newState = Object.assign({}, state);
-      // newState[0].experts[id].questions.unshift(action.payload);
-      //
-      // console.log('ADD_QUESTION: ',newState);
-      // return newState;
-
-      // return Object.assign(state, {questions:[...state[0].experts[id].questions, action.payload]});
-      // return state.map((s, index) => {
-      //   if (index === 0) {
-      //     return s.experts.map((expert, index) => {
-      //       if (index === id) {
-      //         return Object.assign({}, expert, {
-      //           questions: action.payload
-      //         });
-      //       }
-      //     };
-      //   }
-      //   return state;
-      // });
 
     case UPDATE_EXPERT:
 

@@ -99,6 +99,20 @@ class ConditionsBody extends React.Component{
   }
   onDeleteClick=()=>{}
 
+  setToFirebase=()=> {
+    let expert = this.props.expert;
+    expert.conditions = this.state.conditions;
+
+    this.props.newExpert(expert);    
+
+    firebase.database().ref('experts/' + expert.name).set({
+      name: expert.name,
+      description: expert.description,
+      questions: expert.questions,
+      conditions: expert.conditions
+    });
+  }
+
   onAddClick=()=>{
     let tempCondition = this.state.tempCondition;
     tempCondition.result = this.state.resultValue;
@@ -131,6 +145,7 @@ class ConditionsBody extends React.Component{
   }
 
   onFinishClick=()=>{
+    this.setToFirebase();  
   }
 
   handleChange=(input)=>{
@@ -212,7 +227,7 @@ class ConditionsBody extends React.Component{
 
             <div id="CNE-questionDiv-btns">
               <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" onClick={this.onAddClick}>Add</button>
-              <button type="button" name="nextBtn" id="CNE-conditionDiv-finishBtn" onClick={this.onFinishClick}>Finish</button>
+              <NavLink to="/home" name="nextBtn" id="CNE-conditionDiv-finishBtn" onClick={this.onFinishClick}>Finish</NavLink>
             </div>
           </div>
 
@@ -244,6 +259,8 @@ export default withRouter(connect(
     store: state,
   }),
   dispatch=>({
-
+    newExpert: (expert)=>{
+      dispatch({type:'NEW_EXPERT',payload: expert});
+    }
   })
 )(ConditionsBody));
