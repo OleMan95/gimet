@@ -20,6 +20,7 @@ class ConditionsBody extends React.Component{
       </div> 
     ],
     selectGroupsHelper: true,
+    conditionsDOMList: true,
     questions:[],
     pairsCount:0,
     keyTargetId:'',
@@ -33,9 +34,6 @@ class ConditionsBody extends React.Component{
     if (this.state.keyTargetValue==="" && this.state.answerTargetValue==="") {
       return;
     }
-
-    console.log('setPair: ',this.state.keyTargetValue);
-    console.log('setPair: ',this.state.answerTargetValue);
     
     let pair = {
       key: this.state.keyTargetValue,
@@ -50,8 +48,6 @@ class ConditionsBody extends React.Component{
       tempCondition: tempCondition,
     });
     
-    console.log('setPair conditions: ',this.state.tempCondition);
-
     document.getElementById(this.state.keyTargetId).style.borderColor = '#2ecc71';
     document.getElementById(this.state.answerTargetId).style.borderColor = '#2ecc71';
     document.getElementById(this.state.answerTargetId).nextElementSibling.style.display = 'block';
@@ -104,8 +100,6 @@ class ConditionsBody extends React.Component{
   onDeleteClick=()=>{}
 
   onAddClick=()=>{
-
-   
     let tempCondition = this.state.tempCondition;
     tempCondition.result = this.state.resultValue;
     
@@ -133,8 +127,7 @@ class ConditionsBody extends React.Component{
 
     document.getElementById('resultInput').value = '';
 
-    console.log('onAddClick: ', this.state.conditions);
-
+    this.addInConditionsList();
   }
 
   onFinishClick=()=>{
@@ -162,50 +155,86 @@ class ConditionsBody extends React.Component{
 
   }
 
+  addInConditionsList=()=>{
+    let conditions = this.state.conditions;
+    let conDOMList = []; // :P
+
+    for (let i=0; i<conditions.length; i++){
+
+      conDOMList.push(
+        <div className="CNE-conditionsList-listItem" key={'condition'+i}>
+          <h3>Condition #{i+1}</h3> 
+          <h4>if</h4>
+          {this.state.conditions[i].pairs.map((pair,index)=>
+            <p key={index}><mark>{pair.key}</mark> = {pair.answer}</p>
+          )}
+          <h4>then</h4>
+          <p><mark>result</mark> = {this.state.conditions[i].result}</p>
+          <hr/>
+        </div>
+      );
+
+    }
+
+    console.log('addInConditionsList: ', this.state.conditions);
+
+    this.setState({
+      conditionsDOMList: conDOMList,
+    });
+  }
+
   componentDidMount=()=>{
     console.log('ConditionsBody - expert: ', this.props.expert);
   }
 
   render() {
     return (
-      <div className="CNE-main">
-      <div className="CNE-conditionDiv">
+      <div className="CNE">
+        <div className="CNE-main">
+          <div className="CNE-conditionDiv">
 
-        <h2>3. Configuring conditions</h2>
-        <label className="CNE-conditionDiv-labels">Condition #{this.state.count}</label>
-        <label className="CNE-conditionDiv-labels">if</label>
+            <h2>3. Configuring conditions</h2>
+            <label className="CNE-conditionDiv-labels">Condition #{this.state.count}</label>
+            <label className="CNE-conditionDiv-labels">if</label>
 
-        <div className="CNE-conditionDiv-pairs">
-            {this.state.selectGroups}
+            <div className="CNE-conditionDiv-pairs">
+                {this.state.selectGroups}
+            </div>
+            <button type="button" name="addBtn" id="CNE-conditionDiv-plusBtn" onClick={this.onPlusClick}>New condition</button>
+
+            <label className="CNE-conditionDiv-labels">then</label>
+            <div className="CNE-conditionDiv-resultSelector">
+              <p className="CNE-conditionDiv-result">result</p>
+              <p>=</p>
+              <input type="text" name="question" id="resultInput" placeholder="Enter result here" className="CNE-questionDiv-inputs"
+                onChange={(input)=>{this.handleChange(input)}}/>
+            </div>
+
+            <div id="CNE-questionDiv-btns">
+              <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" onClick={this.onAddClick}>Add</button>
+              <button type="button" name="nextBtn" id="CNE-conditionDiv-finishBtn" onClick={this.onFinishClick}>Finish</button>
+            </div>
+          </div>
+
+          <div className="CNE-conditionDiv-questionList">
+            <ul className="CNE-conditionDiv-questionList-list">
+              {this.props.expert.questions.map((question, index)=>
+                <li key={index} className="CNE-conditionDiv-questionListDiv-listItem">
+                  <h3>Question #{index+1}:</h3>
+                  <p><mark>key</mark>: {question.key}</p>
+                  <p><mark>question</mark>: {question.question}</p>
+                  <p><mark>answers</mark>: {question.answersString}</p>
+                </li>)}
+            </ul>
+          </div>
+
         </div>
-        <button type="button" name="addBtn" id="CNE-conditionDiv-plusBtn" onClick={this.onPlusClick}>New condition</button>
 
-        <label className="CNE-conditionDiv-labels">then</label>
-        <div className="CNE-conditionDiv-resultSelector">
-          <p className="CNE-conditionDiv-result">result</p>
-          <p>=</p>
-          <input type="text" name="question" id="resultInput" placeholder="Enter result here" className="CNE-questionDiv-inputs"
-            onChange={(input)=>{this.handleChange(input)}}/>
+        <div className="CNE-conditionsList">
+          <div className="CNE-conditionsList-list">
+            {this.state.conditionsDOMList}
+          </div>
         </div>
-
-        <div id="CNE-questionDiv-btns">
-          <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" onClick={this.onAddClick}>Add</button>
-          <button type="button" name="nextBtn" id="CNE-conditionDiv-finishBtn" onClick={this.onFinishClick}>Finish</button>
-        </div>
-      </div>
-
-      <div className="CNE-conditionDiv-questionList">
-        <ul className="CNE-conditionDiv-questionList-list">
-          {this.props.expert.questions.map((question, index)=>
-            <li key={index} className="CNE-conditionDiv-questionListDiv-listItem">
-              <h3>Question #{index+1}:</h3>
-              <p><mark>key</mark>: {question.key}</p>
-              <p><mark>question</mark>: {question.question}</p>
-              <p><mark>answers</mark>: {question.answersString}</p>
-            </li>)}
-        </ul>
-      </div>
-
       </div>
     )}
 }

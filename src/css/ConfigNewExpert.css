@@ -146,6 +146,7 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 0 15%;
+  min-height: 530px; 
 }
 .CNE-conditionDiv{
   width: 600px;
@@ -277,3 +278,29 @@
   background-color: inherit;
 }
 
+.CNE-conditionsList{
+  width: 100%;
+}
+.CNE-conditionsList-list{
+  overflow-y:scroll;
+  width: 50%;
+  min-width: 350px;
+  height: 400px;
+  border: solid 1px #989898;
+  margin: 24px auto;
+  padding: 8px 24px; 
+}
+.CNE-conditionsList-listItem{
+  list-style: none;
+  margin-bottom: 16px; 
+}
+.CNE-conditionsList-listItem mark{
+  background-color: inherit;
+  color: #3498db;
+}  
+.CNE-conditionsList-listItem p{
+  margin: 0 16px;
+} 
+.CNE-conditionsList-listItem h3{
+  margin: 8px 0;
+} 
