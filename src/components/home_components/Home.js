@@ -1,91 +1,116 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
+import * as firebase from 'firebase';
+
 import '../../css/App.css';
 import '../../css/ConfigNewExpert.css';
 import ExpertRoom from './ExpertRoom';
 
 
-const Home=({store, getHomeBody, newExpert})=>{
-  let experts = store.accountReducer[0].experts;
-  // console.log('store: ',store);
-  const browseActivity=(
-	  <div className="Home-content-body">
-  		<div className="content-body-header">
-  		  <button className="content-body-header-text1">
-  			<h3>Browse activity</h3>
-  		  </button>
-  		  <button className="content-body-header-text2">
-  			<h3>Find an expert</h3>
-  		  </button>
-  		</div>
-  		<div className="content-body">
-  		</div>
-	  </div>
-  );
+// const Home=({store, getHomeBody, newExpert})=>{
+class Home extends React.Component{
+  constructor(){
+    super();
+    this.state={
+      browseActivity:(
+        <div className="Home-content-body">
+          <div className="content-body-header">
+            <button className="content-body-header-text1">
+            <h3>Browse activity</h3>
+            </button>
+            <button className="content-body-header-text2">
+            <h3>Find an expert</h3>
+            </button>
+          </div>
+          <div className="content-body">
+          </div>
+        </div>
+      ),
+      expertNames:[]
+    };
+  }
 
-  let onNewExpertClick=()=>{
+
+  onNewExpertClick=()=>{
     var expert = {
        name:'',
        description:'',
        questions:[],
     }
 
-    // newExpert(expert);
   }
 
+  componentDidMount(){
+    const rootRef = firebase.database().ref().child('experts');
+    rootRef.on('value', snap=>{
+      let expertNames = Object.keys(snap.val());
+      this.setState({
+        expertNames:expertNames
+      });
+      
+      console.log('componentDidMount-firebase: ', expertNames);
+    });
+  }
 
-  const onExpertClick=(expert)=>{
+  onExpertClick=(name)=>{
+    let expert;
+
+    const expertRef = firebase.database().ref().child('experts').child(name);
+    expertRef.on('value', snap=>{
+      expert = snap.val();
+    });
+
     //Передаем компонент ExpertRoom для отображения его
     // вместо browseActivity (по умолчанию) по нажатию на эксперта
-    getHomeBody(<ExpertRoom name={expert.name} description={expert.description}/>);
+    this.props.getHomeBody(<ExpertRoom expert={expert}/>);
   }
 
-
-  return (
-    <div>
-      <header className="header" >
-        <div className="header-left">
-          <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
-            <div className="header-logo-img"></div>
-            <p className="header-logo-title">GIMET</p>
-          </NavLink>
-          <NavLink to="/home" className="header-userName" onClick={()=>this.onSignIn()}>
-            <h2>{store.accountReducer[0].username}</h2>
-          </NavLink>
-        </div>
-        <div className="header-right">
-          <NavLink to="/home" className="signOutBtn" >Sign out</NavLink>
-        </div>
-      </header>
-      <div className="Home">
-        <div className="Home-content">
-          {store.homeBodyHandler[0]?store.homeBodyHandler[0]:browseActivity}
-          <div className="Home-content-experts">
-            <div className="content-experts-header">
-              <div className="experts-header-title">
-                <h3>Your experts</h3>
-                <NavLink to="/config_new_expert" className="addExpertBtn" onClick={onNewExpertClick}>NEW EXPERT</NavLink>
+  render(){
+    return (
+      <div>
+        <header className="header" >
+          <div className="header-left">
+            <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
+              <div className="header-logo-img"></div>
+              <p className="header-logo-title">GIMET</p>
+            </NavLink>
+            <NavLink to="/home" className="header-userName">
+              <h2>{this.props.store.accountReducer[0].username}</h2>
+            </NavLink>
+          </div>
+          <div className="header-right">
+            <NavLink to="/home" className="signOutBtn" >Sign out</NavLink>
+          </div>
+        </header>
+        <div className="Home">
+          <div className="Home-content">
+            {this.props.store.homeBodyHandler[0]?this.props.store.homeBodyHandler[0]:this.state.browseActivity}
+            <div className="Home-content-experts">
+              <div className="content-experts-header">
+                <div className="experts-header-title">
+                  <h3>Your experts</h3>
+                  <NavLink to="/config_new_expert" className="addExpertBtn" onClick={this.onNewExpertClick}>NEW EXPERT</NavLink>
+                </div>
+                <div className="experts-header-find">
+                  <input type="search" name="findExpert" placeholder="Find an expert" />
+                </div>
+  
               </div>
-              <div className="experts-header-find">
-                <input type="search" name="findExpert" placeholder="Find an expert" />
+              <div className="content-experts">
+                <ul className="content-experts-list">
+                  {this.state.expertNames.map((name,index)=>
+                    <li key={index} id={name} onClick={(li)=>{this.onExpertClick(name)}} className="content-experts-listItems">{name}</li>
+                  )}
+                </ul>
               </div>
-
+  
             </div>
-            <div className="content-experts">
-              <ul className="content-experts-list">
-                {store.accountReducer[0].experts.map((expert,index)=>
-                  <li key={index} id={expert.name} onClick={(li)=>{onExpertClick(expert)}} className="content-experts-listItems">{expert.name}</li>
-                )}
-              </ul>
-            </div>
-
           </div>
         </div>
+  
       </div>
-
-    </div>
-  );
+    )}
 }
 
 
