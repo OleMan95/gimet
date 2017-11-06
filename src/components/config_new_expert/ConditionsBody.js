@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 
 import '../../css/App.css';
 import '../../css/Home.css';
+import InitBody from './InitBody';
 
 class ConditionsBody extends React.Component{
   state = {
@@ -146,6 +147,7 @@ class ConditionsBody extends React.Component{
 
   onFinishClick=()=>{
     this.setToFirebase();  
+    this.props.getConfigBody(<InitBody/>);    
   }
 
   handleChange=(input)=>{
@@ -261,6 +263,9 @@ export default withRouter(connect(
   dispatch=>({
     newExpert: (expert)=>{
       dispatch({type:'NEW_EXPERT',payload: expert});
+    },
+    getConfigBody: (component)=>{
+      dispatch({type:'GET_CONFIG_BODY',payload: component});
     }
   })
 )(ConditionsBody));
