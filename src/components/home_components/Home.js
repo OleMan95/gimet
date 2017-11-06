@@ -45,8 +45,23 @@ class Home extends React.Component{
     const rootRef = firebase.database().ref().child('experts');
     rootRef.on('value', snap=>{
       let expertNames = Object.keys(snap.val());
+      let expertListElems=[];
+
+      if(!expertNames) {
+        expertListElems = (
+          <p className="content-experts-emptyList">No experts</p>
+        );
+      }else{
+        for(let i=0; i<expertNames.length; i++){
+          expertListElems.push(
+            <li key={i} id={expertNames[i]} onClick={(li)=>{this.onExpertClick(expertNames[i])}} className="content-experts-listItems">{expertNames[i]}</li>
+          );
+        }
+      }
+
+      console.log('isExpertContains: ',expertNames);
       this.setState({
-        expertNames:expertNames
+        expertNames:expertListElems,
       });
       
       console.log('componentDidMount-firebase: ', expertNames);
@@ -99,9 +114,7 @@ class Home extends React.Component{
               </div>
               <div className="content-experts">
                 <ul className="content-experts-list">
-                  {this.state.expertNames.map((name,index)=>
-                    <li key={index} id={name} onClick={(li)=>{this.onExpertClick(name)}} className="content-experts-listItems">{name}</li>
-                  )}
+                  {this.state.expertNames}
                 </ul>
               </div>
   
