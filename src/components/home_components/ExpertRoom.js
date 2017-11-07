@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 import '../../css/App.css';
 import '../../css/Home.css';
+import '../../css/ConfigConsultation.css';
+
 
 
 const ExpertRoom=({store, dispatchNewExpert, name, getHomeBody, description})=>{
@@ -24,13 +26,18 @@ const ExpertRoom=({store, dispatchNewExpert, name, getHomeBody, description})=>{
             <h3>Configure</h3>
           </button>
           <button onClick={onCloseExpertClick}>
-            <h3>X</h3>
-          </button>
+            <h3>X</h3>            
+          </button>          
         </div>
   		</div>
   		<div className="expertRoom-body">
         <p>{description}</p>
   		</div>
+      <div id="Consultation_Start">
+        <button id="Consultation_StartBtn">   
+            <NavLink to="/consultation" id="Consultation_StartBtn">Start consultation</NavLink>
+        </button>
+      </div>
     </div>
   );
 }

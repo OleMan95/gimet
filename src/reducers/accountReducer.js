@@ -5,7 +5,7 @@ const initialState = [
   {
     username:'John Smith',
     email:'aom-95@live.com',
-    password:'qwerty',
+    password:'qwerty',  
     experts:[
       {
         name:'Medicine expert',
@@ -32,7 +32,7 @@ const initialState = [
           }
         ]
       },
-      {
+       {
         name:'Notebook expert',
         description: 'This expert will helps you choose a notebook!',
         questions:[

@@ -4,6 +4,7 @@ import {NavLink, withRouter } from 'react-router-dom';
 import '../../css/App.css';
 import '../../css/ConfigNewExpert.css';
 import ExpertRoom from './ExpertRoom';
+// import Consultation from './consultation/Consultation';
 
 
 const Home=({store, getHomeBody, newExpert})=>{
@@ -39,6 +40,7 @@ const Home=({store, getHomeBody, newExpert})=>{
     //Передаем компонент ExpertRoom для отображения его
     // вместо browseActivity (по умолчанию) по нажатию на эксперта
     getHomeBody(<ExpertRoom name={expert.name} description={expert.description}/>);
+    // getHomeBody(<Consultation name={expert.name}/>);
   }
 
 
@@ -74,9 +76,9 @@ const Home=({store, getHomeBody, newExpert})=>{
             </div>
             <div className="content-experts">
               <ul className="content-experts-list">
-                {store.accountReducer[0].experts.map((expert,index)=>
-                  <li key={index} id={expert.name} onClick={(li)=>{onExpertClick(expert)}} className="content-experts-listItems">{expert.name}</li>
-                )}
+                  {store.accountReducer[0].experts.map((expert,index)=>
+                    <li key={index} id={expert.name} onClick={(li)=>{onExpertClick(expert)}} className="content-experts-listItems">{expert.name}</li>
+                  )}
               </ul>
             </div>
 
