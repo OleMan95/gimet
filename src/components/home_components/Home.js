@@ -44,7 +44,9 @@ class Home extends React.Component{
   componentDidMount(){
     const rootRef = firebase.database().ref().child('experts');
     rootRef.on('value', snap=>{
-      let expertNames = Object.keys(snap.val());
+      let expertNames
+      if(snap.val()) expertNames = Object.keys(snap.val());
+
       let expertListElems=[];
 
       if(!expertNames) {
@@ -54,7 +56,8 @@ class Home extends React.Component{
       }else{
         for(let i=0; i<expertNames.length; i++){
           expertListElems.push(
-            <li key={i} id={expertNames[i]} onClick={(li)=>{this.onExpertClick(expertNames[i])}} className="content-experts-listItems">{expertNames[i]}</li>
+            <li key={i} id={expertNames[i]} onClick={(li)=>{this.onExpertClick(expertNames[i])}} 
+            className="content-experts-listItems">{expertNames[i]}</li>
           );
         }
       }
@@ -74,6 +77,7 @@ class Home extends React.Component{
     const expertRef = firebase.database().ref().child('experts').child(name);
     expertRef.on('value', snap=>{
       expert = snap.val();
+
     });
 
     //Передаем компонент ExpertRoom для отображения его

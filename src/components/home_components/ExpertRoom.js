@@ -6,11 +6,67 @@ import '../../css/Home.css';
 
 
 class ExpertRoom extends React.Component{
+  constructor(){
+    super();
+    this.state = {
+      conditionsDOMs:[],
+      questionsDOMs:[],
+      name:'',
+      description:'',
+    }
+  }
 
   onCloseExpertClick=(id)=>{
     //Параметр null знатит то, что должно отобразится окно
     // активности (browseActivity)
     this.props.getHomeBody(null);
+  }
+
+  componentDidMount(){
+    if(!this.props.expert.description){
+      this.setState({
+        description:'No description.'
+      });
+    }
+
+    let conditions;
+    if(!this.props.expert.conditions){
+      this.setState({
+        conditionsDOMs:(
+          <p>Empty</p>
+        ),
+      });
+    }else{
+      conditions = this.props.expert.conditions;
+      let temp;
+
+      for(let i=0; i<conditions.length; i++){
+        temp = (
+          <li key={i} className="expertRoom-conditionList-listItem">
+            <h3>Condition #{i+1}:</h3>
+            <h4>if</h4>
+            {condition.pairs.map((pair, i)=>
+              <p key={i}><mark>{pair.key}</mark> = {pair.answer}</p>)}
+            <h4>then</h4>                  
+            <p><mark>result</mark> = {condition.result}</p>
+          </li>
+        );
+      }
+      
+      
+      this.setState({
+        conditionsDOMs:'',
+      });
+    }
+
+    if(!this.props.expert.questions){
+      this.setState({
+        questionsDOMs:(
+          <p>Empty</p>
+        ),
+      });
+    }
+
   }
 
   render(){
