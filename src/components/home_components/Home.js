@@ -84,6 +84,7 @@ class Home extends React.Component{
     //Передаем компонент ExpertRoom для отображения его
     // вместо browseActivity (по умолчанию) по нажатию на эксперта
     this.props.getHomeBody(<ExpertRoom expert={expert}/>);
+    this.props.setConsultationExpert(expert);
   }
 
   render(){
@@ -143,6 +144,9 @@ export default withRouter(connect(
     },
     getHomeBody: (id)=>{
       dispatch({type:'GET_HOME_BODY',payload: id});
+    },
+    setConsultationExpert: (expert)=>{
+      dispatch({type:'SET_CONSULTATON_EXPERT',payload: expert});
     }
   })
 )(Home));
