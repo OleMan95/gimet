@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 import '../../css/App.css';
 import '../../css/Home.css';
+import '../../css/ConfigConsultation.css';
 
 
 class ExpertRoom extends React.Component{

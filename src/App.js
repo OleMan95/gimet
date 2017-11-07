@@ -4,6 +4,7 @@ import { BrowserRouter, Route} from 'react-router-dom';
 import StartPage from './components/StartPage';
 import Home from './components/home_components/Home';
 import ConfigNewExpert from './components/config_new_expert/ConfigNewExpert';
+import Consultation from './components/consultation/Consultation';
 
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
           <Route exact path={"/"} component={StartPage}/>
           <Route path={"/home"} component={Home}/>
           <Route path={"/config_new_expert"} component={ConfigNewExpert}/>
+          <Route path={"/consultation"} component={Consultation}/>
         </div>
       </BrowserRouter>
     );

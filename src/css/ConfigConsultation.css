@@ -1,0 +1,43 @@
+
+
+#Consultation_StartBtn{
+    background-color: #2ecc71;
+    color: white;
+    border: solid 1px #2ecc71;
+    border-radius: 5px;
+    padding: 6px 10px;
+    text-decoration: none;
+    /* line-height: 50%;    */
+    height: 50px;
+    font-size: 20px;
+}
+
+#Consultation_Start{
+    margin-top: 20px;
+    text-align: center;
+    
+}
+
+.consultation_question_frame{  
+    /* display: flex; */
+    flex-direction: row;
+    /* justify-content: space-between; */
+    align-items: center;
+    height: 100px;
+    padding: 30px;
+    /* border: solid 1px #989898; */
+    border-radius: 5px;
+
+}
+
+#consultation_question_number{
+    border: solid 1px #989898;
+    border-radius: 5px;
+    padding-left: 20px;
+}
+
+#consultation_question_text{
+    border: solid 1px #989898; 
+    border-radius: 5px;
+    padding-left: 20px;
+}
