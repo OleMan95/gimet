@@ -51,7 +51,8 @@ class Consultation extends React.Component{
         for(let i=0;i<answers.length;i++){
             answersDOMs.push(
                 <div className='consultation_answers_list'>
-                <input type="radio" name="answer" key={i} className='consultation_answers_radio' value={answers[i]}/>{answers[i]}<br/>
+                    <input type="radio" name="rb" id={'answer'+i} key={i} className='consultation_answers_radio' value={answers[i]}/>
+                    <label for={'answer'+i}>{answers[i]}</label>
                 </div>
             );
         }
