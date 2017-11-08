@@ -67,9 +67,10 @@
     border-radius: 5px;
     background-color: #9faab7;
     z-index: 0;
+    cursor: pointer;
 }
 .consultation_nextBtn:hover {
-    box-shadow: 0 0 10px rgba(black,0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);    
 }
 .consultation_nextBtn:before {
     position: absolute;
@@ -93,15 +94,6 @@
 
 
 
-
-
-/* .consultation_answers_radio{
-    list-style: none;
-    margin-bottom: 8px;
-    padding: 8px 16px;
-    border: solid 1px #989898; 
-    border-radius: 5px;
-} */
 .consultation_answers_radio {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -109,18 +101,19 @@
     -o-appearance: none;
     appearance: none;
     /* position: relative; */
-
-    height: 18px;
-    width: 18px;
+    margin: 0;
+    height: 20px;
+    width: 20px;
     transition: all 0.5s ease-out 0s;
-    background: #e0e0e0;
-    border: none;
+    background: #ffffff;
+    border: 2px solid #2ecc71;
+    
+    /* border: none; */
     color: #fff;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 0.5rem;
     outline: none;
     z-index: 1000;
     border-radius: 50%;
@@ -128,6 +121,10 @@
 }
 .consultation_answers_radio:hover {
     background: #9faab7;
+}
+.consultation_answers_radio:hover + label{
+    color: #6d6d6d;
+
 }
 .consultation_answers_radio:checked {
     background: #2ecc71;
@@ -139,13 +136,15 @@
     
 }
 .consultation_answers_radio:checked::before {
-    background-color: #e0e0e0;    
+    background-color: #2ecc71;    
+    border: 2px solid #ffffff;
     height: 12px;
     width: 12px;
     content: '';
     font-size: 18px;
     border-radius: 50%;
 }
+
 
 .consultation_answers_list{
     padding: 4px 16px;
@@ -155,4 +154,5 @@
 }
 .consultation_answers_list label{
     padding: 4px 16px;
+    cursor: pointer;
 }

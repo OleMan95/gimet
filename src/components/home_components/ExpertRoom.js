@@ -26,48 +26,84 @@ class ExpertRoom extends React.Component{
   componentDidMount(){
     if(!this.props.expert.description){
       this.setState({
-        description:'No description.'
-      });
-    }
-
-    let conditions;
-    if(!this.props.expert.conditions){
-      this.setState({
-        conditionsDOMs:(
-          <p>Empty</p>
+        description:(
+          <p className="expertRoom-emptyText">Empty</p>
         ),
       });
     }else{
-      conditions = this.props.expert.conditions;
-      let temp;
-
-      // for(let i=0; i<conditions.length; i++){
-      //   temp = (
-      //     <li key={i} className="expertRoom-conditionList-listItem">
-      //       <h3>Condition #{i+1}:</h3>
-      //       <h4>if</h4>
-      //       {condition.pairs.map((pair, i)=>
-      //         <p key={i}><mark>{pair.key}</mark> = {pair.answer}</p>)}
-      //       <h4>then</h4>                  
-      //       <p><mark>result</mark> = {condition.result}</p>
-      //     </li>
-      //   );
-      // }
-      
-      
       this.setState({
-        conditionsDOMs:'',
+        description:(
+          <p>{this.props.expert.description}</p>
+        ),
       });
     }
 
-    // if(!this.props.expert.questions){
-    //   this.setState({
-    //     questionsDOMs:(
-    //       <p>Empty</p>
-    //     ),
-    //   });
-    // }
-//
+    if(!this.props.expert.conditions){
+      this.setState({
+        conditionsDOMs:(
+          <p className="expertRoom-emptyText">Empty</p>
+        ),
+      });
+    }else{
+      let isEmpty = false;
+  
+      for(let i=0;i<this.props.expert.conditions.length;i++){
+        if(!this.props.expert.conditions[i].pairs){
+          isEmpty = true;
+        }
+      }
+  
+      if(isEmpty){
+        this.setState({
+          conditionsDOMs:(
+            <p className="expertRoom-emptyText">Empty</p>
+          ),
+        });
+      }else{
+        this.setState({
+          conditionsDOMs:(
+            <ul className="expertRoom-conditionList-list">
+              {this.props.expert.conditions.map((condition, index)=>
+                <li key={index} className="expertRoom-conditionList-listItem">
+                  <h3>Condition #{index+1}:</h3>
+                  <h4>if</h4>
+                  {condition.pairs.map((pair, i)=>
+                    <p key={i}><mark>{pair.key}</mark> = {pair.answer}</p>)}
+                  <h4>then</h4>                  
+                  <p><mark>result</mark> = {condition.result}</p>
+                </li>
+              )}
+            </ul>
+          ),
+        });
+      }
+    }
+        
+    
+
+    if(!this.props.expert.questions){
+      this.setState({
+        questionsDOMs:(
+          <p className="expertRoom-emptyText">Empty</p>
+        ),
+      });
+    }else{
+      this.setState({
+        questionsDOMs:(
+          <ul className="expertRoom-questionList-list">
+            {this.props.expert.questions.map((question, index)=>
+              <li key={index} className="expertRoom-questionList-listItem">
+                <h3>Question #{index+1}:</h3>
+                <p><mark>key</mark>: {question.key}</p>
+                <p><mark>question</mark>: {question.question}</p>
+                <p><mark>answers</mark>: {question.answersString}</p>
+              </li>
+            )}
+          </ul>
+        ),
+      });
+    }
+
   }
 
   render(){
@@ -87,7 +123,7 @@ class ExpertRoom extends React.Component{
           </div>
   
           <div className="header-expertRoom-description">
-            <p>{this.props.expert.description}</p>            
+            {this.state.description}           
           </div>
 
           <div className="header-expertRoom-bottom">
@@ -98,29 +134,11 @@ class ExpertRoom extends React.Component{
         <div className="expertRoom-body">
 
           <div className="expertRoom-questionList">
-            <ul className="expertRoom-questionList-list">
-              {this.props.expert.questions.map((question, index)=>
-                <li key={index} className="expertRoom-questionList-listItem">
-                  <h3>Question #{index+1}:</h3>
-                  <p><mark>key</mark>: {question.key}</p>
-                  <p><mark>question</mark>: {question.question}</p>
-                  <p><mark>answers</mark>: {question.answersString}</p>
-                </li>)}
-            </ul>
+            {this.state.questionsDOMs}
           </div>
 
           <div className="expertRoom-conditionList">
-            <ul className="expertRoom-conditionList-list">
-              {this.props.expert.conditions.map((condition, index)=>
-                <li key={index} className="expertRoom-conditionList-listItem">
-                  <h3>Condition #{index+1}:</h3>
-                  <h4>if</h4>
-                  {condition.pairs.map((pair, i)=>
-                    <p key={i}><mark>{pair.key}</mark> = {pair.answer}</p>)}
-                  <h4>then</h4>                  
-                  <p><mark>result</mark> = {condition.result}</p>
-                </li>)}
-            </ul>
+            {this.state.conditionsDOMs}
           </div>
 
         </div>

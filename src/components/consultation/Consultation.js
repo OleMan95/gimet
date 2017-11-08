@@ -53,6 +53,7 @@ class Consultation extends React.Component{
                 <div className='consultation_answers_list'>
                     <input type="radio" name="rb" id={'answer'+i} key={i} className='consultation_answers_radio' value={answers[i]}/>
                     <label for={'answer'+i}>{answers[i]}</label>
+                    <div className="answers_list_check"></div>
                 </div>
             );
         }

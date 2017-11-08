@@ -57,20 +57,37 @@ class Home extends React.Component{
       }else{
         for(let i=0; i<expertNames.length; i++){
           expertListElems.push(
-            <li key={i} id={expertNames[i]} onClick={(li)=>{this.onExpertClick(expertNames[i])}} 
-            className="content-experts-listItems">{expertNames[i]}</li>
+            <li key={i} id={expertNames[i]} onClick={()=>{this.onExpertClick(expertNames[i])}} 
+            className="content-experts-listItems">
+            <p>{expertNames[i]}</p>
+            <button id={expertNames[i]} onClick={(i)=>this.onDeleteExpertClick(i)}></button>
+            </li>
           );
         }
       }
 
-      console.log('isExpertContains: ',expertNames);
       this.setState({
         expertNames:expertListElems,
       });
-      
-      console.log('componentDidMount-firebase: ', expertNames);
     });
   }
+
+  onDeleteExpertClick=(elem)=>{
+    this.props.getHomeBody(this.state.browseActivity);
+    
+    // Create a reference to the expert to delete
+    const rootRef = firebase.database().ref().child('experts').child(elem.target.id);
+
+    // Delete the expert
+    rootRef.remove().then(function() {
+      // File deleted successfully
+      alert('Expert deleted successfully!');
+    }).catch(function(error) {
+      // Uh-oh, an error occurred!
+      alert('Uh-oh, an error occurred!');
+      
+    });
+  }    
 
   onExpertClick=(name)=>{
     let expert;
@@ -83,6 +100,9 @@ class Home extends React.Component{
 
     //Передаем компонент ExpertRoom для отображения его
     // вместо browseActivity (по умолчанию) по нажатию на эксперта
+    if(!expert){
+      return;
+    }
     this.props.getHomeBody(<ExpertRoom expert={expert}/>);
     this.props.setConsultationExpert(expert);
   }
