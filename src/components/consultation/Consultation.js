@@ -11,17 +11,17 @@ import '../../css/ConfigConsultation.css';
 class Consultation extends React.Component{
 
     state = {
-
-        question:"",
+        question:'',
         questionsCount:0,
-
+        answers:''
     }
 
 
     componentDidMount(){
         let question = this.props.expert.questions[this.state.questionsCount].question;
-        console.log(question);
-       
+  
+        this.getAnswers(this.state.questionsCount);        
+
         this.setState({
             question:question,
         });
@@ -29,19 +29,37 @@ class Consultation extends React.Component{
 
     onNextClick=()=>{
         let count=this.state.questionsCount;
-        if(count+1 == this.props.expert.questions.length){
-            
-        }else{
+        if(count+1 != this.props.expert.questions.length){
             count++;
         }
+
+        let question = this.props.expert.questions[count].question;        
+
+        this.getAnswers(count);
+
         this.setState({
             questionsCount:count,
-        });
-        let question = this.props.expert.questions[count].question;        
-        this.setState({
             question:question,
         });
-    };
+    }
+
+    getAnswers=(count)=>{
+        let answers = this.props.expert.questions[count].answers;
+        let answersDOMs=[];
+        console.log('answers: ',answers);
+
+        for(let i=0;i<answers.length;i++){
+            answersDOMs.push(
+                <div className='consultation_answers_list'>
+                <input type="radio" name="answer" key={i} className='consultation_answers_radio' value={answers[i]}/>{answers[i]}<br/>
+                </div>
+            );
+        }
+
+        this.setState({
+            answers:answersDOMs,
+        });
+    }
 
 
 
@@ -72,13 +90,19 @@ class Consultation extends React.Component{
 
                 <div className="consultation_question_frame">
                     <div id="consultation_question_number">
-                        <h3>Question # {this.state.questionsCount+1}</h3>
+                        <div>
+                            <h3>Question # {this.state.questionsCount+1}</h3>
+                        </div>
                     </div>
-                    {/* <hr/> */}
                     <div id="consultation_question_text">
+                        <div>
                         <h3>{this.state.question}</h3>
+                        </div>
                     </div>
-                    
+                    <div id="consultation_answers">
+                        {this.state.answers}
+                    </div>
+
                     <button className="consultation_nextBtn" onClick={this.onNextClick}>Next</button>
                     
                 </div>

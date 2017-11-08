@@ -36,25 +36,30 @@
 #consultation_question_number{
     /* border-bottom: solid 1px #989898; */
     border-radius: 5px;
-    width: 100%;
     padding: 8px;
 }
 
 #consultation_question_text{
     /* border: solid 1px #989898;  */
     border-radius: 5px;
-    width: 100%;
     padding: 8px;
-    
 }
 .consultation_nextBtn{
     align-self: flex-end;
-    margin-top:8px;
     color: white;
     background-color: #2ecc71;
     border: solid 1px #2ecc71; 
     padding: 4px 16px;
     font-size: 18px;
     border-radius: 5px;
-    
+}
+.consultation_answers_radio{
+    list-style: none;
+    margin-bottom: 8px;
+    padding: 8px 16px;
+    border: solid 1px #989898; 
+    border-radius: 5px;
+}
+.consultation_answers_list{
+    padding: 8px 16px;
 }

@@ -41,14 +41,16 @@ class QuestionsBody extends React.Component{
   onAddClick=()=>{
     let a = this.state.answersValue;
     let newAnswers = a.split(","); //разделяем все значения по комам
+    console.log('newAnswers: ',newAnswers);
 
     for (var i = 0; i < newAnswers.length; i++) {
       let str = newAnswers[i];
       newAnswers[i] = str.trim();
     }//убираем пробелы по краям у каждого элемента массива
 
-    this.state.allAnswers.push(...newAnswers);
-    newAnswers = this.state.allAnswers;
+    // this.state.allAnswers.push(...newAnswers);
+    // newAnswers = this.state.allAnswers;
+
     let question={
       key:this.state.keyValue,
       question:this.state.questionValue,
