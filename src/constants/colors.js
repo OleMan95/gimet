@@ -6,3 +6,4 @@ const COLOR_INPUT = '#b6b6b6';
 const COLOR_DARK_GRAY = '#333333';
 const COLOR_RED = '#e74c3c';
 const COLOR_MARK = '#3498db';
+const COLOR_GREEN = '#2ecc71';

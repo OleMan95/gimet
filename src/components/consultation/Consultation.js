@@ -29,7 +29,11 @@ class Consultation extends React.Component{
 
     onNextClick=()=>{
         let count=this.state.questionsCount;
-        count++;
+        if(count+1 == this.props.expert.questions.length){
+            
+        }else{
+            count++;
+        }
         this.setState({
             questionsCount:count,
         });
@@ -68,16 +72,16 @@ class Consultation extends React.Component{
 
                 <div className="consultation_question_frame">
                     <div id="consultation_question_number">
-                        <h3>Question # {this.state.questionsCount}</h3>
+                        <h3>Question # {this.state.questionsCount+1}</h3>
                     </div>
                     {/* <hr/> */}
                     <div id="consultation_question_text">
                         <h3>{this.state.question}</h3>
                     </div>
                     
+                    <button className="consultation_nextBtn" onClick={this.onNextClick}>Next</button>
                     
                 </div>
-                <button onClick={this.onNextClick}>Next</button>
                 
             </div>
         )
