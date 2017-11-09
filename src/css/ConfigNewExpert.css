@@ -30,7 +30,7 @@
 .CNE-questionDiv-inputs:focus{
   border-radius: 5px;
   padding: 8px;
-  border: solid 1px #2ecc71;
+  /* border: solid 1px #2ecc71; */
 }
 #CNE-initDiv-nextBtn{
   width: 100px;

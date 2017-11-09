@@ -38,6 +38,8 @@ class Home extends React.Component{
        name:'',
        description:'',
        questions:[],
+       filter:'',
+       names:''
     }
 
   }
@@ -48,28 +50,53 @@ class Home extends React.Component{
       let expertNames
       if(snap.val()) expertNames = Object.keys(snap.val());
 
-      let expertListElems=[];
-
-      if(!expertNames) {
-        expertListElems = (
-          <p className="content-experts-emptyList">No experts</p>
-        );
-      }else{
-        for(let i=0; i<expertNames.length; i++){
-          expertListElems.push(
-            <li key={i} id={expertNames[i]} onClick={()=>{this.onExpertClick(expertNames[i])}} 
-            className="content-experts-listItems">
-            <p>{expertNames[i]}</p>
-            <button id={expertNames[i]} onClick={(i)=>this.onDeleteExpertClick(i)}></button>
-            </li>
-          );
-        }
-      }
-
       this.setState({
-        expertNames:expertListElems,
+        names:expertNames,
       });
+
+
+      this.displayExperts(expertNames);
     });
+  }
+
+  displayExperts=(expertNames)=>{
+    let expertListElems=[];
+    
+    if(!expertNames) {
+      expertListElems = (
+        <p className="content-experts-emptyList">No experts</p>
+      );
+    }else{
+      for(let i=0; i<expertNames.length; i++){
+        expertListElems.push(
+          <li key={i} id={expertNames[i]} onClick={()=>{this.onExpertClick(expertNames[i])}} 
+          className="content-experts-listItems">
+          <p>{expertNames[i]}</p>
+          <button id={expertNames[i]} onClick={(i)=>this.onDeleteExpertClick(i)}></button>
+          </li>
+        );
+      }
+    }
+
+    this.setState({
+      expertNames:expertListElems,
+    });
+  }    
+
+  handleFilterChange=(event)=>{
+    switch (event.target.name) {
+      case 'findExpert':
+        let newExpertNames = [];
+        //При чтении экспертов из firebase записывается переменная names в state.
+        //Если name (элемент массива names) содержит event.target.value (значение поля findExpert),
+        // значит name записивается в новый массив с именами.
+        newExpertNames = this.state.names.filter(name => name.includes(event.target.value));
+
+        this.displayExperts(newExpertNames);
+        
+        break;
+      default:
+    }
   }
 
   onDeleteExpertClick=(elem)=>{
@@ -134,7 +161,8 @@ class Home extends React.Component{
                   <NavLink to="/config_new_expert" className="addExpertBtn" onClick={this.onNewExpertClick}>NEW EXPERT</NavLink>
                 </div>
                 <div className="experts-header-find">
-                  <input type="search" name="findExpert" placeholder="Find an expert" />
+                  <input type="search" name="findExpert" placeholder="Find an expert"
+                  onChange={this.handleFilterChange} />
                 </div>
   
               </div>
