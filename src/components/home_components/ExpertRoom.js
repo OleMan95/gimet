@@ -17,7 +17,7 @@ class ExpertRoom extends React.Component{
     }
   }
 
-  onCloseExpertClick=(id)=>{
+  onCloseExpertClick=()=>{
     //Параметр null знатит то, что должно отобразится окно
     // активности (browseActivity)
     this.props.getHomeBody(null);
@@ -41,7 +41,7 @@ class ExpertRoom extends React.Component{
     if(!this.props.expert.conditions){
       this.setState({
         conditionsDOMs:(
-          <p className="expertRoom-emptyText">Empty</p>
+          <p className="expertRoom-emptyText">No conditions!</p>
         ),
       });
     }else{
@@ -56,7 +56,7 @@ class ExpertRoom extends React.Component{
       if(isEmpty){
         this.setState({
           conditionsDOMs:(
-            <p className="expertRoom-emptyText">Empty</p>
+            <p className="expertRoom-emptyText">Incorrectly configured conditions!</p>
           ),
         });
       }else{
@@ -84,7 +84,7 @@ class ExpertRoom extends React.Component{
     if(!this.props.expert.questions){
       this.setState({
         questionsDOMs:(
-          <p className="expertRoom-emptyText">Empty</p>
+          <p className="expertRoom-emptyText">No questions!</p>
         ),
       });
     }else{

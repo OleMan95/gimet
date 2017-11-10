@@ -53,10 +53,13 @@
 /*Experts*/
 .Home-content-experts{
   min-width: 400px;
-  height: auto;
   height: 296px;
   border: solid 1px #989898;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  
 }
 .content-experts-header{
   display: flex;
@@ -101,16 +104,25 @@
   cursor: pointer;
   border: solid 1px #2ecc71;  
 }
+.content-experts{
+  overflow-y: scroll;
+  margin-right: -12px;
+}
+
+.content-experts::-webkit-scrollbar{
+  width: 12px;
+}
 .content-experts-listItems{
   list-style-type: none;
   padding:0;
-  padding-right: 16px;  
+  padding-right: 26px;  
   border-bottom: solid 1px #989898;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  overflow-x: hidden;
 }
 .content-experts-listItems:hover{
   background-color: #d2dbe7;
@@ -126,7 +138,7 @@
 .content-experts-listItems button{
   border: 0;
   border-radius: 5px;
-  /* padding: 4px 16px; */
+  padding: 0;
   color: #e74c3c;
   cursor: pointer;
   background-image: url(../images/delete-red.svg);

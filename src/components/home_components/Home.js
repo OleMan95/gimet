@@ -100,7 +100,7 @@ class Home extends React.Component{
   }
 
   onDeleteExpertClick=(elem)=>{
-    this.props.getHomeBody(this.state.browseActivity);
+    this.props.getHomeBody(null);
     
     // Create a reference to the expert to delete
     const rootRef = firebase.database().ref().child('experts').child(elem.target.id);
@@ -118,7 +118,9 @@ class Home extends React.Component{
 
   onExpertClick=(name)=>{
     let expert;
-
+    this.props.getHomeBody(this.state.browseActivity);
+    
+    
     const expertRef = firebase.database().ref().child('experts').child(name);
     expertRef.on('value', snap=>{
       expert = snap.val();
