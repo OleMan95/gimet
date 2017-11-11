@@ -42,7 +42,6 @@ class QuestionsBody extends React.Component{
   onAddClick=()=>{
     let a = this.state.answersString;
     let newAnswers = a.split(","); //разделяем все значения по комам
-    console.log('newAnswers: ',newAnswers);
 
     for (var i = 0; i < newAnswers.length; i++) {
       let str = newAnswers[i];
@@ -64,10 +63,13 @@ class QuestionsBody extends React.Component{
 
     let newCount = ++this.state.count;
 
+    let initAnswersList = [];
+
     this.setState({
       questions:newQuestions,
       count:newCount,
-      answersList:[],      
+      answersList:[],
+      answersString:'',      
     });//обновляем массив с вопросами и счётик
 
     this.questionInput.value=''; //чистим поля для ввода текста
@@ -116,8 +118,14 @@ class QuestionsBody extends React.Component{
       let answersList = this.state.answersList;
       let answersValue = this.state.answersValue;
 
-      if(!answersValue){
-        return;
+      // if(!answersValue){
+      //   return;
+      // }
+
+      for(let i=0; i<this.state.answersList.length; i++){
+        if(this.state.answersList[i].key==answersValue || !answersValue){
+          return;          
+        }
       }
 
       let newAnswersList = [

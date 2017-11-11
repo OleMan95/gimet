@@ -38,12 +38,6 @@ body{
   color: white;
   padding: 0 4px;
 }
-.Start-header-logo:active{
-
-}
-.Start-header-logo:visited{
-
-}
 .header-logo-img{
   background-image: url(../images/app_logo_round.png);
   background-repeat: no-repeat;
@@ -73,22 +67,40 @@ body{
   margin-right: 50px;
   text-align: left;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
 }
 .Start-contentBody-div1{
-  width: 100%;
   display: flex;
   flex-direction: column;
 }
 .Start-contentBody-logo {
-  background-image: url(../images/app_logo_round.png);
+  background-image: url(../images/icon-center.png);
   background-repeat: no-repeat;
   background-size: contain;
-  width: 200px;
-  height: 200px;
+  background-position: center;
+  width: 300px;
+  height: 300px;
+  position: relative;  
   margin: 0 auto;
 }
+.Start-contentBody-logo:before {
+  background-image: url(../images/icon-border2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  padding: 150px;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+} 
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } } 
+
 .Start-contentBody-text1{
   margin: 0 0 16px 0;
 }
