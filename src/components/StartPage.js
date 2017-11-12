@@ -83,6 +83,7 @@ const ContentBody = (
   <div className="Start-contentBody">
     <div className="Start-contentBody-div1">
       <div className="Start-contentBody-logo"></div>
+      <div className="Start-contentBody-logoBorder"></div>
     </div>
     <h3 className="Start-contentBody-text1">Expert systems for everybody.</h3>
     <p className="Start-contentBody-text2">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
