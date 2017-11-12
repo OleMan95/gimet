@@ -14,7 +14,8 @@ class QuestionsBody extends React.Component{
     answersValue:'',
     keyValue:'',
     questions:[],
-    allAnswers:[],
+    answersString:'',
+    answersList:[],
   }
 
   handleInputChange=(event)=>{
@@ -39,7 +40,7 @@ class QuestionsBody extends React.Component{
   }
 
   onAddClick=()=>{
-    let a = this.state.answersValue;
+    let a = this.state.answersString;
     let newAnswers = a.split(","); //разделяем все значения по комам
 
     for (var i = 0; i < newAnswers.length; i++) {
@@ -47,12 +48,13 @@ class QuestionsBody extends React.Component{
       newAnswers[i] = str.trim();
     }//убираем пробелы по краям у каждого элемента массива
 
-    this.state.allAnswers.push(...newAnswers);
-    newAnswers = this.state.allAnswers;
+    // this.state.allAnswers.push(...newAnswers);
+    // newAnswers = this.state.allAnswers;
+
     let question={
       key:this.state.keyValue,
       question:this.state.questionValue,
-      answersString:this.state.answersValue,
+      answersString:this.state.answersString,
       answers:newAnswers,
     };
 
@@ -61,10 +63,13 @@ class QuestionsBody extends React.Component{
 
     let newCount = ++this.state.count;
 
+    let initAnswersList = [];
+
     this.setState({
       questions:newQuestions,
       count:newCount,
-      answers:newAnswers,
+      answersList:[],
+      answersString:'',      
     });//обновляем массив с вопросами и счётик
 
     this.questionInput.value=''; //чистим поля для ввода текста
@@ -78,6 +83,76 @@ class QuestionsBody extends React.Component{
     this.props.getConfigBody(<ConditionsBody expert={newExpert} answers={this.state.answers}/>);
   }
 
+  onDelTagClick=(elem)=>{
+    
+    let answersList = this.state.answersList;
+    let newAnswersList = [];
+    let newAnswers;
+
+    for(let i=0;i<answersList.length;i++){
+      if(i==elem.target.id){
+        continue; 
+      }
+
+      if(!newAnswers){
+        newAnswers = answersList[i].key;
+      }else
+        newAnswers = newAnswers+', '+answersList[i].key;
+      
+      newAnswersList.push(
+        <span key={answersList[i].key}>
+          <span id={i} onClick={(elem)=>this.onDelTagClick(elem)}></span>
+          {answersList[i].key}</span>
+      );
+    }
+
+    this.setState({
+      answersList:newAnswersList,
+      answers:[],
+      answersString:newAnswers,      
+    });
+  }
+
+  onAnswersKeyDown=(event)=>{
+    if(event.keyCode === 13){
+      let answersList = this.state.answersList;
+      let answersValue = this.state.answersValue;
+
+      // if(!answersValue){
+      //   return;
+      // }
+
+      for(let i=0; i<this.state.answersList.length; i++){
+        if(this.state.answersList[i].key==answersValue || !answersValue){
+          return;          
+        }
+      }
+
+      let newAnswersList = [
+        ...answersList,
+        (
+          <span key={answersValue}>
+            <span id={answersList.length} onClick={(elem)=>this.onDelTagClick(elem)}></span>
+            {answersValue}</span>
+        )
+      ];
+
+      let newAnswers;
+      if(!this.state.answersString){
+        newAnswers = answersValue;
+      }else
+        newAnswers = this.state.answersString+', '+answersValue;
+
+      this.answersInput.value='';
+
+      this.setState({
+        answersList:newAnswersList,
+        answersValue:'',
+        answersString:newAnswers,
+      });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -89,9 +164,16 @@ class QuestionsBody extends React.Component{
           onChange={this.handleInputChange}/>
 
         <label className="CNE-questionDiv-labels">Possible answers</label>
-        <input type="text" name="answers" placeholder="Monday, Wednesday, Friday" className="CNE-questionDiv-inputs"
-          ref={(input)=>{this.answersInput = input}}
-          onChange={this.handleInputChange}/>
+        <div className="questionDiv-answersTags">
+          
+          {this.state.answersList}
+
+          <input type="text" id="questionDiv-answersInput" name="answers" placeholder="Add new answer..." className="CNE-questionDiv-inputs"
+            ref={(input)=>{this.answersInput = input}}
+            onChange={this.handleInputChange}
+            onKeyDown={(event)=>this.onAnswersKeyDown(event)}/>
+          
+        </div>
 
         <label className="CNE-questionDiv-labels">Key</label>
         <input type="text" name="key" placeholder="tomorow" className="CNE-questionDiv-inputs"

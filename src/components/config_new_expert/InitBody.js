@@ -17,6 +17,12 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
     switch (event.target.name) {
       case 'expertname':
         expertnameValue = event.target.value;
+        if(expertnameValue.length > 5){
+          document.getElementsByClassName('CNE-initDiv-input')[0].style.borderColor = '#2ecc71';
+          return;
+        }else{
+          document.getElementsByClassName('CNE-initDiv-input')[0].style.borderColor = '#989898';          
+        }
         break;
       case 'description':
         descriptionValue = event.target.value;
@@ -37,8 +43,16 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
 
 
   const onNextClick=()=>{
+    if(!expertnameValue || expertnameValue.length < 6){
+      document.getElementsByClassName('CNE-initDiv-input')[0].style.borderColor = '#e74c3c';
+      alert('The expert name must be at least 6 characters!');
+      return;
+    }else{
+      document.getElementsByClassName('CNE-initDiv-input')[0].style.borderColor = '#2ecc71';      
+    }
+
     var expert = {
-       name:expertnameValue,
+       name: expertnameValue,
        description: descriptionValue,
        questions:{},
        conditions:{
