@@ -39,7 +39,7 @@ body{
   padding: 0 4px;
 }
 .header-logo-img{
-  background-image: url(../images/app_logo_round.png);
+  background-image: url(../images/logo.svg.png);
   background-repeat: no-repeat;
   background-size: contain;
   width: 50px;
@@ -75,7 +75,7 @@ body{
   flex-direction: column;
 }
 .Start-contentBody-logo {
-  background-image: url(../images/icon-center.png);
+  background-image: url(../images/icon-center.svg.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -85,7 +85,7 @@ body{
   margin: 0 auto;
 }
 .Start-contentBody-logo:before {
-  background-image: url(../images/icon-border2.png);
+  background-image: url(../images/icon-border.svg.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
