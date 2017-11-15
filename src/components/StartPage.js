@@ -1,14 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter, Route, NavLink, withRouter } from 'react-router-dom';
+import {BrowserRouter, Route, NavLink, withRouter, Link } from 'react-router-dom';
 
 
 import '../css/App.css';
 import Home from './home_components/Home';
 
 
-const StartPage = () => { //все this.props мы получем как аргументы функции
-  let signInInput = '';       //тут обьявляются все this.state
+
+const StartPage = (match) => { //все this.props мы получем как аргументы функции
+  let signInInput = '';       //тут обьявляются все переменные (типа this.state)
   let usernameValue = '';
   let emailValue = '';
   let passwordValue = '';
@@ -29,10 +30,19 @@ const StartPage = () => { //все this.props мы получем как арг�
   }
 
   return (
-    <BrowserRouter>
-
     <div>
-      {Header}
+      <header className="header" >
+        <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
+          <div className="header-logo-img"></div>
+          <p className="header-logo-title">GIMET</p>
+        </NavLink>
+        <div className="header-btnsDiv">
+          <a href="#about" className="header-btns">About</a>
+          <a href="#contact" className="header-btns">Contact</a>
+          <NavLink to="/home" id="signInBtn" className="header-btns">Sign in</NavLink>
+        </div>
+      </header>
+
       <div className="Start">
         <div className="Start-content">
           {ContentBody}
@@ -59,24 +69,34 @@ const StartPage = () => { //все this.props мы получем как арг�
         </div>
       </div>
 
-      <Route path={"/home"} component={Home}/>
+      <div id='about' className='About'>
+        <p>about</p>
+      </div>
 
+      <div id='contact' className='Contact'>
+        <div id="email_form">
+          <h4>Contact me:</h4>
+          <p id="formAlert">Message has been sent!</p>
+          <form id="form">
+            <label for="name">Name: </label>
+            <input type="text" id="nameInp" placeholder="Enter your name"/>
+            <br/>
+            <label for="email">Email: </label>
+            <input type="email" id="emailInp" placeholder="enter@your.email"/>
+            <br/>
+            <label for="msgInp" >Message: </label>
+            <textarea id="msgInp" placeholder="Message..."></textarea>
+            <br/>
+            <button type="button" name="button" ondbclick="checkValues()" onclick="submitClick()">Send</button>
+          </form>
+        </div>
+      </div>
     </div>
-
-  </BrowserRouter>
   );
 }
 
 
-const Header = (
-  <header className="header" >
-    <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
-      <div className="header-logo-img"></div>
-      <p className="header-logo-title">GIMET</p>
-    </NavLink>
-    <NavLink to="/home" id="signInBtn" onClick={()=>this.onSignIn()}>Sign in</NavLink>
-  </header>
-);
+
 
 
 const ContentBody = (

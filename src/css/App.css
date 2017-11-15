@@ -13,8 +13,12 @@ body{
   /*width: 100vw;*/
   width: device-width;
   height: calc(100vh-66px);
-  min-height: 550px;
-  background-color: #3c485e;
+  min-height: 750px;
+  background-color: #404e5c;
+  background: url(../images/background.png) no-repeat center center fixed;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   position: relative;
   z-index: 1;
 }
@@ -22,8 +26,8 @@ body{
 .header{
   width: device-width;
   padding: 8px 15% 8px 15%;
-  background-color: #2d323b;
-  box-shadow: 1px 1px 10px 0 black;
+  background-color: #1e1e24;
+  /* box-shadow: 1px 1px 10px 0 black; */
   color: white;
   display: flex;
   flex-direction: row;
@@ -39,7 +43,7 @@ body{
   padding: 0 4px;
 }
 .header-logo-img{
-  background-image: url(../images/logo.svg.png);
+  background-image: url(../images/logo_blue-gray.svg);
   background-repeat: no-repeat;
   background-size: contain;
   width: 50px;
@@ -47,23 +51,43 @@ body{
 }
 .header-logo-title{
   color: #e0e0e0;
-  margin:0 0 0 0.5em;
+  margin:0 0 0 0.2em;
   font-size: 30px;
   display: flex;
   align-items: center;
 }
+.header-btns{
+  height: 30px;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 8px;
+}
+.header-btns:hover{
+  color:#92dce5;
+}  
+.header-btnsDiv{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;  
+}
 
 /*Content*/
 .Start-content{
+  height: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding: 5% 15% 50px 15%;
+  justify-content: space-around;
+  padding: 5% 15%;
 }
 .Start-contentBody{
   width: 700px;
   color: white;
   font-size: 24px;
+  margin: auto 0;
   margin-right: 50px;
   text-align: left;
   display: flex;
@@ -75,7 +99,7 @@ body{
   flex-direction: column;
 }
 .Start-contentBody-logo {
-  background-image: url(../images/icon-center.svg.png);
+  background-image: url(../images/logo_brain.svg);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -85,7 +109,7 @@ body{
   margin: 0 auto;
 }
 .Start-contentBody-logo:before {
-  background-image: url(../images/icon-border.svg.png);
+  background-image: url(../images/logo_border.svg);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -118,7 +142,7 @@ body{
   min-width: 310px;
   height: 290px;
   padding: 30px;
-  background-color: #2d323b;
+  background-color: #1e1e24;
   box-shadow: 1px 1px 2px 1px black;
   margin: 0;
   border-radius: 5px;
@@ -137,6 +161,10 @@ body{
 .Start-signUpDiv-inputs{
   padding: 8px;
   margin-bottom: 8px;
+  border: 0;
+  border-bottom: 2px solid #779cab;
+  background: inherit;
+  color: white;
 }
 .Start-signUpDiv-inputs:last-of-type{
   padding: 8px;
@@ -159,32 +187,62 @@ body{
 
 /*Buttons*/
 #signUpBtn{
-  background-color: #2ecc71;
-  border: solid 1px #2ecc71;
-  color: white;
-  border-radius: 5px;
-  margin-top: 16px;
-  padding: 12px;
-  font-size: 20px;
-}
-#signInBtn{
-  height: 50px;
-  text-decoration: none;
-  color: white;
+  /* background-color: #92dce5;
+  border: solid 1px #92dce5;
+  position: relative; */
+  
+  
+  position: relative;
   display: flex;
-  align-items: center;
-  padding: 0 4px;
-}
+  justify-content: center;
+  padding: 12px;
+  margin-top: 16px;
+  
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #1e1e24;
+  text-align: center;
 
-#signInBtn:hover{
+  background-color: #92dce5;
+  border: none;  
+  border-radius: 5px;
+  z-index: 0;
   cursor: pointer;
+  
 }
 #signUpBtn:hover{
-  background-color: #e0e0e0;
-  color: #2ecc71;
-  cursor: pointer;
-  border: solid 1px white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+#signUpBtn:before{
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #779cab;
+  border-radius: 5px;
+  transition: height, 250ms ease;
+  z-index: -1;
+}
+#signUpBtn:hover:before{
+  height: 100%; 
+}  
+
+#about{
+  border-right: 2px solid #404e5c;
+}
+#contact{
+  border-right: 2px solid #404e5c;
+}
+
+/* #signUpBtn:hover{
+  background-color: #d0ccd0;
+  color: #1e1e24;
+  border: solid 1px white;
+} */
 
 
 
