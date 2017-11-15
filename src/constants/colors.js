@@ -1,7 +1,7 @@
-const Outer_Space = '#404e5c';
 const Raisin_Black = '#1e1e24';
-const Light_Cornflower_Blue = '#92dce5';
+const Outer_Space = '#404e5c';
 const Light_Gray = '#d0ccd0';
+const Light_Cornflower_Blue = '#92dce5';
 const Weldon_Blue = '#779cab';
 
 

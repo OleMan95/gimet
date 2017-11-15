@@ -12,8 +12,8 @@ body{
 .Start{
   /*width: 100vw;*/
   width: device-width;
-  height: calc(100vh-66px);
-  min-height: 750px;
+  /* height: 80%; */
+  min-height: 600px;
   background-color: #404e5c;
   background: url(../images/background.png) no-repeat center center fixed;
   -moz-background-size: cover;
@@ -127,6 +127,8 @@ body{
 
 .Start-contentBody-text1{
   margin: 0 0 16px 0;
+  font-size: 30px;
+  text-align: center;
 }
 .Start-contentBody-text2{
   margin: 0 0 16px 0;
@@ -162,7 +164,7 @@ body{
   padding: 8px;
   margin-bottom: 8px;
   border: 0;
-  border-bottom: 2px solid #779cab;
+  border-bottom: 2px solid #92dce5;
   background: inherit;
   color: white;
 }
@@ -183,15 +185,150 @@ body{
   display: none;
 }
 
+.Start-about{
+  min-height: 600px;
+  position: relative;
+}
+.Start-about:before{
+  position: absolute;
+  background-color: #779cab;
+  content: 'In developing...';
+  color: white;
+  text-align: center;
+  line-height: 600px;
+  font-size: 40px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.8;
+} 
+.Start-about > div{
+  padding: 5% 15%;
+}  
+.Start-about > div h2{
+  font-size: 30px;
+  font-weight: 500;
+}  
+
+
+.Start-contact{
+  min-height: 600px;  
+  background-color: #1e1e24;
+  display: flex;
+  flex-direction: row;
+  padding: 2% 15%;
+  color: white;
+  background: url(../images/background.png) no-repeat center center fixed;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+}
+.Start-contact:before{
+  position: absolute;
+  background-color: #1e1e24;
+  content: 'In developing...';
+  color: white;
+  text-align: center;
+  line-height: 600px;
+  font-size: 40px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.8;
+}  
+.Start-contact > div{
+  width: 450px;
+  height: 400px;
+  padding: 24px;  
+  display: flex;
+  flex-direction: column;;
+}  
+.Start-contact > div h2{
+  align-self: center;
+  font-size: 30px;
+  font-weight: 500;
+}  
+.Start-contact > div button{
+  align-self: center;
+  margin-top: 16px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #1e1e24;
+  text-align: center;
+  background-color: #92dce5;
+  border: none;  
+  border-radius: 5px;
+  z-index: 0;
+  cursor: pointer;
+  padding: 8px 24px;
+}  
+.Start-contact > div button:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);  
+}
+.Start-contact > div button:before{
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #779cab;
+  border-radius: 5px;
+  transition: height, 250ms ease;
+  z-index: -1;
+}
+.Start-contact > div button:hover:before{
+  height: 100%; 
+}  
+#form > div:first-of-type{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contact-inputs{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+#form > div > .contact-inputs:first-of-type{
+  margin-right: 16px;
+}  
+#form > div > .contact-inputs input {
+  width: 190px; 
+  padding: 4px 8px;   
+  background-color: inherit;
+  border:0;
+  border-bottom: 2px solid #404e5c;
+  border-radius: 5px;
+  color: #92dce5;
+}  
+.contact-inputs input, .contact-inputs textarea{
+  padding: 4px 8px;   
+  background-color: inherit;
+  border:0;
+  border-bottom: 2px solid #404e5c;
+  border-radius: 5px;
+  color: #92dce5;
+} 
+.contact-inputs textarea{
+  resize: vertical;
+  height: 100px;
+  max-height: 300px;
+} 
 
 
 /*Buttons*/
 #signUpBtn{
-  /* background-color: #92dce5;
-  border: solid 1px #92dce5;
-  position: relative; */
-  
-  
   position: relative;
   display: flex;
   justify-content: center;

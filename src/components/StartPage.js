@@ -37,8 +37,8 @@ const StartPage = (match) => { //все this.props мы получем как а
           <p className="header-logo-title">GIMET</p>
         </NavLink>
         <div className="header-btnsDiv">
-          <a href="#about" className="header-btns">About</a>
-          <a href="#contact" className="header-btns">Contact</a>
+          <a href="#about" id="about" className="header-btns">About</a>
+          <a href="#contact" id="contact" className="header-btns">Contact</a>
           <NavLink to="/home" id="signInBtn" className="header-btns">Sign in</NavLink>
         </div>
       </header>
@@ -69,26 +69,52 @@ const StartPage = (match) => { //все this.props мы получем как а
         </div>
       </div>
 
-      <div id='about' className='About'>
-        <p>about</p>
+      <div className='Start-about'>
+        <div >
+          <h2>About GIMET</h2>
+          <p>Lorem ipsum dolor sit amet, 
+            consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt 
+            ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud 
+            exercitation ullamco laboris nisi ut 
+            aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit 
+            in voluptate velit esse cillum dolore 
+            eu fugiat nulla pariatur. Excepteur 
+            sint occaecat cupidatat non proident, 
+            sunt in culpa qui officia deserunt 
+            mollit anim id est laborum.</p>
+        </div>
       </div>
 
-      <div id='contact' className='Contact'>
-        <div id="email_form">
-          <h4>Contact me:</h4>
-          <p id="formAlert">Message has been sent!</p>
+      <div className='Start-contact' >
+        <div>
+          <h2>Contact Us:</h2>
           <form id="form">
-            <label for="name">Name: </label>
-            <input type="text" id="nameInp" placeholder="Enter your name"/>
-            <br/>
-            <label for="email">Email: </label>
-            <input type="email" id="emailInp" placeholder="enter@your.email"/>
-            <br/>
-            <label for="msgInp" >Message: </label>
-            <textarea id="msgInp" placeholder="Message..."></textarea>
-            <br/>
-            <button type="button" name="button" ondbclick="checkValues()" onclick="submitClick()">Send</button>
+            <div className="contact-inputsDiv">
+              <div className="contact-inputs">
+                <label for="contact-name">Name: </label>
+                <input type="text" id="contact-name" placeholder="Enter your name"/>
+              </div>
+              <div className="contact-inputs">
+                <label for="contact-email">Email: </label>
+                <input type="email" id="contact-email" placeholder="enter@your.email"/>
+              </div>
+            </div>
+
+            <div className="contact-inputs">
+              <label for="contact-subject">Subject: </label>
+              <input type="text" id="contact-subject" placeholder="Subject..."/>
+            </div>
+
+            <div className="contact-inputs">
+              <label for="msgInp" >Message: </label>
+              <textarea id="msgInp" placeholder="Message..."></textarea>
+            </div>
+
           </form>
+          <button type="button">Send</button>
         </div>
       </div>
     </div>
@@ -106,9 +132,6 @@ const ContentBody = (
       <div className="Start-contentBody-logoBorder"></div>
     </div>
     <h3 className="Start-contentBody-text1">Expert systems for everybody.</h3>
-    <p className="Start-contentBody-text2">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
   </div>
 );
 
