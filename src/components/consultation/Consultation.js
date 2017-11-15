@@ -43,16 +43,41 @@ class Consultation extends React.Component{
         });
     }
 
+    handleChange=(elem)=>{
+        console.log('key: ',elem.target.id, '; answer',elem.target.value);
+        let count=this.state.questionsCount;
+
+        let pair={
+            key: elem.target.id,
+            answer: elem.target.value
+        };
+
+        console.log(this.props.expert);
+        for(let i=0; i<this.props.expert.conditions.length; i++){
+            
+            for(let j=0;j<this.props.expert.conditions[i].pairs.length;j++){
+                if(this.props.expert.conditions[i].pairs[j].key === pair.key &&
+                    this.props.expert.conditions[i].pairs[j].answer === pair.answer){
+                    console.log('question: ',this.props.expert.conditions[i]);
+                    this.getAnswers(i);
+                }
+            }
+        }
+        
+
+    }
+
     getAnswers=(count)=>{
         let answers = this.props.expert.questions[count].answers;
+        let key = this.props.expert.questions[count].key;
         let answersDOMs=[];
-        console.log('answers: ',answers);
+        console.log('answers: ',key);
 
         for(let i=0;i<answers.length;i++){
             answersDOMs.push(
-                <div className='consultation_answers_list'>
-                    <input type="radio" name="rb" id={'answer'+i} key={i} className='consultation_answers_radio' value={answers[i]}/>
-                    <label for={'answer'+i}>{answers[i]}</label>
+                <div className='consultation_answers_list' key={i}>
+                    <input type="radio" name="rb" id={key} className='consultation_answers_radio' onChange={(input)=>this.handleChange(input)} value={answers[i]}/>
+                    <label htmlFor={'answer'+i}>{answers[i]}</label>
                     <div className="answers_list_check"></div>
                 </div>
             );
