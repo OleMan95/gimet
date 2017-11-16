@@ -30,6 +30,8 @@ class Consultation extends React.Component{
     }
 
     onNextClick=()=>{
+        console.log('===============================================');
+        
         let count=this.state.questionsCount;
         if(count+1 != this.props.expert.questions.length){
             count++;
@@ -38,75 +40,68 @@ class Consultation extends React.Component{
         
         let pair=this.state.tempPair;
         let choosenPairs = this.state.choosenPairs;
-      
         choosenPairs.push(pair);
-
-
         let nextKey = '';
-        let result = '';
+
         let isСoincidence = 0;
 
         for(let i=0; i<this.props.expert.conditions.length; i++){
-            console.log('=for conditions: ',i);
-            
+
             for(let j=0; j<this.props.expert.conditions[i].pairs.length; j++){
-                console.log('==========for pairs: ',j);
-            
-                for(let k=0; k<choosenPairs.length; k++){
-            
-                    
-                    if(this.props.expert.conditions[i].pairs[j].key === choosenPairs[k].key 
-                        && this.props.expert.conditions[i].pairs[j].answer === choosenPairs[k].answer){
-                        console.log('****** isСoincidence - pair #',j, ': ',choosenPairs[k].key,' == ',choosenPairs[k].answer);
-                    
-                        isСoincidence++;
-                    }else {
-                        console.log('****** no coincidence! ');                        
-                    }
 
-                    //если набралось совпадений пар на полное количество пар в условии, то пишется результат
-                    if(isСoincidence == this.props.expert.conditions[i].pairs.length){
-                        
-                        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                        console.log('FINAL RESULT: ',this.props.expert.conditions[i].result);
-                        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                        
-                    }
+                if(JSON.stringify(this.props.expert.conditions[i].pairs[j]) == JSON.stringify(pair) 
+                    && this.props.expert.conditions[i].pairs[j+1]){
+                    // если мы находим совпадение пары в условии и еще есть следущая
 
+                        nextKey = this.props.expert.conditions[i].pairs[j+1].key;
                 }
-                //TODO если choosenPairs.length == 0, то надо найти следующий вопрос
-                
+                if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs) 
+                    && !this.props.expert.conditions[i].pairs[j+1]){
+                    //тут мы выводим результат, если все наши ответы совпадают с парами в условии
+                    // !!!!!!!!!!!!!!!
+                    // позже надо сделать проверку на существования нескольких условий, которые
+                    //совпадают с нашими ответами
+                    console.log('****** result', this.props.expert.conditions[i].result);
+                    alert(this.props.expert.conditions[i].result);
+                }
             }
-            
-
-            if(nextKey.length != 0) break;
 
         }
 
-        // let question;      
-        // for(let i=0; i<this.props.expert.questions.length; i++){
-        //     if(this.props.expert.questions[i].key === nextKey){
-        //         question = this.props.expert.questions[i].question; 
-        //         this.getAnswers(i);
-
-        //     }
-        // }      
-
-        let question = this.props.expert.questions[count].question; 
-        this.getAnswers(count);
+        let question;      
+        for(let i=0; i<this.props.expert.questions.length; i++){
+            if(this.props.expert.questions[i].key === nextKey){
+                question = this.props.expert.questions[i].question; 
+                this.getAnswers(i);
+        
+            }
+        }      
+        
+        // let question = this.props.expert.questions[count].question; 
+        // this.getAnswers(count);
         this.setState({
             questionsCount:count,
             question:question,
             choosenPairs:choosenPairs
         });
+        this.clearAnswers();
     }
+
+    clearAnswers=()=>{ // снимаем выделения с радиокнопок
+        let elems = document.getElementsByClassName('consultation_answers_radio');
+        
+        for (let i=0; i<elems.length;i++){
+            elems[i].checked = false;
+        }
+    }
+        
 
     handleChange=(elem)=>{
         let count=this.state.questionsCount;
 
         let pair={
+            answer: elem.target.value,
             key: elem.target.id,
-            answer: elem.target.value
         };
 
         this.setState({

@@ -15,7 +15,7 @@ body{
   /* height: 80%; */
   min-height: 600px;
   background-color: #404e5c;
-  background: url(../images/background.png) no-repeat center center fixed;
+  background: url(../images/background.jpg) no-repeat center center fixed;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
@@ -220,7 +220,7 @@ body{
   flex-direction: row;
   padding: 2% 15%;
   color: white;
-  background: url(../images/background.png) no-repeat center center fixed;
+  background: url(../images/background.jpg) no-repeat center center fixed;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
