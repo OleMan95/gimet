@@ -37,8 +37,8 @@ const StartPage = (match) => { //все this.props мы получем как а
           <p className="header-logo-title">GIMET</p>
         </NavLink>
         <div className="header-btnsDiv">
-          <a href="#about" id="about" className="header-btns">About</a>
-          <a href="#contact" id="contact" className="header-btns">Contact</a>
+          <a href="#about_block" id="about" className="header-btns">About</a>
+          <a href="#contact_block" id="contact" className="header-btns">Contact</a>
           <NavLink to="/home" id="signInBtn" className="header-btns">Sign in</NavLink>
         </div>
       </header>
@@ -69,7 +69,7 @@ const StartPage = (match) => { //все this.props мы получем как а
         </div>
       </div>
 
-      <div className='Start-about'>
+      <div className='Start-about' id="about_block">
         <div >
           <h2>About GIMET</h2>
           <p>Lorem ipsum dolor sit amet, 
@@ -88,7 +88,7 @@ const StartPage = (match) => { //все this.props мы получем как а
         </div>
       </div>
 
-      <div className='Start-contact' >
+      <div className='Start-contact' id="contact_block">
         <div>
           <h2>Contact Us:</h2>
           <form id="form">

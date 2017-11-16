@@ -3,8 +3,8 @@ import {NEW_EXPERT, UPDATE_EXPERT} from '../constants/types.js';
 
 const initialState = [
   {
-    username:'John Smith',
-    email:'aom-95@live.com',
+    username:'John Doe',
+    email:'john_doe@example.com',
     password:'qwerty',  
     experts:[
       {

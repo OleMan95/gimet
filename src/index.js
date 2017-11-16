@@ -8,6 +8,8 @@ import * as firebase from 'firebase';
 import App from './App';
 import './index.css';
 
+//@ts-nocheck
+
 var config = {
     apiKey: "AIzaSyCivktnGFm08scDqJpB_G3vcE43GPCR8DE",
     authDomain: "gimet-project.firebaseapp.com",

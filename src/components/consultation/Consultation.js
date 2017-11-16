@@ -4,7 +4,6 @@ import {NavLink, withRouter } from 'react-router-dom';
 
 import '../../css/App.css';
 import '../../css/ConfigNewExpert.css';
-
 import '../../css/ConfigConsultation.css';
 
 
@@ -13,7 +12,10 @@ class Consultation extends React.Component{
     state = {
         question:'',
         questionsCount:0,
-        answers:''
+        answers:'',
+        tempPair:'',
+        result:'',
+        choosenPairs:[],
     }
 
 
@@ -32,19 +34,74 @@ class Consultation extends React.Component{
         if(count+1 != this.props.expert.questions.length){
             count++;
         }
+        
+        
+        let pair=this.state.tempPair;
+        let choosenPairs = this.state.choosenPairs;
+      
+        choosenPairs.push(pair);
 
-        let question = this.props.expert.questions[count].question;        
 
+        let nextKey = '';
+        let result = '';
+        let isСoincidence = 0;
+
+        for(let i=0; i<this.props.expert.conditions.length; i++){
+            console.log('=for conditions: ',i);
+            
+            for(let j=0; j<this.props.expert.conditions[i].pairs.length; j++){
+                console.log('==========for pairs: ',j);
+            
+                for(let k=0; k<choosenPairs.length; k++){
+            
+                    
+                    if(this.props.expert.conditions[i].pairs[j].key === choosenPairs[k].key 
+                        && this.props.expert.conditions[i].pairs[j].answer === choosenPairs[k].answer){
+                        console.log('****** isСoincidence - pair #',j, ': ',choosenPairs[k].key,' == ',choosenPairs[k].answer);
+                    
+                        isСoincidence++;
+                    }else {
+                        console.log('****** no coincidence! ');                        
+                    }
+
+                    //если набралось совпадений пар на полное количество пар в условии, то пишется результат
+                    if(isСoincidence == this.props.expert.conditions[i].pairs.length){
+                        
+                        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                        console.log('FINAL RESULT: ',this.props.expert.conditions[i].result);
+                        console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                        
+                    }
+
+                }
+                //TODO если choosenPairs.length == 0, то надо найти следующий вопрос
+                
+            }
+            
+
+            if(nextKey.length != 0) break;
+
+        }
+
+        // let question;      
+        // for(let i=0; i<this.props.expert.questions.length; i++){
+        //     if(this.props.expert.questions[i].key === nextKey){
+        //         question = this.props.expert.questions[i].question; 
+        //         this.getAnswers(i);
+
+        //     }
+        // }      
+
+        let question = this.props.expert.questions[count].question; 
         this.getAnswers(count);
-
         this.setState({
             questionsCount:count,
             question:question,
+            choosenPairs:choosenPairs
         });
     }
 
     handleChange=(elem)=>{
-        console.log('key: ',elem.target.id, '; answer',elem.target.value);
         let count=this.state.questionsCount;
 
         let pair={
@@ -52,18 +109,9 @@ class Consultation extends React.Component{
             answer: elem.target.value
         };
 
-        console.log(this.props.expert);
-        for(let i=0; i<this.props.expert.conditions.length; i++){
-            
-            for(let j=0;j<this.props.expert.conditions[i].pairs.length;j++){
-                if(this.props.expert.conditions[i].pairs[j].key === pair.key &&
-                    this.props.expert.conditions[i].pairs[j].answer === pair.answer){
-                    console.log('question: ',this.props.expert.conditions[i]);
-                    this.getAnswers(i);
-                }
-            }
-        }
-        
+        this.setState({
+            tempPair:pair,
+        });
 
     }
 
@@ -71,7 +119,6 @@ class Consultation extends React.Component{
         let answers = this.props.expert.questions[count].answers;
         let key = this.props.expert.questions[count].key;
         let answersDOMs=[];
-        console.log('answers: ',key);
 
         for(let i=0;i<answers.length;i++){
             answersDOMs.push(
@@ -91,10 +138,6 @@ class Consultation extends React.Component{
 
 
     render(){
-
-    
-    console.log(this.props.expert);
-
         return (
             <div>
             

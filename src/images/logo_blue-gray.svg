@@ -18,8 +18,8 @@
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
    sodipodi:docname="logo_blue-gray.svg"
    inkscape:export-filename="/home/oleman/gimet/src/images/logo-bluegrey.svg.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:export-xdpi="95"
+   inkscape:export-ydpi="95">
   <defs
      id="defs2">
     <inkscape:path-effect
@@ -50,11 +50,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="314.56357"
-     inkscape:cy="389.81139"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="260.62022"
+     inkscape:cy="355.34962"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="g4798"
      showgrid="false"
      inkscape:snap-bbox="true"
      showborder="true"
@@ -93,7 +93,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <cc:license
            rdf:resource="" />
       </cc:Work>

@@ -80,7 +80,7 @@ body{
   height: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 5% 15%;
 }
 .Start-contentBody{
