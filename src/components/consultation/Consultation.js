@@ -4,7 +4,6 @@ import {NavLink, withRouter } from 'react-router-dom';
 
 import '../../css/App.css';
 import '../../css/ConfigNewExpert.css';
-
 import '../../css/ConfigConsultation.css';
 
 
@@ -13,7 +12,10 @@ class Consultation extends React.Component{
     state = {
         question:'',
         questionsCount:0,
-        answers:''
+        answers:'',
+        tempPair:'',
+        result:'',
+        choosenPairs:[],
     }
 
 
@@ -28,31 +30,104 @@ class Consultation extends React.Component{
     }
 
     onNextClick=()=>{
+        console.log('===============================================');
+        
         let count=this.state.questionsCount;
-        if(count+1 != this.props.expert.questions.length){
-            count++;
+        // if(count+1 != this.props.expert.questions.length){
+        // }
+        count++;
+        
+        
+        let pair=this.state.tempPair;
+        let choosenPairs = this.state.choosenPairs;
+        choosenPairs.push(pair);
+        let nextKey = '';
+        let result = '';
+
+        for(let i=0; i<this.props.expert.conditions.length; i++){
+            
+            if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs)) {
+                //тут мы выводим результат, если все наши ответы совпадают с парами в условии
+                console.log('****** result', this.props.expert.conditions[i].result);
+                result = this.props.expert.conditions[i].result;
+                this.setState({
+                    result:this.props.expert.conditions[i].result,
+                });
+            }else{
+                result = null;                        
+            }
+
+            for(let j=0; j<this.props.expert.conditions[i].pairs.length; j++){
+                if(JSON.stringify(this.props.expert.conditions[i].pairs[j]) == JSON.stringify(pair)){
+                    // если мы находим совпадение пары в условии и еще есть следущая
+
+                        if(this.props.expert.conditions[i].pairs[j+1]){
+                            nextKey = this.props.expert.conditions[i].pairs[j+1].key;
+                        }
+                }
+            }
+
         }
 
-        let question = this.props.expert.questions[count].question;        
+        if(result){
+            alert(result);
+        }else if(!nextKey && this.state.result){
+            alert(this.state.result);
+        }else if(!nextKey && !this.state.result){
+            alert('No result!');
+        }
 
-        this.getAnswers(count);
-
+        let question;      
+        for(let i=0; i<this.props.expert.questions.length; i++){
+            if(this.props.expert.questions[i].key === nextKey){
+                question = this.props.expert.questions[i].question; 
+                this.getAnswers(i);
+        
+            }
+        }      
+        
+        // let question = this.props.expert.questions[count].question; 
+        // this.getAnswers(count);
         this.setState({
             questionsCount:count,
             question:question,
+            choosenPairs:choosenPairs
         });
+        this.clearAnswers();
+    }
+
+    clearAnswers=()=>{ // снимаем выделения с радиокнопок
+        let elems = document.getElementsByClassName('consultation_answers_radio');
+        
+        for (let i=0; i<elems.length;i++){
+            elems[i].checked = false;
+        }
+    }
+
+    handleChange=(elem)=>{
+        let count=this.state.questionsCount;
+
+        let pair={
+            answer: elem.target.value,
+            key: elem.target.id,
+        };
+
+        this.setState({
+            tempPair:pair,
+        });
+
     }
 
     getAnswers=(count)=>{
         let answers = this.props.expert.questions[count].answers;
+        let key = this.props.expert.questions[count].key;
         let answersDOMs=[];
-        console.log('answers: ',answers);
 
         for(let i=0;i<answers.length;i++){
             answersDOMs.push(
-                <div className='consultation_answers_list'>
-                    <input type="radio" name="rb" id={'answer'+i} key={i} className='consultation_answers_radio' value={answers[i]}/>
-                    <label for={'answer'+i}>{answers[i]}</label>
+                <div className='consultation_answers_list' key={i}>
+                    <input type="radio" name="rb" id={key} className='consultation_answers_radio' onChange={(input)=>this.handleChange(input)} value={answers[i]}/>
+                    <label htmlFor={'answer'+i}>{answers[i]}</label>
                     <div className="answers_list_check"></div>
                 </div>
             );
@@ -63,13 +138,7 @@ class Consultation extends React.Component{
         });
     }
 
-
-
     render(){
-
-    
-    console.log(this.props.expert);
-
         return (
             <div>
             

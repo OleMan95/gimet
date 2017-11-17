@@ -1,14 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter, Route, NavLink, withRouter } from 'react-router-dom';
+import {BrowserRouter, Route, NavLink, withRouter, Link } from 'react-router-dom';
 
 
 import '../css/App.css';
 import Home from './home_components/Home';
 
 
-const StartPage = () => { //все this.props мы получем как аргументы функции
-  let signInInput = '';       //тут обьявляются все this.state
+
+const StartPage = (match) => { //все this.props мы получем как аргументы функции
+  let signInInput = '';       //тут обьявляются все переменные (типа this.state)
   let usernameValue = '';
   let emailValue = '';
   let passwordValue = '';
@@ -29,10 +30,19 @@ const StartPage = () => { //все this.props мы получем как арг�
   }
 
   return (
-    <BrowserRouter>
-
     <div>
-      {Header}
+      <header className="header" >
+        <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
+          <div className="header-logo-img"></div>
+          <p className="header-logo-title">GIMET</p>
+        </NavLink>
+        <div className="header-btnsDiv">
+          <a href="#about_block" id="about" className="header-btns">About</a>
+          <a href="#contact_block" id="contact" className="header-btns">Contact</a>
+          <NavLink to="/home" id="signInBtn" className="header-btns">Sign in</NavLink>
+        </div>
+      </header>
+
       <div className="Start">
         <div className="Start-content">
           {ContentBody}
@@ -59,24 +69,69 @@ const StartPage = () => { //все this.props мы получем как арг�
         </div>
       </div>
 
-      <Route path={"/home"} component={Home}/>
+      <div className='Start-about' id="about_block">
+        <div >
+          <div >
+            <h2>About GIMET Systems</h2>
+            <button className='Start-about-versionBtn'>Version 0.1.22a</button>
+            <div className='Start-about-versionDiv'>
+              <button className='Start-about-versionClose'></button>
+              <h3>Version 0.1.22a</h3>
+              <p>- Implemented the consultation mode.</p>
+              
+            </div>
+            
+          </div >
+          
+          <p>GIMET is a platform for creating expert systems. 
+            An expert system is an intelligent computer program 
+            that contains the knowledge and analytical capabilities 
+            of one or more experts in a particular field of application,
+            and is able to draw logical conclusions based on this knowledge, 
+            thus providing specific tasks (counseling, training, diagnosis,
+            testing, designing etc.) without the participation of an expert
+            (specialist in a specific problem area). It is also defined
+            as a system that uses a knowledge base for solving problems 
+            (issuing recommendations) in a particular subject area.</p>
+            <p>You can use GIMET platform to develop your own expert systems and further exploit it.</p>
+        </div>
+      </div>
 
+      <div className='Start-contact' id="contact_block">
+        <div>
+          <h2>Contact Us:</h2>
+          <form id="form">
+            <div className="contact-inputsDiv">
+              <div className="contact-inputs">
+                <label for="contact-name">Name: </label>
+                <input type="text" id="contact-name" placeholder="Enter your name"/>
+              </div>
+              <div className="contact-inputs">
+                <label for="contact-email">Email: </label>
+                <input type="email" id="contact-email" placeholder="enter@your.email"/>
+              </div>
+            </div>
+
+            <div className="contact-inputs">
+              <label for="contact-subject">Subject: </label>
+              <input type="text" id="contact-subject" placeholder="Subject..."/>
+            </div>
+
+            <div className="contact-inputs">
+              <label for="msgInp" >Message: </label>
+              <textarea id="msgInp" placeholder="Message..."></textarea>
+            </div>
+
+          </form>
+          <button type="button">Send</button>
+        </div>
+      </div>
     </div>
-
-  </BrowserRouter>
   );
 }
 
 
-const Header = (
-  <header className="header" >
-    <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
-      <div className="header-logo-img"></div>
-      <p className="header-logo-title">GIMET</p>
-    </NavLink>
-    <NavLink to="/home" id="signInBtn" onClick={()=>this.onSignIn()}>Sign in</NavLink>
-  </header>
-);
+
 
 
 const ContentBody = (
@@ -86,9 +141,6 @@ const ContentBody = (
       <div className="Start-contentBody-logoBorder"></div>
     </div>
     <h3 className="Start-contentBody-text1">Expert systems for everybody.</h3>
-    <p className="Start-contentBody-text2">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
   </div>
 );
 

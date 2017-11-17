@@ -8,6 +8,8 @@ import * as firebase from 'firebase';
 import App from './App';
 import './index.css';
 
+//@ts-nocheck
+
 var config = {
     apiKey: "AIzaSyCivktnGFm08scDqJpB_G3vcE43GPCR8DE",
     authDomain: "gimet-project.firebaseapp.com",
@@ -27,3 +29,12 @@ ReactDOM.render(
   </Provider>
   , document.getElementById('root'));
 registerServiceWorker();
+
+let versionDiv = document.getElementsByClassName('Start-about-versionDiv')[0];
+
+document.getElementsByClassName('Start-about-versionBtn')[0].onclick =()=>{
+  versionDiv.style.display = 'flex';
+};
+document.getElementsByClassName('Start-about-versionClose')[0].onclick =()=>{
+  versionDiv.style.display = 'none';
+};
