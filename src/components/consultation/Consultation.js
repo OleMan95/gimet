@@ -43,8 +43,6 @@ class Consultation extends React.Component{
         choosenPairs.push(pair);
         let nextKey = '';
 
-        let isСoincidence = 0;
-
         for(let i=0; i<this.props.expert.conditions.length; i++){
 
             for(let j=0; j<this.props.expert.conditions[i].pairs.length; j++){
@@ -58,9 +56,6 @@ class Consultation extends React.Component{
                 if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs) 
                     && !this.props.expert.conditions[i].pairs[j+1]){
                     //тут мы выводим результат, если все наши ответы совпадают с парами в условии
-                    // !!!!!!!!!!!!!!!
-                    // позже надо сделать проверку на существования нескольких условий, которые
-                    //совпадают с нашими ответами
                     console.log('****** result', this.props.expert.conditions[i].result);
                     alert(this.props.expert.conditions[i].result);
                 }

@@ -188,12 +188,16 @@ body{
 .Start-about{
   min-height: 600px;
   position: relative;
+  background-color: #d0ccd0;
+  color: #1e1e24;
+  
 }
 .Start-about:before{
   position: absolute;
-  background-color: #779cab;
+  background-color: #d0ccd0;
+  /* background-color: #779cab; */
   content: 'In developing...';
-  color: white;
+  color: #1e1e24;
   text-align: center;
   line-height: 600px;
   font-size: 40px;
