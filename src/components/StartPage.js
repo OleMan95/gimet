@@ -81,8 +81,8 @@ const StartPage = (match) => { //все this.props мы получем как а
             testing, designing etc.) without the participation of an expert
             (specialist in a specific problem area). It is also defined
             as a system that uses a knowledge base for solving problems 
-            (issuing recommendations) in a particular subject area.
-            You can use this platform to develop your own expert system and further exploit it.</p>
+            (issuing recommendations) in a particular subject area.</p>
+            <p>You can use this platform to develop your own expert system and further exploit it.</p>
         </div>
       </div>
 

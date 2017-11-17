@@ -33,34 +33,48 @@ class Consultation extends React.Component{
         console.log('===============================================');
         
         let count=this.state.questionsCount;
-        if(count+1 != this.props.expert.questions.length){
-            count++;
-        }
+        // if(count+1 != this.props.expert.questions.length){
+        // }
+        count++;
         
         
         let pair=this.state.tempPair;
         let choosenPairs = this.state.choosenPairs;
         choosenPairs.push(pair);
         let nextKey = '';
+        let result = '';
 
         for(let i=0; i<this.props.expert.conditions.length; i++){
+            
+            if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs)) {
+                //тут мы выводим результат, если все наши ответы совпадают с парами в условии
+                console.log('****** result', this.props.expert.conditions[i].result);
+                result = this.props.expert.conditions[i].result;
+                this.setState({
+                    result:this.props.expert.conditions[i].result,
+                });
+            }else{
+                result = null;                        
+            }
 
             for(let j=0; j<this.props.expert.conditions[i].pairs.length; j++){
-
-                if(JSON.stringify(this.props.expert.conditions[i].pairs[j]) == JSON.stringify(pair) 
-                    && this.props.expert.conditions[i].pairs[j+1]){
+                if(JSON.stringify(this.props.expert.conditions[i].pairs[j]) == JSON.stringify(pair)){
                     // если мы находим совпадение пары в условии и еще есть следущая
 
-                        nextKey = this.props.expert.conditions[i].pairs[j+1].key;
-                }
-                if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs) 
-                    && !this.props.expert.conditions[i].pairs[j+1]){
-                    //тут мы выводим результат, если все наши ответы совпадают с парами в условии
-                    console.log('****** result', this.props.expert.conditions[i].result);
-                    alert(this.props.expert.conditions[i].result);
+                        if(this.props.expert.conditions[i].pairs[j+1]){
+                            nextKey = this.props.expert.conditions[i].pairs[j+1].key;
+                        }
                 }
             }
 
+        }
+
+        if(result){
+            alert(result);
+        }else if(!nextKey && this.state.result){
+            alert(this.state.result);
+        }else if(!nextKey && !this.state.result){
+            alert('No result!');
         }
 
         let question;      
@@ -89,7 +103,6 @@ class Consultation extends React.Component{
             elems[i].checked = false;
         }
     }
-        
 
     handleChange=(elem)=>{
         let count=this.state.questionsCount;
@@ -124,8 +137,6 @@ class Consultation extends React.Component{
             answers:answersDOMs,
         });
     }
-
-
 
     render(){
         return (

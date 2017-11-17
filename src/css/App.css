@@ -15,7 +15,7 @@ body{
   /* height: 80%; */
   min-height: 600px;
   background-color: #404e5c;
-  background: url(../images/background.jpg) no-repeat center center fixed;
+  background: url(../images/background.svg) no-repeat center center fixed;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
@@ -207,6 +207,7 @@ body{
   height: 100%;
   z-index: 1;
   opacity: 0.8;
+  display:none;
 } 
 .Start-about > div{
   padding: 5% 15%;
@@ -215,6 +216,10 @@ body{
   font-size: 30px;
   font-weight: 500;
 }  
+.Start-about p{
+  font-size: 22px;
+
+} 
 
 
 .Start-contact{
@@ -224,7 +229,7 @@ body{
   flex-direction: row;
   padding: 2% 15%;
   color: white;
-  background: url(../images/background.jpg) no-repeat center center fixed;
+  background: url(../images/background-dark.svg) no-repeat center center fixed;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
