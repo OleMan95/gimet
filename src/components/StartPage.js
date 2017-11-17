@@ -71,8 +71,19 @@ const StartPage = (match) => { //все this.props мы получем как а
 
       <div className='Start-about' id="about_block">
         <div >
-          <h2>About GIMET</h2>
-          <p>Gimet is a platform for creating expert systems. 
+          <div >
+            <h2>About GIMET Systems</h2>
+            <button className='Start-about-versionBtn'>Version 0.1.22a</button>
+            <div className='Start-about-versionDiv'>
+              <button className='Start-about-versionClose'></button>
+              <h3>Version 0.1.22a</h3>
+              <p>- Implemented the consultation mode.</p>
+              
+            </div>
+            
+          </div >
+          
+          <p>GIMET is a platform for creating expert systems. 
             An expert system is an intelligent computer program 
             that contains the knowledge and analytical capabilities 
             of one or more experts in a particular field of application,
@@ -82,7 +93,7 @@ const StartPage = (match) => { //все this.props мы получем как а
             (specialist in a specific problem area). It is also defined
             as a system that uses a knowledge base for solving problems 
             (issuing recommendations) in a particular subject area.</p>
-            <p>You can use this platform to develop your own expert system and further exploit it.</p>
+            <p>You can use GIMET platform to develop your own expert systems and further exploit it.</p>
         </div>
       </div>
 

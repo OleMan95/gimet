@@ -211,6 +211,67 @@ body{
 } 
 .Start-about > div{
   padding: 5% 15%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+} 
+.Start-about > div > div{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}  
+.Start-about-versionBtn{
+  height: 40px;
+  margin-left: 24px;
+  background-color: inherit;
+  border-radius: 5px;
+  border: solid 1px #1e1e24;
+  cursor: pointer;  
+}
+.Start-about-versionBtn:hover{
+  border: solid 1px #1e1e24;  
+  background-color: #404e5c;
+  color: #d0ccd0;  
+}  
+.Start-about-versionDiv{
+  display: none;
+  position: fixed;
+  width: 400px;
+  height: 300px;
+  top:50%;
+  left:50%;
+  margin-left:-208px;
+  margin-top: -158px; 
+  box-shadow: 1px 1px 1px 1px #1e1e24;
+  z-index: 20;
+  background-color: white;
+  border-radius: 5px;
+  flex-direction: column;
+  padding: 16px;
+}
+.Start-about-versionDiv > button{
+  height: 30px;
+  width: 30px;
+  align-self: flex-end;
+  background-color: inherit;
+  background-image: url(../images/close-black.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  border-radius: 5px;
+  border: solid 1px #1e1e24;
+  cursor: pointer; 
+}  
+.Start-about-versionDiv > button:hover{
+  border: solid 1px #1e1e24;
+  background-color: #e74c3c;
+  background-image: url(../images/close-white.svg);
+}  
+.Start-about-versionDiv > button ~ h3{
+  font-weight: 500;
+}  
+.Start-about-versionDiv > button ~ p{
+  font-size: 16px;
 }  
 .Start-about > div h2{
   font-size: 30px;
@@ -218,7 +279,7 @@ body{
 }  
 .Start-about p{
   font-size: 22px;
-
+  margin: 4px 0;
 } 
 
 
