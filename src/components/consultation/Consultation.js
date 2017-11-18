@@ -16,6 +16,7 @@ class Consultation extends React.Component{
         tempPair:'',
         result:'',
         choosenPairs:[],
+        coinciedence:0,
     }
 
 
@@ -31,7 +32,10 @@ class Consultation extends React.Component{
 
     onNextClick=()=>{
         console.log('===============================================');
-        
+        this.setState({
+            answers:[],
+        });
+
         let count=this.state.questionsCount;
         // if(count+1 != this.props.expert.questions.length){
         // }
@@ -41,40 +45,41 @@ class Consultation extends React.Component{
         let pair=this.state.tempPair;
         let choosenPairs = this.state.choosenPairs;
         choosenPairs.push(pair);
-        let nextKey = '';
-        let result = '';
+        let nextKey;
 
         for(let i=0; i<this.props.expert.conditions.length; i++){
             
-            if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs)) {
-                //тут мы выводим результат, если все наши ответы совпадают с парами в условии
-                console.log('****** result', this.props.expert.conditions[i].result);
-                result = this.props.expert.conditions[i].result;
-                this.setState({
-                    result:this.props.expert.conditions[i].result,
-                });
-            }else{
-                result = null;                        
-            }
-
             for(let j=0; j<this.props.expert.conditions[i].pairs.length; j++){
-                if(JSON.stringify(this.props.expert.conditions[i].pairs[j]) == JSON.stringify(pair)){
+                if(JSON.stringify(this.props.expert.conditions[i].pairs[j]) == JSON.stringify(pair) 
+                && this.props.expert.conditions[i].pairs[j+1]){
                     // если мы находим совпадение пары в условии и еще есть следущая
-
-                        if(this.props.expert.conditions[i].pairs[j+1]){
-                            nextKey = this.props.expert.conditions[i].pairs[j+1].key;
-                        }
+                    nextKey = this.props.expert.conditions[i].pairs[j+1].key;
                 }
-            }
-
+            }         
         }
 
-        if(result){
-            alert(result);
-        }else if(!nextKey && this.state.result){
-            alert(this.state.result);
-        }else if(!nextKey && !this.state.result){
-            alert('No result!');
+
+        console.log('==============');
+        console.log('nextKey: ', nextKey);
+        
+        let result = this.getResult(choosenPairs);
+        console.log('state result: ', this.state.result);
+        console.log('result: ', result);
+        console.log('==============');
+        
+        if(!nextKey){
+
+            if(result && !this.state.result){
+                console.log('@result: ', result);
+                alert(result);                
+            }else if(result && this.state.result){
+                alert(result);
+                console.log('@coinciedences: ', this.state.coinciedence);
+            }else{
+                console.log('@No result!');                
+                alert('No result!');
+            }
+
         }
 
         let question;      
@@ -82,7 +87,6 @@ class Consultation extends React.Component{
             if(this.props.expert.questions[i].key === nextKey){
                 question = this.props.expert.questions[i].question; 
                 this.getAnswers(i);
-        
             }
         }      
         
@@ -94,6 +98,24 @@ class Consultation extends React.Component{
             choosenPairs:choosenPairs
         });
         this.clearAnswers();
+    }
+
+    getResult=(choosenPairs)=>{
+        let coinciedence=0;
+        for(let i=0; i<this.props.expert.conditions.length; i++){
+            
+            if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs)) {
+                //тут мы выводим результат, если все наши ответы совпадают с парами в условии
+                console.log('****** result ', this.props.expert.conditions[i].result);
+                coinciedence++;
+                this.setState({
+                    result:this.props.expert.conditions[i].result,
+                    coinciedence:coinciedence,
+                });
+                return this.props.expert.conditions[i].result;
+            }
+        }
+        return null;
     }
 
     clearAnswers=()=>{ // снимаем выделения с радиокнопок

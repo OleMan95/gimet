@@ -130,8 +130,17 @@ const StartPage = (match) => { //все this.props мы получем как а
   );
 }
 
+let versionDiv = document.getElementsByClassName('Start-about-versionDiv')[0];
 
-
+if(document.getElementsByClassName('Start-about-versionBtn')[0] 
+&& document.getElementsByClassName('Start-about-versionClose')[0]){
+  document.getElementsByClassName('Start-about-versionBtn')[0].onclick =()=>{
+    versionDiv.style.display = 'flex';
+  };
+  document.getElementsByClassName('Start-about-versionClose')[0].onclick =()=>{
+    versionDiv.style.display = 'none';
+  };
+}
 
 
 const ContentBody = (
