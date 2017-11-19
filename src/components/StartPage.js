@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {BrowserRouter, Route, NavLink, withRouter, Link } from 'react-router-dom';
 
@@ -8,140 +8,139 @@ import Home from './home_components/Home';
 
 
 
-const StartPage = (match) => { //все this.props мы получем как аргументы функции
-  let signInInput = '';       //тут обьявляются все переменные (типа this.state)
-  let usernameValue = '';
-  let emailValue = '';
-  let passwordValue = '';
+class StartPage extends React.Component { //все this.props мы получем как аргументы функции
+  state = {
+    signInInput:'',       //тут обьявляются все переменные (типа this.state)
+    usernameValue:'',
+    emailValue:'',
+    passwordValue:'',
+  };
 
-  const handleInputChange=(event)=>{
+  onVersionBtn=()=>{
+    document.getElementsByClassName('Start-about-versionDiv')[0].style.display = 'flex';
+  }
+
+  onVersionClose=()=>{
+    document.getElementsByClassName('Start-about-versionDiv')[0].style.display = 'none';
+  }
+
+  handleInputChange=(event)=>{
     switch (event.target.name) {
       case 'username':
-        usernameValue = event.target.value;
+        this.state.usernameValue = event.target.value;
         break;
       case 'email':
-        emailValue = event.target.value;
+        this.state.emailValue = event.target.value;
         break;
       case 'password':
-        passwordValue = event.target.value;
+        this.state.passwordValue = event.target.value;
         break;
       default:
     }
   }
 
-  return (
-    <div>
-      <header className="header" >
-        <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
-          <div className="header-logo-img"></div>
-          <p className="header-logo-title">GIMET</p>
-        </NavLink>
-        <div className="header-btnsDiv">
-          <a href="#about_block" id="about" className="header-btns">About</a>
-          <a href="#contact_block" id="contact" className="header-btns">Contact</a>
-          <NavLink to="/home" id="signInBtn" className="header-btns">Sign in</NavLink>
-        </div>
-      </header>
+  render(){
+    return (
+      <div>
+        <header className="header" >
+          <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
+            <div className="header-logo-img"></div>
+            <p className="header-logo-title">GIMET</p>
+          </NavLink>
+          <div className="header-btnsDiv">
+            <a href="#about_block" id="about" className="header-btns">About</a>
+            <a href="#contact_block" id="contact" className="header-btns">Contact</a>
+            <NavLink to="/home" id="signInBtn" className="header-btns">Sign in</NavLink>
+          </div>
+        </header>
 
-      <div className="Start">
-        <div className="Start-content">
-          {ContentBody}
+        <div className="Start">
+          <div className="Start-content">
+            {ContentBody}
 
-          <div className="Start-signUpDiv">
-            <div className="Start-signUpDiv-form">
-              <label className="Start-signUpDiv-labels">Username</label>
-              <input type="text" name="username" placeholder="Pick a username" className="Start-signUpDiv-inputs"
-                ref={(input)=>{signInInput = input}}
-                onChange={handleInputChange}/>
-              <label className="Start-signUpDiv-labels">Email</label>
-              <input type="email" name="email" placeholder="you@example.com" className="Start-signUpDiv-inputs"
-                ref={(input)=>{signInInput = input}}
-                onChange={handleInputChange}/>
-              <label className="Start-signUpDiv-labels">Password</label>
-              <input type="password" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
-                ref={(input)=>{signInInput = input}}
-                onChange={handleInputChange}/>
-              <p>Use at least one letter, one numeral, and seven characters.</p>
+            <div className="Start-signUpDiv">
+              <div className="Start-signUpDiv-form">
+                <label className="Start-signUpDiv-labels">Username</label>
+                <input type="text" name="username" placeholder="Pick a username" className="Start-signUpDiv-inputs"
+                  ref={(input)=>{this.state.signInInput = input}}
+                  onChange={this.handleInputChange}/>
+                <label className="Start-signUpDiv-labels">Email</label>
+                <input type="email" name="email" placeholder="you@example.com" className="Start-signUpDiv-inputs"
+                  ref={(input)=>{this.state.signInInput = input}}
+                  onChange={this.handleInputChange}/>
+                <label className="Start-signUpDiv-labels">Password</label>
+                <input type="password" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
+                  ref={(input)=>{this.state.signInInput = input}}
+                  onChange={this.handleInputChange}/>
+                <p>Use at least one letter, one numeral, and seven characters.</p>
+              </div>
+
+              <button type="button" name="signUpBtn" id="signUpBtn">Sign up</button>
             </div>
-
-            <button type="button" name="signUpBtn" id="signUpBtn" onClick={onClickHandler}>Sign up</button>
           </div>
         </div>
-      </div>
 
-      <div className='Start-about' id="about_block">
-        <div >
-          <div >
-            <h2>About GIMET Systems</h2>
-            <button className='Start-about-versionBtn'>Version 0.1.22a</button>
-            <div className='Start-about-versionDiv'>
-              <button className='Start-about-versionClose'></button>
-              <h3>Version 0.1.22a</h3>
-              <p>- Implemented the consultation mode.</p>
+        <div className='Start-about' id="about_block">
+          <div>
+            <div>
+              <h2>About GIMET Systems</h2>
+              <button className='Start-about-versionBtn' onClick={this.onVersionBtn}>Version 0.1.22a</button>
+              <div className='Start-about-versionDiv'>
+                <button className='Start-about-versionClose' onClick={this.onVersionClose}></button>
+                <h3>Version 0.1.22a</h3>
+                <p>- Implemented the consultation mode.</p>
+                
+              </div>
               
             </div>
             
-          </div >
-          
-          <p>GIMET is a platform for creating expert systems. 
-            An expert system is an intelligent computer program 
-            that contains the knowledge and analytical capabilities 
-            of one or more experts in a particular field of application,
-            and is able to draw logical conclusions based on this knowledge, 
-            thus providing specific tasks (counseling, training, diagnosis,
-            testing, designing etc.) without the participation of an expert
-            (specialist in a specific problem area). It is also defined
-            as a system that uses a knowledge base for solving problems 
-            (issuing recommendations) in a particular subject area.</p>
-            <p>You can use GIMET platform to develop your own expert systems and further exploit it.</p>
+            <p>GIMET is a platform for creating expert systems. 
+              An expert system is an intelligent computer program 
+              that contains the knowledge and analytical capabilities 
+              of one or more experts in a particular field of application,
+              and is able to draw logical conclusions based on this knowledge, 
+              thus providing specific tasks (counseling, training, diagnosis,
+              testing, designing etc.) without the participation of an expert
+              (specialist in a specific problem area). It is also defined
+              as a system that uses a knowledge base for solving problems 
+              (issuing recommendations) in a particular subject area.</p>
+              <p>You can use GIMET platform to develop your own expert systems and further exploit it.</p>
+          </div>
+        </div>
+
+        <div className='Start-contact' id="contact_block">
+          <div>
+            <h2>Contact Us:</h2>
+            <form id="form">
+              <div className="contact-inputsDiv">
+                <div className="contact-inputs">
+                  <label for="contact-name">Name: </label>
+                  <input type="text" id="contact-name" placeholder="Enter your name"/>
+                </div>
+                <div className="contact-inputs">
+                  <label for="contact-email">Email: </label>
+                  <input type="email" id="contact-email" placeholder="enter@your.email"/>
+                </div>
+              </div>
+
+              <div className="contact-inputs">
+                <label for="contact-subject">Subject: </label>
+                <input type="text" id="contact-subject" placeholder="Subject..."/>
+              </div>
+
+              <div className="contact-inputs">
+                <label for="msgInp" >Message: </label>
+                <textarea id="msgInp" placeholder="Message..."></textarea>
+              </div>
+
+            </form>
+            <button type="button">Send</button>
+          </div>
         </div>
       </div>
-
-      <div className='Start-contact' id="contact_block">
-        <div>
-          <h2>Contact Us:</h2>
-          <form id="form">
-            <div className="contact-inputsDiv">
-              <div className="contact-inputs">
-                <label for="contact-name">Name: </label>
-                <input type="text" id="contact-name" placeholder="Enter your name"/>
-              </div>
-              <div className="contact-inputs">
-                <label for="contact-email">Email: </label>
-                <input type="email" id="contact-email" placeholder="enter@your.email"/>
-              </div>
-            </div>
-
-            <div className="contact-inputs">
-              <label for="contact-subject">Subject: </label>
-              <input type="text" id="contact-subject" placeholder="Subject..."/>
-            </div>
-
-            <div className="contact-inputs">
-              <label for="msgInp" >Message: </label>
-              <textarea id="msgInp" placeholder="Message..."></textarea>
-            </div>
-
-          </form>
-          <button type="button">Send</button>
-        </div>
-      </div>
-    </div>
-  );
+    );
+  }
 }
-
-let versionDiv = document.getElementsByClassName('Start-about-versionDiv')[0];
-
-if(document.getElementsByClassName('Start-about-versionBtn')[0] 
-&& document.getElementsByClassName('Start-about-versionClose')[0]){
-  document.getElementsByClassName('Start-about-versionBtn')[0].onclick =()=>{
-    versionDiv.style.display = 'flex';
-  };
-  document.getElementsByClassName('Start-about-versionClose')[0].onclick =()=>{
-    versionDiv.style.display = 'none';
-  };
-}
-
 
 const ContentBody = (
   <div className="Start-contentBody">
