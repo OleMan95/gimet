@@ -234,8 +234,19 @@
   margin-top: 8px;
   justify-content: space-between;
 }
+.CNE-conditionDiv-btnsDiv{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;  
+}  
+.CNE-conditionDiv-inputsDiv{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  align-items: center;  
+}
 .CNE-conditionDiv-pair input{
-  width: 43%;
+  width: 200px;
   height: 30px;
   padding: 4px 8px;
 }
@@ -243,7 +254,7 @@
  .CNE-conditionDiv-resultSelector p{
   margin: 0 8px;
 }
-#CNE-conditionDiv-plusBtn{
+#CNE-conditionDiv-addBtn{
   /* width: 40px; */
   height: 40px;
   border: solid 1px #989898;
@@ -253,8 +264,9 @@
   text-align: center;
   justify-content: flex-end;
   align-self: flex-end;
+  cursor: pointer;
 }
-#CNE-conditionDiv-deleteBtn{
+.CNE-conditionDiv-deleteBtn{
   width: 40px;
   height: 40px;
   border: solid 1px #989898;
@@ -262,10 +274,29 @@
   font-size: 20px;
   margin-left:8px;
   display: none;
+  background-image: url(../images/delete-red.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
 }
-#CNE-conditionDiv-deleteBtn:hover{
+.CNE-conditionDiv-deleteBtn:hover{
+  background-image: url(../images/delete-white.svg);  
   background-color: #e74c3c;
-  color: white;
+  border: solid 1px white;
+}
+.CNE-conditionDiv-addPairBtn{
+  width: 40px;
+  height: 40px;
+  border: solid 1px #989898;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-left:8px;
+  display: block;
+  cursor: pointer;
+}
+.CNE-conditionDiv-addPairBtn:hover{
+  background-color: #779cab;
+  color: #fff;
   border: solid 1px white;
 }
 .CNE-conditionDiv-result{

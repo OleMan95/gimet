@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter, Route, NavLink, withRouter, Link } from 'react-router-dom';
-
+import {NavLink, withRouter} from 'react-router-dom';
 
 import '../css/App.css';
-import Home from './home_components/Home';
-
 
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
@@ -27,13 +24,19 @@ class StartPage extends React.Component { //все this.props мы получе�
   handleInputChange=(event)=>{
     switch (event.target.name) {
       case 'username':
-        this.state.usernameValue = event.target.value;
+        this.setState({
+          usernameValue:event.target.value,
+        });
         break;
       case 'email':
-        this.state.emailValue = event.target.value;
+        this.setState({
+          emailValue:event.target.value,
+        });
         break;
       case 'password':
-        this.state.passwordValue = event.target.value;
+        this.setState({
+          passwordValue:event.target.value,
+        });
         break;
       default:
     }
@@ -62,15 +65,12 @@ class StartPage extends React.Component { //все this.props мы получе�
               <div className="Start-signUpDiv-form">
                 <label className="Start-signUpDiv-labels">Username</label>
                 <input type="text" name="username" placeholder="Pick a username" className="Start-signUpDiv-inputs"
-                  ref={(input)=>{this.state.signInInput = input}}
                   onChange={this.handleInputChange}/>
                 <label className="Start-signUpDiv-labels">Email</label>
                 <input type="email" name="email" placeholder="you@example.com" className="Start-signUpDiv-inputs"
-                  ref={(input)=>{this.state.signInInput = input}}
                   onChange={this.handleInputChange}/>
                 <label className="Start-signUpDiv-labels">Password</label>
                 <input type="password" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
-                  ref={(input)=>{this.state.signInInput = input}}
                   onChange={this.handleInputChange}/>
                 <p>Use at least one letter, one numeral, and seven characters.</p>
               </div>
@@ -114,22 +114,22 @@ class StartPage extends React.Component { //все this.props мы получе�
             <form id="form">
               <div className="contact-inputsDiv">
                 <div className="contact-inputs">
-                  <label for="contact-name">Name: </label>
+                  <label htmlFor="contact-name">Name: </label>
                   <input type="text" id="contact-name" placeholder="Enter your name"/>
                 </div>
                 <div className="contact-inputs">
-                  <label for="contact-email">Email: </label>
+                  <label htmlFor="contact-email">Email: </label>
                   <input type="email" id="contact-email" placeholder="enter@your.email"/>
                 </div>
               </div>
 
               <div className="contact-inputs">
-                <label for="contact-subject">Subject: </label>
+                <label htmlFor="contact-subject">Subject: </label>
                 <input type="text" id="contact-subject" placeholder="Subject..."/>
               </div>
 
               <div className="contact-inputs">
-                <label for="msgInp" >Message: </label>
+                <label htmlFor="msgInp" >Message: </label>
                 <textarea id="msgInp" placeholder="Message..."></textarea>
               </div>
 
