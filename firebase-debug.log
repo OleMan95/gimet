@@ -1,0 +1,23 @@
+[debug] [2017-11-21T22:53:47.627Z] ----------------------------------------------------------------------
+[debug] [2017-11-21T22:53:47.630Z] Command:       /usr/bin/node /usr/local/bin/firebase deploy
+[debug] [2017-11-21T22:53:47.631Z] CLI Version:   3.15.2
+[debug] [2017-11-21T22:53:47.631Z] Platform:      linux
+[debug] [2017-11-21T22:53:47.631Z] Node Version:  v6.11.4
+[debug] [2017-11-21T22:53:47.631Z] Time:          Wed Nov 22 2017 00:53:47 GMT+0200 (EET)
+[debug] [2017-11-21T22:53:47.631Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-11-21T22:53:47.648Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-11-21T22:53:47.648Z] > authorizing via signed-in user
+[debug] [2017-11-21T22:53:47.650Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-11-21T22:53:47.650Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/KCPeUpku8ObeQE5BRkRP8oH6dFf1nbvyOYRmmI8wUag',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Nov 22 2017 00:53:47 GMT+0200 (EET)
+[debug] [2017-11-21T22:53:47.858Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-21T22:53:47.874Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gimet-project  
+ Wed Nov 22 2017 00:53:47 GMT+0200 (EET)
+[debug] [2017-11-21T22:53:48.742Z] <<< HTTP RESPONSE 200
+[debug] [2017-11-21T22:53:48.745Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gimet-project/tokens  
+ Wed Nov 22 2017 00:53:48 GMT+0200 (EET)
