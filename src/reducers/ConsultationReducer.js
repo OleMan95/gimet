@@ -1,16 +1,28 @@
-import {SET_CONSULTATON_EXPERT} from '../constants/types.js';
+import {SET_CONSULTATON_EXPERT, SET_CONSULTATON_CONTENT} from '../constants/types.js';
 
-const initialState = {};
+const initialState = {
+  expert:{},
+  content:''
+};
 
-// Этот редюсер принимает initialState и action
-// Возвращает state. В случае action.type === ADD_TO_STORE возвращает новый, дополненый state
+
 export default function reducer(state = initialState, action){
-
+  let newState;
   switch (action.type) {
     case SET_CONSULTATON_EXPERT:
-      
-      return action.payload;
-      
+      newState = {
+        expert:action.payload,
+        content:''
+      };
+      return newState;
+    
+    case SET_CONSULTATON_CONTENT:
+      newState = {
+        expert: state.expert,
+        content: action.payload
+      };
+      return newState;
+    
     default:
       return state;
 

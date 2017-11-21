@@ -90,7 +90,7 @@ class QuestionsBody extends React.Component{
     let newAnswers;
 
     for(let i=0;i<answersList.length;i++){
-      if(i==elem.target.id){
+      if(i===elem.target.id){
         continue; 
       }
 
@@ -123,7 +123,7 @@ class QuestionsBody extends React.Component{
       // }
 
       for(let i=0; i<this.state.answersList.length; i++){
-        if(this.state.answersList[i].key==answersValue || !answersValue){
+        if(this.state.answersList[i].key===answersValue || !answersValue){
           return;          
         }
       }
