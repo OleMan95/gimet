@@ -153,9 +153,19 @@ class QuestionsBody extends React.Component{
     }
   }
 
+  onDeleteClick=(elem)=>{
+    let questionsList = this.state.questions;
+    questionsList.splice(elem.target.name, 1);
+    
+    this.setState({
+      questions: questionsList,
+      count:this.state.count-1,      
+    });
+  }
+
   render() {
     return (
-      <div>
+      <div className="CNE-questionBody">
       <div className="CNE-questionDiv">
         <h2>2. Configuring questions</h2>
         <label className="CNE-questionDiv-labels">Question #{this.state.count}</label>
@@ -187,15 +197,22 @@ class QuestionsBody extends React.Component{
 
       </div>
       <div className="CNE-list">
-        <hr className="CNE-listDiv-line"/>
         <div className="CNE-questionListDiv">
           <ul className="CNE-questionListDiv-list">
             {this.state.questions.map((question, index)=>
               <li key={index} className="CNE-questionListDiv-listItem">
+              <div>
                 <h3>Question #{index+1}:</h3>
                 <p><mark>key</mark>: {question.key}</p>
                 <p><mark>question</mark>: {question.question}</p>
                 <p><mark>answers</mark>: {question.answersString}</p>
+              </div>
+              <div>
+                <button type="button" name={index} id="CNE-questionDiv-changeBtn"></button>
+                <button type="button" name={index} id="CNE-questionDiv-deleteBtn" 
+                  onClick={(elem)=>this.onDeleteClick(elem)}></button>
+              </div>
+                
               </li>)}
           </ul>
         </div>
