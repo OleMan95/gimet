@@ -192,4 +192,5 @@
 }
 .question_frame_list label{
     padding: 4px 16px;
+    cursor: pointer;
 }

@@ -29,6 +29,7 @@ class ConditionsBody extends React.Component{
     keyTargetValue:'',
     answerTargetValue:'',
     resultValue:'',
+    isTempConditionEmpty:false,
   }
 
   setPair=()=>{
@@ -47,6 +48,7 @@ class ConditionsBody extends React.Component{
     
     this.setState({
       tempCondition: tempCondition,
+      isTempConditionEmpty:false,
     });
     
     document.getElementById(this.state.keyTargetId).style.borderColor = '#2ecc71';
@@ -57,8 +59,11 @@ class ConditionsBody extends React.Component{
   }
 
   onNewConditionClick=()=>{
+    if(this.state.isTempConditionEmpty){
+      return;
+    }
+
     let pairsCount = this.state.pairsCount;
-    
     let keyTargetId = 'key'+pairsCount;
     let answerTargetId = 'answer'+pairsCount;
 
@@ -99,25 +104,22 @@ class ConditionsBody extends React.Component{
     this.setState({
       pairsGroup:newPairsGroup,
       pairsCount: pairsCount,
+      isTempConditionEmpty:true,      
     });
 
   }
   onDeleteClick=(elem)=>{
-    console.log('del name: ',elem.target.name);
-    
     
     let newPairsGroup = this.state.pairsGroup;
-    newPairsGroup[elem.target.name] = null;
-    console.log('del newPairsGroup: ',newPairsGroup);
+    newPairsGroup.splice(elem.target.name, 1);
     
     let tempCondition = this.state.tempCondition;
-    tempCondition.pairs[elem.target.name] = null;
+    tempCondition.pairs.splice(elem.target.name, 1);
     
     let count = 0;
     for(let i=0; i<newPairsGroup.length; i++){
       if(!newPairsGroup[i]) count++;
     }
-
     
     if(count === newPairsGroup.length){
       this.setState({
@@ -152,18 +154,14 @@ class ConditionsBody extends React.Component{
   }
 
   onAddClick=()=>{
-    let tempCondition = this.state.tempCondition;
-
-    let newPairs = [];
-    for(let i=0; i<tempCondition.pairs.length; i++){
-      if(!tempCondition.pairs[i]) continue;
-      newPairs.push(tempCondition.pairs[i]);
+    if (this.state.tempCondition.pairs.length < 1 || 
+      this.state.resultValue==="") {
+      return;
     }
 
-    tempCondition.pairs = newPairs;
+    let tempCondition = this.state.tempCondition;
     tempCondition.result = this.state.resultValue;
     
-    console.log('onAddClick: ',newPairs);
     let newConditions = this.state.conditions;
     newConditions.push(tempCondition);
 
@@ -184,6 +182,7 @@ class ConditionsBody extends React.Component{
       answerTargetId:'',
       keyTargetValue:'',
       answerTargetValue:'',
+      resultValue:'',
     });
 
     document.getElementById('resultInput').value = '';
@@ -221,38 +220,62 @@ class ConditionsBody extends React.Component{
   addInConditionsList=()=>{
     let conditions = this.state.conditions;
     let conDOMList = []; // :P
-
+    let count = this.state.count;
+    count++;
     for (let i=0; i<conditions.length; i++){
 
       conDOMList.push(
         <div className="CNE-conditionsList-listItem" key={'condition'+i}>
-          <h3>Condition #{i+1}</h3> 
-          <h4>if</h4>
-          {this.state.conditions[i].pairs.map((pair,index)=>
-            <p key={index}><mark>{pair.key}</mark> = {pair.answer}</p>
-          )}
-          <h4>then</h4>
-          <p><mark>result</mark> = {this.state.conditions[i].result}</p>
-          <hr/>
+          <div>
+            <h3>Condition #{i+1}</h3> 
+            <h4>if</h4>
+            {this.state.conditions[i].pairs.map((pair,index)=>
+              <p key={index}><mark>{pair.key}</mark> = {pair.answer}</p>
+            )}
+            <h4>then</h4>
+            <p><mark>result</mark> = {this.state.conditions[i].result}</p>
+          </div>
+          <div>
+            <button type="button" name={i} id="CNE-conditionsList-changeBtn"></button>
+            <button type="button" name={i} id="CNE-conditionsList-deleteBtn" 
+              onClick={(elem)=>this.onDeleteConditionClick(elem)}></button>
+          </div>
         </div>
       );
 
     }
 
-    console.log('addInConditionsList: ', this.state.conditions);
-
     this.setState({
       conditionsDOMList: conDOMList,
+      count:count,      
     });
   }
 
   componentDidMount=()=>{
-    console.log('ConditionsBody - expert: ', this.props.expert);
+    // console.log('ConditionsBody - expert: ', this.props.expert);
+  }
+
+  onDeleteConditionClick=(elem)=>{
+    let conditionsList = this.state.conditionsDOMList;
+    conditionsList.splice(elem.target.name, 1);
+    
+    let newConditions = this.state.conditions;
+    newConditions.splice(elem.target.name, 1);
+
+    let count = this.state.count;
+    count--;
+
+    this.setState({
+      conditionsDOMList: conditionsList,
+      conditions: newConditions,      
+      count:count,  
+    });
   }
 
   render() {
     return (
-      <div className="CNE">
+    <div>
+      <div className="CNE-conditions">
         <div className="CNE-main">
           <div className="CNE-conditionDiv">
 
@@ -263,7 +286,8 @@ class ConditionsBody extends React.Component{
             <div className="CNE-conditionDiv-pairs">
                 {this.state.pairsGroup}
             </div>
-            <button type="button" name="addBtn" id="CNE-conditionDiv-addBtn" onClick={this.onNewConditionClick}>New condition</button>
+            <button type="button" name="addBtn" id="CNE-conditionDiv-addBtn" 
+              onClick={this.onNewConditionClick}>New condition</button>
 
             <label className="CNE-conditionDiv-labels">then</label>
             <div className="CNE-conditionDiv-resultSelector">
@@ -274,23 +298,12 @@ class ConditionsBody extends React.Component{
             </div>
 
             <div id="CNE-questionDiv-btns">
-              <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" onClick={this.onAddClick}>Add</button>
-              <NavLink to="/home" name="nextBtn" id="CNE-conditionDiv-finishBtn" onClick={this.onFinishClick}>Finish</NavLink>
+              <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" 
+              onClick={this.onAddClick}>Add</button>
+              <NavLink to="/home" name="nextBtn" id="CNE-conditionDiv-finishBtn" 
+              onClick={this.onFinishClick}>Finish</NavLink>
             </div>
           </div>
-
-          <div className="CNE-conditionDiv-questionList">
-            <ul className="CNE-conditionDiv-questionList-list">
-              {this.props.expert.questions.map((question, index)=>
-                <li key={index} className="CNE-conditionDiv-questionListDiv-listItem">
-                  <h3>Question #{index+1}:</h3>
-                  <p><mark>key</mark>: {question.key}</p>
-                  <p><mark>question</mark>: {question.question}</p>
-                  <p><mark>answers</mark>: {question.answersString}</p>
-                </li>)}
-            </ul>
-          </div>
-
         </div>
 
         <div className="CNE-conditionsList">
@@ -299,8 +312,24 @@ class ConditionsBody extends React.Component{
           </div>
         </div>
       </div>
+
+      <div className="CNE-conditionDiv-questionList">
+        <ul className="CNE-conditionDiv-questionList-list">
+          {this.props.expert.questions.map((question, index)=>
+            <li key={index} className="CNE-conditionDiv-questionListDiv-listItem">
+              <h3>Question #{index+1}:</h3>
+              <p><mark>key</mark>: {question.key}</p>
+              <p><mark>question</mark>: {question.question}</p>
+              <p><mark>answers</mark>: {question.answersString}</p>
+            </li>)}
+        </ul>
+      </div> 
+    </div>
+      
     )}
 }
+
+
 
 export default withRouter(connect(
   state=>({

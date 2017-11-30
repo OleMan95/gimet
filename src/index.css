@@ -25,6 +25,9 @@ a{
 }
 button{
   font-family:  'Roboto',sans-serif;
+  border-radius: 5px;
+  border:0;
+  cursor: pointer;  
 }
 input, textarea{
   border: 1px solid #b6b6b6;
