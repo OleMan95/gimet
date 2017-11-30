@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter, Prompt } from 'react-router-dom';
+import * as firebase from 'firebase';
+
 import '../../css/App.css';
 import '../../css/Home.css';
 import ConditionsBody from './ConditionsBody';
-import * as firebase from 'firebase';
 
 
 class QuestionsBody extends React.Component{
@@ -69,9 +70,11 @@ class QuestionsBody extends React.Component{
       questions:newQuestions,
       count:newCount,
       answersList:[],
-      answersString:'',      
+      answersString:'',
+      questionValue:'',    
     });//обновляем массив с вопросами и счётик
 
+    console.log(this.questionInput.value);
     this.questionInput.value=''; //чистим поля для ввода текста
     this.answersInput.value='';
     this.keyInput.value='';
@@ -165,61 +168,66 @@ class QuestionsBody extends React.Component{
 
   render() {
     return (
-      <div className="CNE-questionBody">
-      <div className="CNE-questionDiv">
-        <h2>2. Configuring questions</h2>
-        <label className="CNE-questionDiv-labels">Question #{this.state.count}</label>
-        <input type="text" name="question" placeholder="What day tomorow?" className="CNE-questionDiv-inputs"
-          ref={(input)=>{this.questionInput = input}}
-          onChange={this.handleInputChange}/>
+      <div>
+        <div className="CNE-questionBody">
+          <div className="CNE-questionDiv">
+            <h2>2. Configuring questions</h2>
+            <label className="CNE-questionDiv-labels">Question #{this.state.count}</label>
+            <textarea type="text" rows="5" name="question" placeholder="What day tomorow?" 
+              className="CNE-questionDiv-textarea"
+              ref={(input)=>{this.questionInput = input}}
+              onChange={this.handleInputChange}/>
 
-        <label className="CNE-questionDiv-labels">Possible answers</label>
-        <div className="questionDiv-answersTags">
-          
-          {this.state.answersList}
+            <label className="CNE-questionDiv-labels">Possible answers</label>
+            <div className="questionDiv-answersTags">
+              
+              {this.state.answersList}
 
-          <input type="text" id="questionDiv-answersInput" name="answers" placeholder="Add new answer..." className="CNE-questionDiv-inputs"
-            ref={(input)=>{this.answersInput = input}}
-            onChange={this.handleInputChange}
-            onKeyDown={(event)=>this.onAnswersKeyDown(event)}/>
-          
-        </div>
+              <input type="text" id="questionDiv-answersInput" name="answers" placeholder="Add new answer..." className="CNE-questionDiv-inputs"
+                ref={(input)=>{this.answersInput = input}}
+                onChange={this.handleInputChange}
+                onKeyDown={(event)=>this.onAnswersKeyDown(event)}/>
+              
+            </div>
 
-        <label className="CNE-questionDiv-labels">Key</label>
-        <input type="text" name="key" placeholder="tomorow" className="CNE-questionDiv-inputs"
-          ref={(input)=>{this.keyInput = input}}
-          onChange={this.handleInputChange}/>
+            <label className="CNE-questionDiv-labels">Key</label>
+            <input type="text" name="key" placeholder="tomorow" className="CNE-questionDiv-inputs"
+              ref={(input)=>{this.keyInput = input}}
+              onChange={this.handleInputChange}/>
 
-        <div id="CNE-questionDiv-btns">
-          <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" onClick={this.onAddClick}>Add</button>
-          <button type="button" name="nextBtn" id="CNE-questionDiv-nextBtn" onClick={this.onNextClick}>Go to conditions</button>
+            <div id="CNE-questionDiv-btns">
+              <button type="button" name="addBtn" id="CNE-questionDiv-addBtn" 
+                onClick={this.onAddClick}>Add</button>
+              <button type="button" name="nextBtn" id="CNE-questionDiv-nextBtn" 
+                onClick={this.onNextClick}>Go to conditions</button>
+            </div>
+
+          </div>
+          <div className="CNE-list">
+            <div className="CNE-questionListDiv">
+              <ul className="CNE-questionListDiv-list">
+                {this.state.questions.map((question, index)=>
+                  <li key={index} className="CNE-questionListDiv-listItem">
+                  <div>
+                    <h3>Question #{index+1}:</h3>
+                    <p><mark>key</mark>: {question.key}</p>
+                    <p><mark>question</mark>: {question.question}</p>
+                    <p><mark>answers</mark>: {question.answersString}</p>
+                  </div>
+                  <div>
+                    <button type="button" name={index} id="CNE-questionDiv-changeBtn"></button>
+                    <button type="button" name={index} id="CNE-questionDiv-deleteBtn" 
+                      onClick={(elem)=>this.onDeleteClick(elem)}></button>
+                  </div>
+                  </li>)}
+              </ul>
+            </div>
+          </div>
         </div>
 
       </div>
-      <div className="CNE-list">
-        <div className="CNE-questionListDiv">
-          <ul className="CNE-questionListDiv-list">
-            {this.state.questions.map((question, index)=>
-              <li key={index} className="CNE-questionListDiv-listItem">
-              <div>
-                <h3>Question #{index+1}:</h3>
-                <p><mark>key</mark>: {question.key}</p>
-                <p><mark>question</mark>: {question.question}</p>
-                <p><mark>answers</mark>: {question.answersString}</p>
-              </div>
-              <div>
-                <button type="button" name={index} id="CNE-questionDiv-changeBtn"></button>
-                <button type="button" name={index} id="CNE-questionDiv-deleteBtn" 
-                  onClick={(elem)=>this.onDeleteClick(elem)}></button>
-              </div>
-                
-              </li>)}
-          </ul>
-        </div>
-      </div>
-    </div>
     )}
-}
+  }
 
 export default withRouter(connect(
   state=>({

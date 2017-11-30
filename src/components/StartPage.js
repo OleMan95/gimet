@@ -85,12 +85,13 @@ class StartPage extends React.Component { //все this.props мы получе�
             <div>
               <h2>About GIMET Systems</h2>
               <button className='Start-about-versionBtn' 
-                onClick={this.onVersionBtn}>Version 0.1.23a</button>
+                onClick={this.onVersionBtn}>Version 0.1.24a</button>
               <div className='Start-about-versionDiv'>
                 <button className='Start-about-versionClose' 
                   onClick={this.onVersionClose}></button>
-                <h3>Version 0.1.23a</h3>
-                <p>- New style in the consultation screen.</p>
+                <h3>Version 0.1.24a</h3>
+                <p>- Delete questions and conditions when creating a new expert.</p>
+                <p>- Small updates.</p>
                 
               </div>
               
