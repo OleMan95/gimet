@@ -36,10 +36,14 @@ class ConfigDevelop extends React.Component{
     },
     keyValue:'',
     questionValue:'',
-    answersValue:'',
+    answerValue:'',
     resultValue:'',
     answers:[],
     results:[],
+    answersList:[],
+    resultsList:[],
+    answersCount:1, 
+    answersString:'',    
   }
 
   handleInputChange=(event)=>{
@@ -51,7 +55,7 @@ class ConfigDevelop extends React.Component{
         break;
       case 'answer':
         this.setState({
-          answersValue:event.target.value,
+          answerValue:event.target.value,
         });
         break;
       case 'key':
@@ -68,20 +72,91 @@ class ConfigDevelop extends React.Component{
     }
   }
 
-  // выводить список с ответами и результатами при нажатии на Enter
-  // добавить ввод типа результата
-  // заполнить массив this.state.answers
   // заполнить массив this.state.results
   // добавить запись всего эксперта в Firebase по нажатию на кнопку Finish
 
+  onKeyDown=(event)=>{
+    if(event.keyCode === 13){
+      let answersList = this.state.answersList;
+      let answersValue = this.state.answerValue;
+      let newAnswersCount = this.state.answersCount;
+      let answers = this.state.answers;
+      
+      let resultsList = this.state.resultsList;
+      let resultValue = this.state.resultValue;
+      
+      if(!answersValue) return;
+      let str = answersValue;
+      let answerValue = str.trim();
+      //убираем пробелы по краям ответа
+
+      for(let i=0; i<this.state.answersList.length; i++){
+        if(this.state.answers[i] == answerValue || !answerValue){
+          return;          
+        }
+      }
+
+      let newAnswers = [
+        ...answers,
+        answerValue
+      ];
+      let newAnswersList = [
+        ...answersList,
+        (
+          <li className="CD-answerItem" key={answerValue} id={newAnswersCount}>
+            <mark>{newAnswersCount}.</mark>
+            <p>{answerValue}</p>
+            <div id={answersList.length} 
+              onClick={(elem)=>this.onDelTagClick(elem)}></div>
+          </li>
+        )
+      ];
+      let newResultsList = [
+        // <mark>Result {newAnswersCount}:</mark>
+        ...resultsList,
+        (
+          <li className="CD-resultItem" key={answerValue}>
+            <select defaultValue="key">
+              <option value="key">key</option>
+              <option value="text">text</option>
+            </select>
+            <input type="text" className="CD-resultInput" 
+              name="result"
+              placeholder={"Result for answer №"+newAnswersCount}
+              onChange={(elem)=>this.handleInputChange(elem)}/>
+          </li>
+        )
+      ];
+
+      let newAnswersString;
+      if(!this.state.answersString) newAnswersString = answerValue;
+      else newAnswersString = this.state.answersString+', '+answerValue;
+
+      this.answersInput.value='';
+
+      newAnswersCount++;
+      this.setState({
+        answersList:newAnswersList,
+        resultsList:newResultsList,
+        answersValue:'',
+        answersString:newAnswersString,
+        answersCount:newAnswersCount,
+        answers:newAnswers,        
+      });
+    }
+  }
+
   onAddClick=()=>{
     let expert = this.state.expert;
-    expert.question = {
+    let newQuestions = expert.questions;
+    newQuestions.push({
       key:this.state.keyValue,
-      question:this.state.keyValue,
+      question:this.state.questionValue,
       answers:this.state.answers,
       results:this.state.results
-    };
+    }); 
+    expert.questions = newQuestions;
+
 
     console.log(expert);
     
@@ -107,8 +182,9 @@ class ConfigDevelop extends React.Component{
 
           <input type="text" id="CD-content-answersInput" name="answer" 
             placeholder="Add new answer"
+            ref={(input)=>{this.answersInput = input}}            
             onChange={(elem)=>this.handleInputChange(elem)}
-            onKeyDown={(event)=>this.onAnswersKeyDown(event)}/>
+            onKeyDown={(event)=>this.onKeyDown(event)}/>
           
           <input type="text" id="CD-content-keyInput" name="key" 
             placeholder="Enter the key for this question"
@@ -116,38 +192,19 @@ class ConfigDevelop extends React.Component{
 
           <div>
 
-            <ul className="CD-answersList">
-              <li className="CD-answerItem">
-                <mark>1.</mark>
-                <p>Answer value 1</p>
-                <div></div>
-              </li>
-              <li className="CD-answerItem">
-                <mark>2.</mark>
-                <p>Answer value 2</p>
-                <div></div>
-              </li>
-            </ul>
+            <div className="CD-answersDiv">
+              <h3>Answers:</h3>
+              <ul className="CD-answersList">
+                {this.state.answersList}
+              </ul>
+            </div>
 
-
-            <ul className="CD-resultsList">
-              <li className="CD-resultItem">
-                <mark>Result 1:</mark>
-                <input type="text" className="CD-resultInput" 
-                  name="result" 
-                  placeholder="Enter the result for answer #1"
-                  ref={(input)=>{this.answersInput = input}}                  
-                  onChange={(elem)=>this.handleInputChange(elem)}/>
-              </li>
-              <li className="CD-resultItem">
-                <mark>Result 2:</mark>
-                <input type="text" className="CD-resultInput" 
-                  name="result" 
-                  placeholder="Enter the result for answer #2"
-                  ref={(input)=>{this.answersInput = input}}
-                  onChange={(elem)=>this.handleInputChange(elem)}/>
-              </li>
-            </ul>
+            <div className="CD-resultsDiv">
+              <h3>Results:</h3>
+              <ul className="CD-resultsList">
+                {this.state.resultsList}
+              </ul>
+            </div>
 
           </div>
 
