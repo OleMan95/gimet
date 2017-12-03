@@ -143,8 +143,10 @@ class ConsultationInterview extends React.Component{
         for(let i=0;i<answers.length;i++){
             answersDOMs.push(
                 <div className='question_frame_list' key={i}>
-                    <input type="radio" name="rb" id={i+'#@key-'+key} className='question_frame_radio' 
-                        onChange={(input)=>this.handleChange(input)} value={answers[i]}/>
+                    <div>
+                        <input type="radio" name="rb" id={i+'#@key-'+key} className='question_frame_radio' 
+                            onChange={(input)=>this.handleChange(input)} value={answers[i]}/>
+                    </div>
                     <label htmlFor={i+'#@key-'+key}>{answers[i]}</label>
                     <div className="answers_list_check"></div>
                 </div>

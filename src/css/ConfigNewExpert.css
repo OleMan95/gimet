@@ -266,7 +266,7 @@
   margin:0;  
 }
 
-/*ConditionDiv*/
+/* ConditionDiv */
 .CNE-conditions{
   display: flex;
   flex-direction: row;
@@ -514,3 +514,163 @@
   background-color: #e9e9e9;
   background-image: url(../images/configure-black.svg);  
 }  
+
+
+
+
+/* ConfigDevelop */
+.CD-questionBody{
+  margin: 24px 15% 0 15%;
+  border: solid 1px #404e5c;
+  border-radius: 5px;  
+}
+.CD-header{
+  border-bottom: solid 1px #404e5c;
+  padding: 8px 16px;
+}
+.CD-header h3{
+  margin: 0;
+}  
+.CD-content{
+  display: flex; 
+  flex-direction: column;
+  padding: 16px;
+}
+
+.CD-content textarea{
+  padding: 8px;
+  margin-bottom: 8px;
+  outline: none;
+  overflow: auto;
+  resize: none;
+}
+.CD-content input{
+  padding: 8px;
+  margin-bottom: 8px;  
+}
+.CD-content > div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.CD-answersList, .CD-resultsList{
+  border: solid 1px #779cab;
+  border-radius: 5px;
+  padding: 8px;
+  height: 200px;
+  width:46%;
+  overflow-y: scroll; 
+  margin: 0;
+}
+.CD-answersList{
+  margin-right: 8px;
+}
+.CD-answerItem{
+  padding: 8px;  
+  background-color: #92dce5;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;  
+  align-items: center;  
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+.CD-answerItem mark{
+  color: #1e1e24;
+  background-color: inherit;
+  margin-right: 8px;  
+}
+.CD-answerItem p{
+  color: #404e5c;
+  margin: 0;
+}
+.CD-answerItem div{
+  padding: 0 4px;
+  height: 20px;
+  width: 20px;
+  background-image: url(../images/close-white.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  cursor: pointer;
+  margin:0; 
+}
+    
+.CD-resultItem{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  flex-direction: row;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+.CD-resultItem mark{
+  color: #1e1e24;
+  background-color: inherit;
+  margin-right: 8px;
+  width:100px;
+}
+.CD-resultItem input{
+  margin: 0;  
+  border: 0;
+  border-radius: 0;
+  border-bottom: solid 1px #779cab;  
+  color: #404e5c;
+  padding-bottom: 2px;
+  width: 100%;
+}
+
+.CD-content > div:last-of-type{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+#CD-buttons-addBtn{
+  width: 60px;
+  height: 40px;  
+  padding: 8px;
+  border: solid 1px #779cab;
+  border-radius: 5px;
+  text-align: center;
+  margin-right: 16px;
+  background-color: #ebebeb;  
+}
+#CD-buttons-addBtn:hover{
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);  
+}  
+#CD-buttons-finishBtn{
+  position: relative;
+  display: block;
+  padding: 0 16px;
+  height: 40px;
+  color: white;
+  background-color: #779cab;
+  border: none;  
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  z-index: 0; 
+}
+#CD-buttons-finishBtn:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+#CD-buttons-finishBtn:before {
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #92dce5;
+  border-radius: 5px;
+  transition: height, 250ms ease;
+  z-index: -1;
+}
+#CD-buttons-finishBtn:hover:before{
+  height: 100%;
+}
