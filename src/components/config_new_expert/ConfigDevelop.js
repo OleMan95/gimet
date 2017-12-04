@@ -37,9 +37,7 @@ class ConfigDevelop extends React.Component{
     keyValue:'',
     questionValue:'',
     answerValue:'',
-    resultValue:'',
     answers:[],
-    results:[],
     answersList:[],
     resultsList:[],
     answersCount:1, 
@@ -63,17 +61,14 @@ class ConfigDevelop extends React.Component{
           keyValue:event.target.value,
         });
         break;
-      case 'result':
-        this.setState({
-          resultValue:event.target.value,
-        });
+      // case 'result':
+      //   this.setState({
+      //     resultValue:event.target.value,
+      //   });
         break;
       default:
     }
   }
-
-  // заполнить массив this.state.results
-  // добавить запись всего эксперта в Firebase по нажатию на кнопку Finish
 
   onKeyDown=(event)=>{
     if(event.keyCode === 13){
@@ -83,7 +78,7 @@ class ConfigDevelop extends React.Component{
       let answers = this.state.answers;
       
       let resultsList = this.state.resultsList;
-      let resultValue = this.state.resultValue;
+      // let resultValue = this.state.resultValue;
       
       if(!answersValue) return;
       let str = answersValue;
@@ -101,13 +96,16 @@ class ConfigDevelop extends React.Component{
         answerValue
       ];
       let newAnswersList = [
+        // <mark>{newAnswersCount}.</mark>
         ...answersList,
         (
-          <li className="CD-answerItem" key={answerValue} id={newAnswersCount}>
-            <mark>{newAnswersCount}.</mark>
-            <p>{answerValue}</p>
-            <div id={answersList.length} 
-              onClick={(elem)=>this.onDelTagClick(elem)}></div>
+          <li key={answerValue}>
+            <div className="CD-answerItem">
+              <div>
+                <p>{answerValue}</p>
+              </div>
+              <div onClick={()=>this.onDelTagClick(answerValue)}></div>
+            </div>            
           </li>
         )
       ];
@@ -115,15 +113,18 @@ class ConfigDevelop extends React.Component{
         // <mark>Result {newAnswersCount}:</mark>
         ...resultsList,
         (
-          <li className="CD-resultItem" key={answerValue}>
-            <select defaultValue="key">
-              <option value="key">key</option>
-              <option value="text">text</option>
-            </select>
-            <input type="text" className="CD-resultInput" 
-              name="result"
-              placeholder={"Result for answer №"+newAnswersCount}
-              onChange={(elem)=>this.handleInputChange(elem)}/>
+          <li key={answerValue}>
+            <div className="CD-resultItem">
+              <select defaultValue="key" className="CD-resultSelect">
+                <option value="key">key</option>
+                <option value="text">text</option>
+              </select>
+              <input type="text" className="CD-resultInput"
+                name="result"
+                placeholder={"Result for an answer with the same number"}
+                onChange={(elem)=>this.handleInputChange(elem)}/>
+            </div>
+              
           </li>
         )
       ];
@@ -145,25 +146,95 @@ class ConfigDevelop extends React.Component{
       });
     }
   }
+  onDelTagClick=(value)=>{
+    let index;
+    let answers = this.state.answers;
+    let answersList = this.state.answersList;
+    let resultsList = this.state.resultsList;
+
+    for(let i=0; i<answers.length; i++){
+      if(answers[i] == value){
+        console.log(answers[i], ' = ',value);
+        answers.splice(i, 1);
+        answersList.splice(i, 1);
+        resultsList.splice(i, 1);
+      }
+    }
+
+    this.setState({
+      answersList: answersList,
+    });      
+  }
+
+
 
   onAddClick=()=>{
+    if(!this.state.answers){
+      alert('Error! No answers found!');
+      return;
+    }
+    let questionCount = this.state.questionCount;
+
     let expert = this.state.expert;
     let newQuestions = expert.questions;
+
+    let resultValues = document.getElementsByClassName("CD-resultInput");
+    let resultTypes = document.getElementsByClassName("CD-resultSelect");
+
+    let newResults = [];
+    let value = '';
+    let type = '';
+
+    for(let i=0; i<resultValues.length; i++){
+      if(resultValues[i].value == '') {
+        alert('Error! Result №'+(i+1)+' is empty.');
+        return;
+        // Проверка полей ввода результата на постое значение. 
+        // Если поле "Result" пустое, то выводится сообщение.  
+      }else{
+        value = resultValues[i].value;
+        type = resultTypes[i].value;
+        newResults.push({
+          type:type,
+          value:value
+        });
+      }
+    }
+    
     newQuestions.push({
       key:this.state.keyValue,
       question:this.state.questionValue,
       answers:this.state.answers,
-      results:this.state.results
+      results:newResults
     }); 
     expert.questions = newQuestions;
-
-
-    console.log(expert);
     
+    questionCount++;
     this.setState({
       expert: expert,
+      keyValue:'',
+      questionValue:'',
+      answers:[],
+      answersList:[],
+      resultsList:[],
+      answersCount:1,
+      questionCount:questionCount,
     });
-    // очистить поля и массивы.
+
+    document.getElementById('CD-questioninput').value = '';
+    document.getElementById('CD-answerinput').value = '';
+    document.getElementById('CD-keyinput').value = '';
+  }
+
+  setToFirebase=()=> {
+    let expert = this.state.expert;
+    console.log(expert);
+
+    firebase.database().ref('experts/' + expert.name).set({
+      name: expert.name,
+      description: expert.description,
+      questions: expert.questions
+    });
   }
 
   render() {
@@ -176,34 +247,36 @@ class ConfigDevelop extends React.Component{
         </div>
 
         <div className="CD-content">
-          <textarea type="text" rows="5" name="question" 
+          <textarea type="text" rows="5" name="question" id='CD-questioninput'
             placeholder="Write here your question" 
             onChange={(elem)=>this.handleInputChange(elem)}/>
 
+          <input type="text" id="CD-content-keyInput" name="key" 
+            id='CD-keyinput'
+            placeholder="Enter the key for this question"
+            onChange={(elem)=>this.handleInputChange(elem)}/>
+
           <input type="text" id="CD-content-answersInput" name="answer" 
+            id='CD-answerinput'
             placeholder="Add new answer"
             ref={(input)=>{this.answersInput = input}}            
             onChange={(elem)=>this.handleInputChange(elem)}
             onKeyDown={(event)=>this.onKeyDown(event)}/>
           
-          <input type="text" id="CD-content-keyInput" name="key" 
-            placeholder="Enter the key for this question"
-            onChange={(elem)=>this.handleInputChange(elem)}/>
-
           <div>
 
             <div className="CD-answersDiv">
               <h3>Answers:</h3>
-              <ul className="CD-answersList">
+              <ol className="CD-answersList">
                 {this.state.answersList}
-              </ul>
+              </ol>
             </div>
 
             <div className="CD-resultsDiv">
               <h3>Results:</h3>
-              <ul className="CD-resultsList">
+              <ol className="CD-resultsList">
                 {this.state.resultsList}
-              </ul>
+              </ol>
             </div>
 
           </div>
@@ -211,14 +284,12 @@ class ConfigDevelop extends React.Component{
           <div className="CD-buttons">
             <button type="button" name="addBtn" id="CD-buttons-addBtn" 
               onClick={this.onAddClick}>Add</button>
-            <button type="button" name="finishBtn" id="CD-buttons-finishBtn" 
-              onClick={this.onNextClick}>Finish</button>
+            <NavLink to="/home" type="button" name="finishBtn" id="CD-buttons-finishBtn" 
+              onClick={this.setToFirebase}>Finish</NavLink>
           </div>
 
 
         </div>
-        
-
       </div>
     )}
   }
@@ -227,9 +298,5 @@ export default withRouter(connect(
   state=>({
     store: state
   }),
-  dispatch=>({
-    getConfigBody: (component)=>{
-      dispatch({type:'GET_CONFIG_BODY',payload: component});
-    }
-  })
+  dispatch=>({})
 )(ConfigDevelop));
