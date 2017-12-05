@@ -2,7 +2,7 @@
   "name": "gimet",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gimet.pp.ua/",  
+  "homepage": "http://gimet.pp.ua/",
   "dependencies": {
     "firebase": "^4.6.0",
     "react": "^16.0.0",

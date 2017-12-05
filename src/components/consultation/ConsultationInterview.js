@@ -10,6 +10,7 @@ import ConsultationResult from './ConsultationResult';
 class ConsultationInterview extends React.Component{
 
     state = {
+
         question:'',
         questionsCount:0,
         answers:'',
@@ -17,6 +18,7 @@ class ConsultationInterview extends React.Component{
         result:'',
         choosenPairs:[],
         coinciedence:0,
+        currentQuestion:0,
     }
 
 
@@ -30,71 +32,55 @@ class ConsultationInterview extends React.Component{
     }
 
     onNextClick=()=>{
+        let result = this.state.result;
+        if(!result.value){
+            console.log("qqqqqqqqqqqq");
+            return;
+        }
         this.setState({
             answers:[],
         });
-
+        let key = null;
         let count=this.state.questionsCount;
-        // if(count+1 != this.props.expert.questions.length){
-        // }
+        let questions = this.props.expert.questions;
+        let question = null;
         count++;
 
 
-        let pair=this.state.tempPair;
-        let choosenPairs = this.state.choosenPairs;
-        choosenPairs.push(pair);
-        let nextKey;
-
-        for(let i=0; i<this.props.expert.conditions.length; i++){
-
-            for(let j=0; j<this.props.expert.conditions[i].pairs.length; j++){
-                if(JSON.stringify(this.props.expert.conditions[i].pairs[j]) == JSON.stringify(pair)
-                && this.props.expert.conditions[i].pairs[j+1]){
-                    // если мы находим совпадение пары в условии и еще есть следущая
-                    nextKey = this.props.expert.conditions[i].pairs[j+1].key;
+        console.log(result);
+      
+        if(result.type == 'key'){
+            console.log("type",result.type);
+            console.log("value",result.value);
+            key = result.value;
+            for(let i=0; i<questions.length; i++){
+                if(questions[i].key == key){
+                    question = questions[i].question;
+                    this.getAnswers(i);
+                    this.setState({currentQuestion:i});
                 }
             }
         }
-
-        let result = this.getResult(choosenPairs);
-
-        if(!nextKey){
-
-            if(result && !this.state.result){
-                // alert(result);
-                this.props.setContent(<ConsultationResult result={result}/>);
-    
-            }else if(result && this.state.result){
-                // alert(result);
-                this.props.setContent(<ConsultationResult result={result}/>);
-    
-            }else{
-                // alert('No result!');
-                this.props.setContent(
-                    <ConsultationResult result={'For this case, the result is not provided!'}/>
-                );
-                
-            }
+        else if(result.type == 'text'){
+            console.log("type",result.type);
+            console.log("value",result.value);
+            this.props.setContent(<ConsultationResult result={result.value}/>);
         }
 
-        let question;
-        for(let i=0; i<this.props.expert.questions.length; i++){
-            if(this.props.expert.questions[i].key === nextKey){
-                question = this.props.expert.questions[i].question;
-                this.getAnswers(i);
-            }
-        }
+
+
         
         this.setState({
             questionsCount:count,
             question:question,
-            choosenPairs:choosenPairs
+            result:'',
         });
         this.clearAnswers();
     }
 
     getResult=(choosenPairs)=>{
         let coinciedence=0;
+
         for(let i=0; i<this.props.expert.conditions.length; i++){
 
             if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs)) {
@@ -123,14 +109,25 @@ class ConsultationInterview extends React.Component{
         let count=this.state.questionsCount;
         let id = elem.target.id;
         let key = id.split("#@key-");
-
-        let pair={
-            answer: elem.target.value,
-            key: key[1],
-        };
-
+        let index = null;
+        
+        console.log('count ',this.state.questionsCount);
+        let answers = this.props.expert.questions[this.state.currentQuestion].answers;
+        
+        for(let i=0; i<answers.length; i++){
+            console.log('ответ ',answers[i]);
+            if(answers[i]==elem.target.value){
+                console.log('нашло ответ ',elem.target.value);
+                index=i;
+                break;
+            }
+        }
+        
+        
+        let result = this.props.expert.questions[this.state.currentQuestion].results[index];
+        console.log('result',result);
         this.setState({
-            tempPair:pair,
+            result:result,
         });
 
     }
@@ -150,7 +147,7 @@ class ConsultationInterview extends React.Component{
                     <label htmlFor={i+'#@key-'+key}>{answers[i]}</label>
                     <div className="answers_list_check"></div>
                 </div>
-            );
+            )
         }
 
         this.setState({
