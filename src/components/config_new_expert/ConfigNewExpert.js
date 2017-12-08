@@ -46,8 +46,6 @@ class ConfigNewExpert extends React.Component{
         </div>
 
       </header>
-      <Prompt when={true} message={location => (
-        `Are you sure you want to go?`)}/>
       <div className="CNE">
         {this.props.store.newConfigReducer.length!==0?this.props.store.newConfigReducer[0]:<InitBody/>}
       </div>

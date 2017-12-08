@@ -53,13 +53,13 @@
 /*Experts*/
 .Home-content-experts{
   min-width: 400px;
+  /* width: 650px; */
   height: 296px;
   border: solid 1px #989898;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  
 }
 .content-experts-header{
   display: flex;
@@ -132,7 +132,9 @@
   padding: 8px 0;
   padding-left: 16px;
   margin: 0;
-  width: 100%;
+  width: 400px;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }  
 
 .content-experts-listItems button{
