@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import '../../css/App.css';
 import '../../css/Home.css';
 import QuestionsBody from './QuestionsBody';
+import ConfigDevelop from './ConfigDevelop';
 
 const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updateExpert})=>{
   let expertnameInput = '';
@@ -43,14 +44,10 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
     var expert = {
        name: expertnameValue,
        description: descriptionValue,
-       questions:{},
-       conditions:{
-         pairs:[],
-         result:''
-       }
+       questions:[],
     }
     // writeExpert(expert.name, expert);
-    getConfigBody(<QuestionsBody expert={expert}/>);
+    getConfigBody(<ConfigDevelop expert={expert}/>);
   }
 
   return (

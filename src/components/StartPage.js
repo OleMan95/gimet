@@ -42,6 +42,30 @@ class StartPage extends React.Component { //все this.props мы получе�
     }
   }
 
+  signupClick=()=>{
+    console.log('====================================');
+    console.log('request: ', this.state.usernameValue);
+
+    fetch('http://localhost:3012/artists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: this.state.usernameValue,
+      })
+    }).then((response) => {
+      if(!response.ok) {
+        console.log('error: ', response);
+      }else{
+        console.log('OK: ', response.ok);        
+        return response;
+      }
+    })
+
+    console.log('====================================');
+  }
+
   render(){
     return (
       <div>
@@ -64,10 +88,14 @@ class StartPage extends React.Component { //все this.props мы получе�
             <div className="Start-signUpDiv">
               <div className="Start-signUpDiv-form">
                 <label className="Start-signUpDiv-labels">Username</label>
-                <input type="text" name="username" placeholder="Pick a username" className="Start-signUpDiv-inputs"
+                <input type="text" name="username" 
+                  placeholder="Pick a username" 
+                  className="Start-signUpDiv-inputs"
                   onChange={this.handleInputChange}/>
                 <label className="Start-signUpDiv-labels">Email</label>
-                <input type="email" name="email" placeholder="you@example.com" className="Start-signUpDiv-inputs"
+                <input type="email" name="email" 
+                  placeholder="you@example.com" 
+                  className="Start-signUpDiv-inputs"
                   onChange={this.handleInputChange}/>
                 <label className="Start-signUpDiv-labels">Password</label>
                 <input type="password" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
@@ -75,7 +103,8 @@ class StartPage extends React.Component { //все this.props мы получе�
                 <p>Use at least one letter, one numeral, and seven characters.</p>
               </div>
 
-              <button type="button" name="signUpBtn" id="signUpBtn">Sign up</button>
+              <button type="button" name="signUpBtn" id="signUpBtn"
+              onClick={this.signupClick}>Sign up</button>
             </div>
           </div>
         </div>
@@ -85,13 +114,14 @@ class StartPage extends React.Component { //все this.props мы получе�
             <div>
               <h2>About GIMET Systems</h2>
               <button className='Start-about-versionBtn' 
-                onClick={this.onVersionBtn}>Version 0.1.24a</button>
+                onClick={this.onVersionBtn}>Version 0.1.25a</button>
               <div className='Start-about-versionDiv'>
                 <button className='Start-about-versionClose' 
                   onClick={this.onVersionClose}></button>
-                <h3>Version 0.1.24a</h3>
-                <p>- Delete questions and conditions when creating a new expert.</p>
-                <p>- Small updates.</p>
+                <h3>Version 0.1.25a</h3>
+                <p>- A complete change in the creation of the expert 
+                configuration and consultation with the expert.</p>
+                <p>- Various user interface improvements.</p>
                 
               </div>
               

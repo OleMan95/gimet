@@ -106,6 +106,17 @@ class ExpertRoom extends React.Component{
 
   }
 
+  onConfigureExpertClick=()=>{
+    var url = 'http://www.google.com';
+    fetch(url).then((response) => {
+      if(!response.ok) alert('Download error!');
+      return response;
+    }).then((response) => response.json())
+    .then((data) => {
+      console.log('загружено: '+data);
+})
+  }
+
   render(){
     return (
       <div className="Home-content-body">
@@ -115,9 +126,11 @@ class ExpertRoom extends React.Component{
               <h3 className="header-expertRoom-expertName">{this.props.expert.name}</h3>
             </div>
             <div className="header-expertRoom-btns">
-              <button className="expertRoom-configureExpert">
+              <button className="expertRoom-configureExpert" 
+                onClick={this.onConfigureExpertClick}>
               </button>
-              <button className="expertRoom-closeBtn" onClick={this.onCloseExpertClick}>
+              <button className="expertRoom-closeBtn" 
+                onClick={this.onCloseExpertClick}>
               </button>
             </div>
           </div>
