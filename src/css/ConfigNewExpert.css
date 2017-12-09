@@ -525,9 +525,9 @@
 
 /* ConfigDevelop */
 .CD-questionBody{
-  margin: 24px 15% 0 15%;
+  margin: 24px 15% 50px 15%;
   border: solid 1px #404e5c;
-  border-radius: 5px;  
+  border-radius: 5px;
 }
 .CD-header{
   border-bottom: solid 1px #404e5c;
@@ -609,10 +609,15 @@
   margin:0;
 }
 
+.CD-resultsList > div{
+  display: flex;
+}
+
 .CD-resultsList li{
-  margin-left: 16px;
   list-style-type: decimal;
+  list-style-position: outside;
   font-size: 16px;
+  margin-left: 16px;
 }
     
 .CD-resultItem{
@@ -646,8 +651,27 @@
 .CD-content > div:last-of-type{
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center; 
   margin-top: 16px;
+}
+
+.CD-hints{
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  overflow-x: scroll;
+}
+.CD-hints p{
+  margin: 0 8px 0 0;
+  background-color: #92dce5;
+  padding: 4px 8px;
+  border-radius: 5px;
+}  
+.CD-buttons{
+  display: flex;
+  flex-direction: row;
+  width: 160px;
 }
 #CD-buttons-addBtn{
   width: 60px;

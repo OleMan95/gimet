@@ -50,11 +50,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="260.62022"
-     inkscape:cy="355.34962"
+     inkscape:zoom="1"
+     inkscape:cx="447.29237"
+     inkscape:cy="392.3886"
      inkscape:document-units="px"
-     inkscape:current-layer="g4798"
+     inkscape:current-layer="g1445"
      showgrid="false"
      inkscape:snap-bbox="true"
      showborder="true"
@@ -63,8 +63,8 @@
      width="720px"
      showguides="false"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1680"
-     inkscape:window-height="991"
+     inkscape:window-width="1920"
+     inkscape:window-height="1021"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -104,7 +104,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-106.5)"
-     style="display:inline">
+     style="display:none">
     <path
        style="opacity:1;fill:#d0ccd0;fill-opacity:1;stroke:#eeeeee;stroke-width:4.15748024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 360,64 A 296,296 0 0 0 64,360 296,296 0 0 0 360,656 296,296 0 0 0 656,360 296,296 0 0 0 587.01367,170.12891 57.897292,58.892661 0 0 1 546.69727,186.83594 57.897292,58.892661 0 0 1 488.80078,127.94336 57.897292,58.892661 0 0 1 497.03711,97.794922 296,296 0 0 0 360,64 Z"
@@ -132,6 +132,40 @@
        cy="254.01312"
        rx="10.018839"
        ry="10.191083" />
+  </g>
+  <g
+     style="display:inline"
+     transform="translate(0,-106.5)"
+     id="g1445"
+     inkscape:groupmode="layer"
+     inkscape:label="Border - no paint">
+    <path
+       transform="matrix(0.26458333,0,0,0.26458333,0,106.5)"
+       inkscape:connector-curvature="0"
+       id="path1437"
+       d="M 360,64 A 296,296 0 0 0 64,360 296,296 0 0 0 360,656 296,296 0 0 0 656,360 296,296 0 0 0 587.01367,170.12891 57.897292,58.892661 0 0 1 546.69727,186.83594 57.897292,58.892661 0 0 1 488.80078,127.94336 57.897292,58.892661 0 0 1 497.03711,97.794922 296,296 0 0 0 360,64 Z"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#eeeeee;stroke-width:4.15748024;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <ellipse
+       ry="15.582017"
+       rx="15.318659"
+       cy="140.35167"
+       cx="144.64717"
+       id="ellipse1439"
+       style="opacity:1;fill:#ffffff;fill-opacity:0;stroke:#eeeeee;stroke-width:1.10000002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <ellipse
+       style="opacity:1;fill:#eeeeee;fill-opacity:1;stroke:#eeeeee;stroke-width:1.10000002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="ellipse1441"
+       cx="16.788116"
+       cy="201.89021"
+       rx="10.018839"
+       ry="10.191083" />
+    <ellipse
+       ry="10.191083"
+       rx="10.018839"
+       cy="254.01312"
+       cx="153.04854"
+       id="ellipse1443"
+       style="opacity:1;fill:#eeeeee;fill-opacity:1;stroke:#eeeeee;stroke-width:1.10000002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <g
      style="display:none"

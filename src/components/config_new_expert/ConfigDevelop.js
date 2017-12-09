@@ -64,11 +64,6 @@ class ConfigDevelop extends React.Component{
           keyValue:value.trim(),
         });
         break;
-      // case 'result':
-      //   this.setState({
-      //     resultValue:event.target.value,
-      //   });
-        break;
       default:
     }
   }
@@ -116,9 +111,9 @@ class ConfigDevelop extends React.Component{
                 <p>{answerValue}</p>
               </div>
               <div onClick={()=>this.onDelTagClick(answerValue)}></div>
-            </div>            
+            </div>         
           </li>
-        )
+          )
       ];
       let newResultsList = [
         // <mark>Result {newAnswersCount}:</mark>
@@ -126,7 +121,8 @@ class ConfigDevelop extends React.Component{
         (
           <li key={answerValue}>
             <div className="CD-resultItem">
-              <select defaultValue="key" className="CD-resultSelect">
+              <select defaultValue="none" className="CD-resultSelect">
+                <option value="none"></option>
                 <option value="key">key</option>
                 <option value="text">text</option>
               </select>
@@ -177,6 +173,16 @@ class ConfigDevelop extends React.Component{
     });      
   }
   onAddClick=()=>{
+    let questionCount = this.state.questionCount;
+    let expert = this.state.expert;
+    let newQuestions = expert.questions;
+    let resultValues = document.getElementsByClassName("CD-resultInput");
+    let resultTypes = document.getElementsByClassName("CD-resultSelect");
+    let newResults = [];
+    let unsolvedQuestions = this.state.unsolvedQuestions;
+    let value = '';
+    let type = '';
+
     if(this.state.answers.length <=0){
       alert('No answers found! ');
       return;
@@ -188,44 +194,47 @@ class ConfigDevelop extends React.Component{
       this.keyInput.value.trim() === ''){
         alert('Enter the question key.');
         return;
+    }else if(resultValues) {
+      for(let i=0; i<resultValues.length; i++){
+        console.log('result type:',resultTypes[i].value,'.');
+        
+        if(resultValues[i].value.trim() === '') {
+          alert('Error! Result №'+(i+1)+' is empty.');
+          return;
+          // Проверка полей ввода результата на пустое значение. 
+          // Если поле "Result" пустое, то выводится сообщение.  
+        }else if(resultTypes[i].value.trim() === 'none'){
+          alert('Select type of result №'+(i+1));
+          return;
+        }
+      }      
     }
 
-    let questionCount = this.state.questionCount;
-    let expert = this.state.expert;
-    let newQuestions = expert.questions;
-    let resultValues = document.getElementsByClassName("CD-resultInput");
-    let resultTypes = document.getElementsByClassName("CD-resultSelect");
-    let newResults = [];
-    let unsolvedQuestions = this.state.unsolvedQuestions;
-    let value = '';
-    let type = '';
+    for(let i=0; i<resultValues.length; i++){
+      if(resultValues[i].value.trim() === '') {
+        alert('Error! Result №'+(i+1)+' is empty.');
+        return;
+        // Проверка полей ввода результата на пустое значение. 
+        // Если поле "Result" пустое, то выводится сообщение.  
+      }else{
+        value = resultValues[i].value.trim();
+        type = resultTypes[i].value.trim();
 
+        if(type === 'key' && unsolvedQuestions.indexOf(value) === -1)
+         unsolvedQuestions.push(value);
+
+        newResults.push({
+          type:type,
+          value:value
+        });
+      }
+    }
     for(let j=0; j<expert.questions.length; j++){
       if(expert.questions[j].key === this.state.keyValue){
         alert('Question "'+ this.state.keyValue +'" already exist.');
         return;        
       }
     }      
-
-    for(let i=0; i<resultValues.length; i++){
-      if(resultValues[i].value == '') {
-        alert('Error! Result №'+(i+1)+' is empty.');
-        return;
-        // Проверка полей ввода результата на пустое значение. 
-        // Если поле "Result" пустое, то выводится сообщение.  
-      }else{
-        value = resultValues[i].value;
-        type = resultTypes[i].value;
-        newResults.push({
-          type:type,
-          value:value
-        });
-
-        if(type === 'key'){
-          unsolvedQuestions.push(value);
-        }
-      }
-    }
     
     newQuestions.push({
       key:this.state.keyValue,
@@ -242,7 +251,7 @@ class ConfigDevelop extends React.Component{
     }else if(unsolvedQuestionsIndex < 0){
     }
 
-    console.log('unusedKey: ',unsolvedQuestions);
+    console.log('unsolvedQuestions: ',unsolvedQuestions);
 
     questionCount++;
     this.setState({
@@ -259,7 +268,6 @@ class ConfigDevelop extends React.Component{
     this.questionInput.value = '';
     this.keyInput.value = '';
     this.answersInput.value = '';
-    // document.getElementById('CD-keyinput').value = '';
   }
   onFinish=()=>{
     let unsolvedQuestions = this.state.unsolvedQuestions;
@@ -331,11 +339,18 @@ class ConfigDevelop extends React.Component{
 
           </div>
 
-          <div className="CD-buttons">
-            <button type="button" name="addBtn" id="CD-buttons-addBtn" 
-              onClick={this.onAddClick}>Add</button>
-            <NavLink to="/home" type="button" name="finishBtn" 
-              id="CD-buttons-finishBtn">Finish</NavLink>
+          <div>
+            <div className="CD-hints">
+              {this.state.unsolvedQuestions.map((key, index)=>
+                <p key={index}>{key}</p>
+              )}
+            </div>
+            <div className="CD-buttons">
+              <button type="button" name="addBtn" id="CD-buttons-addBtn" 
+                onClick={this.onAddClick}>Add</button>
+              <NavLink to="/home" type="button" name="finishBtn" 
+                id="CD-buttons-finishBtn">Finish</NavLink>
+            </div>
           </div>
 
 
