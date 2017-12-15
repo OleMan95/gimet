@@ -1,4 +1,6 @@
 var UsersModel = require('../models/users');
+var ExpertsModel = require('../models/experts');
+var ObjectID = require('mongodb').ObjectID;
 //данный файл работает только с запросами и ответами. 
 
 exports.all = function(req, res){
@@ -23,7 +25,8 @@ exports.create = function(req, res){
     var user = {
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        experts:[]
     };
     UsersModel.create(user, function(err, doc){
         if(err){
@@ -55,4 +58,32 @@ exports.delete = function(req, res){
         }
         res.sendStatus(200);
     });
+}
+exports.pushExpert = function(req, res){
+    UsersModel.findById(req.params.id, function(err, docUser){
+
+        ExpertsModel.create(req.body, function(err, docExpert){
+            if(err){
+                res.sendStatus(500);
+                return console.log(err);
+            }
+            //WARNING! поле owner (_id) обязательно!
+            
+            var experts = docUser.experts;
+            experts.push(docExpert.ops[0]);
+            var user = {
+                name: docUser.name,
+                email: docUser.email,
+                password: docUser.password,
+                experts: experts
+            };
+            UsersModel.update(req.params.id, user, function(err, doc){
+                if(err){
+                    res.sendStatus(500);
+                    return console.log('post /api/users/:id error: ',err);
+                }
+                res.sendStatus(200);
+            }); 
+        });
+    });        
 }

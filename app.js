@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var db = require('./db');
 
 var users = require('./routes/users');
+var experts = require('./routes/experts');
 
 //"proxy": "http://localhost:3001"
 //sudo service mongod start
@@ -16,15 +17,12 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 
 app.use('/api/users', users);
+app.use('/api/experts', experts);
 
 app.get('*', function(req, res){
   res.send('Sorry, this is an invalid URL.');
-});
-app.get('/api', function(req, res){
-  res.send('Hello, GIMET!');
 });
 
 

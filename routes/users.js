@@ -4,10 +4,9 @@ var usersController = require('../controllers/users');
 
 var users = [
   {
-  	id: 1,
+  	_id: 1,
     name: "Oleksii Manachynskyi",
     email: "aom-95@live.com",
-    phoneNumber: 380731343161,
     experts: [],
   }
 ];
@@ -18,6 +17,7 @@ router.get('/:id', usersController.findById);
 
 /* POST users listing. */
 router.post('/', usersController.create);
+router.post('/:id', usersController.pushExpert);
 
 /* PUT users listing. */
 router.put('/:id', usersController.update);
@@ -26,3 +26,14 @@ router.put('/:id', usersController.update);
 router.delete('/:id', usersController.delete);
 
 module.exports = router;
+
+
+var experts = [
+  {
+  	_id: 1,
+    name: "PC expert",
+    description: "aom-95@live.com",
+    owner:"_id", //user id
+    questions: [],
+  }
+];
