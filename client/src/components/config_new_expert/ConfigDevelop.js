@@ -272,6 +272,21 @@ class ConfigDevelop extends React.Component{
   onFinish=()=>{
     let unsolvedQuestions = this.state.unsolvedQuestions;
 
+    fetch('/v1/user/5a36eee2112ae4388013d7c3', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.expert)
+    }).then((response) => {
+      response.json().then(function(data) {  
+        console.log(data);  
+      });  
+      return response;
+    }).catch(function(error) {
+      console.log('There has been a problem with fetch operation: ' + error.message);
+    });
+
     this.setToFirebase();
     if(unsolvedQuestions.length > 0){
       let msg = 'You have unsolved questions: '
@@ -281,6 +296,7 @@ class ConfigDevelop extends React.Component{
       return "Are you sure you want to go?";
     }
   }
+
   setToFirebase=()=> {
     let expert = this.state.expert;
 

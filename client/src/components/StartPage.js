@@ -43,10 +43,7 @@ class StartPage extends React.Component { //все this.props мы получе�
   }
 
   signupClick=()=>{
-    console.log('====================================');
-    console.log('request: ', this.state.usernameValue);
-
-    fetch('/api/users', {
+    fetch('/v1/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -57,15 +54,13 @@ class StartPage extends React.Component { //все this.props мы получе�
         password: this.state.passwordValue,
       })
     }).then((response) => {
-      if(!response.ok) {
-        console.log('error: ', response);
-      }else{
-        console.log('OK: ', response.ok);        
-        return response;
-      }
-    })
-
-    console.log('====================================');
+      response.json().then(function(data) {  
+        console.log(data);  
+      });  
+      return response;
+    }).catch(function(error) {
+      console.log('There has been a problem with fetch operation: ' + error.message);
+    });
   }
 
   render(){
