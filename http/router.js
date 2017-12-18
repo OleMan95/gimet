@@ -16,7 +16,7 @@ router.get('/v1/experts', expertController.find);
 router.get('/v1/user/:id/experts', expertController.findUserExperts);
 router.get('/v1/expert/:expertId', expertController.findById);
 router.post('/v1/user/:id/', expertController.create);
-router.put('/v1/user/:id/:expertId', expertController.update);
-router.delete('/v1/user/:id/:expertId', expertController.delete);
+router.put('/v1/expert/:id', expertController.update); // /../../..?expertId=<num>
+router.delete('/v1/expert/:id', expertController.delete); // /../../..?expertId=<num>
 
 module.exports = router;

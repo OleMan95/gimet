@@ -1,11 +1,12 @@
 "use strict";
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const schema = mongoose.Schema({
     name:String,
     email:String,
     password:String,
-    experts:[],
+    experts:[{ type: Schema.ObjectId, ref: 'Expert' }]
 });
 schema.set('toJSON', {versionKey:false});
 

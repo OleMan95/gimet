@@ -4,7 +4,7 @@ const {User} = require('./../../models');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 class ExpertController{
-    //GET /users
+    //GET /experts
     async find(ctx, next){
         ctx.body = await Expert.find();
         ctx.status = 200;
@@ -26,13 +26,17 @@ class ExpertController{
         ctx.status = 200;
         return next();
     }
-    //GET /user/:id/:expertId
+    //GET /expert/:expertId?populate=<value> (true or nothing)
     async findById(ctx, next){
-        
         const {id, expertId} = ctx.params;
-        console.log('ctx.params: ',ctx.params);
+
+        if(ctx.query.populate === 'true'){
+            ctx.body = await Expert.findById(expertId).populate('author');
+        }else{
+            ctx.body = await Expert.findById(expertId);
+        }
+
         ctx.status = 200;
-        ctx.body = await Expert.findById(expertId);
         return next();
     }
     //POST /user/:id/
@@ -58,26 +62,26 @@ class ExpertController{
         ctx.body = expertFromDB;
         return next();
     }
-    //PUT /user/:id/:expertId
+    //PUT /expert/:id?expertId=<num>
     async update(ctx, next){
-      const {id, expertId} = ctx.params;
+      const {id} = ctx.params;
       const data = ctx.request.body;
       
       ctx.status = 200;
-      ctx.body = await User.findByIdAndUpdate(expertId, data, {new:true});
+      ctx.body = await User.findByIdAndUpdate(ctx.query.expertId, data, {new:true});
       return next();
     }
-    //DELETE /user/:id/:expertId
+    //DELETE /expert/:id?expertId=<num>
     async delete(ctx, next){
-        const {id, expertId} = ctx.params;
+        const {id} = ctx.params;
         const user = await User.findById(id);
         const userExperts = user.experts;
         
         for(let i=0;i<userExperts.length;i++){
-            if(userExperts[i] == expertId){
+            if(userExperts[i] == ctx.query.expertId){
                 userExperts.splice(i, 1);
                 await User.findByIdAndUpdate(id, {experts: userExperts}, {new:false});
-                var {deletedCount} = await Expert.deleteOne({_id: ObjectId(expertId)});
+                var {deletedCount} = await Expert.deleteOne({_id: ObjectId(ctx.query.expertId)});
             }
         }
         
