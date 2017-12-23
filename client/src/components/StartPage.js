@@ -42,11 +42,8 @@ class StartPage extends React.Component { //все this.props мы получе�
     }
   }
 
-  signupClick=()=>{ // отправка данных пользователя с формы регистрации в АРI и создание файла JSON
-    console.log('====================================');
-    console.log('request: ', this.state.usernameValue);
-
-    fetch('/api/users', { 
+  signupClick=()=>{
+    fetch('/v1/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -56,16 +53,14 @@ class StartPage extends React.Component { //все this.props мы получе�
         email: this.state.emailValue,
         password: this.state.passwordValue,
       })
-    }).then((response) => { // ответ Response на запрос 
-      if(!response.ok) {
-        console.log('error: ', response);
-      }else{
-        console.log('OK: ', response.ok);        
-        return response;
-      }
-    })
-
-    console.log('====================================');
+    }).then((response) => {
+      response.json().then(function(data) {  
+        console.log(data);  
+      });  
+      return response;
+    }).catch(function(error) {
+      console.log('There has been a problem with fetch operation: ' + error.message);
+    });
   }
 
   render(){
