@@ -13,15 +13,15 @@ class StartPage extends React.Component { //все this.props мы получе�
     passwordValue:'',
   };
 
-  onVersionBtn=()=>{
+  onVersionBtn=()=>{ // вызов и отображение елемента(окна) Start-about-versionDiv в котором находится инф. об изменениях в системе
     document.getElementsByClassName('Start-about-versionDiv')[0].style.display = 'flex';
   }
 
-  onVersionClose=()=>{
+  onVersionClose=()=>{ // закритие окна при нажатии выхода
     document.getElementsByClassName('Start-about-versionDiv')[0].style.display = 'none';
   }
 
-  handleInputChange=(event)=>{
+  handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные 
     switch (event.target.name) {
       case 'username':
         this.setState({
@@ -42,21 +42,21 @@ class StartPage extends React.Component { //все this.props мы получе�
     }
   }
 
-  signupClick=()=>{
+  signupClick=()=>{ // отправка данных пользователя с формы регистрации в АРI и создание файла JSON
     console.log('====================================');
     console.log('request: ', this.state.usernameValue);
 
-    fetch('/api/users', {
+    fetch('/api/users', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
+      body: JSON.stringify({ // занесение данных в JSON
         name: this.state.usernameValue,
         email: this.state.emailValue,
         password: this.state.passwordValue,
       })
-    }).then((response) => {
+    }).then((response) => { // ответ Response на запрос 
       if(!response.ok) {
         console.log('error: ', response);
       }else{
@@ -71,7 +71,7 @@ class StartPage extends React.Component { //все this.props мы получе�
   render(){
     return (
       <div>
-        <header className="header" >
+        <header className="header" >  
           <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
             <div className="header-logo-img"></div>
             <p className="header-logo-title">GIMET</p>
@@ -115,8 +115,7 @@ class StartPage extends React.Component { //все this.props мы получе�
           <div>
             <div>
               <h2>About GIMET Systems</h2>
-              <button className='Start-about-versionBtn' 
-                onClick={this.onVersionBtn}>Version 0.1.25a</button>
+              <button className='Start-about-versionBtn' onClick={this.onVersionBtn}>Version 0.1.25a</button>
               <div className='Start-about-versionDiv'>
                 <button className='Start-about-versionClose' 
                   onClick={this.onVersionClose}></button>

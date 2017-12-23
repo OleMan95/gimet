@@ -17,14 +17,14 @@ class ExpertRoom extends React.Component{
     }
   }
 
-  onCloseExpertClick=()=>{
+  onCloseExpertClick=()=>{ // если закрываем описание експерта, то отображаем начальное окно browseActivity
     //Параметр null знатит то, что должно отобразится окно
     // активности (browseActivity)
     this.props.getHomeBody(null);
   }
 
-  componentDidMount(){
-    if(!this.props.expert.description){
+  componentDidMount(){ // происходит после рендеринга объекта
+    if(!this.props.expert.description){ // если присутствует описание про експерта то происходит вывод this.props.expert.description, если нет то Empty
       this.setState({
         description:(
           <p className="expertRoom-emptyText">Empty</p>
@@ -38,28 +38,28 @@ class ExpertRoom extends React.Component{
       });
     }
 
-    if(!this.props.expert.conditions){
+    if(!this.props.expert.conditions){// если не присутствуют conditions в експерте то No conditions!
       this.setState({
         conditionsDOMs:(
           <p className="expertRoom-emptyText">No conditions!</p>
         ),
       });
-    }else{
+    }else{ // иначе выводятся все conditions
       let isEmpty = false;
   
-      for(let i=0;i<this.props.expert.conditions.length;i++){
+      for(let i=0;i<this.props.expert.conditions.length;i++){ // проверка на наличие пар в експерте
         if(!this.props.expert.conditions[i].pairs){
           isEmpty = true;
         }
       }
   
-      if(isEmpty){
+      if(isEmpty){ // если пар нету, то выводим Incorrectly configured conditions!
         this.setState({
           conditionsDOMs:(
             <p className="expertRoom-emptyText">Incorrectly configured conditions!</p>
           ),
         });
-      }else{
+      }else{ // если пары есть, то выводим информацию Conditions
         this.setState({
           conditionsDOMs:(
             <ul className="expertRoom-conditionList-list">
@@ -81,13 +81,13 @@ class ExpertRoom extends React.Component{
         
     
 
-    if(!this.props.expert.questions){
+    if(!this.props.expert.questions){ // проверка на наличие вопросов, если нету то вывод No questions!
       this.setState({
         questionsDOMs:(
           <p className="expertRoom-emptyText">No questions!</p>
         ),
       });
-    }else{
+    }else{ // если вопросы есть, то выводим их
       this.setState({
         questionsDOMs:(
           <ul className="expertRoom-questionList-list">
@@ -106,7 +106,7 @@ class ExpertRoom extends React.Component{
 
   }
 
-  onConfigureExpertClick=()=>{
+  onConfigureExpertClick=()=>{// .....
     var url = 'http://www.google.com';
     fetch(url).then((response) => {
       if(!response.ok) alert('Download error!');

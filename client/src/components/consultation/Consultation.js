@@ -9,15 +9,15 @@ import ConsultationInit from './ConsultationInit';
 class Consultation extends React.Component{
 
     state = {
-        content: (<ConsultationInit/>),
+        content: (<ConsultationInit/>), // присваиваем перемненной content обьект ConsultationInit
     }
 
 
-    componentDidMount(){
+    componentDidMount(){ // .....
         window.onpopstate = this.onBackButtonEvent;
     }
 
-    onBackButtonEvent=() => {
+    onBackButtonEvent=() => { // тут происходит загрузка обьекта ConsultationInit
         this.props.setContent(<ConsultationInit/>);
     }
 
@@ -52,12 +52,12 @@ class Consultation extends React.Component{
 
 
 export default withRouter(connect(
-    state=>({
+    state=>({ // изменение данных в переменных
       expert: state.ConsultationReducer.expert,
       content: state.ConsultationReducer.content,
       store:state
     }),
-    dispatch=>({
+    dispatch=>({ // сохранение контента в Redux
         setContent: (content)=>{
             dispatch({type:'SET_CONSULTATON_CONTENT',payload: content});
         }
