@@ -1,27 +1,19 @@
 {
   "name": "gimet",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "http://gimet.pp.ua/",
-  "dependencies": {
-    "firebase": "^4.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-redux": "^5.0.6",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-router-redux": "^4.0.8",
-    "react-scripts": "1.0.14",
-    "reactfire": "^1.0.0",
-    "redux": "^3.7.2"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:dev": "supervisor index.js"
   },
-  "devDependencies": {
-    "redux-devtools": "^3.4.0"
+  "author": "Oleksii Manachynskyi <manachinskiy@gmail.com> (oleman95.github.io)",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.3.0",
+    "mongoose": "^4.13.7"
   }
 }

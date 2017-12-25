@@ -1,0 +1,536 @@
+body, html{
+  margin: 0;
+  padding: 0;
+}
+body{
+  /*background-color: #263238;*/
+  /*background: url(../images/background.jpg) no-repeat center center fixed;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;*/
+}
+.Start{
+  /* + */
+  /*width: 100vw;*/
+  width: device-width;
+  /* height: 80%; */
+  min-height: 600px;
+  background-color: #404e5c;
+  background: url(../images/background.svg) no-repeat center center fixed;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+}
+/*Header*/
+.header{
+  /* + */
+  width: device-width;
+  padding: 8px 15% 8px 15%;
+  background-color: #1e1e24;
+  /* box-shadow: 1px 1px 10px 0 black; */
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position:relative;
+  z-index: 2;
+}
+.header > div{
+  display: flex;
+  flex-direction: row;
+}
+.header-logo{
+  /* + */
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: white;
+  padding: 0 4px;
+  outline:none;
+}
+.header-logo-img{
+  /* + */
+  background-image: url(../images/logo_blue-gray.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+}
+.header-logo-title{
+  /* + */
+  color: #e0e0e0;
+  margin:0 0 0 0.2em;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+}
+.header-btns{
+  /* + */
+  height: 30px;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 8px;
+}
+.header-btns:hover{
+  color:#92dce5;
+}  
+.header-btnsDiv{
+  /* + */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;  
+}
+
+/*Content*/
+.Start-content{
+  /* + */
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5% 15%;
+}
+.Start-contentBody{
+  /* + */
+  width: 700px;
+  color: white;
+  font-size: 24px;
+  margin: auto 0;
+  margin-right: 50px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.Start-contentBody-div1{
+  /* + */
+  display: flex;
+  flex-direction: column;
+}
+.Start-contentBody-logo {
+  /* + */
+  background-image: url(../images/logo_brain.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 300px;
+  height: 300px;
+  position: relative;  
+  margin: 0 auto;
+}
+.Start-contentBody-logo:before {
+  background-image: url(../images/logo_border.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  padding: 150px;
+  -webkit-animation:spin 20s linear infinite;
+  -moz-animation:spin 20s linear infinite;
+  animation:spin 20s linear infinite;
+} 
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } } 
+
+.Start-contentBody-text1{
+  /* + */
+  margin: 0 0 16px 0;
+  font-size: 30px;
+  text-align: center;
+  color: white;
+}
+.Start-contentBody-text2{
+  margin: 0 0 16px 0;
+}
+.Start-contentBody p:last-of-type{
+  width: 100%;
+  font-size: 20px;
+  text-align: left;
+}
+
+/*signUpDiv*/
+.Start-signUpDiv{
+  /* + */
+  min-width: 310px;
+  height: 290px;
+  padding: 30px;
+  background-color: #1e1e24;
+  box-shadow: 1px 1px 2px 1px black;
+  margin: 0;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.Start-signUpDiv-form{
+  /* + */
+  display: flex;
+  flex-direction: column;
+}
+.Start-signUpDiv-labels{
+  /* + */
+  color: white;
+  text-align: left;
+  padding: 4px;
+}
+.Start-signUpDiv-inputs{
+  /* + */
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 0;
+  border-bottom: 2px solid #92dce5;
+  background: inherit;
+  color: white;
+}
+.Start-signUpDiv-inputs::placeholder{
+  color: #d0ccd0;  
+}
+.Start-signUpDiv-inputs:last-of-type{
+  padding: 8px;
+  margin-bottom: 0;
+}
+.Start-signUpDiv p{
+  color: white;
+  font-size: 11px;
+  margin: auto;
+  margin-top: 2px;
+  margin-bottom: 8px;
+
+}
+
+.Start-signUpDiv-720{
+  display: none;
+}
+
+.Start-about{
+  /* + */
+  min-height: 600px;
+  position: relative;
+  background-color: #d0ccd0;
+  color: #1e1e24;
+  
+}
+.Start-about:before{
+  position: absolute;
+  background-color: #d0ccd0;
+  /* background-color: #779cab; */
+  content: 'In developing...';
+  color: #1e1e24;
+  text-align: center;
+  line-height: 600px;
+  font-size: 40px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.8;
+  display:none;
+} 
+.Start-about > div{
+  padding: 5% 15%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+} 
+.Start-about > div > div{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}  
+.Start-about-versionBtn{
+  /* + */
+  height: 40px;
+  margin-left: 24px;
+  background-color: inherit;
+  border-radius: 5px;
+  border: solid 1px #1e1e24;
+  cursor: pointer;  
+}
+.Start-about-versionBtn:hover{
+  border: solid 1px #1e1e24;  
+  background-color: #404e5c;
+  color: #d0ccd0;  
+}  
+.Start-about-versionDiv{
+  /* + */
+  display: none;
+  position: fixed;
+  width: 400px;
+  height: 300px;
+  top:50%;
+  left:50%;
+  margin-left:-208px;
+  margin-top: -158px; 
+  box-shadow: 1px 1px 1px 1px #1e1e24;
+  z-index: 20;
+  background-color: white;
+  border-radius: 5px;
+  flex-direction: column;
+  padding: 16px;
+}
+.Start-about-versionDiv > button{
+  height: 30px;
+  width: 30px;
+  align-self: flex-end;
+  background-color: inherit;
+  background-image: url(../images/close-black.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  border-radius: 5px;
+  border: solid 1px #1e1e24;
+  cursor: pointer; 
+}  
+.Start-about-versionDiv > button:hover{
+  border: solid 1px #1e1e24;
+  background-color: #e74c3c;
+  background-image: url(../images/close-white.svg);
+}  
+.Start-about-versionDiv > button ~ h3{
+  font-weight: 500;
+}  
+.Start-about-versionDiv > button ~ p{
+  font-size: 16px;
+}  
+.Start-about > div h2{
+  font-size: 30px;
+  font-weight: 500;
+}  
+.Start-about p{
+  font-size: 22px;
+  margin: 4px 0;
+} 
+
+
+.Start-contact{
+  /* + */
+  min-height: 600px;  
+  background-color: #1e1e24;
+  display: flex;
+  flex-direction: row;
+  padding: 2% 15%;
+  color: white;
+  background: url(../images/background-dark.svg) no-repeat center center fixed;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+}
+.Start-contact:before{
+  position: absolute;
+  background-color: #1e1e24;
+  content: 'In developing...';
+  color: white;
+  text-align: center;
+  line-height: 600px;
+  font-size: 40px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.8;
+}  
+.Start-contact > div{
+  width: 450px;
+  height: 400px;
+  padding: 24px;  
+  display: flex;
+  flex-direction: column;;
+}  
+.Start-contact > div h2{
+  align-self: center;
+  font-size: 30px;
+  font-weight: 500;
+}  
+.Start-contact > div button{
+  align-self: center;
+  margin-top: 16px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #1e1e24;
+  text-align: center;
+  background-color: #92dce5;
+  border: none;  
+  border-radius: 5px;
+  z-index: 0;
+  cursor: pointer;
+  padding: 8px 24px;
+}  
+.Start-contact > div button:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);  
+}
+.Start-contact > div button:before{
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #779cab;
+  border-radius: 5px;
+  transition: height, 250ms ease;
+  z-index: -1;
+}
+.Start-contact > div button:hover:before{
+  height: 100%; 
+}  
+#form > div:first-of-type{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contact-inputs{
+  /* + */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+#form > div > .contact-inputs:first-of-type{
+  margin-right: 16px;
+}  
+#form > div > .contact-inputs input {
+  width: 190px; 
+  padding: 4px 8px;   
+  background-color: inherit;
+  border:0;
+  border-bottom: 2px solid #404e5c;
+  border-radius: 5px;
+  color: #92dce5;
+}  
+.contact-inputs input, .contact-inputs textarea{
+  padding: 4px 8px;   
+  background-color: inherit;
+  border:0;
+  border-bottom: 2px solid #404e5c;
+  border-radius: 5px;
+  color: #92dce5;
+} 
+.contact-inputs textarea{
+  resize: vertical;
+  height: 100px;
+  max-height: 300px;
+} 
+
+
+/*Buttons*/
+#signUpBtn{
+  /* + */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  margin-top: 16px;
+  
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #1e1e24;
+  text-align: center;
+
+  background-color: #92dce5;
+  border: none;  
+  border-radius: 5px;
+  z-index: 0;
+  cursor: pointer;
+  
+}
+#signUpBtn:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+#signUpBtn:before{
+  position: absolute;
+  content: '';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #779cab;
+  border-radius: 5px;
+  transition: height, 250ms ease;
+  z-index: -1;
+}
+#signUpBtn:hover:before{
+  height: 100%; 
+}  
+
+#about{
+  /* + */
+  border-right: 2px solid #404e5c;
+}
+#contact{
+  /* + */
+  border-right: 2px solid #404e5c;
+}
+
+/* #signUpBtn:hover{
+  background-color: #d0ccd0;
+  color: #1e1e24;
+  border: solid 1px white;
+} */
+
+
+
+@media screen and (max-width: 1080px) {
+  .Start-content{
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 5% 15%;
+  }
+  .Start-signUpDiv{
+    max-width: 310px;
+    margin: 0 auto;
+  }
+  .Start-contentBody{
+    /* + */
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 50px;
+  }
+  .Start-contentBody-logo {
+    margin-bottom: 16px;
+  }
+  .header{
+    width: device-width;
+    padding: 8px 5% 8px 5%;
+  }
+  .header-btns{
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 720px) {
+  .Start-signUpDiv{
+    min-width: 0;
+    background-color: inherit;
+    box-shadow: 0 0 0 0;
+    padding: 0;
+  }
+  .Start-content{
+    padding: 5% 16px 150px 16px;
+  }
+  .header{
+    width: device-width;
+    padding: 8px 8px;
+  }
+  .header-btns{
+    font-size: 12px;
+  }
+  .Start-about-versionDiv{
+    width: 200px;
+  }
+}
