@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from 'react-router-dom';
 
-import '../css/App.css';
-
-
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
   state = {
     signInInput:'',       //тут обьявляются все переменные (типа this.state)

@@ -3,13 +3,11 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 import * as firebase from 'firebase';
 
-import '../../css/App.css';
-import '../../css/ConfigNewExpert.css';
+// import '../../css/App.css';
+// import '../../css/Home.css';
+// import '../../css/ConfigNewExpert.css';
 import ExpertRoom from './ExpertRoom';
-// import Consultation from './consultation/Consultation';
 
-
-// const Home=({store, getHomeBody, newExpert})=>{
 class Home extends React.Component{
   constructor(){
     super();
@@ -32,18 +30,6 @@ class Home extends React.Component{
     };
   }
 
-
-  onNewExpertClick=()=>{
-    var expert = {
-       name:'',
-       description:'',
-       questions:[],
-       filter:'',
-       names:''
-    }
-
-  }
-
   componentDidMount(){
     const rootRef = firebase.database().ref().child('experts');
     rootRef.on('value', snap=>{
@@ -53,7 +39,6 @@ class Home extends React.Component{
       this.setState({
         names:expertNames,
       });
-
 
       this.displayExperts(expertNames);
     });
@@ -112,7 +97,6 @@ class Home extends React.Component{
     }).catch(function(error) {
       // Uh-oh, an error occurred!
       alert('Uh-oh, an error occurred!');
-      
     });
   }    
 
@@ -140,8 +124,8 @@ class Home extends React.Component{
     return (
       <div>
         <header className="header" >
-          <div className="header-left">
-            <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
+          <div>
+            <NavLink to="/" className="header-logo">
               <div className="header-logo-img"></div>
               <p className="header-logo-title">GIMET</p>
             </NavLink>
@@ -149,10 +133,11 @@ class Home extends React.Component{
               <h2>{this.props.store.accountReducer[0].username}</h2>
             </NavLink>
           </div>
-          <div className="header-right">
-            <NavLink to="/home" className="signOutBtn" >Sign out</NavLink>
+          <div>
+            <NavLink to="/home" className="signOutBtn">Sign out</NavLink>
           </div>
         </header>
+        
         <div className="Home">
           <div className="Home-content">
             {this.props.store.homeBodyHandler[0]?this.props.store.homeBodyHandler[0]:this.state.browseActivity}
@@ -160,7 +145,7 @@ class Home extends React.Component{
               <div className="content-experts-header">
                 <div className="experts-header-title">
                   <h3>Your experts</h3>
-                  <NavLink to="/config_new_expert" className="addExpertBtn" onClick={this.onNewExpertClick}>NEW EXPERT</NavLink>
+                  <NavLink to="/config_new_expert" className="addExpertBtn">NEW EXPERT</NavLink>
                 </div>
                 <div className="experts-header-find">
                   <input type="search" name="findExpert" placeholder="Find an expert"

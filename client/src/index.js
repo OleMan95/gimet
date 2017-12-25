@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import * as firebase from 'firebase';
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore.js';
+import './index.css';
+import './css/App.css';
+import './css/Home.css';
+import './css/ConfigNewExpert.css';
 
 //@ts-nocheck
 var config = {

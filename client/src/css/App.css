@@ -35,12 +35,17 @@ body{
   position:relative;
   z-index: 2;
 }
+.header > div{
+  display: flex;
+  flex-direction: row;
+}
 .header-logo{
   display: flex;
   flex-direction: row;
   text-decoration: none;
   color: white;
   padding: 0 4px;
+  outline:none;
 }
 .header-logo-img{
   background-image: url(../images/logo_blue-gray.svg);

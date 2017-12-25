@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
-import '../../css/App.css';
-import '../../css/Home.css';
-import '../../css/ConfigConsultation.css';
+// import '../../css/App.css';
+// import '../../css/Home.css';
+// import '../../css/ConfigConsultation.css';
 
 
 class ExpertRoom extends React.Component{
@@ -96,7 +96,7 @@ class ExpertRoom extends React.Component{
                 <h3>Question #{index+1}:</h3>
                 <p><mark>key</mark>: {question.key}</p>
                 <p><mark>question</mark>: {question.question}</p>
-                <p><mark>answers</mark>: {question.answersString}</p>
+                <p><mark>questions</mark>: {question.answersString}</p>
               </li>
             )}
           </ul>
@@ -123,7 +123,8 @@ class ExpertRoom extends React.Component{
         <div className="header-expertRoom">
           <div className="header-expertRoom-top">
             <div>
-              <h3 className="header-expertRoom-expertName">{this.props.expert.name}</h3>
+              <h3 className="header-expertRoom-expertName"
+              title={this.props.expert.name}>{this.props.expert.name}</h3>
             </div>
             <div className="header-expertRoom-btns">
               <button className="expertRoom-configureExpert" 
@@ -148,10 +149,6 @@ class ExpertRoom extends React.Component{
 
           <div className="expertRoom-questionList">
             {this.state.questionsDOMs}
-          </div>
-
-          <div className="expertRoom-conditionList">
-            {this.state.conditionsDOMs}
           </div>
 
         </div>

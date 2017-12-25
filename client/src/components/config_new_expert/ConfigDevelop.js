@@ -4,7 +4,7 @@ import {NavLink, withRouter, Prompt } from 'react-router-dom';
 import * as firebase from 'firebase';
 
 import '../../css/App.css';
-import '../../css/Home.css';
+// import '../../css/Home.css';
 // import ConditionsBody from './ConditionsBody';
 
 /*

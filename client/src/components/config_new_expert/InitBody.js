@@ -4,8 +4,7 @@ import {withRouter } from 'react-router-dom';
 import * as firebase from 'firebase';
 
 import '../../css/App.css';
-import '../../css/Home.css';
-// import QuestionsBody from './QuestionsBody';
+// import '../../css/Home.css';
 import ConfigDevelop from './ConfigDevelop';
 
 const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updateExpert})=>{
