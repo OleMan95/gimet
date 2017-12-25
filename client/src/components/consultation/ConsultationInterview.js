@@ -2,8 +2,8 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 
-import '../../css/App.css';
-import '../../css/ConfigConsultation.css';
+// import '../../css/App.css';
+// import '../../css/ConfigConsultation.css';
 import ConsultationResult from './ConsultationResult';
 
 

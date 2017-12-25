@@ -130,7 +130,6 @@
     justify-content: center;
     align-items: center;
 }
-
 .result_frame_btns{
     display: flex;
     flex-direction: row;
@@ -192,4 +191,17 @@
 .question_frame_list label{
     padding: 4px 16px;
     cursor: pointer;
+}
+
+@media screen and (max-width: 1080px) {
+    .consultation_frame{
+        border: 0;
+    }
+    #init_frame_header, #question_frame_header,
+    #result_frame_header{
+        border-bottom: 0;
+    }
+}
+@media screen and (max-width: 720px) {
+
 }

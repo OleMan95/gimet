@@ -190,6 +190,9 @@ body{
   background: inherit;
   color: white;
 }
+.Start-signUpDiv-inputs::placeholder{
+  color: #d0ccd0;  
+}
 .Start-signUpDiv-inputs:last-of-type{
   padding: 8px;
   margin-bottom: 0;
@@ -506,6 +509,9 @@ body{
     width: device-width;
     padding: 8px 5% 8px 5%;
   }
+  .header-btns{
+    font-size: 14px;
+  }
 }
 @media screen and (max-width: 720px) {
   .Start-signUpDiv{
@@ -514,7 +520,6 @@ body{
     box-shadow: 0 0 0 0;
     padding: 0;
   }
-
   .Start-content{
     padding: 5% 16px 150px 16px;
   }
@@ -522,5 +527,10 @@ body{
     width: device-width;
     padding: 8px 8px;
   }
-
+  .header-btns{
+    font-size: 12px;
+  }
+  .Start-about-versionDiv{
+    width: 200px;
+  }
 }

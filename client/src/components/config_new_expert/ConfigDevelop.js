@@ -280,7 +280,7 @@ class ConfigDevelop extends React.Component{
       body: JSON.stringify(this.state.expert)
     }).then((response) => {
       response.json().then(function(data) {  
-        console.log(data);  
+        console.log(data);
       });  
       return response;
     }).catch(function(error) {

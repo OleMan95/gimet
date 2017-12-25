@@ -1,6 +1,7 @@
 "use strict";
 const mongoose = require('mongoose');
 const connectionUrl = 'mongodb://localhost:27017/gimet';
+// const connectionUrl = 'mongodb://mongo/gimet';
 
 mongoose.Promise = Promise;
 

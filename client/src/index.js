@@ -9,6 +9,7 @@ import './index.css';
 import './css/App.css';
 import './css/Home.css';
 import './css/ConfigNewExpert.css';
+import './css/Consultation.css';
 
 //@ts-nocheck
 var config = {

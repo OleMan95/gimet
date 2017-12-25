@@ -55,3 +55,58 @@ input:-moz-placeholder, textarea:-moz-placeholder { /* Firefox 18- */
 label{
   color:#1e1e24;  
 }
+
+
+@media screen and (max-width: 1080px) {
+  h2{
+    font-size: 18px;
+    font-weight: 400;
+    color:#1e1e24;  
+  }
+  h3{
+    font-size: 16px;
+    font-weight: 400;
+    color:#1e1e24;  
+  }
+  h4{
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    color:#1e1e24;  
+  }
+  p{
+    font-size: 14px;  
+    font-weight: 400;
+    color:#1e1e24;
+  }
+  a{
+    font-weight: 500;
+  }
+}
+@media screen and (max-width: 720px) {
+  h2{
+    font-size: 16px;
+    font-weight: 400;
+    color:#1e1e24;  
+  }
+  h3{
+    font-size: 14px;
+    font-weight: 400;
+    color:#1e1e24;  
+  }
+  h4{
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0;
+    color:#1e1e24;  
+  }
+  p{
+    font-size: 12px;  
+    font-weight: 400;
+    color:#1e1e24;
+  }
+  a{
+    font-weight: 500;
+  }
+
+}

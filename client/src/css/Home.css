@@ -141,13 +141,9 @@
   background-size: 25px;
   background-color: inherit;  
   width: 40px;
-  height: 0;
-  transition: height 0.25s ease-out 0s;  
-  
-}
-.content-experts-listItems:hover button{
   height: 30px;
-}  
+  transition: height 0.25s ease-out 0s;  
+}
 .content-experts-listItems button:hover{
   background-color: #e74c3c;
   background-image: url(../images/delete-white.svg);
@@ -164,7 +160,6 @@
 
 /*Content body*/
 .Home-content-body{
-
   min-width: 400px;
   padding-right: 5%;
 }
@@ -411,6 +406,7 @@
   .Home-content-body{
     order: 2;
     min-width: 300px;
+    padding-right: 0;
   }
   .header-userName{
     display: none;
@@ -419,5 +415,8 @@
 @media screen and (max-width: 720px) {
   .Home-content{
     padding: 24px 8px 50px 8px;
+  }
+  .header-expertRoom-top > div:first-of-type{
+    width:70%;
   }
 }
