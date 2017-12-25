@@ -11,8 +11,8 @@ import ExpertRoom from './ExpertRoom';
 class Home extends React.Component{
   constructor(){
     super();
-    this.state={
-      browseActivity:(
+    this.state={ 
+      browseActivity:( // создание елемента который будет отображаться на странице до момента нажатия на експерта в списке експертов
         <div className="Home-content-body">
           <div className="content-body-header">
             <button className="content-body-header-text1">
@@ -44,7 +44,7 @@ class Home extends React.Component{
     });
   }
 
-  displayExperts=(expertNames)=>{
+  displayExperts=(expertNames)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
     let expertListElems=[];
     
     if(!expertNames) {
@@ -53,7 +53,7 @@ class Home extends React.Component{
       );
     }else{
       for(let i=0; i<expertNames.length; i++){
-        expertListElems.push(
+        expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
           <li key={i} id={expertNames[i]} onClick={()=>{this.onExpertClick(expertNames[i])}} 
           className="content-experts-listItems">
           <p>{expertNames[i]}</p>
@@ -68,7 +68,7 @@ class Home extends React.Component{
     });
   }    
 
-  handleFilterChange=(event)=>{
+  handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
     switch (event.target.name) {
       case 'findExpert':
         let newExpertNames = [];
@@ -84,7 +84,7 @@ class Home extends React.Component{
     }
   }
 
-  onDeleteExpertClick=(elem)=>{
+  onDeleteExpertClick=(elem)=>{ // процес удаления експерта при нажатии кнопки удаления в списке експертов.
     this.props.getHomeBody(null);
     
     // Create a reference to the expert to delete
@@ -100,7 +100,7 @@ class Home extends React.Component{
     });
   }    
 
-  onExpertClick=(name)=>{
+  onExpertClick=(name)=>{ // при нажатии на определенного есперта из списка експертов , происходит рендер определенной области с отображеним данных об експерте
     let expert;
     this.props.getHomeBody(this.state.browseActivity);
     
@@ -173,7 +173,7 @@ export default withRouter(connect(
   state=>({
     store: state,
   }),
-  dispatch=>({
+  dispatch=>({ // сохранение в Redux данных
     newExpert: (expert)=>{
       dispatch({type:'NEW_EXPERT',payload: expert});
     },

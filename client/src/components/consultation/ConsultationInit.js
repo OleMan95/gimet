@@ -9,7 +9,7 @@ import ConsultationInterview from './ConsultationInterview';
 class ConsultationInit extends React.Component{
 
     state = {
-        initContent:(
+        initContent:( // создаем обьект в переменную initContent
             <div className="consultation_frame" id="init_frame">
                 <div id="consultation_question_number">
                     <h3>{this.props.expert.name}</h3>
@@ -26,7 +26,7 @@ class ConsultationInit extends React.Component{
 
     }
 
-    onStartClick=()=>{
+    onStartClick=()=>{ // при нажатии кнопки старт загружаем новую страницу ConsultationInterview и присваиваем переменной content ConsultationInterview
         this.props.setContent(<ConsultationInterview/>);  
         
         this.setState({
@@ -67,12 +67,12 @@ class ConsultationInit extends React.Component{
 
 
 export default withRouter(connect(
-    state=>({
+    state=>({ // изменение данных в переменных
       expert: state.ConsultationReducer.expert,
       content: state.ConsultationReducer.content,
       store:state
     }),
-    dispatch=>({
+    dispatch=>({ // сохранение контента в Redux
         setContent: (content)=>{
             dispatch({type:'SET_CONSULTATON_CONTENT',payload: content});
         }
