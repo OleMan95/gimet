@@ -2,21 +2,14 @@ body, html{
   margin: 0;
   padding: 0;
 }
-body{
-  /*background-color: #263238;*/
-  /*background: url(../images/background.jpg) no-repeat center center fixed;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;*/
-}
+
 .Start{
   /* + */
   /*width: 100vw;*/
   width: device-width;
   /* height: 80%; */
   min-height: 600px;
-  background-color: #404e5c;
-  background: url(../images/background.svg) no-repeat center center fixed;
+  background: #404e5c url(../images/background.svg) no-repeat fixed center center;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
@@ -29,7 +22,6 @@ body{
   width: device-width;
   padding: 8px 15% 8px 15%;
   background-color: #1e1e24;
-  /* box-shadow: 1px 1px 10px 0 black; */
   color: white;
   display: flex;
   flex-direction: row;
@@ -52,8 +44,7 @@ body{
 }
 .header-logo-img{
   /* + */
-  background-image: url(../images/logo_blue-gray.svg);
-  background-repeat: no-repeat;
+  background: url(../images/logo_blue-gray.svg) no-repeat;
   background-size: contain;
   width: 50px;
   height: 50px;
@@ -101,8 +92,7 @@ body{
   width: 700px;
   color: white;
   font-size: 24px;
-  margin: auto 0;
-  margin-right: 50px;
+  margin: auto 50px auto 0;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -200,10 +190,7 @@ body{
 .Start-signUpDiv p{
   color: white;
   font-size: 11px;
-  margin: auto;
-  margin-top: 2px;
-  margin-bottom: 8px;
-
+  margin: 2px auto 8px;
 }
 
 .Start-signUpDiv-720{
@@ -216,12 +203,10 @@ body{
   position: relative;
   background-color: #d0ccd0;
   color: #1e1e24;
-  
 }
 .Start-about:before{
   position: absolute;
   background-color: #d0ccd0;
-  /* background-color: #779cab; */
   content: 'In developing...';
   color: #1e1e24;
   text-align: center;
@@ -313,13 +298,13 @@ body{
 
 .Start-contact{
   /* + */
-  min-height: 600px;  
+  min-height: 600px;
   background-color: #1e1e24;
   display: flex;
   flex-direction: row;
   padding: 2% 15%;
   color: white;
-  background: url(../images/background-dark.svg) no-repeat center center fixed;
+  background: url(../images/background.svg) no-repeat center center fixed;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
@@ -435,20 +420,17 @@ body{
   justify-content: center;
   padding: 12px;
   margin-top: 16px;
-  
   text-decoration: none;
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 1px;
   color: #1e1e24;
   text-align: center;
-
   background-color: #92dce5;
   border: none;  
   border-radius: 5px;
   z-index: 0;
   cursor: pointer;
-  
 }
 #signUpBtn:hover{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -477,14 +459,6 @@ body{
   /* + */
   border-right: 2px solid #404e5c;
 }
-
-/* #signUpBtn:hover{
-  background-color: #d0ccd0;
-  color: #1e1e24;
-  border: solid 1px white;
-} */
-
-
 
 @media screen and (max-width: 1080px) {
   .Start-content{

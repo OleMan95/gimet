@@ -109,7 +109,7 @@ class StartPage extends React.Component { //все this.props мы получе�
               <h2>About GIMET Systems</h2>
               <button className='Start-about-versionBtn' onClick={this.onVersionBtn}>Version 0.1.25a</button>
               <div className='Start-about-versionDiv'>
-                <button className='Start-about-versionClose' 
+                <button className='Start-about-versionClose'
                   onClick={this.onVersionClose}></button>
                 <h3>Version 0.1.25a</h3>
                 <p>- A complete change in the creation of the expert 
@@ -156,7 +156,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 
               <div className="contact-inputs">
                 <label htmlFor="msgInp" >Message: </label>
-                <textarea id="msgInp" placeholder="Message..."></textarea>
+                <textarea id="msgInp" placeholder="Message..."/>
               </div>
 
             </form>
@@ -170,20 +170,14 @@ class StartPage extends React.Component { //все this.props мы получе�
 
 const ContentBody = (
   <div className="Start-contentBody">
-    <div className="Start-contentBody-div1">
-      <div className="Start-contentBody-logo"></div>
-      <div className="Start-contentBody-logoBorder"></div>
-    </div>
-    <h3 className="Start-contentBody-text1">Expert systems for everybody.</h3>
+	<div className="Start-contentBody-div1">
+	  <div className="Start-contentBody-logo"/>
+	  <div className="Start-contentBody-logoBorder"/>
+	</div>
+	<h3 className="Start-contentBody-text1">Expert systems for everybody.</h3>
   </div>
 );
 
-
-
-//actions
-var onClickHandler =()=>{
-  alert('click');
-}
 
 export default withRouter(connect(
   state=>({

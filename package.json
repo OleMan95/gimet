@@ -11,9 +11,13 @@
   "author": "Oleksii Manachynskyi <manachinskiy@gmail.com> (oleman95.github.io)",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.3",
+    "jsonwebtoken": "^8.1.0",
     "koa": "^2.4.1",
     "koa-body": "^2.5.0",
     "koa-router": "^7.3.0",
-    "mongoose": "^4.13.7"
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.7",
+    "mongoose-unique-validator": "^1.0.6"
   }
 }
