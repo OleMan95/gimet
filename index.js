@@ -2,12 +2,12 @@
 require('./bootstrap');
 const Koa = require('koa');
 const bodyParser = require('koa-body');
-const app = new Koa();
 const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
-
 const PORT = require('./config').server.port;
+    
+const app = new Koa();
 
 app.use(async (ctx, next) => {
     const start = Date.now();

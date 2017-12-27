@@ -1,26 +1,21 @@
-import React,{Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {NavLink, withRouter } from 'react-router-dom';
-
-// import '../../css/App.css';
-// import '../../css/ConfigConsultation.css';
+import {withRouter } from 'react-router-dom';
 import ConsultationResult from './ConsultationResult';
 
 
 class ConsultationInterview extends React.Component{
 
     state = {
-
         question:'',
         questionsCount:0,
         answers:'',
         tempPair:'',
         result:'',
-        choosenPairs:[],
-        coinciedence:0,
+        chosenPairs:[],
+        coincidence:0,
         currentQuestion:0,
-    }
-
+    };
 
     componentDidMount(){ // получение вопросов и ответов при загрузке страницы
         let question = this.props.expert.questions[this.state.questionsCount].question;
@@ -49,19 +44,19 @@ class ConsultationInterview extends React.Component{
 
         console.log(result);
       
-        if(result.type == 'key'){ // если тип ответа key то происходит поиск нового вопроса та ответов
+        if(result.type === 'key'){ // если тип ответа key то происходит поиск нового вопроса та ответов
             console.log("type",result.type);
             console.log("value",result.value);
             key = result.value;
             for(let i=0; i<questions.length; i++){ // подбор следующего вопроса
-                if(questions[i].key == key){ // если в масиве вопросов есть ключ который совпадает с ранее выбраным, то присваиваем новый вопрос и отображаем новые ответы
+                if(questions[i].key === key){ // если в масиве вопросов есть ключ который совпадает с ранее выбраным, то присваиваем новый вопрос и отображаем новые ответы
                     question = questions[i].question;
                     this.getAnswers(i);
                     this.setState({currentQuestion:i});
                 }
             }
         }
-        else if(result.type == 'text'){// если тип ответа text то происходит отображение результующего ответа
+        else if(result.type === 'text'){// если тип ответа text то происходит отображение результующего ответа
             console.log("type",result.type);
             console.log("value",result.value);
             this.props.setContent(<ConsultationResult result={result.value}/>);
@@ -76,26 +71,26 @@ class ConsultationInterview extends React.Component{
             result:'',
         });
         this.clearAnswers();
-    }
+    };
 
-    getResult=(choosenPairs)=>{ // ......
-        let coinciedence=0;
+    getResult=(chosenPairs)=>{ // ......
+        let coincidence=0;
 
         for(let i=0; i<this.props.expert.conditions.length; i++){
 
-            if(JSON.stringify(this.props.expert.conditions[i].pairs) == JSON.stringify(choosenPairs)) {
+            if(JSON.stringify(this.props.expert.conditions[i].pairs) === JSON.stringify(chosenPairs)) {
                 //тут мы выводим результат, если все наши ответы совпадают с парами в условии
                 console.log('****** result ', this.props.expert.conditions[i].result);
-                coinciedence++;
+                coincidence++;
                 this.setState({
                     result:this.props.expert.conditions[i].result,
-                    coinciedence:coinciedence,
+                    coincidence:coincidence,
                 });
                 return this.props.expert.conditions[i].result;
             }
         }
         return null;
-    }
+    };
 
     clearAnswers=()=>{ // снимаем выделения с радиокнопок
         let elems = document.getElementsByClassName('question_frame_radio');
@@ -103,12 +98,9 @@ class ConsultationInterview extends React.Component{
         for (let i=0; i<elems.length;i++){
             elems[i].checked = false;
         }
-    }
+    };
 
-    handleChange=(elem)=>{// ... механизм определения выбора ответа???
-        let count=this.state.questionsCount;
-        let id = elem.target.id;
-        let key = id.split("#@key-");
+    handleChange=(elem)=>{// механизм определения выбора ответа
         let index = null;
         
         console.log('count ',this.state.questionsCount);
@@ -116,7 +108,7 @@ class ConsultationInterview extends React.Component{
         
         for(let i=0; i<answers.length; i++){
             console.log('ответ ',answers[i]);
-            if(answers[i]==elem.target.value){
+            if(answers[i]===elem.target.value){
                 console.log('нашло ответ ',elem.target.value);
                 index=i;
                 break;
@@ -130,7 +122,7 @@ class ConsultationInterview extends React.Component{
             result:result,
         });
 
-    }
+    };
 
     getAnswers=(count)=>{ // выборка и отображение ответов на екран в соответствии с номером вопроса
         let answers = this.props.expert.questions[count].answers;
@@ -145,7 +137,7 @@ class ConsultationInterview extends React.Component{
                             onChange={(input)=>this.handleChange(input)} value={answers[i]}/>
                     </div>
                     <label htmlFor={i+'#@key-'+key}>{answers[i]}</label>
-                    <div className="answers_list_check"></div>
+                    <div className="answers_list_check"/>
                 </div>
             )
         }
@@ -153,7 +145,7 @@ class ConsultationInterview extends React.Component{
         this.setState({
             answers:answersDOMs,
         });
-    }
+    };
 
     render(){
         return (
@@ -189,7 +181,7 @@ export default withRouter(connect(
     }),
     dispatch=>({
         setContent: (content)=>{
-            dispatch({type:'SET_CONSULTATON_CONTENT',payload: content});
+            dispatch({type:'SET_CONSULTATION_CONTENT',payload: content});
         }
     })
   )(ConsultationInterview));

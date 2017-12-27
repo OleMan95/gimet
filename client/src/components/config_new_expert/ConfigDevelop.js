@@ -3,10 +3,6 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter, Prompt } from 'react-router-dom';
 import * as firebase from 'firebase';
 
-import '../../css/App.css';
-// import '../../css/Home.css';
-// import ConditionsBody from './ConditionsBody';
-
 /*
   expert:{
     name:'',
@@ -44,7 +40,7 @@ class ConfigDevelop extends React.Component{
     answersCount:1, 
     answersString:'',
     finishMassage:'Are you sure you want to go?' 
-  }
+  };
 
   handleInputChange=(event)=>{
     let value = event.target.value.trim();
@@ -66,7 +62,7 @@ class ConfigDevelop extends React.Component{
         break;
       default:
     }
-  }
+  };
 
   onKeyDown=(event)=>{
     if(event.keyCode === 13){
@@ -87,12 +83,11 @@ class ConfigDevelop extends React.Component{
         alert('No answer value found!');
         return;
       }
-      let str = answersValue;
-      let answerValue = str.trim();
+        let answerValue = answersValue.trim();
       //убираем пробелы по краям ответа
 
       for(let i=0; i<this.state.answersList.length; i++){
-        if(this.state.answers[i] == answerValue || !answerValue){
+        if(this.state.answers[i] === answerValue || !answerValue){
           return;          
         }
       }
@@ -110,19 +105,18 @@ class ConfigDevelop extends React.Component{
               <div>
                 <p>{answerValue}</p>
               </div>
-              <div onClick={()=>this.onDelTagClick(answerValue)}></div>
+              <div onClick={() => this.onDelTagClick(answerValue)}/>
             </div>         
           </li>
           )
       ];
       let newResultsList = [
-        // <mark>Result {newAnswersCount}:</mark>
         ...resultsList,
         (
           <li key={answerValue}>
             <div className="CD-resultItem">
               <select defaultValue="none" className="CD-resultSelect">
-                <option value="none"></option>
+                <option value="none"/>
                 <option value="key">key</option>
                 <option value="text">text</option>
               </select>
@@ -152,15 +146,15 @@ class ConfigDevelop extends React.Component{
         answers:newAnswers,        
       });
     }
-  }
+  };
+
   onDelTagClick=(value)=>{
-    let index;
     let answers = this.state.answers;
     let answersList = this.state.answersList;
     let resultsList = this.state.resultsList;
 
     for(let i=0; i<answers.length; i++){
-      if(answers[i] == value){
+      if(answers[i] === value){
         console.log(answers[i], ' = ',value);
         answers.splice(i, 1);
         answersList.splice(i, 1);
@@ -171,7 +165,8 @@ class ConfigDevelop extends React.Component{
     this.setState({
       answersList: answersList,
     });      
-  }
+  };
+
   onAddClick=()=>{
     let questionCount = this.state.questionCount;
     let expert = this.state.expert;
@@ -268,7 +263,8 @@ class ConfigDevelop extends React.Component{
     this.questionInput.value = '';
     this.keyInput.value = '';
     this.answersInput.value = '';
-  }
+  };
+
   onFinish=()=>{
     let unsolvedQuestions = this.state.unsolvedQuestions;
 
@@ -289,13 +285,12 @@ class ConfigDevelop extends React.Component{
 
     this.setToFirebase();
     if(unsolvedQuestions.length > 0){
-      let msg = 'You have unsolved questions: '
-        +unsolvedQuestions+". Are you sure you want to go?";
-      return msg;
+        return 'You have unsolved questions: '
+          + unsolvedQuestions + ". Are you sure you want to go?";
     }else {
       return "Are you sure you want to go?";
     }
-  }
+  };
 
   setToFirebase=()=> {
     let expert = this.state.expert;
@@ -305,7 +300,7 @@ class ConfigDevelop extends React.Component{
       description: expert.description,
       questions: expert.questions
     });
-  }
+  };
 
   render() {
     return (
@@ -316,7 +311,7 @@ class ConfigDevelop extends React.Component{
           </div>
         </div>
 
-        <Prompt when={true} message={(location) => {return this.onFinish();}}/>
+        <Prompt when={true} message={() => {return this.onFinish()}}/>
 
         <div className="CD-content">
           <textarea type="text" rows="5" name="question" id='CD-questioninput'
@@ -324,13 +319,13 @@ class ConfigDevelop extends React.Component{
             placeholder="Write here your question" 
             onChange={(elem)=>this.handleInputChange(elem)}/>
 
-          <input type="text" id="CD-content-keyInput" name="key" 
+          <input type="text" name="key"
             id='CD-keyinput'
             ref={(input)=>{this.keyInput = input}}           
             placeholder="Enter the key for this question"
             onChange={(elem)=>this.handleInputChange(elem)}/>
 
-          <input type="text" id="CD-content-answersInput" name="answer" 
+          <input type="text" name="answer"
             id='CD-answerinput'
             placeholder="Add new answer"
             ref={(input)=>{this.answersInput = input}}            

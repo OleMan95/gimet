@@ -1,24 +1,14 @@
-import React,{Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {NavLink, withRouter, Redirect, Route } from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 
-// import '../../css/App.css';
-// import '../../css/ConfigConsultation.css';
 import ConsultationInit from './ConsultationInit';
 
 class ConsultationResult extends React.Component{
 
-    state = {
-
-    }
-
-    componentDidMount(){
-
-    }
-
     onStartClick=()=>{
         this.props.setContent(<ConsultationInit/>);  
-    }        
+    };
 
     render(){
         return (
@@ -48,7 +38,7 @@ export default withRouter(connect(
     }),
     dispatch=>({
         setContent: (content)=>{
-            dispatch({type:'SET_CONSULTATON_CONTENT',payload: content});
+            dispatch({type:'SET_CONSULTATION_CONTENT',payload: content});
         }
     })
   )(ConsultationResult));

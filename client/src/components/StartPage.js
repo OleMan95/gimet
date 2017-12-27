@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from 'react-router-dom';
 
@@ -10,68 +10,100 @@ class StartPage extends React.Component { //все this.props мы получе�
     passwordValue:'',
   };
 
-  onVersionBtn=()=>{ // вызов и отображение елемента(окна) Start-about-versionDiv в котором находится инф. об изменениях в системе
-    document.getElementsByClassName('Start-about-versionDiv')[0].style.display = 'flex';
-  }
+    onVersionBtn=()=>{ // вызов и отображение елемента(окна) Start-about-versionDiv в котором находится инф. об изменениях в системе
+        this.versionDiv.style.display = 'flex';
+    };
+    onVersionClose=()=>{ // закритие окна при нажатии выхода
+        this.versionDiv.style.display = '';
+    };
+    handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
+        switch (event.target.name) {
+            case 'username':
+                this.setState({
+                    usernameValue:event.target.value,
+                });
+                break;
+            case 'email':
+                this.setState({
+                  emailValue:event.target.value,
+                });
+                break;
+            case 'password':
+                this.setState({
+                  passwordValue:event.target.value,
+                });
+                break;
+            default:
+        }
+    };
 
-  onVersionClose=()=>{ // закритие окна при нажатии выхода
-    document.getElementsByClassName('Start-about-versionDiv')[0].style.display = 'none';
-  }
+    signUpClick=(context)=>{
+      fetch('/v1/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ // занесение данных в JSON
+          name: this.state.usernameValue,
+          email: this.state.emailValue,
+          password: this.state.passwordValue,
+        })
+      }).then((response) => {
+        response.json().then(function(data) {
 
-  handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные 
-    switch (event.target.name) {
-      case 'username':
-        this.setState({
-          usernameValue:event.target.value,
+
+
+            if(data.data){
+              context.signInAction(context);
+            }
         });
-        break;
-      case 'email':
-        this.setState({
-          emailValue:event.target.value,
-        });
-        break;
-      case 'password':
-        this.setState({
-          passwordValue:event.target.value,
-        });
-        break;
-      default:
-    }
-  }
+        return response;
+      }).catch(function(error) {
+        console.log('There has been a problem with fetch operation: ' + error.message);
+      });
+    };
+    signInAction=(context)=>{
 
-  signupClick=()=>{
-    fetch('/v1/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ // занесение данных в JSON
-        name: this.state.usernameValue,
-        email: this.state.emailValue,
-        password: this.state.passwordValue,
-      })
-    }).then((response) => {
-      response.json().then(function(data) {  
-        console.log(data);  
-      });  
-      return response;
-    }).catch(function(error) {
-      console.log('There has been a problem with fetch operation: ' + error.message);
-    });
-  }
+        fetch('/v1/auth/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ // занесение данных в JSON
+                email: this.state.emailValue,
+                password: this.state.passwordValue
+            })
+        }).then((response) => {
+            response.json().then(async function (data) {
+                context.setState({
+                    emailValue:'',
+                    passwordValue:''
+                });
 
-  render(){
-    return (
+                if (data.data) {
+                    context.props.history.push('/home');
+                } else {
+                    alert('Error!');
+                }
+            });
+            return response;
+        }).catch(function(error) {
+            console.log('There has been a problem with fetch operation: ' + error.message);
+        });
+    };
+
+    render(){
+      return (
       <div>
         <header className="header" >  
           <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
-            <div className="header-logo-img"></div>
+            <div className="header-logo-img"/>
             <p className="header-logo-title">GIMET</p>
           </NavLink>
           <div className="header-btnsDiv">
             <a href="#about_block" id="about" className="header-btns">About</a>
             <a href="#contact_block" id="contact" className="header-btns">Contact</a>
-            <NavLink to="/home" id="signInBtn" className="header-btns">Sign in</NavLink>
+            <NavLink to="/signin" id="signInBtn" className="header-btns">Sign in</NavLink>
           </div>
         </header>
 
@@ -98,7 +130,7 @@ class StartPage extends React.Component { //все this.props мы получе�
               </div>
 
               <button type="button" name="signUpBtn" id="signUpBtn"
-              onClick={this.signupClick}>Sign up</button>
+              onClick={()=>this.signUpClick(this)}>Sign up</button>
             </div>
           </div>
         </div>
@@ -107,10 +139,13 @@ class StartPage extends React.Component { //все this.props мы получе�
           <div>
             <div>
               <h2>About GIMET Systems</h2>
-              <button className='Start-about-versionBtn' onClick={this.onVersionBtn}>Version 0.1.25a</button>
-              <div className='Start-about-versionDiv'>
+              <button className='Start-about-versionBtn'
+                      ref={(button)=>{this.versionBtn = button}}
+                      onClick={this.onVersionBtn}>Version 0.1.25a</button>
+              <div className='Start-about-versionDiv'
+                   ref={(button)=>{this.versionDiv = button}}>
                 <button className='Start-about-versionClose'
-                  onClick={this.onVersionClose}></button>
+                    onClick={this.onVersionClose}/>
                 <h3>Version 0.1.25a</h3>
                 <p>- A complete change in the creation of the expert 
                 configuration and consultation with the expert.</p>

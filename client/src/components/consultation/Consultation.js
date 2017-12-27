@@ -1,25 +1,23 @@
-import React,{Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {NavLink, withRouter,Prompt } from 'react-router-dom';
-
-// import '../../css/App.css';
-// import '../../css/ConfigConsultation.css';
+import {NavLink, withRouter} from 'react-router-dom';
 import ConsultationInit from './ConsultationInit';
+
 
 class Consultation extends React.Component{
 
     state = {
         content: (<ConsultationInit/>), // присваиваем перемненной content обьект ConsultationInit
-    }
+    };
 
 
     componentDidMount(){ // .....
         window.onpopstate = this.onBackButtonEvent;
-    }
+    };
 
     onBackButtonEvent=() => { // тут происходит загрузка обьекта ConsultationInit
         this.props.setContent(<ConsultationInit/>);
-    }
+    };
 
 
     render(){
@@ -28,7 +26,7 @@ class Consultation extends React.Component{
                 <header className="header" >
                     <div className="header-left">
                     <NavLink to="/home" activeClassName="Start-header-logo-active" className="header-logo">
-                        <div className="header-logo-img"></div>
+                        <div className="header-logo-img"/>
                         <p className="header-logo-title">GIMET</p>
                     </NavLink>
                     <NavLink to="/home" className="header-userName">
@@ -59,7 +57,7 @@ export default withRouter(connect(
     }),
     dispatch=>({ // сохранение контента в Redux
         setContent: (content)=>{
-            dispatch({type:'SET_CONSULTATON_CONTENT',payload: content});
+            dispatch({type:'SET_CONSULTATION_CONTENT',payload: content});
         }
     })
   )(Consultation));

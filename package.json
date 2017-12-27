@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "start:dev": "supervisor index.js"
+    "start:dev": "supervisor index.js",
+    "start:prod": "node index.js",
+    "build": "cd client && npm run-script build",
+    "install": "(cd client && npm install) && (npm install)"
   },
   "author": "Oleksii Manachynskyi <manachinskiy@gmail.com> (oleman95.github.io)",
   "license": "ISC",

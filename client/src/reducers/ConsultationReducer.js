@@ -1,4 +1,4 @@
-import {SET_CONSULTATON_EXPERT, SET_CONSULTATON_CONTENT} from '../constants/types.js';
+import {SET_CONSULTATION_EXPERT, SET_CONSULTATION_CONTENT} from '../constants/types.js';
 
 const initialState = {
   expert:{},
@@ -9,14 +9,14 @@ const initialState = {
 export default function reducer(state = initialState, action){
   let newState;
   switch (action.type) {
-    case SET_CONSULTATON_EXPERT:
+    case SET_CONSULTATION_EXPERT:
       newState = {
         expert:action.payload,
         content:''
       };
       return newState;
     
-    case SET_CONSULTATON_CONTENT:
+    case SET_CONSULTATION_CONTENT:
       newState = {
         expert: state.expert,
         content: action.payload

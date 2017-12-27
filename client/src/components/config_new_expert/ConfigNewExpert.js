@@ -1,29 +1,25 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {NavLink, withRouter, Prompt} from 'react-router-dom';
-
-import '../../css/App.css';
+import {NavLink, withRouter} from 'react-router-dom';
 import InitBody from './InitBody';
 
 
-// const ConfigNewExpert=({store,questions,questionsLI, dispatchNewExpert, getConfigBody})=>{
 class ConfigNewExpert extends React.Component{
   state = {
     length:this.props.store.accountReducer[0].experts.length - 1,
-  }
+  };
 
   test=()=>{
-    // console.log('TEST: ',this.props.experts[this.state.length].questions);
     console.log('TEST questionsList: ',this.props.store.accountReducer);
-  }
+  };
 
   onBackButtonEvent=() => {
     this.props.getConfigBody(<InitBody/>);
-  }
+  };
 
   componentDidMount=() => {
     window.onpopstate = this.onBackButtonEvent;
-  }
+  };
 
   render() {
     return (
@@ -32,7 +28,7 @@ class ConfigNewExpert extends React.Component{
         <div className="header-left">
           <NavLink to="/home" activeClassName="Start-header-logo-active"
           className="header-logo" onClick={this.onBackButtonEvent}>
-            <div className="header-logo-img"></div>
+            <div className="header-logo-img"/>
             <p className="header-logo-title">GIMET</p>
           </NavLink>
           <NavLink to="/home" className="header-userName"

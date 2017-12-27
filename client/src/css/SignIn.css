@@ -4,87 +4,153 @@ body, html{
 }
 /*Header*/
 .SignIn-header{
-  background-color: rgba(255, 255, 255, 0);
-  display: flex;
-  justify-content: center;
-  padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
 }
-.SignIn-logo-header{
-  background-image: url(../images/app_logo_round_white.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 100px;
-  height: 100px;
+.SignIn-header > div {
+    width:200px;
+    display: flex;
+    flex-direction: column;
+}
+.SignIn-logo{
+    background-image: url(../images/logo_brain.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: 0 auto;
+}
+.SignIn-logoBorder{
+    background-image: url(../images/logo_border_black.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    z-index: -1;
+    content: '';
+    padding: 100px;
+    -webkit-animation:spin 20s linear infinite;
+    -moz-animation:spin 20s linear infinite;
+    animation:spin 20s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+
+.SignIn-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
+    color: white;
+}
+.SignIn-mainLogo{
+    background: url(../images/logo_blue-gray_black.svg) no-repeat;
+    background-size: contain;
+    background-color: rgba(255,255,255,0);
+    width: 70px;
+    height: 70px;
+    align-self: center;
+}
+.SignIn-form > h2{
+    margin-top: 8px;
+}
+.SignIn-errorBlock{
+    display: none;
+    background-color: #e74c3c;
+    width: 300px;
+    padding: 8px 36px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px 0 black;
+    margin-bottom: 8px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.SignIn-errorBlock p{
+    color: white;
+}
+.SignIn-errorCloseBtn{
+    background-image: url(../images/close-white.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-color: inherit;
+}
+.SignIn-errorCloseBtn:hover{
+    background-image: url(../images/close-black.svg);
+}
+.SignIn-form > div:last-of-type{
+    width:300px;
+    background-color: #1e1e24;
+    box-shadow: 0px 1px 2px 0 black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 36px 36px;
+}
+.SignIn-form > div > div{
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+.SignIn-form > div > div label{
+    color: white;
+}
+.SignIn-form > div > div label:last-of-type{
+    margin-top: 16px;
+}
+.SignIn-form > div > div input{
+    padding: 8px 16px;
+    transition: color 0.1s ease, border-color 0.1s ease;
+    margin-bottom: 8px;
+    border: 0;
+    border-bottom: 2px solid #92dce5;
+    background: inherit;
+    color: white;
+}
+.SignIn-form > div > div input::placeholder{
+    color: #d0ccd0;
+}
+.SignIn-form > div > div input:last-of-type{
+    margin-bottom: 24px;
+}
+.SignIn-form > div:last-of-type button{
+    padding: 8px 16px;
+    position: relative;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #1e1e24;
+    background-color: #92dce5;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 0;
+}
+.SignIn-form > div:last-of-type button:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.SignIn-form > div:last-of-type button:before{
+    position: absolute;
+    content: '';
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #779cab;
+    border-radius: 5px;
+    transition: height, 250ms ease;
+    z-index: -1;
+}
+.SignIn-form > div:last-of-type button:hover:before{
+    height: 100%;
 }
 
-/*Form*/
-.SignIn-content{
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
-}
-.SignIn-enter{
-  display: flex;
-  width: 300px;
-  padding: 30px;
-  background-color: #333333;
-  flex-direction: column;
-  box-shadow: 1px 3px 5px 1px black;
-  margin: 0 5%;
-  border-radius: 3px;
-}
-.SignIn-enter-labels{
-  color: white;
-  text-align: left;
-  padding: 4px;
-}
-.SignIn-enter-inputs{
-  padding: 8px;
-  margin-bottom: 8px;
-}
-.SignIn-enter-inputs:last-of-type{
-  padding: 8px;
-  margin-bottom: 0;
-}
-.SignIn-enter-p1{
-  color: white;
-  font-size: 20px;
-  margin-top: 0;
-  margin-bottom: 8px;
-  text-align: center;
-}
-.SignIn-pass{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.SignIn-forgotPass{
-  text-decoration: none;
-  color: white;
-  font-size: 12px;
-}
-.SignIn-forgotPass:hover{
-  cursor: pointer;
-}
-
-/*Buttons*/
-#SignIn-signInBtn{
-  background-color: #e0e0e0;
-  border: 0;
-  font-weight: bold;
-  color: #263238;
-  border-radius: 3px;
-  margin-top: 16px;
-  padding: 12px;
-}
-#SignIn-homeBtn{
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-  color: white;
-  font-weight: bold;
-  padding: 0;
-}
-#signInBtn:hover, #SignIn-homeBtn:hover{
-  cursor: pointer;
-}
