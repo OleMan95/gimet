@@ -5,8 +5,9 @@ const bodyParser = require('koa-body');
 const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
-const PORT = require('./config').server.port;
-    
+// const PORT = require('./config').server.port;
+const PORT = 8080;
+
 const app = new Koa();
 
 app.use(async (ctx, next) => {
