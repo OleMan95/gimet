@@ -17,7 +17,7 @@ class UserController{
         //     return next();
         // }
 
-        ctx.body = await User.find();
+        // ctx.body = await User.find();
 
         ctx.status = 200;
         return next();
