@@ -10,11 +10,11 @@ const jwtService = require('../../services/jwt-service');
 class UserController{
     //GET /users
     async find(ctx, next){ // поле для админа
-        if(!ctx.user){
-            ctx.throw(403, {message:'Forbidden'});
-            ctx.body = ctx.user;
-            return next();
-        }
+        // if(!ctx.user){
+        //     ctx.throw(403, {message:'Forbidden'});
+        //     ctx.body = ctx.user;
+        //     return next();
+        // }
 
         ctx.body = await User.find();
 
