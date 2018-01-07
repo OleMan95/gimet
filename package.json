@@ -9,7 +9,7 @@
     "start:dev": "supervisor index.js",
     "start:prod": "node index.js",
     "build": "cd client && npm run-script build",
-    "install": "(cd client && npm install) && (npm install)"
+    "install": "npm install"
   },
   "author": "Oleksii Manachynskyi <manachinskiy@gmail.com> (oleman95.github.io)",
   "license": "ISC",
