@@ -6,6 +6,7 @@
     "port":3001
   },
   "mongodb":{
-    "host":"mongodb://localhost:27017/gimet"
+    "host_local":"mongodb://localhost:27017/gimet",
+    "host":"mongodb://admin:Oleman9291@ds247077.mlab.com:47077/gimet_db"
   }
 }
