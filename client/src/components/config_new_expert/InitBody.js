@@ -1,23 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter } from 'react-router-dom';
-import * as firebase from 'firebase';
-
-import '../../css/App.css';
-// import '../../css/Home.css';
 import ConfigDevelop from './ConfigDevelop';
 
-const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updateExpert})=>{
-  let expertnameInput = '';
-  let descriptionInput = '';
-  let expertnameValue = '';
+const InitBody=({getConfigBody})=>{
+  let expertNameValue = '';
   let descriptionValue = '';
 
   const handleInputChange=(event)=>{
     switch (event.target.name) {
       case 'expertname':
-        expertnameValue = event.target.value;
-        if(expertnameValue.length > 5){
+        expertNameValue = event.target.value;
+        if(expertNameValue.length > 5){
           document.getElementsByClassName('CNE-initDiv-input')[0].style.borderColor = '#2ecc71';
           return;
         }else{
@@ -29,10 +23,10 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
         break;
       default:
     }
-  }
+  };
 
   const onNextClick=()=>{
-    if(!expertnameValue || expertnameValue.length < 6){
+    if(!expertNameValue || expertNameValue.length < 6){
       document.getElementsByClassName('CNE-initDiv-input')[0].style.borderColor = '#e74c3c';
       alert('The expert name must be at least 6 characters!');
       return;
@@ -40,14 +34,13 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
       document.getElementsByClassName('CNE-initDiv-input')[0].style.borderColor = '#2ecc71';      
     }
 
-    var expert = {
-       name: expertnameValue,
+    const expert = {
+       name: expertNameValue,
        description: descriptionValue,
        questions:[],
-    }
-    // writeExpert(expert.name, expert);
+    };
     getConfigBody(<ConfigDevelop expert={expert}/>);
-  }
+  };
 
   return (
     <div className="CNE-initDiv">
@@ -64,7 +57,7 @@ const InitBody=({store, questions, getConfigBody, newExpert, getQuestions, updat
       <button type="button" name="nextBtn" id="CNE-initDiv-nextBtn" onClick={onNextClick}>Next</button>
     </div>
   );
-}
+};
 
 
 export default withRouter(connect(

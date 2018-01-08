@@ -1,9 +1,8 @@
-import React,{Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {NavLink, withRouter, Redirect, Route } from 'react-router-dom';
+import {withRouter, Redirect, Route} from 'react-router-dom';
 
-// import '../../css/App.css';
-// import '../../css/ConfigConsultation.css';
+
 import ConsultationInterview from './ConsultationInterview';
 
 class ConsultationInit extends React.Component{
@@ -19,12 +18,7 @@ class ConsultationInit extends React.Component{
                 <button className="consultation_startBtn" onClick={this.onStartClick}>Start</button>
             </div>
         ),
-    }
-
-
-    componentDidMount(){
-
-    }
+    };
 
     onStartClick=()=>{ // при нажатии кнопки старт загружаем новую страницу ConsultationInterview и присваиваем переменной content ConsultationInterview
         this.props.setContent(<ConsultationInterview/>);  
@@ -32,7 +26,7 @@ class ConsultationInit extends React.Component{
         this.setState({
             content: <ConsultationInterview/>,
         });  
-    }        
+    };
 
     render(){
         return (
@@ -49,19 +43,13 @@ class ConsultationInit extends React.Component{
                             <div>
                                 <p>{this.props.expert.description}</p>
                             </div>
-            
-                            <button className="consultation_startBtn" 
+                            <button className="consultation_startBtn"
                                 onClick={this.onStartClick}>Start</button>
                         </div>
                     </div>
                 )
             )}/>
-
-
-
-
         )
-
     }
 }
 
@@ -74,7 +62,7 @@ export default withRouter(connect(
     }),
     dispatch=>({ // сохранение контента в Redux
         setContent: (content)=>{
-            dispatch({type:'SET_CONSULTATON_CONTENT',payload: content});
+            dispatch({type:'SET_CONSULTATION_CONTENT',payload: content});
         }
     })
   )(ConsultationInit));

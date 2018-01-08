@@ -125,7 +125,7 @@ class Home extends React.Component{
       <div>
         <header className="header" >
           <div>
-            <NavLink to="/" className="header-logo">
+            <NavLink to="/home" className="header-logo">
               <div className="header-logo-img"></div>
               <p className="header-logo-title">GIMET</p>
             </NavLink>
@@ -134,7 +134,7 @@ class Home extends React.Component{
             </NavLink>
           </div>
           <div>
-            <NavLink to="/home" className="signOutBtn">Sign out</NavLink>
+            <NavLink to="/" className="signOutBtn">Sign out</NavLink>
           </div>
         </header>
         

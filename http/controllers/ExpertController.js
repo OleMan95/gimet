@@ -6,12 +6,22 @@ const ObjectId = require('mongoose').Types.ObjectId;
 class ExpertController{
     //GET /experts
     async find(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
         ctx.body = await Expert.find();
         ctx.status = 200;
         return next();
     }
     //GET /user/:id/experts
     async findUserExperts(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
         const {id} = ctx.params;
         const expertList = [];
         const user = await User.findById(id);
@@ -28,6 +38,11 @@ class ExpertController{
     }
     //GET /expert/:expertId?populate=<value> (true or nothing)
     async findById(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
         const {id, expertId} = ctx.params;
 
         if(ctx.query.populate === 'true'){
@@ -41,6 +56,11 @@ class ExpertController{
     }
     //POST /user/:id/
     async create(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
         const {id} = ctx.params;
         
         const data = {
@@ -64,28 +84,39 @@ class ExpertController{
     }
     //PUT /expert/:id?expertId=<num>
     async update(ctx, next){
-      const {id} = ctx.params;
-      const data = ctx.request.body;
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
+        const {id} = ctx.params;
+        const data = ctx.request.body;
       
-      ctx.status = 200;
-      ctx.body = await User.findByIdAndUpdate(ctx.query.expertId, data, {new:true});
-      return next();
+        ctx.status = 200;
+        ctx.body = await User.findByIdAndUpdate(ctx.query.expertId, data, {new:true});
+        return next();
     }
     //DELETE /expert/:id?expertId=<num>
     async delete(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
         const {id} = ctx.params;
         const user = await User.findById(id);
         const userExperts = user.experts;
         
         for(let i=0;i<userExperts.length;i++){
-            if(userExperts[i] == ctx.query.expertId){
+            if(userExperts[i] === ctx.query.expertId){
                 userExperts.splice(i, 1);
+                // удаление эксперта у пользователя
                 await User.findByIdAndUpdate(id, {experts: userExperts}, {new:false});
+                // удаление эксперта в общем списке
                 var {deletedCount} = await Expert.deleteOne({_id: ObjectId(ctx.query.expertId)});
             }
         }
         
-        // var {deletedCount} = await Expert.deleteOne({_id: ObjectId(expertId)});
         if(deletedCount===1) ctx.status = 200;
         else ctx.status = 204;
 

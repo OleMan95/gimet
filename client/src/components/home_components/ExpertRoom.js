@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
-// import '../../css/App.css';
-// import '../../css/Home.css';
-// import '../../css/ConfigConsultation.css';
+
 
 
 class ExpertRoom extends React.Component{
@@ -21,7 +19,7 @@ class ExpertRoom extends React.Component{
     //Параметр null знатит то, что должно отобразится окно
     // активности (browseActivity)
     this.props.getHomeBody(null);
-  }
+  };
 
   componentDidMount(){ // происходит после рендеринга объекта
     if(!this.props.expert.description){ // если присутствует описание про експерта то происходит вывод this.props.expert.description, если нет то Empty
@@ -106,16 +104,8 @@ class ExpertRoom extends React.Component{
 
   }
 
-  onConfigureExpertClick=()=>{// .....
-    var url = 'http://www.google.com';
-    fetch(url).then((response) => {
-      if(!response.ok) alert('Download error!');
-      return response;
-    }).then((response) => response.json())
-    .then((data) => {
-      console.log('загружено: '+data);
-})
-  }
+  onConfigureExpertClick=()=>{
+  };
 
   render(){
     return (
@@ -141,7 +131,7 @@ class ExpertRoom extends React.Component{
           </div>
 
           <div className="header-expertRoom-bottom">
-            <NavLink to="/consultation" className="header-expertRoom-consultationBtn" onClick={this.onCloseExpertClick}>Consultation</NavLink>            
+            <NavLink to="/consultation" className="header-expertRoom-consultationBtn">Consultation</NavLink>
           </div>
 
         </div>

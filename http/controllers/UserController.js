@@ -1,12 +1,22 @@
 "use strict";
-const {User} = require('./../../models');
-const {Expert} = require('./../../models');
+const {User, Expert} = require('./../../models');
 const ObjectId = require('mongoose').Types.ObjectId;
+const pick = require('lodash/pick');
+const jwtService = require('../../services/jwt-service');
+
+
 //5a36cbdfcdaf0d4d7e34182b
 
 class UserController{
     //GET /users
-    async find(ctx, next){
+    async find(ctx, next){ // поле для админа
+        console.log("find method");
+        // if(!ctx.user){
+        //     ctx.throw(403, {message:'Forbidden'});
+        //     ctx.body = ctx.user;
+        //     return next();
+        // }
+
         ctx.body = await User.find();
 
         ctx.status = 200;
@@ -14,6 +24,12 @@ class UserController{
     }
     //GET /users/:id?populate=<value> (true or nothing)
     async findById(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
+
         const {id} = ctx.params;
         
         if(ctx.query.populate === 'true'){
@@ -25,22 +41,41 @@ class UserController{
         ctx.status = 200;
         return next();
     }
-    //POST /users
-    async create(ctx, next){
-        const data = {
-            name: ctx.request.body.name,
-            email: ctx.request.body.email,
-            password: ctx.request.body.password,
-            experts: [],
-        };
-        const user = new User(data);
-        
+    // POST /auth/signup
+    async signup(ctx){
+        const { _id } = await User.create(pick(ctx.request.body, User.createFields));
+        const user = await User.findOneWithPublicFields({_id});
+
         ctx.status = 200;
-        ctx.body = await user.save();
-        return next();
+        ctx.body = { data: user };
+    }
+    // POST /auth/signin
+    async signin(ctx){
+        const { email, password } = ctx.request.body;
+
+        if(!email || !password){
+            ctx.throw(400, {message:'Invalid data'});
+        }
+
+        const user = await User.findOne({email});
+        if(!user){
+            ctx.throw(400, {message:'User not found'});
+        }
+        if(!user.comparePasswords(password)){
+            ctx.throw(400, {message:'Invalid data'});
+        }
+        const token = await jwtService.genToken(email);
+        ctx.status = 200;
+        ctx.body = { data: token };
     }
     //PUT /users/:id
     async update(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
+
         const {id} = ctx.params;
         const data = ctx.request.body;
         ctx.status = 200;
@@ -49,6 +84,11 @@ class UserController{
     }
     //DELETE /users/:id
     async delete(ctx, next){
+        if(!ctx.user){
+            ctx.throw(403, {message:'Forbidden'});
+            ctx.body = ctx.user;
+            return next();
+        }
         const {id} = ctx.params;
         
         const user = await User.findById(id);

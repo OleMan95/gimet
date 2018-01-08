@@ -1,22 +1,24 @@
 "use strict";
 const Router = require('koa-router');
-const router = new Router();
+const router = new Router({prefix: '/v1'});
 const {UserController, ExpertController} = require('./controllers');
 
 const userController = new UserController();
 const expertController = new ExpertController();
 
-router.get('/v1/users', userController.find);
-router.get('/v1/user/:id', userController.findById);
-router.post('/v1/user', userController.create);
-router.put('/v1/user/:id', userController.update);
-router.delete('/v1/user/:id', userController.delete);
+router.get('/users', userController.find);
+router.get('/user/:id', userController.findById);
+// router.post('/user', userController.create);
+router.post('/auth/signup', userController.signup);
+router.post('/auth/signin', userController.signin);
+router.put('/user/:id', userController.update);
+router.delete('/user/:id', userController.delete);
 
-router.get('/v1/experts', expertController.find);
-router.get('/v1/user/:id/experts', expertController.findUserExperts);
-router.get('/v1/expert/:expertId', expertController.findById);
-router.post('/v1/user/:id/', expertController.create);
-router.put('/v1/expert/:id', expertController.update); // /../../..?expertId=<num>
-router.delete('/v1/expert/:id', expertController.delete); // /../../..?expertId=<num>
+router.get('/experts', expertController.find);
+router.get('/user/:id/experts', expertController.findUserExperts);
+router.get('/expert/:expertId', expertController.findById);
+router.post('/user/:id/', expertController.create);
+router.put('/expert/:id', expertController.update); // /../../..?expertId=<num>
+router.delete('/expert/:id', expertController.delete); // /../../..?expertId=<num>
 
 module.exports = router;
