@@ -62,6 +62,7 @@ app.use(bodyParser());
 app.use(serve('public'));
 app.use(router.middleware());
 app.use(router.allowedMethods);
+app.use(router.routes());
 
 
 
