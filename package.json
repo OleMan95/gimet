@@ -10,7 +10,8 @@
     "build": "cd client && npm run build"
   },
   "engines": {
-    "node": "8.9.4"
+    "node": "8.9.4",
+    "npm": "5.6.0"
   },
   "author": "Oleksii Manachynskyi <manachinskiy@gmail.com> (oleman95.github.io)",
   "license": "ISC",
