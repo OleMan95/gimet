@@ -2,6 +2,7 @@
 require('./bootstrap');
 const Koa = require('koa');
 const bodyParser = require('koa-body');
+const serve = require('koa-static');
 const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
@@ -58,6 +59,7 @@ app.use(async(ctx, next) => {
 }); // auth
 
 app.use(bodyParser());
+app.use(serve('public'));
 app.use(router.middleware());
 app.use(router.allowedMethods);
 
