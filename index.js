@@ -6,7 +6,7 @@ const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
 // const PORT = require('./config').server.port;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const app = new Koa();
 
@@ -63,7 +63,7 @@ app.use(router.allowedMethods);
 
 
 app.listen(PORT, ()=>{
-    console.log('\nServer has started...');
+    console.log('\nServer has started on port:'+PORT);
 });
 
 
