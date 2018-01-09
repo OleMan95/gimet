@@ -81,6 +81,7 @@ class StartPage extends React.Component { //все this.props мы получе�
                 });
 
                 if (data.data) {
+                    context.props.setUser(data.data);
                     context.props.history.push('/home');
                 } else {
                     alert('Error!');
@@ -218,5 +219,9 @@ export default withRouter(connect(
   state=>({
     store: state,
   }),
-  dispatch=>({})
+  dispatch=>({
+      setUser: (user)=>{
+          dispatch({type:'NEW_EXPERT',payload: user});
+      }
+  })
 )(StartPage));

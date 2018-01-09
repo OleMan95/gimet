@@ -266,11 +266,13 @@ class ConfigDevelop extends React.Component{
 
   onFinish=()=>{
     let unsolvedQuestions = this.state.unsolvedQuestions;
+    const url = '/v1/user/' + this.props.store.accountReducer.user._id;
 
-    fetch('/v1/user/5a3801ea9f91a11904d4de0a', {
+    fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization':this.props.store.accountReducer.token
       },
       body: JSON.stringify(this.state.expert)
     }).then((response) => {
