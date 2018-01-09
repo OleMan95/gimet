@@ -28,34 +28,42 @@ class Home extends React.Component{
   };
 
   componentDidMount(){
-    console.log(this.props.store.accountReducer);
-    const rootRef = firebase.database().ref().child('experts');
-    rootRef.on('value', snap=>{
-      let expertNames;
-      if(snap.val()) expertNames = Object.keys(snap.val());
+      const url = '/v1/user/' + this.props.store.accountReducer.user._id + '/experts';
+      const context = this;
 
-      this.setState({
-        names:expertNames,
+      fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization':this.props.store.accountReducer.token
+          },
+
+      }).then((response) => {
+          response.json().then(function(data) {
+              console.log(data);
+              context.displayExperts(data);
+
+          });
+          return response;
+      }).catch(function(error) {
+          console.log('There has been a problem with fetch operation: ' + error.message);
       });
-
-      this.displayExperts(expertNames);
-    });
   };
 
-  displayExperts=(expertNames)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
+  displayExperts=(experts)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
     let expertListElems=[];
     
-    if(!expertNames) {
+    if(!experts) {
       expertListElems = (
         <p className="content-experts-emptyList">No experts</p>
       );
     }else{
-      for(let i=0; i<expertNames.length; i++){
+      for(let i=0; i<experts.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
-          <li key={i} id={expertNames[i]} onClick={()=>{this.onExpertClick(expertNames[i])}} 
+          <li key={i} id={experts[i]._id} onClick={()=>{this.onExpertClick(experts[i])}}
             className="content-experts-listItems">
-            <p>{expertNames[i]}</p>
-            <button id={expertNames[i]} onClick={(i) => this.onDeleteExpertClick(i)}/>
+            <p>{experts[i].name}</p>
+            <button id={experts[i]._id} onClick={(i) => this.onDeleteExpertClick(i)}/>
           </li>
         );
       }
