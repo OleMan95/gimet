@@ -4,22 +4,6 @@ import {withRouter} from 'react-router-dom';
 
 class SignIn extends React.Component { //все this.props мы получем как аргументы функции
     state = {
-        formContent:(
-            <div>
-                <div>
-                    <label>Email</label>
-                    <input type="email" name="email"
-                           placeholder="you@example.com"
-                           onChange={(event)=>this.handleInputChange(event)}/>
-
-                    <label>Password</label>
-                    <input type="password" name="password"
-                           placeholder="Enter a password"
-                           onChange={(event)=>this.handleInputChange(event)}/>
-                </div>
-                <button onClick={()=>this.signInAction(this)}>Login</button>
-            </div>
-        ),
         emailValue:'',
         passwordValue:'',
         errorMessage:'',
@@ -85,7 +69,20 @@ class SignIn extends React.Component { //все this.props мы получем �
                         <button className="SignIn-errorCloseBtn"
                             onClick={() => this.errorClose()}/>
                     </div>
-                    {this.state.formContent}
+                    <div>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" name="email"
+                                   placeholder="you@example.com"
+                                   onChange={(event)=>this.handleInputChange(event)}/>
+
+                            <label>Password</label>
+                            <input type="password" name="password"
+                                   placeholder="Enter a password"
+                                   onChange={(event)=>this.handleInputChange(event)}/>
+                        </div>
+                        <button onClick={()=>this.signInAction(this)}>Login</button>
+                    </div>
                 </div>
             </div>
         );

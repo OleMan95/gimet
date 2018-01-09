@@ -8,7 +8,6 @@ const expertController = new ExpertController();
 
 router.get('/users', userController.find);
 router.get('/user/:id', userController.findById);
-// router.post('/user', userController.create);
 router.post('/auth/signup', userController.signup);
 router.post('/auth/signin', userController.signin);
 router.put('/user/:id', userController.update);

@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter, Prompt } from 'react-router-dom';
-import * as firebase from 'firebase';
 
 /*
   expert:{
@@ -283,23 +282,12 @@ class ConfigDevelop extends React.Component{
       console.log('There has been a problem with fetch operation: ' + error.message);
     });
 
-    this.setToFirebase();
     if(unsolvedQuestions.length > 0){
         return 'You have unsolved questions: '
           + unsolvedQuestions + ". Are you sure you want to go?";
     }else {
       return "Are you sure you want to go?";
     }
-  };
-
-  setToFirebase=()=> {
-    let expert = this.state.expert;
-
-    firebase.database().ref('experts/' + expert.name).set({
-      name: expert.name,
-      description: expert.description,
-      questions: expert.questions
-    });
   };
 
   render() {

@@ -3,9 +3,6 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 import * as firebase from 'firebase';
 
-// import '../../css/App.css';
-// import '../../css/Home.css';
-// import '../../css/ConfigNewExpert.css';
 import ExpertRoom from './ExpertRoom';
 
 class Home extends React.Component{
@@ -28,12 +25,12 @@ class Home extends React.Component{
       ),
       expertNames:[]
     };
-  }
+  };
 
   componentDidMount(){
     const rootRef = firebase.database().ref().child('experts');
     rootRef.on('value', snap=>{
-      let expertNames
+      let expertNames;
       if(snap.val()) expertNames = Object.keys(snap.val());
 
       this.setState({
@@ -42,7 +39,7 @@ class Home extends React.Component{
 
       this.displayExperts(expertNames);
     });
-  }
+  };
 
   displayExperts=(expertNames)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
     let expertListElems=[];
@@ -55,9 +52,9 @@ class Home extends React.Component{
       for(let i=0; i<expertNames.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
           <li key={i} id={expertNames[i]} onClick={()=>{this.onExpertClick(expertNames[i])}} 
-          className="content-experts-listItems">
-          <p>{expertNames[i]}</p>
-          <button id={expertNames[i]} onClick={(i)=>this.onDeleteExpertClick(i)}></button>
+            className="content-experts-listItems">
+            <p>{expertNames[i]}</p>
+            <button id={expertNames[i]} onClick={(i) => this.onDeleteExpertClick(i)}/>
           </li>
         );
       }
@@ -66,7 +63,7 @@ class Home extends React.Component{
     this.setState({
       expertNames:expertListElems,
     });
-  }    
+  };
 
   handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
     switch (event.target.name) {
@@ -82,7 +79,7 @@ class Home extends React.Component{
         break;
       default:
     }
-  }
+  };
 
   onDeleteExpertClick=(elem)=>{ // процес удаления експерта при нажатии кнопки удаления в списке експертов.
     this.props.getHomeBody(null);
@@ -98,17 +95,16 @@ class Home extends React.Component{
       // Uh-oh, an error occurred!
       alert('Uh-oh, an error occurred!');
     });
-  }    
+  };
 
   onExpertClick=(name)=>{ // при нажатии на определенного есперта из списка експертов , происходит рендер определенной области с отображеним данных об експерте
-    let expert;
+    let expert = {};
     this.props.getHomeBody(this.state.browseActivity);
     
     
     const expertRef = firebase.database().ref().child('experts').child(name);
     expertRef.on('value', snap=>{
       expert = snap.val();
-
     });
 
     //Передаем компонент ExpertRoom для отображения его
@@ -118,7 +114,7 @@ class Home extends React.Component{
     }
     this.props.getHomeBody(<ExpertRoom expert={expert}/>);
     this.props.setConsultationExpert(expert);
-  }
+  };
 
   render(){
     return (
@@ -126,11 +122,11 @@ class Home extends React.Component{
         <header className="header" >
           <div>
             <NavLink to="/home" className="header-logo">
-              <div className="header-logo-img"></div>
+              <div className="header-logo-img"/>
               <p className="header-logo-title">GIMET</p>
             </NavLink>
             <NavLink to="/home" className="header-userName">
-              <h2>{this.props.store.accountReducer[0].username}</h2>
+              <h2>{this.props.store.accountReducer}</h2>
             </NavLink>
           </div>
           <div>
@@ -164,7 +160,7 @@ class Home extends React.Component{
         </div>
   
       </div>
-    )}
+    )};
 }
 
 
@@ -174,9 +170,6 @@ export default withRouter(connect(
     store: state,
   }),
   dispatch=>({ // сохранение в Redux данных
-    newExpert: (expert)=>{
-      dispatch({type:'NEW_EXPERT',payload: expert});
-    },
     getHomeBody: (id)=>{
       dispatch({type:'GET_HOME_BODY',payload: id});
     },
