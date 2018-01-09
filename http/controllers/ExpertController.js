@@ -22,14 +22,19 @@ class ExpertController{
             ctx.body = ctx.user;
             return next();
         }
+
         const {id} = ctx.params;
         const expertList = [];
         const user = await User.findById(id);
         const userExperts = user.experts;
-        
+
+
         for(let i=0;i<userExperts.length;i++){
             let expert = await Expert.findById(userExperts[i]);
-            expertList.push(expert);
+            expertList.push({
+                _id: expert._id,
+                name: expert.name
+            });
         }            
 
         ctx.body = expertList;
