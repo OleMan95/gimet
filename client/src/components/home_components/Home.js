@@ -28,6 +28,7 @@ class Home extends React.Component{
   };
 
   componentDidMount(){
+    console.log(this.props.store.accountReducer);
     const rootRef = firebase.database().ref().child('experts');
     rootRef.on('value', snap=>{
       let expertNames;
@@ -126,7 +127,7 @@ class Home extends React.Component{
               <p className="header-logo-title">GIMET</p>
             </NavLink>
             <NavLink to="/home" className="header-userName">
-              <h2>{this.props.store.accountReducer}</h2>
+              <h2>{this.props.store.accountReducer.user.name}</h2>
             </NavLink>
           </div>
           <div>

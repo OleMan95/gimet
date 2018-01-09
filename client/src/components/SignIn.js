@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import {NEW_EXPERT} from "../constants/types";
 
 class SignIn extends React.Component { //все this.props мы получем как аргументы функции
     state = {
@@ -39,6 +40,7 @@ class SignIn extends React.Component { //все this.props мы получем �
         }).then((response) => {
             response.json().then(async function (data) {
                 if (data.data) {
+                    context.props.setUser(data.data);
                     context.props.history.push('/home');
                 } else {
                     context.errorBlock.style.display = 'flex';
@@ -86,12 +88,16 @@ class SignIn extends React.Component { //все this.props мы получем �
                 </div>
             </div>
         );
-    }
+    };
 }
 
 export default withRouter(connect(
     state=>({
         store: state,
     }),
-    dispatch=>({})
+    dispatch=>({
+        setUser: (user)=>{
+            dispatch({type:'NEW_EXPERT',payload: user});
+        }
+    })
 )(SignIn));

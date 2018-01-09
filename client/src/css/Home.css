@@ -13,6 +13,9 @@
   padding: 0 8px;
   outline:none;
 }
+.header-userName h2{
+  color: white;
+}
 .signOutBtn{
   height: 50px;
   text-decoration: none;
