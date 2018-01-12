@@ -36,49 +36,6 @@ class ExpertRoom extends React.Component{
       });
     }
 
-    if(!this.props.expert.conditions){// если не присутствуют conditions в експерте то No conditions!
-      this.setState({
-        conditionsDOMs:(
-          <p className="expertRoom-emptyText">No conditions!</p>
-        ),
-      });
-    }else{ // иначе выводятся все conditions
-      let isEmpty = false;
-  
-      for(let i=0;i<this.props.expert.conditions.length;i++){ // проверка на наличие пар в експерте
-        if(!this.props.expert.conditions[i].pairs){
-          isEmpty = true;
-        }
-      }
-  
-      if(isEmpty){ // если пар нету, то выводим Incorrectly configured conditions!
-        this.setState({
-          conditionsDOMs:(
-            <p className="expertRoom-emptyText">Incorrectly configured conditions!</p>
-          ),
-        });
-      }else{ // если пары есть, то выводим информацию Conditions
-        this.setState({
-          conditionsDOMs:(
-            <ul className="expertRoom-conditionList-list">
-              {this.props.expert.conditions.map((condition, index)=>
-                <li key={index} className="expertRoom-conditionList-listItem">
-                  <h3>Condition #{index+1}:</h3>
-                  <h4>if</h4>
-                  {condition.pairs.map((pair, i)=>
-                    <p key={i}><mark>{pair.key}</mark> = {pair.answer}</p>)}
-                  <h4>then</h4>                  
-                  <p><mark>result</mark> = {condition.result}</p>
-                </li>
-              )}
-            </ul>
-          ),
-        });
-      }
-    }
-        
-    
-
     if(!this.props.expert.questions){ // проверка на наличие вопросов, если нету то вывод No questions!
       this.setState({
         questionsDOMs:(
@@ -107,6 +64,11 @@ class ExpertRoom extends React.Component{
   onConfigureExpertClick=()=>{
   };
 
+  consultationClick=(context)=>{
+      context.props.setConsultationExpert(this.props.expert);
+      context.props.history.push('/consultation');
+  };
+
   render(){
     return (
       <div className="Home-content-body">
@@ -131,7 +93,7 @@ class ExpertRoom extends React.Component{
           </div>
 
           <div className="header-expertRoom-bottom">
-            <NavLink to="/consultation" className="header-expertRoom-consultationBtn">Consultation</NavLink>
+            <button onClick={()=>{this.consultationClick(this)}} className="header-expertRoom-consultationBtn">Consultation</button>
           </div>
 
         </div>
@@ -147,6 +109,8 @@ class ExpertRoom extends React.Component{
   }
 }
 
+{/*<NavLink to="/consultation" className="header-expertRoom-consultationBtn">Consultation</NavLink>*/}
+
 export default withRouter(connect(
   state=>({
     store: state,
@@ -154,6 +118,9 @@ export default withRouter(connect(
   dispatch=>({
     getHomeBody: (id)=>{
       dispatch({type:'GET_HOME_BODY',payload: id});
+    },
+    setConsultationExpert: (expert)=>{
+      dispatch({type:'SET_CONSULTATION_EXPERT1',payload: expert});
     }
   })
 )(ExpertRoom));

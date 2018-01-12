@@ -18,6 +18,7 @@ class ConsultationInterview extends React.Component{
     };
 
     componentDidMount(){ // получение вопросов и ответов при загрузке страницы
+        console.log('interview: ', this.props.expert);
         let question = this.props.expert.questions[this.state.questionsCount].question;
         this.getAnswers(this.state.questionsCount);
 

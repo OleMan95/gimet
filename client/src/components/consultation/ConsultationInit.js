@@ -21,11 +21,11 @@ class ConsultationInit extends React.Component{
     };
 
     onStartClick=()=>{ // при нажатии кнопки старт загружаем новую страницу ConsultationInterview и присваиваем переменной content ConsultationInterview
-        this.props.setContent(<ConsultationInterview/>);  
-        
-        this.setState({
-            content: <ConsultationInterview/>,
-        });  
+        console.log('onStartClick');
+
+        this.props.setContent(<ConsultationInterview/>);
+        console.log('this.props.content: ', this.props.content);
+
     };
 
     render(){

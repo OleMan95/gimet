@@ -60,9 +60,8 @@ class Home extends React.Component{
     }else{
       for(let i=0; i<experts.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
-          <li key={i} id={experts[i]._id} onClick={()=>{this.onExpertClick(experts[i])}}
-            className="content-experts-listItems">
-            <p>{experts[i].name}</p>
+          <li key={i} id={experts[i]._id} onClick={(elem)=>{this.onExpertClick(experts[i])}} className="content-experts-listItems">
+            <p id={experts[i]._id}>{experts[i].name}</p>
             <button id={experts[i]._id} onClick={(i) => this.onDeleteExpertClick(i)}/>
           </li>
         );
@@ -106,23 +105,28 @@ class Home extends React.Component{
     });
   };
 
-  onExpertClick=(name)=>{ // при нажатии на определенного есперта из списка експертов , происходит рендер определенной области с отображеним данных об експерте
-    let expert = {};
-    this.props.getHomeBody(this.state.browseActivity);
-    
-    
-    const expertRef = firebase.database().ref().child('experts').child(name);
-    expertRef.on('value', snap=>{
-      expert = snap.val();
-    });
+  onExpertClick=(expert, elem)=>{ // при нажатии на определенного есперта из списка експертов ,
+                                  // происходит рендер определенной области с отображеним данных об експерте
+      const url = '/v1/expert/' + expert._id;
+      const ctx = this;
+      console.log('expert: ', expert._id);
 
-    //Передаем компонент ExpertRoom для отображения его
-    // вместо browseActivity (по умолчанию) по нажатию на эксперта
-    if(!expert){
-      return;
-    }
-    this.props.getHomeBody(<ExpertRoom expert={expert}/>);
-    this.props.setConsultationExpert(expert);
+      fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization':this.props.store.accountReducer.token
+          }
+      }).then((response) => {
+          response.json().then(function(data) {
+              console.log(data);
+              ctx.props.getHomeBody(<ExpertRoom expert={data}/>);
+              // ctx.props.setConsultationExpert(data);
+          });
+          return response;
+      }).catch(function(error) {
+          console.log('There has been a problem with fetch operation: ' + error.message);
+      });
   };
 
   render(){
@@ -182,8 +186,8 @@ export default withRouter(connect(
     getHomeBody: (id)=>{
       dispatch({type:'GET_HOME_BODY',payload: id});
     },
-    setConsultationExpert: (expert)=>{
-      dispatch({type:'SET_CONSULTATON_EXPERT',payload: expert});
-    }
+    // setConsultationExpert: (expert)=>{
+    //   dispatch({type:'SET_CONSULTATON_EXPERT1',payload: expert});
+    // }
   })
 )(Home));
