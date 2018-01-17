@@ -113,7 +113,7 @@ class ExpertController{
         const userExperts = user.experts;
         
         for(let i=0;i<userExperts.length;i++){
-            if(userExperts[i] === ctx.query.expertId){
+            if(userExperts[i] == ctx.query.expertId){
                 userExperts.splice(i, 1);
                 // удаление эксперта у пользователя
                 await User.findByIdAndUpdate(id, {experts: userExperts}, {new:false});

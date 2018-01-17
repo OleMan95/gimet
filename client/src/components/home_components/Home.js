@@ -4,6 +4,7 @@ import {NavLink, withRouter } from 'react-router-dom';
 import * as firebase from 'firebase';
 
 import ExpertRoom from './ExpertRoom';
+// import ConfirmDeleteExpert from '/.ConfirmDeleteExpert';
 
 class Home extends React.Component{
   constructor(){
@@ -23,11 +24,17 @@ class Home extends React.Component{
           </div>
         </div>
       ),
-      expertNames:[]
+      expertNames:[],
+      confirmationBlock: "",
     };
   };
 
   componentDidMount(){
+      this.getExperts();
+  };
+
+  getExperts=()=>{
+
       const url = '/v1/user/' + this.props.store.accountReducer.user._id + '/experts';
       const context = this;
 
@@ -48,6 +55,7 @@ class Home extends React.Component{
       }).catch(function(error) {
           console.log('There has been a problem with fetch operation: ' + error.message);
       });
+
   };
 
   displayExperts=(experts)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
@@ -62,7 +70,7 @@ class Home extends React.Component{
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
           <li key={i} id={experts[i]._id} onClick={(elem)=>{this.onExpertClick(experts[i])}} className="content-experts-listItems">
             <p id={experts[i]._id}>{experts[i].name}</p>
-            <button id={experts[i]._id} onClick={(i) => this.onDeleteExpertClick(i)}/>
+            <button id={experts[i]._id} onClick={(elem) => this.onConfirmDeleteUserDialog(experts[i])}/>
           </li>
         );
       }
@@ -89,20 +97,76 @@ class Home extends React.Component{
     }
   };
 
-  onDeleteExpertClick=(elem)=>{ // процес удаления експерта при нажатии кнопки удаления в списке експертов.
-    this.props.getHomeBody(null);
+  onDeleteExpertClick=(expert)=>{ // процес удаления експерта при нажатии кнопки удаления в списке експертов.
+    // this.props.getHomeBody(<ConfirmDeleteExpert />);
+      const userId = this.props.store.accountReducer.user._id;
+      console.log(userId);
+      const url = '/v1/expert/'+userId+'?expertId='+ expert._id;
+      const ctx = this;
+      console.log('expert: ', expert._id);
+
+      fetch(url, {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization':this.props.store.accountReducer.token
+          }
+      }).then((response) => {
+          if(response.status==200)
+          {
+              ctx.getExperts();
+          }
+          else
+          {
+              alert("Expert not found");
+          }
+          ctx.ConfirmDeleteUserDiv.style.display='';
+
+          return response;
+      }).catch(function(error) {
+          console.log('There has been a problem with fetch operation: ' + error.message);
+      });
     
     // Create a reference to the expert to delete
-    const rootRef = firebase.database().ref().child('experts').child(elem.target.id);
+    // const rootRef = firebase.database().ref().child('experts').child(elem.target.id);
+    //
+    // // Delete the expert
+    // rootRef.remove().then(function() {
+    //   // File deleted successfully
+    //   alert('Expert deleted successfully!');
+    // }).catch(function(error) {
+    //   // Uh-oh, an error occurred!
+    //   alert('Uh-oh, an error occurred!');
+    // });
 
-    // Delete the expert
-    rootRef.remove().then(function() {
-      // File deleted successfully
-      alert('Expert deleted successfully!');
-    }).catch(function(error) {
-      // Uh-oh, an error occurred!
-      alert('Uh-oh, an error occurred!');
-    });
+  };
+
+   onConfirmDeleteUserDialog=(expert)=> {
+
+        this.setState({
+            confirmationBlock:(
+              <div className='ConfirmDeleteUserDiv' ref={(button)=>{this.ConfirmDeleteUserDiv = button}}>
+                  <h3>Delete:</h3>
+                  <p>Are you sure you want to delete this expert?</p>
+
+                  <button className='ConfirmDeleteUserDivClose'
+                          onClick={this.onConfirmDeleteUserDialogClose}>Close</button>
+                  <button className='ConfirmDeleteUserDivAccept'
+                          onClick={(elem)=>this.onDeleteExpertClick(expert)} >Confirm</button>
+
+              </div>
+            )
+      }, ()=>{
+            this.ConfirmDeleteUserDiv.style.display='inline-block';
+        })
+
+
+      // this.ConfirmDeleteUserDiv.style.display='inline-block';
+  };
+
+
+  onConfirmDeleteUserDialogClose=()=> {
+      this.ConfirmDeleteUserDiv.style.display='';
   };
 
   onExpertClick=(expert, elem)=>{ // при нажатии на определенного есперта из списка експертов ,
@@ -119,9 +183,10 @@ class Home extends React.Component{
           }
       }).then((response) => {
           response.json().then(function(data) {
-              console.log(data);
               ctx.props.getHomeBody(<ExpertRoom expert={data}/>);
               // ctx.props.setConsultationExpert(data);
+
+
           });
           return response;
       }).catch(function(error) {
@@ -171,7 +236,16 @@ class Home extends React.Component{
             </div>
           </div>
         </div>
-  
+
+
+
+          {this.state.confirmationBlock}
+
+
+
+
+
+
       </div>
     )};
 }

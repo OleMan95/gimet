@@ -423,3 +423,44 @@
     width:70%;
   }
 }
+
+
+.ConfirmDeleteUserDiv{
+  /* + */
+  display: none;
+  position: fixed;
+  width: 400px;
+  height: 130px;
+  top:50%;
+  left:50%;
+  margin-left:-208px;
+  margin-top: -158px;
+  box-shadow: 1px 1px 1px 1px #1e1e24;
+  z-index: 20;
+  background-color: white;
+  border-radius: 5px;
+  flex-direction: column;
+  padding: 16px;
+
+}
+.ConfirmDeleteUserDivClose{
+
+  height: 30px;
+  width: 60px;
+  /*align-self: flex-end;*/
+    float: right;
+  border-radius: 5px;
+  border: solid 1px #1e1e24;
+  cursor: pointer;
+}
+
+.ConfirmDeleteUserDivAccept{
+
+    height: 30px;
+    width: 70px;
+    /*align-self: flex-start;*/
+    float: left;
+    border-radius: 5px;
+    border: solid 1px #1e1e24;
+    cursor: pointer;
+}

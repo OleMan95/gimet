@@ -13,7 +13,7 @@ class StartPage extends React.Component { //все this.props мы получе�
     onVersionBtn=()=>{ // вызов и отображение елемента(окна) Start-about-versionDiv в котором находится инф. об изменениях в системе
         this.versionDiv.style.display = 'flex';
     };
-    onVersionClose=()=>{ // закритие окна при нажатии выхода
+    onVersionClose=()=>{ // закритие окversionDivна при нажатии выхода
         this.versionDiv.style.display = '';
     };
     handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
