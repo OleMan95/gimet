@@ -142,15 +142,14 @@ class StartPage extends React.Component { //все this.props мы получе�
               <h2>About GIMET Systems</h2>
               <button className='Start-about-versionBtn'
                       ref={(button)=>{this.versionBtn = button}}
-                      onClick={this.onVersionBtn}>Version 0.1.25a</button>
+                      onClick={this.onVersionBtn}>Version 0.2.29a</button>
               <div className='Start-about-versionDiv'
                    ref={(button)=>{this.versionDiv = button}}>
                 <button className='Start-about-versionClose'
                     onClick={this.onVersionClose}/>
-                <h3>Version 0.1.25a</h3>
-                <p>- A complete change in the creation of the expert 
-                configuration and consultation with the expert.</p>
-                <p>- Various user interface improvements.</p>
+                <h3>Version 0.2.29a</h3>
+                <p>- GIMET was deployed at Heroku hosting.</p>
+                <p>- Registration and authorisation was developed.</p>
                 
               </div>
               
