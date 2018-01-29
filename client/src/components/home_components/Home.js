@@ -3,10 +3,8 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 import * as firebase from 'firebase';
 
-// import '../../css/App.css';
-// import '../../css/Home.css';
-// import '../../css/ConfigNewExpert.css';
 import ExpertRoom from './ExpertRoom';
+// import ConfirmDeleteExpert from '/.ConfirmDeleteExpert';
 
 class Home extends React.Component{
   constructor(){
@@ -26,38 +24,53 @@ class Home extends React.Component{
           </div>
         </div>
       ),
-      expertNames:[]
+      expertNames:[],
+      confirmationBlock: "",
     };
-  }
+  };
 
   componentDidMount(){
-    const rootRef = firebase.database().ref().child('experts');
-    rootRef.on('value', snap=>{
-      let expertNames
-      if(snap.val()) expertNames = Object.keys(snap.val());
+      this.getExperts();
+  };
 
-      this.setState({
-        names:expertNames,
+  getExperts=()=>{
+
+      const url = '/v1/user/' + this.props.store.accountReducer.user._id + '/experts';
+      const context = this;
+
+      fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization':this.props.store.accountReducer.token
+          },
+
+      }).then((response) => {
+          response.json().then(function(data) {
+              console.log(data);
+              context.displayExperts(data);
+
+          });
+          return response;
+      }).catch(function(error) {
+          console.log('There has been a problem with fetch operation: ' + error.message);
       });
 
-      this.displayExperts(expertNames);
-    });
-  }
+  };
 
-  displayExperts=(expertNames)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
+  displayExperts=(experts)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
     let expertListElems=[];
     
-    if(!expertNames) {
+    if(!experts) {
       expertListElems = (
         <p className="content-experts-emptyList">No experts</p>
       );
     }else{
-      for(let i=0; i<expertNames.length; i++){
+      for(let i=0; i<experts.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
-          <li key={i} id={expertNames[i]} onClick={()=>{this.onExpertClick(expertNames[i])}} 
-          className="content-experts-listItems">
-          <p>{expertNames[i]}</p>
-          <button id={expertNames[i]} onClick={(i)=>this.onDeleteExpertClick(i)}></button>
+          <li key={i} id={experts[i]._id} onClick={(elem)=>{this.onExpertClick(experts[i])}} className="content-experts-listItems">
+            <p id={experts[i]._id}>{experts[i].name}</p>
+            <button id={experts[i]._id} onClick={(elem) => this.onConfirmDeleteUserDialog(experts[i])}/>
           </li>
         );
       }
@@ -66,7 +79,7 @@ class Home extends React.Component{
     this.setState({
       expertNames:expertListElems,
     });
-  }    
+  };
 
   handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
     switch (event.target.name) {
@@ -82,43 +95,104 @@ class Home extends React.Component{
         break;
       default:
     }
-  }
+  };
 
-  onDeleteExpertClick=(elem)=>{ // процес удаления експерта при нажатии кнопки удаления в списке експертов.
-    this.props.getHomeBody(null);
+  onDeleteExpertClick=(expert)=>{ // процес удаления експерта при нажатии кнопки удаления в списке експертов.
+    // this.props.getHomeBody(<ConfirmDeleteExpert />);
+      const userId = this.props.store.accountReducer.user._id;
+      console.log(userId);
+      const url = '/v1/expert/'+userId+'?expertId='+ expert._id;
+      const ctx = this;
+      console.log('expert: ', expert._id);
+
+      fetch(url, {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization':this.props.store.accountReducer.token
+          }
+      }).then((response) => {
+          if(response.status==200)
+          {
+              ctx.getExperts();
+          }
+          else
+          {
+              alert("Expert not found");
+          }
+          ctx.ConfirmDeleteUserDiv.style.display='';
+
+          return response;
+      }).catch(function(error) {
+          console.log('There has been a problem with fetch operation: ' + error.message);
+      });
     
     // Create a reference to the expert to delete
-    const rootRef = firebase.database().ref().child('experts').child(elem.target.id);
+    // const rootRef = firebase.database().ref().child('experts').child(elem.target.id);
+    //
+    // // Delete the expert
+    // rootRef.remove().then(function() {
+    //   // File deleted successfully
+    //   alert('Expert deleted successfully!');
+    // }).catch(function(error) {
+    //   // Uh-oh, an error occurred!
+    //   alert('Uh-oh, an error occurred!');
+    // });
 
-    // Delete the expert
-    rootRef.remove().then(function() {
-      // File deleted successfully
-      alert('Expert deleted successfully!');
-    }).catch(function(error) {
-      // Uh-oh, an error occurred!
-      alert('Uh-oh, an error occurred!');
-    });
-  }    
+  };
 
-  onExpertClick=(name)=>{ // при нажатии на определенного есперта из списка експертов , происходит рендер определенной области с отображеним данных об експерте
-    let expert;
-    this.props.getHomeBody(this.state.browseActivity);
-    
-    
-    const expertRef = firebase.database().ref().child('experts').child(name);
-    expertRef.on('value', snap=>{
-      expert = snap.val();
+   onConfirmDeleteUserDialog=(expert)=> {
 
-    });
+        this.setState({
+            confirmationBlock:(
+              <div className='ConfirmDeleteUserDiv' ref={(button)=>{this.ConfirmDeleteUserDiv = button}}>
+                  <h3>Delete:</h3>
+                  <p>Are you sure you want to delete this expert?</p>
 
-    //Передаем компонент ExpertRoom для отображения его
-    // вместо browseActivity (по умолчанию) по нажатию на эксперта
-    if(!expert){
-      return;
-    }
-    this.props.getHomeBody(<ExpertRoom expert={expert}/>);
-    this.props.setConsultationExpert(expert);
-  }
+                  <button className='ConfirmDeleteUserDivClose'
+                          onClick={this.onConfirmDeleteUserDialogClose}>Close</button>
+                  <button className='ConfirmDeleteUserDivAccept'
+                          onClick={(elem)=>this.onDeleteExpertClick(expert)} >Confirm</button>
+
+              </div>
+            )
+      }, ()=>{
+            this.ConfirmDeleteUserDiv.style.display='inline-block';
+        })
+
+
+      // this.ConfirmDeleteUserDiv.style.display='inline-block';
+  };
+
+
+  onConfirmDeleteUserDialogClose=()=> {
+      this.ConfirmDeleteUserDiv.style.display='';
+  };
+
+  onExpertClick=(expert, elem)=>{ // при нажатии на определенного есперта из списка експертов ,
+                                  // происходит рендер определенной области с отображеним данных об експерте
+      const url = '/v1/expert/' + expert._id;
+      const ctx = this;
+      console.log('expert: ', expert._id);
+
+      fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization':this.props.store.accountReducer.token
+          }
+      }).then((response) => {
+          response.json().then(function(data) {
+              ctx.props.getHomeBody(<ExpertRoom expert={data}/>);
+              // ctx.props.setConsultationExpert(data);
+
+
+          });
+          return response;
+      }).catch(function(error) {
+          console.log('There has been a problem with fetch operation: ' + error.message);
+      });
+  };
 
   render(){
     return (
@@ -126,11 +200,11 @@ class Home extends React.Component{
         <header className="header" >
           <div>
             <NavLink to="/home" className="header-logo">
-              <div className="header-logo-img"></div>
+              <div className="header-logo-img"/>
               <p className="header-logo-title">GIMET</p>
             </NavLink>
             <NavLink to="/home" className="header-userName">
-              <h2>{this.props.store.accountReducer[0].username}</h2>
+              <h2>{this.props.store.accountReducer.user.name}</h2>
             </NavLink>
           </div>
           <div>
@@ -162,9 +236,18 @@ class Home extends React.Component{
             </div>
           </div>
         </div>
-  
+
+
+
+          {this.state.confirmationBlock}
+
+
+
+
+
+
       </div>
-    )}
+    )};
 }
 
 
@@ -174,14 +257,11 @@ export default withRouter(connect(
     store: state,
   }),
   dispatch=>({ // сохранение в Redux данных
-    newExpert: (expert)=>{
-      dispatch({type:'NEW_EXPERT',payload: expert});
-    },
     getHomeBody: (id)=>{
       dispatch({type:'GET_HOME_BODY',payload: id});
     },
-    setConsultationExpert: (expert)=>{
-      dispatch({type:'SET_CONSULTATON_EXPERT',payload: expert});
-    }
+    // setConsultationExpert: (expert)=>{
+    //   dispatch({type:'SET_CONSULTATON_EXPERT1',payload: expert});
+    // }
   })
 )(Home));

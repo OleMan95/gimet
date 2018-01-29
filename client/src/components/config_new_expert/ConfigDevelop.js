@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter, Prompt } from 'react-router-dom';
-import * as firebase from 'firebase';
 
 /*
   expert:{
@@ -267,11 +266,13 @@ class ConfigDevelop extends React.Component{
 
   onFinish=()=>{
     let unsolvedQuestions = this.state.unsolvedQuestions;
+    const url = '/v1/user/' + this.props.store.accountReducer.user._id;
 
-    fetch('/v1/user/5a3801ea9f91a11904d4de0a', {
+    fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization':this.props.store.accountReducer.token
       },
       body: JSON.stringify(this.state.expert)
     }).then((response) => {
@@ -283,23 +284,12 @@ class ConfigDevelop extends React.Component{
       console.log('There has been a problem with fetch operation: ' + error.message);
     });
 
-    this.setToFirebase();
     if(unsolvedQuestions.length > 0){
         return 'You have unsolved questions: '
           + unsolvedQuestions + ". Are you sure you want to go?";
     }else {
       return "Are you sure you want to go?";
     }
-  };
-
-  setToFirebase=()=> {
-    let expert = this.state.expert;
-
-    firebase.database().ref('experts/' + expert.name).set({
-      name: expert.name,
-      description: expert.description,
-      questions: expert.questions
-    });
   };
 
   render() {

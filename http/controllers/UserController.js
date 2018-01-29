@@ -4,9 +4,6 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const pick = require('lodash/pick');
 const jwtService = require('../../services/jwt-service');
 
-
-//5a36cbdfcdaf0d4d7e34182b
-
 class UserController{
     //GET /users
     async find(ctx, next){ // поле для админа
@@ -56,17 +53,19 @@ class UserController{
         if(!email || !password){
             ctx.throw(400, {message:'Invalid data'});
         }
-
         const user = await User.findOne({email});
+
         if(!user){
             ctx.throw(400, {message:'User not found'});
         }
         if(!user.comparePasswords(password)){
             ctx.throw(400, {message:'Invalid data'});
         }
+
         const token = await jwtService.genToken(email);
+        user.password = undefined;
         ctx.status = 200;
-        ctx.body = { data: token };
+        ctx.body = { data:{token,user}};
     }
     //PUT /users/:id
     async update(ctx, next){

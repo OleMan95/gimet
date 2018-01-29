@@ -10,7 +10,6 @@ mongoose.plugin(uniqueValidator);
 const UserSchema = new Schema({
     name:{
         type:String,
-        lowercase:true,
         // Указывает на то, что поле обязательно.
         // В строке указывается сообщение при ошибке.
         required:'Name is required'

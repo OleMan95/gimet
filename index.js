@@ -6,7 +6,6 @@ const serve = require('koa-static');
 const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
-// const PORT = require('./config').server.port;
 const PORT = process.env.PORT || 3001;
 
 const app = new Koa();
@@ -63,9 +62,6 @@ app.use(serve('public'));
 app.use(router.middleware());
 app.use(router.allowedMethods);
 app.use(router.routes());
-
-
-
 
 app.listen(PORT, ()=>{
     console.log('\nServer has started on port:'+PORT);

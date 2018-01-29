@@ -13,7 +13,7 @@ class StartPage extends React.Component { //все this.props мы получе�
     onVersionBtn=()=>{ // вызов и отображение елемента(окна) Start-about-versionDiv в котором находится инф. об изменениях в системе
         this.versionDiv.style.display = 'flex';
     };
-    onVersionClose=()=>{ // закритие окна при нажатии выхода
+    onVersionClose=()=>{ // закритие окversionDivна при нажатии выхода
         this.versionDiv.style.display = '';
     };
     handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
@@ -81,6 +81,7 @@ class StartPage extends React.Component { //все this.props мы получе�
                 });
 
                 if (data.data) {
+                    context.props.setUser(data.data);
                     context.props.history.push('/home');
                 } else {
                     alert('Error!');
@@ -141,15 +142,14 @@ class StartPage extends React.Component { //все this.props мы получе�
               <h2>About GIMET Systems</h2>
               <button className='Start-about-versionBtn'
                       ref={(button)=>{this.versionBtn = button}}
-                      onClick={this.onVersionBtn}>Version 0.1.25a</button>
+                      onClick={this.onVersionBtn}>Version 0.2.29a</button>
               <div className='Start-about-versionDiv'
                    ref={(button)=>{this.versionDiv = button}}>
                 <button className='Start-about-versionClose'
                     onClick={this.onVersionClose}/>
-                <h3>Version 0.1.25a</h3>
-                <p>- A complete change in the creation of the expert 
-                configuration and consultation with the expert.</p>
-                <p>- Various user interface improvements.</p>
+                <h3>Version 0.2.29a</h3>
+                <p>- GIMET was deployed at Heroku hosting.</p>
+                <p>- Registration and authorisation was developed.</p>
                 
               </div>
               
@@ -218,5 +218,9 @@ export default withRouter(connect(
   state=>({
     store: state,
   }),
-  dispatch=>({})
+  dispatch=>({
+      setUser: (user)=>{
+          dispatch({type:'NEW_EXPERT',payload: user});
+      }
+  })
 )(StartPage));

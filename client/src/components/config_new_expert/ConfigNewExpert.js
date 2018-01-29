@@ -6,7 +6,7 @@ import InitBody from './InitBody';
 
 class ConfigNewExpert extends React.Component{
   state = {
-    length:this.props.store.accountReducer[0].experts.length - 1,
+    // length:this.props.store.accountReducer.user.experts.length - 1,
   };
 
   test=()=>{

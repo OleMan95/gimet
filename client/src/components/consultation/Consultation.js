@@ -30,7 +30,7 @@ class Consultation extends React.Component{
                         <p className="header-logo-title">GIMET</p>
                     </NavLink>
                     <NavLink to="/home" className="header-userName">
-                        <h2>{this.props.store.accountReducer[0].username}</h2>
+                        <h2>{this.props.store.accountReducer.name}</h2>
                     </NavLink>
                     </div>
                     <div className="header-right">

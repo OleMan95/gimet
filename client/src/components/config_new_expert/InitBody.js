@@ -63,7 +63,7 @@ const InitBody=({getConfigBody})=>{
 export default withRouter(connect(
   state=>({
     store: state,
-    questions: state.accountReducer[0].experts[0].questions,
+    // questions: state.accountReducer[0].experts[0].questions,
   }),
   dispatch=>({
     getConfigBody: (component)=>{
