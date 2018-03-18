@@ -10,20 +10,20 @@ class Home extends React.Component{
   constructor(){
     super();
     this.state={ 
-      browseActivity:( // создание елемента который будет отображаться на странице до момента нажатия на експерта в списке експертов
-        <div className="Home-content-body">
-          <div className="content-body-header">
-            <button className="content-body-header-text1">
-            <h3>Browse activity</h3>
-            </button>
-            <button className="content-body-header-text2">
-            <h3>Find an expert</h3>
-            </button>
-          </div>
-          <div className="content-body">
-          </div>
-        </div>
-      ),
+      // browseActivity:( // создание елемента который будет отображаться на странице до момента нажатия на експерта в списке експертов
+      //   <div className="Home-content-body">
+      //     <div className="content-body-header">
+      //       <button className="content-body-header-text1">
+      //       <h3>Browse activity</h3>
+      //       </button>
+      //       <button className="content-body-header-text2">
+      //       <h3>Find an expert</h3>
+      //       </button>
+      //     </div>
+      //     <div className="content-body">
+      //     </div>
+      //   </div>
+      // ),
       expertNames:[],
       confirmationBlock: "",
     };
@@ -68,7 +68,8 @@ class Home extends React.Component{
     }else{
       for(let i=0; i<experts.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
-          <li key={i} id={experts[i]._id} onClick={(elem)=>{this.onExpertClick(experts[i])}} className="content-experts-listItems">
+          <li key={i} id={experts[i]._id} onClick={(elem)=>{this.onExpertClick(experts[i])}}
+              className="experts-listItems d-flex justify-between align-items-center">
             <p id={experts[i]._id}>{experts[i].name}</p>
             <button id={experts[i]._id} onClick={(elem) => this.onConfirmDeleteUserDialog(experts[i])}/>
           </li>
@@ -141,7 +142,7 @@ class Home extends React.Component{
 
   };
 
-   onConfirmDeleteUserDialog=(expert)=> {
+  onConfirmDeleteUserDialog=(expert)=> {
 
         this.setState({
             confirmationBlock:(
@@ -163,7 +164,6 @@ class Home extends React.Component{
 
       // this.ConfirmDeleteUserDiv.style.display='inline-block';
   };
-
 
   onConfirmDeleteUserDialogClose=()=> {
       this.ConfirmDeleteUserDiv.style.display='';
@@ -211,29 +211,27 @@ class Home extends React.Component{
             <NavLink to="/" className="signOutBtn">Sign out</NavLink>
           </div>
         </header>
-        
+
         <div className="Home">
-          <div className="Home-content">
-            {this.props.store.homeBodyHandler[0]?this.props.store.homeBodyHandler[0]:this.state.browseActivity}
-            <div className="Home-content-experts">
-              <div className="content-experts-header">
-                <div className="experts-header-title">
-                  <h3>Your experts</h3>
-                  <NavLink to="/config_new_expert" className="addExpertBtn">NEW EXPERT</NavLink>
-                </div>
-                <div className="experts-header-find">
-                  <input type="search" name="findExpert" placeholder="Find an expert"
-                  onChange={this.handleFilterChange} />
-                </div>
-  
+          <div className="home-content">
+              <div className="home-top">
+                  <div className="home-search d-flex justify-center">
+                      <input type="search" name="findExpert" placeholder="Find an expert"
+                             onChange={this.handleFilterChange} />
+                      <NavLink to="/config_new_expert" className="addExpertBtn">NEW EXPERT</NavLink>
+                  </div>
+
+                  <div className="d-flex justify-center">
+                    <h3>Your experts</h3>
+                  </div>
               </div>
-              <div className="content-experts">
-                <ul className="content-experts-list">
+
+              <div className="home-body d-flex justify-center">
+                <ul className="d-flex flex-column justify-start">
                   {this.state.expertNames}
                 </ul>
               </div>
-  
-            </div>
+
           </div>
         </div>
 
