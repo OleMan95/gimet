@@ -7,12 +7,16 @@ export function getToken(){
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function signin(emailValue, passwordValue){
+/**
+ * @param emailValue - using for authorization if it needs
+ * @param passwordValue - using for authorization if it needs
+ * @returns if token exist in cookie - returns token, if not - undefined
+ */
+export async function signin(emailValue, passwordValue){
     const token = getToken();
-    let result;
 
     if(!token){
-        fetch('/v1/auth/signin', {
+        let response = await fetch('/v1/auth/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,37 +25,64 @@ export function signin(emailValue, passwordValue){
                 email: emailValue,
                 password: passwordValue
             })
-        }).then((response) => {
-            response.json().then(async function (data) {
-                console.log('data: ', data);
-
-                if (data.data) {
-                    document.cookie = 'token='+data.data.token;
-                    result = data.data.token;
-                }
-            });
-            return response;
-        }).catch(function(error) {
-            console.log('There has been a problem with fetch operation: ' + error.message);
         });
-    }else{
-        result = token;
-    }
+        let user = await response.json();
 
-    return result;
+        if (user.data) {
+            document.cookie = 'token='+user.data.token;
+            return user.data.token;
+        }else{
+            console.log('There has been a problem with fetch operation: ' + response);
+            return false;
+        }
+    }else{
+        return token;
+    }
 }
 
+// export async function signin(emailValue, passwordValue){
+//     const token = getToken();
+//
+//     return new Promise(function(resolve, reject) {
+//         if(!token){
+//             fetch('/v1/auth/signin', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify({
+//                     email: emailValue,
+//                     password: passwordValue
+//                 })
+//             }).then(async (response) => {
+//                 response.json().then(async function (data) {
+//                     console.log('signin> data: ', data);
+//
+//                     if (data.data) {
+//                         document.cookie = 'token='+data.data.token;
+//                         resolve(data.data.token);
+//                     }
+//                 });
+//                 return response;
+//             }).catch(function(error) {
+//                 reject(false);
+//                 console.log('There has been a problem with fetch operation: ' + error.message);
+//             });
+//         }else{
+//             resolve(token);
+//         }
+//     });
+// }
+
+/**
+ * @param fields - using for designation fields that needs for selection
+ * @param populate - indicates that you will receive a complete detailed field of experts
+ * @returns user data
+ */
 export async function getUser(fields, populate){
     const token = getToken();
 
     return new Promise(function(resolve, reject) {
-        // Эта функция будет вызвана автоматически
-
-        // В ней можно делать любые асинхронные операции,
-        // А когда они завершатся — нужно вызвать одно из:
-        // resolve(результат) при успешном выполнении
-        // reject(ошибка) при ошибке
-
         if(token){
             console.log('fields: ',fields);
 
@@ -62,11 +93,7 @@ export async function getUser(fields, populate){
                 }})
                 .then((response) => {
                     response.json().then(async function (data) {
-                        console.log('data 1111: ', data);
-
-                        if (data) {
-                            resolve(data);
-                        }
+                        if (data) resolve(data);
                     });
                     return response;
                 }).catch(function(error) {

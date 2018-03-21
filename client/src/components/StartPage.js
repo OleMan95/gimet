@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from 'react-router-dom';
-import {signin} from '../services/tokenService';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
   state = {
@@ -63,12 +62,6 @@ class StartPage extends React.Component { //все this.props мы получе�
         console.log('There has been a problem with fetch operation: ' + error.message);
       });
     };
-    signInAction=()=>{
-        if(signin())
-            this.props.history.push('/home');
-        else
-            this.props.history.push('/signin');
-    };
 
     render(){
       return (
@@ -81,7 +74,7 @@ class StartPage extends React.Component { //все this.props мы получе�
           <div className="header-btnsDiv">
             <a href="#about_block" id="about" className="header-btns">About</a>
             <a href="#contact_block" id="contact" className="header-btns">Contact</a>
-            <button id="signInBtn" className="header-btns" onClick={()=>{this.signInAction()}}>Sign in</button>
+            <NavLink to="/signin" id="signInBtn" className="header-btns">Sign in</NavLink>
           </div>
         </header>
 
