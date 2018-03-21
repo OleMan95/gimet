@@ -11,65 +11,30 @@ class Home extends React.Component{
   constructor(){
     super();
     this.state={ 
-      // browseActivity:( // создание елемента который будет отображаться на странице до момента нажатия на експерта в списке експертов
-      //   <div className="Home-content-body">
-      //     <div className="content-body-header">
-      //       <button className="content-body-header-text1">
-      //       <h3>Browse activity</h3>
-      //       </button>
-      //       <button className="content-body-header-text2">
-      //       <h3>Find an expert</h3>
-      //       </button>
-      //     </div>
-      //     <div className="content-body">
-      //     </div>
-      //   </div>
-      // ),
-      expertNames:[],
-      confirmationBlock: "",
+      expertsList:[],
+      experts:[],
+      confirmationBlock: '',
+      username: '',
+      roomClass: 'expand-block'
     };
   };
 
   async componentDidMount() {
-
-      const user = await getUser('experts', 'true');
-
-      console.log('user: ', user);
+      const user = await getUser('experts name', 'true');
+      console.log('! user: ', user);
 
       if (user) {
           this.props.setUser(user);
           this.displayExperts(user.experts);
+
+          this.setState({
+              username: user.name,
+              experts: user.experts,
+          });
+
       } else {
           this.props.history.push('/signin');
       }
-
-      // this.getExperts();
-  };
-
-  getExperts=()=>{
-
-    const url = '/v1/user/' + this.props.store.accountReducer.user._id + '/experts';
-    console.log('url: ', url);
-    console.log('token: ', getToken);
-
-    const context = this;
-
-    fetch(url, {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization':getToken
-      },
-
-    }).then((response) => {
-      console.log(response);
-      response.json().then(function(data) {
-          context.displayExperts(data);
-      });
-      return response;
-    }).catch(function(error) {
-      console.log('There has been a problem with fetch operation: ' + error.message);
-    });
 
   };
 
@@ -83,30 +48,41 @@ class Home extends React.Component{
     }else{
       for(let i=0; i<experts.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
-          <li key={i} id={experts[i]._id} onClick={(elem)=>{this.onExpertClick(experts[i])}}
-              className="experts-listItems d-flex justify-between align-items-center">
-            <p id={experts[i]._id}>{experts[i].name}</p>
-            <button id={experts[i]._id} onClick={(elem) => this.onConfirmDeleteUserDialog(experts[i])}/>
+          <li key={i} id={experts[i]._id} className="experts-listItem d-flex flex-column"
+              onClick={()=>{this.onExpertClick()}}>
+            <div className="experts-header d-flex justify-between align-items-center">
+
+              <p id={experts[i]._id}>{experts[i].name}</p>
+
+              <button className="d-flex justify-center align-items-center"
+                      id={experts[i]._id} onClick={(elem) => this.onConfirmDeleteUserDialog(experts[i])}>
+                  <i className="material-icons">delete</i>
+              </button>
+            </div>
+            <div className="experts-body d-flex flex-column justify-center align-items-center">
+                <i className="material-icons" ref={elem=>this.expandIcon = elem}>keyboard_arrow_down</i>
+                <div className={this.state.roomClass} ref={elem=>this.expandBlock = elem}>
+                    <ExpertRoom expert={experts[i]}/>
+                </div>
+            </div>
           </li>
-        );
-      }
+        );     }
     }
 
     this.setState({
-      expertNames:expertListElems,
+      expertsList:expertListElems,
     });
   };
 
   handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
     switch (event.target.name) {
       case 'findExpert':
-        let newExpertNames = [];
-        //При чтении экспертов из firebase записывается переменная names в state.
-        //Если name (элемент массива names) содержит event.target.value (значение поля findExpert),
-        // значит name записивается в новый массив с именами.
-        newExpertNames = this.state.names.filter(name => name.includes(event.target.value));
+        const newExperts = this.state.experts.filter(expert => {
+            const name = expert.name.toLowerCase();
+            return name.includes(event.target.value.toLowerCase());
+        });
 
-        this.displayExperts(newExpertNames);
+        this.displayExperts(newExperts);
         
         break;
       default:
@@ -184,33 +160,18 @@ class Home extends React.Component{
       this.ConfirmDeleteUserDiv.style.display='';
   };
 
-  onExpertClick=(expert, elem)=>{ // при нажатии на определенного есперта из списка експертов ,
-                                  // происходит рендер определенной области с отображеним данных об експерте
-      const url = '/v1/expert/' + expert._id;
-      const ctx = this;
-      console.log('expert: ', expert._id);
-
-      fetch(url, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization':this.props.store.accountReducer.token
-          }
-      }).then((response) => {
-          response.json().then(function(data) {
-              ctx.props.getHomeBody(<ExpertRoom expert={data}/>);
-              // ctx.props.setConsultationExpert(data);
-
-
-          });
-          return response;
-      }).catch(function(error) {
-          console.log('There has been a problem with fetch operation: ' + error.message);
-      });
+  onExpertClick=()=>{
+      console.log(this.expandIcon.classList);
+      if(this.expandBlock.classList.contains('show')){
+          this.expandBlock.classList.remove("show");
+          this.expandIcon.classList.remove("hide");
+      }else{
+          this.expandBlock.classList.add("show");
+          this.expandIcon.classList.add("hide");
+      }
   };
 
   render(){
-      const user = this.props.store.accountReducer.user || {name: ''};
 
     return (
       <div>
@@ -221,7 +182,7 @@ class Home extends React.Component{
               <p className="header-logo-title">GIMET</p>
             </NavLink>
             <NavLink to="/home" className="header-userName">
-              <h2>{user.name}</h2>
+              <h2>{this.state.username}</h2>
             </NavLink>
           </div>
           <div>
@@ -245,22 +206,13 @@ class Home extends React.Component{
 
               <div className="home-body d-flex justify-center">
                 <ul className="d-flex flex-column justify-start">
-                  {this.state.expertNames}
+                  {this.state.expertsList}
                 </ul>
               </div>
 
           </div>
         </div>
-
-
-
           {this.state.confirmationBlock}
-
-
-
-
-
-
       </div>
     )};
 }

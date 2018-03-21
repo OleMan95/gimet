@@ -26,11 +26,11 @@ export async function signin(emailValue, passwordValue){
                 password: passwordValue
             })
         });
-        let user = await response.json();
+        let data = await response.json();
 
-        if (user.data) {
-            document.cookie = 'token='+user.data.token;
-            return user.data.token;
+        if (data.data) {
+            document.cookie = 'token='+data.data.token;
+            return data.data.token;
         }else{
             console.log('There has been a problem with fetch operation: ' + response);
             return false;
@@ -40,40 +40,6 @@ export async function signin(emailValue, passwordValue){
     }
 }
 
-// export async function signin(emailValue, passwordValue){
-//     const token = getToken();
-//
-//     return new Promise(function(resolve, reject) {
-//         if(!token){
-//             fetch('/v1/auth/signin', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({
-//                     email: emailValue,
-//                     password: passwordValue
-//                 })
-//             }).then(async (response) => {
-//                 response.json().then(async function (data) {
-//                     console.log('signin> data: ', data);
-//
-//                     if (data.data) {
-//                         document.cookie = 'token='+data.data.token;
-//                         resolve(data.data.token);
-//                     }
-//                 });
-//                 return response;
-//             }).catch(function(error) {
-//                 reject(false);
-//                 console.log('There has been a problem with fetch operation: ' + error.message);
-//             });
-//         }else{
-//             resolve(token);
-//         }
-//     });
-// }
-
 /**
  * @param fields - using for designation fields that needs for selection
  * @param populate - indicates that you will receive a complete detailed field of experts
@@ -82,24 +48,22 @@ export async function signin(emailValue, passwordValue){
 export async function getUser(fields, populate){
     const token = getToken();
 
-    return new Promise(function(resolve, reject) {
-        if(token){
-            console.log('fields: ',fields);
+    if(token){
+        console.log('fields: ',fields);
+        const response = await fetch(`/v1/user?fields=${fields}&populate=${populate}`, {
+            method: 'GET',
+            headers: {
+                'Authorization' : token
+            }});
 
-            fetch(`/v1/user?fields=${fields}&populate=${populate}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization' : token
-                }})
-                .then((response) => {
-                    response.json().then(async function (data) {
-                        if (data) resolve(data);
-                    });
-                    return response;
-                }).catch(function(error) {
-                    reject(false);
-                    console.log('There has been a problem with fetch operation: ' + error.message);
-                });
+        let data = await response.json();
+        console.log('data: ', data);
+
+        if (data) return data;
+        else {
+            console.log('There has been a problem with fetch operation: ' + response);
+            return false;
         }
-    });
+    }
+    return false;
 }

@@ -11,6 +11,7 @@ import './css/Home.css';
 import './css/ConfigNewExpert.css';
 import './css/Consultation.css';
 import './css/SignIn.css';
+import './css/materialDesignIcons.css';
 
 //@ts-nocheck
 var config = {
