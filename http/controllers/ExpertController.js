@@ -19,27 +19,17 @@ class ExpertController{
     async findUserExperts(ctx, next){
         if(!ctx.user){
             ctx.throw(403, {message:'Forbidden'});
-            ctx.body = ctx.user;
             return next();
         }
 
         const {id} = ctx.params;
-        const expertList = [];
-        const user = await User.findById(id);
-        const userExperts = user.experts;
+        console.log('id: ', id);
 
+        const experts = await Expert.find({'author': ObjectId(id)});
+        console.log('experts: ', experts);
 
-        for(let i=0;i<userExperts.length;i++){
-            let expert = await Expert.findById(userExperts[i]);
-            expertList.push({
-                _id: expert._id,
-                name: expert.name
-            });
-        }            
-
-        ctx.body = expertList;
+        ctx.body = experts;
         ctx.status = 200;
-        return next();
     }
     //GET /expert/:expertId?populate=<value> (true or nothing)
     async findById(ctx, next){
@@ -127,6 +117,5 @@ class ExpertController{
 
         return next();
     }
-
 }
 module.exports = ExpertController;

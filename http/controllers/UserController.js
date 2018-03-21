@@ -19,7 +19,9 @@ class UserController{
         ctx.status = 200;
         return next();
     }
-    //GET /users/:id?populate=<value> (true or nothing)
+    //GET /user?
+    // populate=<value> ('true' or nothing)
+    // fields=<values> (enum of fields to get from DB, string)
     async findById(ctx, next){
         if(!ctx.user){
             ctx.throw(403, {message:'Forbidden'});
@@ -27,16 +29,20 @@ class UserController{
             return next();
         }
 
-        const {id} = ctx.params;
-        
-        if(ctx.query.populate === 'true'){
-            ctx.body = await User.findById(id).populate('experts');
+        const {authorization} = ctx.headers;
+        const payload = await jwtService.verify(authorization);
+        console.log('fields: ',ctx.query.fields);
+
+        const id = ObjectId(payload._id);
+        const fields = ctx.query.fields || '';
+
+        if(ctx.query.populate.indexOf('true') != -1){
+            ctx.body = await User.findById(id, fields).populate('experts');
         }else{
-            ctx.body = await User.findById(id);
+            ctx.body = await User.findById(id, fields);
         }
 
         ctx.status = 200;
-        return next();
     }
     // POST /auth/signup
     async signup(ctx){
@@ -62,10 +68,14 @@ class UserController{
             ctx.throw(400, {message:'Invalid data'});
         }
 
-        const token = await jwtService.genToken(email);
-        user.password = undefined;
+        const token = await jwtService.genToken({
+            _id: user._id,
+            name: user.name,
+            email: user.email
+        });
+
         ctx.status = 200;
-        ctx.body = { data:{token,user}};
+        ctx.body = { data:{token}};
     }
     //PUT /users/:id
     async update(ctx, next){

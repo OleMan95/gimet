@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from 'react-router-dom';
+import {signin} from '../services/tokenService';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
   state = {
@@ -62,35 +63,11 @@ class StartPage extends React.Component { //все this.props мы получе�
         console.log('There has been a problem with fetch operation: ' + error.message);
       });
     };
-    signInAction=(context)=>{
-
-        fetch('/v1/auth/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ // занесение данных в JSON
-                email: this.state.emailValue,
-                password: this.state.passwordValue
-            })
-        }).then((response) => {
-            response.json().then(async function (data) {
-                context.setState({
-                    emailValue:'',
-                    passwordValue:''
-                });
-
-                if (data.data) {
-                    context.props.setUser(data.data);
-                    context.props.history.push('/home');
-                } else {
-                    alert('Error!');
-                }
-            });
-            return response;
-        }).catch(function(error) {
-            console.log('There has been a problem with fetch operation: ' + error.message);
-        });
+    signInAction=()=>{
+        if(signin())
+            this.props.history.push('/home');
+        else
+            this.props.history.push('/signin');
     };
 
     render(){
@@ -104,7 +81,7 @@ class StartPage extends React.Component { //все this.props мы получе�
           <div className="header-btnsDiv">
             <a href="#about_block" id="about" className="header-btns">About</a>
             <a href="#contact_block" id="contact" className="header-btns">Contact</a>
-            <NavLink to="/signin" id="signInBtn" className="header-btns">Sign in</NavLink>
+            <button id="signInBtn" className="header-btns" onClick={()=>{this.signInAction()}}>Sign in</button>
           </div>
         </header>
 

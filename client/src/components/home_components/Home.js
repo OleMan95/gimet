@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
+import {getUser, getToken} from '../../services/tokenService';
 import * as firebase from 'firebase';
 
 import ExpertRoom from './ExpertRoom';
@@ -29,32 +30,46 @@ class Home extends React.Component{
     };
   };
 
-  componentDidMount(){
-      this.getExperts();
+  async componentDidMount() {
+
+      const user = await getUser('experts', 'true');
+
+      console.log('user: ', user);
+
+      if (user) {
+          this.props.setUser(user);
+          this.displayExperts(user.experts);
+      } else {
+          this.props.history.push('/signin');
+      }
+
+      // this.getExperts();
   };
 
   getExperts=()=>{
 
-      const url = '/v1/user/' + this.props.store.accountReducer.user._id + '/experts';
-      const context = this;
+    const url = '/v1/user/' + this.props.store.accountReducer.user._id + '/experts';
+    console.log('url: ', url);
+    console.log('token: ', getToken);
 
-      fetch(url, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization':this.props.store.accountReducer.token
-          },
+    const context = this;
 
-      }).then((response) => {
-          response.json().then(function(data) {
-              console.log(data);
-              context.displayExperts(data);
+    fetch(url, {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization':getToken
+      },
 
-          });
-          return response;
-      }).catch(function(error) {
-          console.log('There has been a problem with fetch operation: ' + error.message);
+    }).then((response) => {
+      console.log(response);
+      response.json().then(function(data) {
+          context.displayExperts(data);
       });
+      return response;
+    }).catch(function(error) {
+      console.log('There has been a problem with fetch operation: ' + error.message);
+    });
 
   };
 
@@ -195,6 +210,8 @@ class Home extends React.Component{
   };
 
   render(){
+      const user = this.props.store.accountReducer.user || {name: ''};
+
     return (
       <div>
         <header className="header" >
@@ -204,7 +221,7 @@ class Home extends React.Component{
               <p className="header-logo-title">GIMET</p>
             </NavLink>
             <NavLink to="/home" className="header-userName">
-              <h2>{this.props.store.accountReducer.user.name}</h2>
+              <h2>{user.name}</h2>
             </NavLink>
           </div>
           <div>
@@ -258,8 +275,8 @@ export default withRouter(connect(
     getHomeBody: (id)=>{
       dispatch({type:'GET_HOME_BODY',payload: id});
     },
-    // setConsultationExpert: (expert)=>{
-    //   dispatch({type:'SET_CONSULTATON_EXPERT1',payload: expert});
-    // }
+    setUser: (user)=>{
+      dispatch({type:'SET_USER',payload: user});
+    }
   })
 )(Home));

@@ -2,6 +2,7 @@
 require('./bootstrap');
 const Koa = require('koa');
 const bodyParser = require('koa-body');
+const logger = require('koa-logger');
 const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
@@ -9,12 +10,7 @@ const PORT = process.env.PORT || 3001;
 
 const app = new Koa();
 
-app.use(async (ctx, next) => {
-    const start = Date.now();
-    await next();
-    const ms = Date.now() - start;
-    console.log(`${ctx.method} ${ctx.status} ${ctx.url} - ${ms}ms`);
-}); // logger
+app.use(logger()); // logger
 
 app.use(async(ctx, next) =>{
     try{
@@ -41,10 +37,10 @@ app.use(async(ctx, next) => {
 
     if(authorization){
         try{
-            const email = await jwtService.verify(authorization);
-            console.log(email);
+            const payload = await jwtService.verify(authorization);
+            console.log('payload: ',payload);
 
-            ctx.user = await User.findOne({ email }, function (err, person) {
+            ctx.user = await User.findOne({email: payload.email}, function (err, person) {
                 if (err) return console.log(err);
             });
         }catch(e){
