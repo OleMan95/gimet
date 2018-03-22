@@ -97,6 +97,7 @@
 
 .home-body > ul{
   width: 100%;
+  padding: 0;
 }
 
 .experts-listItem{
@@ -144,6 +145,7 @@
   height: 0;
   overflow-y: scroll;
   background-color: #e1e1e166;
+  width: 100%;
 }
 .show{
   border-top: solid 1px #989898;
@@ -231,14 +233,11 @@
 
 @media screen and (max-width: 1080px) {
   .home-content{
-    padding: 0 50px;
+    padding: 0 55px;
   }
 }
 @media screen and (max-width: 720px) {
-  .Home-content{
-    padding: 24px 8px 50px 8px;
-  }
-  .header-expertRoom-top > div:first-of-type{
-    width:70%;
+  .home-content{
+    padding: 0 8px;
   }
 }

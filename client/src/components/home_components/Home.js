@@ -14,8 +14,7 @@ class Home extends React.Component{
       expertsList:[],
       experts:[],
       confirmationBlock: '',
-      username: '',
-      roomClass: 'expand-block'
+      username: ''
     };
   };
 
@@ -50,7 +49,7 @@ class Home extends React.Component{
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
           <li key={i} id={experts[i]._id} className="experts-listItem d-flex flex-column">
             <div className="experts-header d-flex justify-between align-items-center"
-                 onClick={()=>{this.onExpertClick()}}>
+                 onClick={()=>{this.onExpertClick(i)}}>
 
               <p id={experts[i]._id}>{experts[i].name}</p>
 
@@ -60,10 +59,10 @@ class Home extends React.Component{
               </button>
             </div>
             <div className="experts-body d-flex flex-column justify-center align-items-center">
-                <i className="material-icons d-flex justify-center"
+                <i className={"material-icons d-flex justify-center "+i}
                    ref={elem=>this.expandIcon = elem}
-                   onClick={()=>{this.onExpertClick()}}>keyboard_arrow_down</i>
-                <div className={this.state.roomClass} ref={elem=>this.expandBlock = elem}>
+                   onClick={()=>{this.onExpertClick(i)}}>keyboard_arrow_down</i>
+                <div className={'expand-block '+i} ref={elem=>this.expandBlock = elem}>
                     <ExpertRoom expert={experts[i]}/>
                 </div>
             </div>
@@ -162,15 +161,21 @@ class Home extends React.Component{
       this.ConfirmDeleteUserDiv.style.display='';
   };
 
-  onExpertClick=()=>{
-      console.log(this.expandIcon.classList);
-      if(this.expandBlock.classList.contains('show')){
-          this.expandBlock.classList.remove("show");
-          this.expandIcon.classList.remove("hide");
-      }else{
-          this.expandBlock.classList.add("show");
-          this.expandIcon.classList.add("hide");
+  onExpertClick=(index)=>{
+      const expandBlock = document.getElementsByClassName('expand-block '+index)[0];
+      const expandIcon = document.getElementsByClassName('material-icons '+index)[0];
+
+      if(expandBlock.classList.contains(''+index)){
+
+          if(expandBlock.classList.contains('show')){
+              expandBlock.classList.remove("show");
+              expandIcon.classList.remove("hide");
+          }else{
+              expandBlock.classList.add("show");
+              expandIcon.classList.add("hide");
+          }
       }
+
   };
 
   render(){
