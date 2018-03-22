@@ -44,9 +44,13 @@ class ExpertRoom extends React.Component{
             {this.props.expert.questions.map((question, index)=>
               <li key={index} className="expertRoom-listItem">
                 <h3>Question #{index+1}:</h3>
-                <p><mark>key</mark>: {question.key}</p>
-                <p><mark>question</mark>: {question.question}</p>
-                <p><mark>answers</mark>: {question.answers}</p>
+                <div>
+                  <p><mark>key</mark>: {question.key}</p>
+                  <p><mark>question</mark>: {question.question}</p>
+                </div>
+                <div className="hide">
+                  <p><mark>answers</mark>: {question.answers}</p>
+                </div>
               </li>
             )}
           </ul>

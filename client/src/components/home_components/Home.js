@@ -48,9 +48,9 @@ class Home extends React.Component{
     }else{
       for(let i=0; i<experts.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
-          <li key={i} id={experts[i]._id} className="experts-listItem d-flex flex-column"
-              onClick={()=>{this.onExpertClick()}}>
-            <div className="experts-header d-flex justify-between align-items-center">
+          <li key={i} id={experts[i]._id} className="experts-listItem d-flex flex-column">
+            <div className="experts-header d-flex justify-between align-items-center"
+                 onClick={()=>{this.onExpertClick()}}>
 
               <p id={experts[i]._id}>{experts[i].name}</p>
 
@@ -60,7 +60,9 @@ class Home extends React.Component{
               </button>
             </div>
             <div className="experts-body d-flex flex-column justify-center align-items-center">
-                <i className="material-icons" ref={elem=>this.expandIcon = elem}>keyboard_arrow_down</i>
+                <i className="material-icons d-flex justify-center"
+                   ref={elem=>this.expandIcon = elem}
+                   onClick={()=>{this.onExpertClick()}}>keyboard_arrow_down</i>
                 <div className={this.state.roomClass} ref={elem=>this.expandBlock = elem}>
                     <ExpertRoom expert={experts[i]}/>
                 </div>
