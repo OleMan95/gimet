@@ -7,11 +7,11 @@ const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
 const PORT = process.env.PORT || 3001;
+import serve from 'koa2-static';
 
 const app = new Koa();
 
 app.use(logger()); // logger
-
 app.use(async(ctx, next) =>{
     try{
         await next();
@@ -31,7 +31,6 @@ app.use(async(ctx, next) =>{
 
     }
 }); // error handler
-
 app.use(async(ctx, next) => {
     const {authorization} = ctx.headers;
 
@@ -52,6 +51,10 @@ app.use(async(ctx, next) => {
     await next();
 }); // auth
 
+app.use(serve({
+    path: "/assets",
+    root: __dirname + '/../../public/assets'
+}));
 app.use(bodyParser());
 app.use(router.middleware());
 app.use(router.allowedMethods);
