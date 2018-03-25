@@ -6,9 +6,8 @@ const logger = require('koa-logger');
 const router = require('./http/router');
 const jwtService = require('./services/jwt-service');
 const {User} = require('./models');
-const PORT = process.env.PORT || 3001;
-import serve from 'koa2-static';
 
+const PORT = process.env.PORT || 3001;
 const app = new Koa();
 
 app.use(logger()); // logger
@@ -51,10 +50,7 @@ app.use(async(ctx, next) => {
     await next();
 }); // auth
 
-app.use(serve({
-    path: "/assets",
-    root: __dirname + '/../../public/assets'
-}));
+app.use(require('koa-static')(__dirname + '/public'));
 app.use(bodyParser());
 app.use(router.middleware());
 app.use(router.allowedMethods);
