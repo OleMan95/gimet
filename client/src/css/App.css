@@ -508,3 +508,46 @@ body, html{
     width: 200px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+*:focus {outline:none !important;}
+*::-moz-focus-inner {
+  border: 0 !important;
+}
+*:active {
+  outline: none !important;
+}
+
+.d-flex{
+  display: flex;
+}
+.flex-row{
+  flex-direction: row;
+}
+.flex-column{
+  flex-direction: column;
+}
+.justify-center{
+  justify-content: center;
+}
+.justify-start{
+  justify-content: flex-start;
+}
+.justify-end{
+  justify-content: flex-end;
+}
+.justify-between{
+  justify-content: space-between;
+}
+.align-items-center{
+  align-items: center;
+}

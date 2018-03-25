@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {NEW_EXPERT} from "../constants/types";
+import {signin, getToken} from '../services/tokenService';
 
 class SignIn extends React.Component { //все this.props мы получем как аргументы функции
     state = {
@@ -9,6 +10,21 @@ class SignIn extends React.Component { //все this.props мы получем �
         passwordValue:'',
         errorMessage:'',
     };
+
+    componentDidMount(){
+        if(getToken()) this.props.history.push('/home');
+    }
+    componentWillMount(){
+        document.addEventListener("keydown", event=>{
+            if(event.keyCode === 13){
+                console.log(this.state.emailValue.length);
+                console.log(this.state.passwordValue.length);
+                if(this.state.emailValue.length > 0 && this.state.passwordValue.length > 0){
+                    this.signInAction();
+                }
+            }
+        }, false);
+    }
 
     handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
         switch (event.target.name) {
@@ -26,32 +42,18 @@ class SignIn extends React.Component { //все this.props мы получем �
         }
     };
 
-    signInAction=(context)=>{
+    signInAction = async () => {
+        await signin(this.state.emailValue, this.state.passwordValue).then(async (token)=>{
+            console.log('signInAction: ',token);
 
-        fetch('/v1/auth/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ // занесение данных в JSON
-                email: this.state.emailValue,
-                password: this.state.passwordValue
-            })
-        }).then((response) => {
-            response.json().then(async function (data) {
-                if (data.data) {
-                    context.props.setUser(data.data);
-                    context.props.history.push('/home');
-                } else {
-                    context.errorBlock.style.display = 'flex';
-                    await setTimeout(()=>{
-                        context.errorBlock.style.display = '';
-                    }, 4000);
-                }
-            });
-            return response;
-        }).catch(function(error) {
-            console.log('There has been a problem with fetch operation: ' + error.message);
+            if (token) {
+                this.props.history.push('/home');
+            } else {
+                this.errorBlock.style.display = 'flex';
+                await setTimeout(() => {
+                    this.errorBlock.style.display = '';
+                }, 4000);
+            }
         });
     };
 
@@ -94,10 +96,5 @@ class SignIn extends React.Component { //все this.props мы получем �
 export default withRouter(connect(
     state=>({
         store: state,
-    }),
-    dispatch=>({
-        setUser: (user)=>{
-            dispatch({type:'NEW_EXPERT',payload: user});
-        }
     })
 )(SignIn));

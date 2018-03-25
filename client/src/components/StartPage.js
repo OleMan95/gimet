@@ -62,36 +62,6 @@ class StartPage extends React.Component { //все this.props мы получе�
         console.log('There has been a problem with fetch operation: ' + error.message);
       });
     };
-    signInAction=(context)=>{
-
-        fetch('/v1/auth/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ // занесение данных в JSON
-                email: this.state.emailValue,
-                password: this.state.passwordValue
-            })
-        }).then((response) => {
-            response.json().then(async function (data) {
-                context.setState({
-                    emailValue:'',
-                    passwordValue:''
-                });
-
-                if (data.data) {
-                    context.props.setUser(data.data);
-                    context.props.history.push('/home');
-                } else {
-                    alert('Error!');
-                }
-            });
-            return response;
-        }).catch(function(error) {
-            console.log('There has been a problem with fetch operation: ' + error.message);
-        });
-    };
 
     render(){
       return (

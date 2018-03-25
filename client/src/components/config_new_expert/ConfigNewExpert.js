@@ -17,7 +17,7 @@ class ConfigNewExpert extends React.Component{
     this.props.getConfigBody(<InitBody/>);
   };
 
-  componentDidMount=() => {
+  componentDidMount(){
     window.onpopstate = this.onBackButtonEvent;
   };
 

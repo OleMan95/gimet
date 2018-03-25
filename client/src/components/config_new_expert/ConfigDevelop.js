@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter, Prompt } from 'react-router-dom';
+import {getUser, getToken} from '../../services/tokenService';
 
 /*
   expert:{
@@ -38,8 +39,15 @@ class ConfigDevelop extends React.Component{
     resultsList:[],
     answersCount:1, 
     answersString:'',
-    finishMassage:'Are you sure you want to go?' 
+    finishMassage:'Are you sure you want to go?',
+    user: {}
   };
+
+  async componentDidMount() {
+      const user = await getUser('name');
+      this.setState({user});
+      console.log('user._id: ', user._id);
+  }
 
   handleInputChange=(event)=>{
     let value = event.target.value.trim();
@@ -264,32 +272,32 @@ class ConfigDevelop extends React.Component{
     this.answersInput.value = '';
   };
 
-  onFinish=()=>{
-    let unsolvedQuestions = this.state.unsolvedQuestions;
-    const url = '/v1/user/' + this.props.store.accountReducer.user._id;
+  onFinish= async () => {
+      let unsolvedQuestions = this.state.unsolvedQuestions;
+      const url = '/v1/user/' + this.state.user._id;
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization':this.props.store.accountReducer.token
-      },
-      body: JSON.stringify(this.state.expert)
-    }).then((response) => {
-      response.json().then(function(data) {  
-        console.log(data);
-      });  
-      return response;
-    }).catch(function(error) {
-      console.log('There has been a problem with fetch operation: ' + error.message);
-    });
+      fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': await getToken()
+          },
+          body: JSON.stringify(this.state.expert)
+      }).then((response) => {
+          response.json().then(function (data) {
+              console.log(data);
+          });
+          return response;
+      }).catch(function (error) {
+          console.log('There has been a problem with fetch operation: ' + error.message);
+      });
 
-    if(unsolvedQuestions.length > 0){
-        return 'You have unsolved questions: '
-          + unsolvedQuestions + ". Are you sure you want to go?";
-    }else {
-      return "Are you sure you want to go?";
-    }
+      if (unsolvedQuestions.length > 0) {
+          return 'You have unsolved questions: '
+              + unsolvedQuestions + ". Are you sure you want to go?";
+      } else {
+          return "Are you sure you want to go?";
+      }
   };
 
   render() {
