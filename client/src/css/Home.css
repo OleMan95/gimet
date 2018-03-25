@@ -113,15 +113,17 @@
   word-wrap: break-word;
 }
 .experts-listItem:hover{
-  color: #3b4652;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 }
+
+
+
 .experts-listItem button{
   background-color: #fff;
   border: 0;
   border-radius: 5px;
   padding: 0;
-  color: #e74c3c;
+  color: #222222;
   cursor: pointer;
   width: 30px;
   height: 30px;
@@ -129,9 +131,15 @@
   transition: height 0.25s ease-out 0s;
 }
 .experts-listItem button:hover{
-  background-color: #e74c3c;
+  background-color: #404e5c;
   color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.experts-listItem .deleteBtn{
+  color: #e74c3c;
+}
+.experts-listItem .deleteBtn:hover{
+  background-color: #e74c3c;
 }
 .experts-header{
   padding: 8px 8px 8px 16px;

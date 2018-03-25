@@ -14,27 +14,12 @@ class Home extends React.Component{
       expertsList:[],
       experts:[],
       confirmationBlock: '',
-      username: ''
+      user: ''
     };
   };
 
   async componentDidMount() {
-      const user = await getUser('experts name', 'true');
-      console.log('! user: ', user);
-
-      if (user) {
-          this.props.setUser(user);
-          this.displayExperts(user.experts);
-
-          this.setState({
-              username: user.name,
-              experts: user.experts,
-          });
-
-      } else {
-          this.props.history.push('/signin');
-      }
-
+      await this.fetchUser();
   };
 
   displayExperts=(experts)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
@@ -48,20 +33,29 @@ class Home extends React.Component{
       for(let i=0; i<experts.length; i++){
         expertListElems.push( // перебор экспертов и создание маркированного списка, при нажатии на элемент списка происходит вызов события onExpertClick
           <li key={i} id={experts[i]._id} className="experts-listItem d-flex flex-column">
-            <div className="experts-header d-flex justify-between align-items-center"
-                 onClick={()=>{this.onExpertClick(i)}}>
+            <div className="experts-header d-flex justify-between align-items-center">
 
               <p id={experts[i]._id}>{experts[i].name}</p>
 
-              <button className="d-flex justify-center align-items-center"
-                      id={experts[i]._id} onClick={(elem) => this.onConfirmDeleteUserDialog(experts[i])}>
-                  <i className="material-icons">delete</i>
-              </button>
+              <div className="d-flex justify-end align-items-center">
+
+                <button className="expandBtn d-flex justify-center align-items-center"
+                      id={experts[i]._id}>
+                  <i className="material-icons">search</i>
+                </button>
+                <button className="expandBtn d-flex justify-center align-items-center"
+                      id={experts[i]._id} onClick={()=>{this.onExpandClick(i)}}>
+                  <i className={"material-icons d-flex justify-center "+i}
+                     ref={elem=>this.expandIcon = elem}>
+                      keyboard_arrow_down</i>
+                </button>
+                <button className="deleteBtn d-flex justify-center align-items-center"
+                      id={experts[i]._id} onClick={(elem) => this.onDeleteExpertClick(experts[i])}>
+                   <i className="material-icons">delete</i>
+                </button>
+            </div>
             </div>
             <div className="experts-body d-flex flex-column justify-center align-items-center">
-                <i className={"material-icons d-flex justify-center "+i}
-                   ref={elem=>this.expandIcon = elem}
-                   onClick={()=>{this.onExpertClick(i)}}>keyboard_arrow_down</i>
                 <div className={'expand-block '+i} ref={elem=>this.expandBlock = elem}>
                     <ExpertRoom expert={experts[i]}/>
                 </div>
@@ -73,6 +67,23 @@ class Home extends React.Component{
     this.setState({
       expertsList:expertListElems,
     });
+  };
+
+  fetchUser = async () => {
+      const user = await getUser('experts name', 'true');
+
+      if (user) {
+          this.props.setUser(user);
+          this.displayExperts(user.experts);
+
+          this.setState({
+              user,
+              experts: user.experts,
+          });
+
+      } else {
+          this.props.history.push('/signin');
+      }
   };
 
   handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
@@ -90,48 +101,28 @@ class Home extends React.Component{
     }
   };
 
-  onDeleteExpertClick=(expert)=>{ // процес удаления експерта при нажатии кнопки удаления в списке експертов.
-    // this.props.getHomeBody(<ConfirmDeleteExpert />);
-      const userId = this.props.store.accountReducer.user._id;
+  onDeleteExpertClick= async (expert) => { // процес удаления експерта при нажатии кнопки удаления в списке експертов.
+      const userId = this.state.user._id;
       console.log(userId);
-      const url = '/v1/expert/'+userId+'?expertId='+ expert._id;
-      const ctx = this;
+      const url = '/v1/expert/' + expert._id;
       console.log('expert: ', expert._id);
 
-      fetch(url, {
+      const response = await fetch(url, {
           method: 'DELETE',
           headers: {
               'Content-Type': 'application/json',
-              'Authorization':this.props.store.accountReducer.token
+              'Authorization': getToken()
           }
-      }).then((response) => {
-          if(response.status==200)
-          {
-              ctx.getExperts();
-          }
-          else
-          {
-              alert("Expert not found");
-          }
-          ctx.ConfirmDeleteUserDiv.style.display='';
-
-          return response;
-      }).catch(function(error) {
-          console.log('There has been a problem with fetch operation: ' + error.message);
       });
-    
-    // Create a reference to the expert to delete
-    // const rootRef = firebase.database().ref().child('experts').child(elem.target.id);
-    //
-    // // Delete the expert
-    // rootRef.remove().then(function() {
-    //   // File deleted successfully
-    //   alert('Expert deleted successfully!');
-    // }).catch(function(error) {
-    //   // Uh-oh, an error occurred!
-    //   alert('Uh-oh, an error occurred!');
-    // });
 
+      if (response.status === 200) {
+          alert("Expert has been deleted");
+      }else {
+          console.log('There has been a problem with fetch operation: ' + response);
+          alert("Expert not found");
+      }
+
+      await this.fetchUser();
   };
 
   onConfirmDeleteUserDialog=(expert)=> {
@@ -161,21 +152,17 @@ class Home extends React.Component{
       this.ConfirmDeleteUserDiv.style.display='';
   };
 
-  onExpertClick=(index)=>{
-      const expandBlock = document.getElementsByClassName('expand-block '+index)[0];
-      const expandIcon = document.getElementsByClassName('material-icons '+index)[0];
+  onExpandClick=(index)=>{
+    const expandBlock = document.getElementsByClassName('expand-block '+index)[0].classList;
+    const expandIcon = document.getElementsByClassName('material-icons '+index)[0];
 
-      if(expandBlock.classList.contains(''+index)){
-
-          if(expandBlock.classList.contains('show')){
-              expandBlock.classList.remove("show");
-              expandIcon.classList.remove("hide");
-          }else{
-              expandBlock.classList.add("show");
-              expandIcon.classList.add("hide");
-          }
-      }
-
+    if(expandBlock.contains(''+index) && expandBlock.contains('show')){
+        expandBlock.remove("show");
+        expandIcon.innerHTML = 'keyboard_arrow_down';
+    }else if(expandBlock.contains(''+index) && !expandBlock.contains('show')){
+        expandBlock.add("show");
+        expandIcon.innerHTML = 'keyboard_arrow_up';
+    }
   };
 
   render(){
@@ -189,7 +176,7 @@ class Home extends React.Component{
               <p className="header-logo-title">GIMET</p>
             </NavLink>
             <NavLink to="/home" className="header-userName">
-              <h2>{this.state.username}</h2>
+              <h2>{this.state.user.name}</h2>
             </NavLink>
           </div>
           <div>
@@ -219,7 +206,7 @@ class Home extends React.Component{
 
           </div>
         </div>
-          {this.state.confirmationBlock}
+        {this.state.confirmationBlock}
       </div>
     )};
 }

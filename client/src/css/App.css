@@ -519,8 +519,13 @@ body, html{
 
 
 
-
-
+*:focus {outline:none !important;}
+*::-moz-focus-inner {
+  border: 0 !important;
+}
+*:active {
+  outline: none !important;
+}
 
 .d-flex{
   display: flex;
@@ -535,7 +540,10 @@ body, html{
   justify-content: center;
 }
 .justify-start{
-  justify-content: start;
+  justify-content: flex-start;
+}
+.justify-end{
+  justify-content: flex-end;
 }
 .justify-between{
   justify-content: space-between;

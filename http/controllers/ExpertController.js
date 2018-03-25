@@ -2,15 +2,16 @@
 const {Expert} = require('./../../models');
 const {User} = require('./../../models');
 const ObjectId = require('mongoose').Types.ObjectId;
+const jwtService = require('../../services/jwt-service');
 
 class ExpertController{
     //GET /experts
     async find(ctx, next){
-        if(!ctx.user){
-            ctx.throw(403, {message:'Forbidden'});
-            ctx.body = ctx.user;
-            return next();
-        }
+        // if(!ctx.user){
+        //     ctx.throw(403, {message:'Forbidden'});
+        //     ctx.body = ctx.user;
+        //     return next();
+        // }
         ctx.body = await Expert.find();
         ctx.status = 200;
         return next();
@@ -57,7 +58,7 @@ class ExpertController{
             return next();
         }
         const {id} = ctx.params;
-        
+
         const data = {
             name: ctx.request.body.name,
             description: ctx.request.body.description,
@@ -93,29 +94,28 @@ class ExpertController{
     }
     //DELETE /expert/:id?expertId=<num>
     async delete(ctx, next){
-        if(!ctx.user){
-            ctx.throw(403, {message:'Forbidden'});
-            ctx.body = ctx.user;
-            return next();
-        }
+        const {authorization} = ctx.headers;
+        const payload = await jwtService.verify(authorization);
         const {id} = ctx.params;
-        const user = await User.findById(id);
+        const user = await User.findById({_id: ObjectId(payload._id)});
         const userExperts = user.experts;
-        
+
+        let index;
         for(let i=0;i<userExperts.length;i++){
-            if(userExperts[i] == ctx.query.expertId){
-                userExperts.splice(i, 1);
-                // удаление эксперта у пользователя
-                await User.findByIdAndUpdate(id, {experts: userExperts}, {new:false});
+            if(userExperts[i] == id){
                 // удаление эксперта в общем списке
-                var {deletedCount} = await Expert.deleteOne({_id: ObjectId(ctx.query.expertId)});
+                let {deletedCount} = await Expert.deleteOne({_id: ObjectId(id)});
+                userExperts[i] = deletedCount === 1 ? undefined : userExperts[i];
+                index = deletedCount === 1 ? i : null;
             }
         }
-        
-        if(deletedCount===1) ctx.status = 200;
-        else ctx.status = 204;
 
-        return next();
+        if(index){
+            // удаление эксперта у пользователя
+            await User.findByIdAndUpdate(payload._id, {experts: userExperts});
+            ctx.status = 200;
+        }
+        else ctx.status = 204;
     }
 }
 module.exports = ExpertController;
