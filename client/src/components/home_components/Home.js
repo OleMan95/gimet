@@ -40,7 +40,7 @@ class Home extends React.Component{
               <div className="d-flex justify-end align-items-center">
 
                 <button className="expandBtn d-flex justify-center align-items-center"
-                      id={experts[i]._id}>
+                      id={experts[i]._id} onClick={()=>{this.onEditClick(experts[i]._id)}}>
                   <i className="material-icons">search</i>
                 </button>
                 <button className="expandBtn d-flex justify-center align-items-center"
@@ -163,6 +163,10 @@ class Home extends React.Component{
         expandBlock.add("show");
         expandIcon.innerHTML = 'keyboard_arrow_up';
     }
+  };
+
+  onEditClick=(id)=>{
+		this.props.history.push(`/edit/${id}`);
   };
 
   render(){

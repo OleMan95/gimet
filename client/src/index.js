@@ -8,6 +8,7 @@ import configureStore from './store/configureStore.js';
 import './index.css';
 import './css/App.css';
 import './css/Home.css';
+import './css/Edit.css';
 import './css/ConfigNewExpert.css';
 import './css/Consultation.css';
 import './css/SignIn.css';

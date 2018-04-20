@@ -2,8 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 
-
-
 class ExpertRoom extends React.Component{
   constructor(){
     super();

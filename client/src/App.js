@@ -3,6 +3,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 
 import StartPage from './components/StartPage';
 import Home from './components/home_components/Home';
+import Edit from './components/expert_editing/Edit';
 import ConfigNewExpert from './components/config_new_expert/ConfigNewExpert';
 import Consultation from './components/consultation/Consultation';
 import SignIn from './components/SignIn';
@@ -22,6 +23,7 @@ class App extends Component {
         <div>
           <Route exact path={"/"} component={StartPage}/>
           <Route path={"/home"} component={Home}/>
+          <Route path={"/edit/:id"} component={Edit}/>
           <Route path={"/config_new_expert"} component={ConfigNewExpert}/>
           <Route path={"/consultation"} component={Consultation}/>
           <Route path={"/signin"} component={SignIn}/>

@@ -1,0 +1,90 @@
+.edit-content{
+    padding: 16px 150px;
+}
+
+.edit-top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.edit-top input{
+    width: 40%;
+    height: 32px;
+    padding: 7px;
+    margin-right: 24px;
+}
+.edit-plus-btn{
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    font-size: 18px;
+    margin: 0 4px;
+}
+.edit-btns button:hover{
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+    background-color: #9faab7;
+    color: white;
+}
+
+.edit-description{
+    padding: 8px 100px;
+}
+
+.edit-list{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+.edit-listItem{
+    flex: 2 0 20%;
+    padding: 8px;
+    max-height: 200px;
+    overflow: hidden;
+    list-style: none;
+    border: solid 1px #989898;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    margin: 4px;
+    cursor: pointer;
+    line-height: 1.25;
+}
+.edit-listItem:hover{
+    box-shadow: 0 1px 6px rgb(12, 87, 143);
+}
+.edit-listItem mark{
+     background-color: inherit;
+     color: #404e5c;
+}
+.edit-listItem h3{
+    margin: 0 0 8px;
+}
+.edit-listItem p{
+    font-size: 14px;
+    margin: 0 0 8px;
+}
+
+
+
+@media screen and (max-width: 1080px) {
+    .edit-content{
+        padding: 0 55px;
+    }
+    .edit-description{
+        padding: 0 20px;
+    }
+    .edit-listItem{
+        flex: 1 0 30%;
+    }
+}
+@media screen and (max-width: 720px) {
+    .edit-content{
+        padding: 0 8px;
+    }
+    .edit-description{
+        padding: 0;
+    }
+    .edit-listItem{
+        flex: 1 0 100%;
+    }
+}
