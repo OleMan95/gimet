@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink, withRouter } from 'react-router-dom';
 import {getUser, getToken} from '../../services/tokenService';
+import ConfigDevelop from '../config_new_expert/ConfigDevelop';
 
 class Edit extends React.Component{
   constructor(){
@@ -94,6 +95,17 @@ class Edit extends React.Component{
 		}
 	};
 
+    consultationClick=(context)=>{
+    	console.log(context);
+        context.props.setConsultationExpert(this.state.expert);
+        context.props.history.push('/consultation');
+    };
+
+    addNewConditionClick =(context)=>{
+
+
+    };
+
   render(){
 
     return (
@@ -120,7 +132,7 @@ class Edit extends React.Component{
 											 onChange={this.handleFilterChange} />
 								<div className="edit-btns d-flex justify-center">
 									<button onClick={()=>{this.consultationClick(this)}} className="d-flex align-items-center">Consultation</button>
-									<button onClick={()=>{this.consultationClick(this)}} className="edit-plus-btn d-flex align-items-center">+</button>
+									<button onClick={()=>{this.addNewConditionClick(this)}} className="edit-plus-btn d-flex align-items-center">+</button>
 								</div>
               </div>
 
