@@ -93,6 +93,10 @@ class Edit extends React.Component{
 			default:
 		}
 	};
+	consultationClick=(context)=>{
+		context.props.setConsultationExpert(this.state.expert);
+		context.props.history.push('/consultation');
+	};
 
   render(){
 
@@ -120,7 +124,7 @@ class Edit extends React.Component{
 											 onChange={this.handleFilterChange} />
 								<div className="edit-btns d-flex justify-center">
 									<button onClick={()=>{this.consultationClick(this)}} className="d-flex align-items-center">Consultation</button>
-									<button onClick={()=>{this.consultationClick(this)}} className="edit-plus-btn d-flex align-items-center">+</button>
+									<button onClick={()=>{}} className="edit-plus-btn d-flex align-items-center">+</button>
 								</div>
               </div>
 

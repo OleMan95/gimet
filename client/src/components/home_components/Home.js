@@ -19,7 +19,8 @@ class Home extends React.Component{
   };
 
   async componentDidMount() {
-      await this.fetchUser();
+    alert('This is a demo version.');
+    await this.fetchUser();
   };
 
   displayExperts=(experts)=>{ // проверка и заполнение списка експертов(если они есть) в кабинете пользователя
