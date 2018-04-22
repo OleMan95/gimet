@@ -117,9 +117,9 @@ class Home extends React.Component{
       });
 
       if (response.status === 200) {
-          alert("Expert has been deleted");
+          alert("Expert has deleted");
       }else {
-          console.log('There has been a problem with fetch operation: ' + response);
+          console.log('There was a problem with fetch operation: ' + response);
           alert("Expert not found");
       }
 

@@ -107,7 +107,7 @@ class Edit extends React.Component{
 	};
 
 	editClick=(question)=>{
-		{/*<EditConditionBox/>*/}
+		/*<EditConditionBox/>*/
 		console.log(question);
 	};
 
