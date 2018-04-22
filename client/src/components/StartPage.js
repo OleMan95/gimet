@@ -59,7 +59,7 @@ class StartPage extends React.Component { //все this.props мы получе�
         });
         return response;
       }).catch(function(error) {
-        console.log('There has been a problem with fetch operation: ' + error.message);
+        console.log('There was a problem with fetch operation: ' + error.message);
       });
     };
 
@@ -118,9 +118,7 @@ class StartPage extends React.Component { //все this.props мы получе�
                 <button className='Start-about-versionClose'
                     onClick={this.onVersionClose}/>
                 <h3>Version 0.2.29a</h3>
-                <p>- GIMET was deployed at Heroku hosting.</p>
-                <p>- Registration and authorisation was developed.</p>
-                
+                <p>- New home page.</p>
               </div>
               
             </div>
