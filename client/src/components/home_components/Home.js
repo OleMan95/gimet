@@ -19,7 +19,6 @@ class Home extends React.Component{
   };
 
   async componentDidMount() {
-    alert('This is a demo version.');
     await this.fetchUser();
   };
 
