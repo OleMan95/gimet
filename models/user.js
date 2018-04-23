@@ -8,26 +8,25 @@ const uniqueValidator = require('mongoose-unique-validator');
 mongoose.plugin(uniqueValidator);
 
 const UserSchema = new Schema({
-    name:{
-        type:String,
-        // Указывает на то, что поле обязательно.
-        // В строке указывается сообщение при ошибке.
-        required:'Name is required'
-    },
-    email:{
-        type:String,
-        unique:'User with email "{VALUE}" already exist.',
-        lowercase:true,
-        required:'Email is required'
-    },
-    password:{
-        type:String,
-        required:'Password is required'
-    },
-    experts:[{
-        type: Schema.ObjectId,
-        ref: 'Expert' // Это поле имеет ссылку на таблицу экспертов
-    }]
+	name:{
+		type:String,
+		required:'Name is required'
+	},
+	email:{
+		type:String,
+		lowercase:true,
+		required:'Email is required'
+	},
+	password:{
+		type:String,
+		required:'Password is required'
+	},
+	isAdmin: Boolean,
+	isConfirmed: Boolean,
+	experts:[{
+		type: Schema.ObjectId,
+		ref: 'Expert'
+	}]
 },{timestamps:true});
 
 UserSchema.set('toJSON', {versionKey:false});

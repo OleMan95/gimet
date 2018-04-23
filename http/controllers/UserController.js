@@ -63,6 +63,9 @@ class UserController{
         if(!user){
             ctx.throw(400, {message:'User not found'});
         }
+        if(!user.isConfirmed){
+            ctx.throw(400, {message:'User not confirmed'});
+        }
         if(!user.comparePasswords(password)){
             ctx.throw(400, {message:'Invalid data'});
         }

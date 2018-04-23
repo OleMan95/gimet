@@ -248,4 +248,7 @@
   .home-content{
     padding: 0 8px;
   }
+  .header-userName{
+    margin: 0;
+  }
 }
