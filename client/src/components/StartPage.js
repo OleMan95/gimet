@@ -50,11 +50,8 @@ class StartPage extends React.Component { //все this.props мы получе�
         })
       }).then((response) => {
         response.json().then(function(data) {
-
-
-
             if(data.data){
-              context.signInAction(context);
+              alert('User has registered.');
             }
         });
         return response;
