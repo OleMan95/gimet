@@ -44,10 +44,12 @@ class ConfigDevelop extends React.Component{
   };
 
   async componentDidMount() {
-      const user = await getUser('name');
-      this.setState({user});
-      console.log('user._id: ', user._id);
-  }
+    const user = await getUser('name');
+    this.setState({user});
+
+    let expert = this.props.expert;
+		this.setState({expert});
+	}
 
   handleInputChange=(event)=>{
     let value = event.target.value.trim();
@@ -231,6 +233,7 @@ class ConfigDevelop extends React.Component{
         });
       }
     }
+    console.log('expert develop: ',expert);
     for(let j=0; j<expert.questions.length; j++){
       if(expert.questions[j].key === this.state.keyValue){
         alert('Question "'+ this.state.keyValue +'" already exist.');
@@ -273,31 +276,36 @@ class ConfigDevelop extends React.Component{
   };
 
   onFinish= async () => {
-      let unsolvedQuestions = this.state.unsolvedQuestions;
-      const url = '/v1/user/' + this.state.user._id;
+    let unsolvedQuestions = this.state.unsolvedQuestions;
+    const url = '/v1/user/' + this.state.user._id;
 
-      fetch(url, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': await getToken()
-          },
-          body: JSON.stringify(this.state.expert)
-      }).then((response) => {
-          response.json().then(function (data) {
-              console.log(data);
-          });
-          return response;
-      }).catch(function (error) {
-          console.log('There has been a problem with fetch operation: ' + error.message);
+    let expert = this.state.expert;
+    expert.name = this.props.expert.name;
+
+		this.setState({expert});
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': await getToken()
+      },
+      body: JSON.stringify(this.state.expert)
+    }).then((response) => {
+      response.json().then(function (data) {
+          console.log(data);
       });
+      return response;
+    }).catch(function (error) {
+      console.log('There has been a problem with fetch operation: ' + error.message);
+    });
 
-      if (unsolvedQuestions.length > 0) {
-          return 'You have unsolved questions: '
-              + unsolvedQuestions + ". Are you sure you want to go?";
-      } else {
-          return "Are you sure you want to go?";
-      }
+    if (unsolvedQuestions.length > 0) {
+      return 'You have unsolved questions: '
+            + unsolvedQuestions + ". Are you sure you want to go?";
+    } else {
+      return "Are you sure you want to go?";
+    }
   };
 
   render() {

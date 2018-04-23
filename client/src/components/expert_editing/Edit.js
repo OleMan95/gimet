@@ -14,6 +14,7 @@ class Edit extends React.Component{
 			questionsDOMs:[],
 			name:'',
 			description:'',
+			editBlock: 'test'
     };
   };
 
@@ -111,16 +112,21 @@ class Edit extends React.Component{
 		console.log(question);
 	};
 
-    consultationClick=(context)=>{
-    	console.log(context);
-        context.props.setConsultationExpert(this.state.expert);
-        context.props.history.push('/consultation');
-    };
+	consultationClick=(context)=>{
+		console.log(context);
+			context.props.setConsultationExpert(this.state.expert);
+			context.props.history.push('/consultation');
+	};
 
-    addNewConditionClick =(context)=>{
+	addNewConditionClick =(context)=>{
 
+		this.setState({
+			editBlock: (
+				<ConfigDevelop expert={this.state.expert}/>
+			)
+		});
 
-    };
+	};
 
   render(){
 
@@ -165,6 +171,9 @@ class Edit extends React.Component{
 
           </div>
         </div>
+
+				{this.state.editBlock}
+
       </div>
     )};
 }
