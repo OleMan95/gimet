@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js && cd client/ && npm start",
     "start:dev": "supervisor index.js",
     "start:prod": "node index.js",
     "build": "cd client && npm run build",
-    "heroku-prebuild": "NODE_ENV=development npm i && npm install --dev && cd client && npm i --dev && npm i && npm run build "
+    "heroku-prebuild": "NODE_ENV=development npm i && npm i --dev && cd client && npm i --dev && npm i && npm run build "
   },
   "engines": {
     "node": "8.9.4"
