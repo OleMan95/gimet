@@ -14,7 +14,7 @@ class Edit extends React.Component{
 			questionsDOMs:[],
 			name:'',
 			description:'',
-			editBlock: 'test'
+			editBlock: ''
     };
   };
 
@@ -31,8 +31,6 @@ class Edit extends React.Component{
   };
 
 	fetchExpert = async () => {
-		console.log('match.params.id: ', this.props.match.params.id);
-
 		const token = getToken();
 		const response = await fetch(`/v1/expert/${this.props.match.params.id}`, {
 			method: 'GET',
@@ -102,20 +100,15 @@ class Edit extends React.Component{
 			default:
 		}
 	};
+
 	consultationClick=(context)=>{
-		context.props.setConsultationExpert(this.state.expert);
-		context.props.history.push('/consultation');
+    console.log('consultationClick: ',this.state.expert);
+    context.props.history.push('/consultation/'+this.state.expert._id);
 	};
 
 	editClick=(question)=>{
 		/*<EditConditionBox/>*/
 		console.log(question);
-	};
-
-	consultationClick=(context)=>{
-		console.log(context);
-			context.props.setConsultationExpert(this.state.expert);
-			context.props.history.push('/consultation');
 	};
 
 	addNewConditionClick =(context)=>{

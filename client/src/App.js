@@ -25,7 +25,7 @@ class App extends Component {
           <Route path={"/home"} component={Home}/>
           <Route path={"/edit/:id"} component={Edit}/>
           <Route path={"/config_new_expert"} component={ConfigNewExpert}/>
-          <Route path={"/consultation"} component={Consultation}/>
+          <Route path={"/consultation/:id"} component={Consultation}/>
           <Route path={"/signin"} component={SignIn}/>
         </div>
       </BrowserRouter>

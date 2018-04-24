@@ -4,53 +4,57 @@ import {withRouter, Redirect, Route} from 'react-router-dom';
 
 
 import ConsultationInterview from './ConsultationInterview';
+import {getToken} from "../../services/tokenService";
 
 class ConsultationInit extends React.Component{
 
-    state = {
-        initContent:( // создаем обьект в переменную initContent
-            <div className="consultation_frame" id="init_frame">
-                <div id="consultation_question_number">
-                    <h3>{this.props.expert.name}</h3>
-                    <p>{this.props.expert.description}</p>
-                </div>
+  state = {
+    expert: {},
+  };
 
-                <button className="consultation_startBtn" onClick={this.onStartClick}>Start</button>
-            </div>
-        ),
-    };
+  async componentDidMount() {
+    const token = getToken();
+    const response = await fetch(`/v1/expert/${this.props.match.params.id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization' : token
+      }});
 
-    onStartClick=()=>{ // при нажатии кнопки старт загружаем новую страницу ConsultationInterview и присваиваем переменной content ConsultationInterview
-        console.log('onStartClick');
+    let data = await response.json();
 
-        this.props.setContent(<ConsultationInterview/>);
-        console.log('this.props.content: ', this.props.content);
+    console.log('data: ',data);
 
-    };
-
-    render(){
-        return (
-            <Route exact path="/consultation" render={() => (
-                !this.props.expert.name ? (
-                  <Redirect to="/home"/>
-                ) : (
-                    <div className="consultation_frame" id="init_frame">
-                        <div id="init_frame_header">
-                            <h3>{this.props.expert.name}</h3>
-                        </div>
-                    
-                        <div id="init_frame_content">
-                            <div>
-                                <p>{this.props.expert.description}</p>
-                            </div>
-                            <button className="consultation_startBtn"
-                                onClick={this.onStartClick}>Start</button>
-                        </div>
-                    </div>
-                )
-            )}/>
-        )
+    if(data._id){
+      this.setState({
+        expert: data
+      });
+    }else{
+      this.props.history.push('/home');
     }
+
+  };
+
+  onStartClick=()=>{ // при нажатии кнопки старт загружаем новую страницу ConsultationInterview и присваиваем переменной content ConsultationInterview
+    this.props.setContent(<ConsultationInterview expert={this.state.expert}/>);
+  };
+
+  render(){
+    return (
+      <div className="consultation_frame" id="init_frame">
+        <div id="init_frame_header">
+          <h3>{this.state.expert.name}</h3>
+        </div>
+
+        <div id="init_frame_content">
+          <div>
+              <p>{this.state.expert.description}</p>
+          </div>
+          <button className="consultation_startBtn"
+              onClick={this.onStartClick}>Start</button>
+        </div>
+      </div>
+    )
+  }
 }
 
 

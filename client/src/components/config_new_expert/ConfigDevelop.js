@@ -74,8 +74,8 @@ class ConfigDevelop extends React.Component{
   };
 
   onKeyDown=(event)=>{
-	  event.preventDefault();
     if(event.keyCode === 13){
+      event.preventDefault();
       let answersList = this.state.answersList;
       let answersValue = this.state.answerValue;
       let newAnswersCount = this.state.answersCount;

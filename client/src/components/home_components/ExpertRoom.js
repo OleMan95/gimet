@@ -59,8 +59,8 @@ class ExpertRoom extends React.Component{
   }
 
   consultationClick=(context)=>{
-      context.props.setConsultationExpert(this.props.expert);
-      context.props.history.push('/consultation');
+    context.props.setConsultationExpert(this.props.expert);
+    context.props.history.push('/consultation/'+this.state.expert._id);
   };
 
   render(){
