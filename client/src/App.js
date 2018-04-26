@@ -18,8 +18,13 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <BrowserRouter basename="/">
+		let supportsHistory;
+		if(window.mobilecheck()){
+			supportsHistory = 'pushState' in window.history;
+    }
+
+		return (
+      <BrowserRouter basename="/" forceRefresh={!supportsHistory}>
         <div>
           <Route exact path={"/"} component={StartPage}/>
           <Route path={"/home"} component={Home}/>
