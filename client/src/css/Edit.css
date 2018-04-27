@@ -51,13 +51,16 @@
     height: 70px;
     transition: height 1s;
     word-wrap: break-word;
-
 }
 .edit-listItem:hover{
     box-shadow: 0 1px 6px rgb(12, 87, 143);
     height: 200px;
-    transition: height 1s;
     overflow-y: visible;
+}
+.edit-listItem {
+}
+.edit-listItem:hover{
+
 }
 .edit-listItem mark{
      background-color: inherit;
@@ -74,7 +77,6 @@
 .edit-Condition-Btn{
     float: right;
     margin: -27px 0 0 0;
-
 }
 
 .edit-Condition-Btn:hover{
@@ -82,7 +84,6 @@
     background-color: #9faab7;
     color: white;
 }
-
 
 
 @media screen and (max-width: 1080px) {

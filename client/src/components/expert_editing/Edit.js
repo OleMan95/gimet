@@ -62,17 +62,10 @@ class Edit extends React.Component{
 							<h3>Question #{index+1}:</h3>
 							<button onClick={()=>{this.editClick(question)}} className="edit-Condition-Btn">Edit</button>
 							<hr/>
-							<div>
+							<div className="edit-li-content">
 								<p><mark><b>key</b></mark>: {question.key}</p>
 								<p><mark><b>question</b></mark>: {question.question}</p>
 							</div>
-							{/*<div className="hide">*/}
-								<p><mark><b>answers</b></mark>: {question.answers}</p>
-								<p><b>results:</b></p>
-                            	<p>{question.results[0].type} : {question.results[0].value}</p>
-                            	<p>{question.results[1].type} : {question.results[1].value}</p>
-
-							{/*</div>*/}
 						</li>
 					)}
 				</ul>

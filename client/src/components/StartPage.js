@@ -61,11 +61,6 @@ class StartPage extends React.Component { //все this.props мы получе�
     };
 
     render(){
-      let test = 'It\'s a usual browser';
-			if(window.mobilecheck()){
-				test = 'It\'s a mobile browser';
-			}
-
       return (
       <div>
         <header className="header" >  
@@ -121,7 +116,6 @@ class StartPage extends React.Component { //все this.props мы получе�
                     onClick={this.onVersionClose}/>
                 <h3>Version 0.2.29a</h3>
                 <p>- New home page.</p>
-								{test}
               </div>
               
             </div>
