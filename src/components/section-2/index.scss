@@ -1,0 +1,40 @@
+@import '../variables.scss';
+$page-name-margin: 0 1rem;
+
+.section-2{
+  .modal{
+    background-color: #2229;
+
+    .modal-dialog{
+      max-width: 50%;
+      @media (max-width: $md) {
+        max-width: 80%;
+      }
+      @media (max-width: $sm) {
+        max-width: 100%;
+      }
+    }
+
+    .table td, .table th {
+      padding: .5rem;
+
+      a, input{
+        margin: 0;
+      }
+    }
+
+    tbody{
+      tr{
+        cursor: initial;
+      }
+    }
+
+  }
+  .show{
+    display: block;
+  }
+  .alert{
+    z-index: 9999;
+  }
+
+}

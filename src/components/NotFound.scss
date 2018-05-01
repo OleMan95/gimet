@@ -1,0 +1,27 @@
+@import 'variables.scss';
+
+.not-found{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    span{
+        color: #779cab33;
+        font-size: 30rem;
+        position: absolute;
+        margin: 0 auto;
+        z-index: -1;
+    }
+    h1{
+        justify-self: flex-start;
+        color: $primary-color;
+        font-size: 40px;
+    }
+
+}
