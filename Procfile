@@ -1,1 +1,0 @@
-web: supervisor index.js && cd client && npm start
