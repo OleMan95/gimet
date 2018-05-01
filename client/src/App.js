@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, HashRouter, Switch} from 'react-router-dom';
 
 import StartPage from './components/StartPage';
 import Home from './components/home_components/Home';
@@ -19,16 +19,16 @@ class App extends Component {
 
   render() {
 		return (
-      <BrowserRouter basename="/">
-        <div>
+      <HashRouter basename="/">
+        <Switch>
           <Route exact path={"/"} component={StartPage}/>
           <Route path={"/home"} component={Home}/>
           <Route path={"/edit/:id"} component={Edit}/>
           <Route path={"/config_new_expert"} component={ConfigNewExpert}/>
           <Route path={"/consultation/:id"} component={Consultation}/>
           <Route path={"/signin"} component={SignIn}/>
-        </div>
-      </BrowserRouter>
+        </Switch>
+      </HashRouter>
     );
   }
 }
