@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
+import './index.scss';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
   state = {
@@ -62,46 +63,9 @@ class StartPage extends React.Component { //все this.props мы получе�
 
     render(){
       return (
-      <div>
-        <header className="header" >  
-          <NavLink to="/" activeClassName="Start-header-logo-active" className="header-logo">
-            <div className="header-logo-img"/>
-            <p className="header-logo-title">GIMET</p>
-          </NavLink>
-          <div className="header-btnsDiv">
-            <a href="#about_block" id="about" className="header-btns">About</a>
-            <a href="#contact_block" id="contact" className="header-btns">Contact</a>
-            <NavLink to="/signin" id="signInBtn" className="header-btns">Sign in</NavLink>
-          </div>
-        </header>
-
-        <div className="Start">
-          <div className="Start-content">
-            {ContentBody}
-
-            <div className="Start-signUpDiv">
-              <div className="Start-signUpDiv-form">
-                <label className="Start-signUpDiv-labels">Username</label>
-                <input type="text" name="username" 
-                  placeholder="Pick a username" 
-                  className="Start-signUpDiv-inputs"
-                  onChange={this.handleInputChange}/>
-                <label className="Start-signUpDiv-labels">Email</label>
-                <input type="email" name="email" 
-                  placeholder="you@example.com" 
-                  className="Start-signUpDiv-inputs"
-                  onChange={this.handleInputChange}/>
-                <label className="Start-signUpDiv-labels">Password</label>
-                <input type="password" name="password" placeholder="Create a password" className="Start-signUpDiv-inputs"
-                  onChange={this.handleInputChange}/>
-                <p>Use at least one letter, one numeral, and seven characters.</p>
-              </div>
-
-              <button type="button" name="signUpBtn" id="signUpBtn"
-              onClick={()=>this.signUpClick(this)}>Sign up</button>
-            </div>
-          </div>
-        </div>
+      <div className="StartPage">
+        <Header />
+        {section1}
 
         <div className='Start-about' id="about_block">
           <div>
@@ -168,13 +132,36 @@ class StartPage extends React.Component { //все this.props мы получе�
   }
 }
 
-const ContentBody = (
-  <div className="Start-contentBody">
-    <div className="Start-contentBody-div1">
-      <div className="Start-contentBody-logo"/>
-      <div className="Start-contentBody-logoBorder"/>
+const section1 = (
+  <div className="section-1">
+    <div className="">
+      <div className="">
+        <div className=""/>
+        <div className=""/>
+      </div>
+      <h3 className="">Expert systems for everybody.</h3>
     </div>
-    <h3 className="Start-contentBody-text1">Expert systems for everybody.</h3>
+
+    <div className="">
+
+      <form>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Name</label>
+          <input type="name" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your full name"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Email address</label>
+          <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="exampleInputPassword1">Password</label>
+          <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+          <small id="emailHelp" className="form-text text-muted">Use at least one letter, one numeral, and seven characters.</small>
+        </div>
+        <button type="submit" className="btn btn-primary" onClick={()=>this.signUpClick(this)}>Submit</button>
+      </form>
+
+    </div>
   </div>
 );
 

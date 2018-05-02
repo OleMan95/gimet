@@ -13,9 +13,10 @@ router.get('/v1/message', async (req, res) => {
 });
 
 router.get('*', (req, res)=>{
+	let context = {};
 	// if above are no routes has been found - page routes searching here
 	const body = renderToString(
-		<StaticRouter location={req.url}>
+		<StaticRouter location={req.url} context={context}>
 			<App />
 		</StaticRouter>
 	);
@@ -24,7 +25,7 @@ router.get('*', (req, res)=>{
 	res.send(template({
 		body: body,
 		footer: footer,
-		title: 'GIMET-CMS'
+		title: 'GIMET'
 	}));
 });
 

@@ -1,0 +1,23 @@
+@import '../../variables';
+
+.Header{
+
+  img{
+    width: 50px;
+    height: 50px;
+    margin-right: .5rem;
+  }
+  input{
+    margin-bottom: 0;
+  }
+  .btn-outline-success{
+    background-color: transparent;
+    border-color: $primary-light-color;
+    color: $primary-light-color;
+  }
+  .btn-outline-success:hover{
+    background-color: $primary-light-color;
+    border-color: $primary-light-color;
+    color: white;
+  }
+}
