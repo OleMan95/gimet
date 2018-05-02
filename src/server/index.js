@@ -8,7 +8,6 @@ import cookieParser from 'cookie-parser';
 
 import routes from "./routes/index"
 import users from "./routes/users"
-import "./services/telegram-bot"
 
 const app = express();
 app.use(cookieParser());

@@ -1,6 +1,9 @@
-import Users from './users/Users';
-import Experts from './experts/Experts';
-import Login from './login/Login';
+import StartPage from './StartPage/';
+import Login from './Login/';
+import HomePage from './HomePage/';
+import EditorPage from './EditorPage/';
+import ConfiguratorPage from './ConfiguratorPage/';
+import ConsultationPage from './ConsultationPage/';
 import NotFound from './NotFound';
 
 /**
@@ -10,17 +13,33 @@ import NotFound from './NotFound';
 const routes = [
 	{
 		path: '/',
+		component: StartPage,
+		exact: true
+	},
+	{
+		path: '/login',
 		component: Login,
 		exact: true
 	},
 	{
-		path: '/experts',
-		component: Experts,
+		path: '/home',
+		component: HomePage,
 		exact: true
 	},
 	{
-		path: '/users',
-		component: Users
+		path: '/editor/:id',
+		component: EditorPage,
+    exact: true
+  },
+	{
+		path: '/configurator',
+		component: ConfiguratorPage,
+    exact: true
+	},
+	{
+		path: '/consultation/:id',
+		component: ConsultationPage,
+    exact: true
 	},
 	{
 		path: '*',
@@ -29,3 +48,7 @@ const routes = [
 ];
 
 export default routes;
+
+
+
+{/*<Route path={"/signin"} component={SignIn}/>*/}

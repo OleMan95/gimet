@@ -3,7 +3,7 @@ import React from "react";
 import {renderToString} from "react-dom/server";
 import template from "../template";
 import App from "../../components/App";
-import Footer from "../../components/partials/Footer";
+import Footer from "../../components/sections/Footer/index";
 import {StaticRouter} from 'react-router-dom';
 
 const router = express.Router();
@@ -14,7 +14,7 @@ router.get('/v1/message', async (req, res) => {
 
 router.get('*', (req, res)=>{
 	// if above are no routes has been found - page routes searching here
-	const murkup = renderToString(
+	const body = renderToString(
 		<StaticRouter location={req.url}>
 			<App />
 		</StaticRouter>
@@ -22,7 +22,7 @@ router.get('*', (req, res)=>{
 	const footer = renderToString(<Footer />);
 
 	res.send(template({
-		body: murkup,
+		body: body,
 		footer: footer,
 		title: 'GIMET-CMS'
 	}));

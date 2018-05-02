@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "set NODE_ENV=development&&webpack --config ./webpack.config.js --progress --profile --colors -w",
-    "dev": "set NODE_ENV=development&&nodemon server.js"
+    "build:dev": "NODE_ENV=development webpack --progress --profile --colors -w",
+    "dev": "NODE_ENV=development nodemon server.js"
   },
   "author": "Oleksii Manachynskyi",
   "license": "ISC",
