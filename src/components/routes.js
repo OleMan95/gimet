@@ -1,5 +1,5 @@
 import StartPage from './StartPage/';
-import Login from './Login/';
+import Signin from './Signin/';
 import HomePage from './HomePage/';
 import EditorPage from './EditorPage/';
 import ConfiguratorPage from './ConfiguratorPage/';
@@ -18,7 +18,7 @@ const routes = [
 	},
 	{
 		path: '/login',
-		component: Login,
+		component: Signin,
 		exact: true
 	},
 	{

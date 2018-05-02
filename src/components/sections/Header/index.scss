@@ -1,6 +1,8 @@
 @import '../../variables';
 
 .Header{
+  transition: all .5s linear;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
 
   img{
     width: 50px;
@@ -14,10 +16,27 @@
     background-color: transparent;
     border-color: $primary-light-color;
     color: $primary-light-color;
+
+    &:hover{
+      background-color: $primary-light-color;
+      border-color: $primary-light-color;
+      color: white;
+    }
+
+    &:not(:disabled):not(.disabled):active{
+      background-color: $primary-light-color;
+      border-color: $primary-light-color;
+      color: white;
+      &:focus{
+        box-shadow: 0 0 0 .2rem rgba(40, 154, 167, 0.5);
+      }
+    }
+    &:focus {
+      box-shadow: 0 0 0 .2rem rgba(40, 154, 167, 0.4);
+    }
   }
-  .btn-outline-success:hover{
-    background-color: $primary-light-color;
-    border-color: $primary-light-color;
-    color: white;
+  .dropdown-item{
+    cursor: pointer;
   }
+
 }

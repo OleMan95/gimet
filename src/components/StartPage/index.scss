@@ -1,68 +1,91 @@
+@import '../variables';
+
 .StartPage{
 
   .section-1{
     min-height: 600px;
-    //background: #404e5c url(../images/background.svg) no-repeat fixed center center;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    margin: 0;
+    background: url(images/background.svg) no-repeat right fixed;
     background-size: cover;
-    position: relative;
-    z-index: 1;
+
+    div{
+      padding: 0;
+    }
+
+    div:first-child{
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .logo {
+        background: url(images/logo-brain.svg) no-repeat center;
+        background-size: contain;
+        width: 300px;
+        height: 300px;
+        position: relative;
+        margin: 0 auto;
+      }
+      .logo:before {
+        background: url(images/logo-border.svg) no-repeat center;
+        background-size: contain;
+        position: absolute;
+        z-index: 1010;
+        content: '';
+        padding: 150px;
+        -webkit-animation:spin 20s linear infinite;
+        -moz-animation:spin 20s linear infinite;
+        animation:spin 20s linear infinite;
+      }
+
+
+    }
+
+    .signup{
+      justify-content: center;
+      align-items: center;
+
+      .card{
+        padding: 1.5rem 0.5rem;
+      }
+      form{
+        flex-direction: column;
+      }
+
+    }
+  }
+
+  .section-2{
+    .container{
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 0;
+
+
+      p{
+        text-justify: newspaper;
+      }
+
+      .openModal{
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .modal{
+        background-color: #2226;
+      }
+
+      .show{
+        display: block;
+        padding-right: 12px;
+      }
+
+    }
   }
 
 
 
 }
 
-/*Content*/
-.Start-content{
-  /* + */
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 5% 15%;
-}
-.Start-contentBody{
-  /* + */
-  width: 700px;
-  color: white;
-  font-size: 24px;
-  margin: auto 50px auto 0;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-.Start-contentBody-div1{
-  /* + */
-  display: flex;
-  flex-direction: column;
-}
-.Start-contentBody-logo {
-  /* + */
-  //background-image: url(../images/logo_brain.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  width: 300px;
-  height: 300px;
-  position: relative;
-  margin: 0 auto;
-}
-.Start-contentBody-logo:before {
-  //background-image: url(../images/logo_border.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  z-index: -1;
-  content: '';
-  padding: 150px;
-  -webkit-animation:spin 20s linear infinite;
-  -moz-animation:spin 20s linear infinite;
-  animation:spin 20s linear infinite;
-} 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } } 

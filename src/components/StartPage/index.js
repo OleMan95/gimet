@@ -4,99 +4,143 @@ import Header from '../sections/Header/';
 import './index.scss';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
-  state = {
-    signInInput:'',       //тут обьявляются все переменные (типа this.state)
-    usernameValue:'',
-    emailValue:'',
-    passwordValue:'',
-  };
+	constructor(props) {
+	  super(props);
+	  this.state = {
+			modalShow: '',
+	  };
+	}
 
-    onVersionBtn=()=>{ // вызов и отображение елемента(окна) Start-about-versionDiv в котором находится инф. об изменениях в системе
-        this.versionDiv.style.display = 'flex';
-    };
-    onVersionClose=()=>{ // закритие окversionDivна при нажатии выхода
-        this.versionDiv.style.display = '';
-    };
-    handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
-        switch (event.target.name) {
-            case 'username':
-                this.setState({
-                    usernameValue:event.target.value,
-                });
-                break;
-            case 'email':
-                this.setState({
-                  emailValue:event.target.value,
-                });
-                break;
-            case 'password':
-                this.setState({
-                  passwordValue:event.target.value,
-                });
-                break;
-            default:
-        }
-    };
+	handleClose=()=>{
+		this.setState({ modalShow: '' });
+	};
 
-    signUpClick=(context)=>{
-      fetch('/v1/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ // занесение данных в JSON
-          name: this.state.usernameValue,
-          email: this.state.emailValue,
-          password: this.state.passwordValue,
-        })
-      }).then((response) => {
-        response.json().then(function(data) {
-            if(data.data){
-              alert('User has registered.');
-            }
-        });
-        return response;
-      }).catch(function(error) {
-        console.log('There was a problem with fetch operation: ' + error.message);
-      });
-    };
+	handleShow=()=>{
+		this.setState({ modalShow: 'show' });
+	};
+  // handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
+  //     switch (event.target.name) {
+  //         case 'username':
+  //             this.setState({
+  //                 usernameValue:event.target.value,
+  //             });
+  //             break;
+  //         case 'email':
+  //             this.setState({
+  //               emailValue:event.target.value,
+  //             });
+  //             break;
+  //         case 'password':
+  //             this.setState({
+  //               passwordValue:event.target.value,
+  //             });
+  //             break;
+  //         default:
+  //     }
+  // };
+  // signUpClick=(context)=>{
+  //   fetch('/v1/auth/signup', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ // занесение данных в JSON
+  //       name: this.state.usernameValue,
+  //       email: this.state.emailValue,
+  //       password: this.state.passwordValue,
+  //     })
+  //   }).then((response) => {
+  //     response.json().then(function(data) {
+  //         if(data.data){
+  //           alert('User has registered.');
+  //         }
+  //     });
+  //     return response;
+  //   }).catch(function(error) {
+  //     console.log('There was a problem with fetch operation: ' + error.message);
+  //   });
+  // };
 
-    render(){
-      return (
+  render(){
+    return (
       <div className="StartPage">
         <Header />
-        {section1}
+				<div className="section-1 row">
+					<div className="col d-flex">
+						<span className="logo"/>
+						<h3 className="text-white">Expert systems for everybody.</h3>
+					</div>
 
-        <div className='Start-about' id="about_block">
-          <div>
-            <div>
-              <h2>About GIMET Systems</h2>
-              <button className='Start-about-versionBtn'
-                      ref={(button)=>{this.versionBtn = button}}
-                      onClick={this.onVersionBtn}>Version 0.2.29a</button>
-              <div className='Start-about-versionDiv'
-                   ref={(button)=>{this.versionDiv = button}}>
-                <button className='Start-about-versionClose'
-                    onClick={this.onVersionClose}/>
-                <h3>Version 0.2.29a</h3>
-                <p>- New home page.</p>
-              </div>
-              
-            </div>
-            
-            <p>GIMET is a platform for creating expert systems. 
-              An expert system is an intelligent computer program 
-              that contains the knowledge and analytical capabilities 
-              of one or more experts in a particular field of application,
-              and is able to draw logical conclusions based on this knowledge, 
-              thus providing specific tasks (counseling, training, diagnosis,
-              testing, designing etc.) without the participation of an expert
-              (specialist in a specific problem area). It is also defined
-              as a system that uses a knowledge base for solving problems 
-              (issuing recommendations) in a particular subject area.</p>
-              <p>You can use GIMET platform to develop your own expert systems and further exploit it.</p>
-          </div>
-        </div>
+					<div className="col signup d-flex">
+
+						<div className="card text-white bg-dark">
+							<div className="card-body">
+								<form className="col d-flex">
+									<div className="form-group">
+										<label htmlFor="exampleInputEmail1">Name</label>
+										<input type="name" className="form-control" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter your full name"/>
+									</div>
+									<div className="form-group">
+										<label htmlFor="exampleInputEmail1">Email address</label>
+										<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+									</div>
+									<div className="form-group">
+										<label htmlFor="exampleInputPassword1">Password</label>
+										<input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+										<small id="emailHelp" className="form-text text-muted">Use at least one letter, one numeral, and seven characters.</small>
+									</div>
+									<button type="submit" className="btn btn-primary" onClick={()=>this.signUpClick(this)}>Submit</button>
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div className='section-2 bg-light py-5' id="about_block">
+					<div className='container pt-5 d-flex'>
+						<h2 className="display-4 mb-4">What is GIMET?</h2>
+
+						<p>GIMET is a platform for creating expert systems.
+							The expert system is an intelligent computer program
+							that contains the knowledge and analytical capabilities
+							of one or more experts in a particular field of application,
+							and is able to draw logical conclusions based on this knowledge,
+							thus providing specific tasks (counseling, training, diagnosis,
+							testing, designing etc.) without the participation of an expert
+							(specialist in a specific problem area). It is also defined
+							as a system that uses a knowledge base for solving problems
+							(issuing recommendations) in a particular subject area.</p>
+						<p>You can use GIMET platform to develop your own expert systems and further exploit it.</p>
+
+						<button type="button" className="btn openModal btn-link" data-toggle="modal"
+										data-target="#exampleModalCenter" onClick={this.handleShow}>
+							v-1.0.1a
+						</button>
+
+						<div className={"modal fade "+this.state.modalShow} id="exampleModalCenter" tabIndex="-1" role="dialog"
+								 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" onClick={this.handleClose}>
+							<div className="modal-dialog modal-dialog-centered" role="document" onClick={(event)=>event.stopPropagation()}>
+								<div className="modal-content">
+									<div className="modal-header">
+										<h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+										<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleClose}>
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div className="modal-body">
+										<ul className="list-group list-group-flush">
+											<li className="list-group-item">New design of the site</li>
+											<li className="list-group-item">The main algorithms were optimized (creation of experts and logical output)</li>
+											<li className="list-group-item">The work of the site was optimized</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
 
         <div className='Start-contact' id="contact_block">
           <div>
@@ -130,40 +174,8 @@ class StartPage extends React.Component { //все this.props мы получе�
       </div>
     );
   }
+
 }
-
-const section1 = (
-  <div className="section-1">
-    <div className="">
-      <div className="">
-        <div className=""/>
-        <div className=""/>
-      </div>
-      <h3 className="">Expert systems for everybody.</h3>
-    </div>
-
-    <div className="">
-
-      <form>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Name</label>
-          <input type="name" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your full name"/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Email address</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Password</label>
-          <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
-          <small id="emailHelp" className="form-text text-muted">Use at least one letter, one numeral, and seven characters.</small>
-        </div>
-        <button type="submit" className="btn btn-primary" onClick={()=>this.signUpClick(this)}>Submit</button>
-      </form>
-
-    </div>
-  </div>
-);
 
 
 export default withRouter(StartPage);
