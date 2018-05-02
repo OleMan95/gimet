@@ -89,7 +89,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 										<input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
 										<small id="emailHelp" className="form-text text-muted">Use at least one letter, one numeral, and seven characters.</small>
 									</div>
-									<button type="submit" className="btn btn-primary" onClick={()=>this.signUpClick(this)}>Submit</button>
+									<button type="submit" className="btn btn-primary" onClick={()=>this.signUpClick(this)}>Sign up</button>
 								</form>
 							</div>
 						</div>
@@ -123,7 +123,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 							<div className="modal-dialog modal-dialog-centered" role="document" onClick={(event)=>event.stopPropagation()}>
 								<div className="modal-content">
 									<div className="modal-header">
-										<h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+										<h5 className="modal-title" id="exampleModalLongTitle">Changelog v-1.0.1a:</h5>
 										<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleClose}>
 											<span aria-hidden="true">&times;</span>
 										</button>
