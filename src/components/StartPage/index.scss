@@ -1,10 +1,12 @@
 @import '../variables';
 
 .StartPage{
-
+  .container{
+    padding: 0 3rem;
+  }
   .section-1{
     min-height: 600px;
-    background: url(images/background.svg) no-repeat right fixed;
+    background: url(images/background.png) no-repeat right fixed;
     background-size: cover;
     margin: 66px 0 0;
 
@@ -92,16 +94,50 @@
   }
 
   .section-3{
+
+    .container{
+      &>h2{
+        font-size: 3rem;
+      }
+      .cards-block{
+        justify-content: space-between;
+        margin: 0;
+      }
+      .card{
+        width: 29.7rem;
+        flex-direction: row;
+
+        .card-img-top{
+          padding: 0;
+        }
+        .card-body{
+          flex: 1 1 430px;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .row{
+            margin: 0;
+          }
+        }
+        .ion{
+          font-size: 1.5rem;
+        }
+      }
+
+    }
+  }
+
+  .section-4{
     min-height: 600px;
     padding: .5rem;
     color: white;
-    background: #1e1e24 url(images/background.svg) no-repeat fixed center;
+    background: url(images/background.png) no-repeat fixed center;
     background-size: cover;
     position: relative;
 
     &:before{
       position: absolute;
-      background-color: #ffffffb3;
+      background-color: #ffffffe6;
       content: '';
       bottom: 0;
       left: 0;
@@ -116,10 +152,18 @@
       padding: 3rem 2rem;
       z-index: 1010;
       &:first-of-type{
-        background-color: #343a40;
-        border-radius: .25rem;
+        justify-content: center;
+        align-items: center;
+        form{
+          max-width: 25rem;
+          max-height: 31rem;
+          background-color: #343a40;
+          border-radius: .25rem;
+          padding: 3rem 2rem;
+        }
       }
     }
+
     .form-row{
       .form-group{
         margin: 0;
