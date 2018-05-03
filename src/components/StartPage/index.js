@@ -65,7 +65,7 @@ class StartPage extends React.Component { //все this.props мы получе�
     return (
       <div className="StartPage">
         <Header />
-				<div className="section-1 row">
+				<div className="section-1 d-flex">
 					<div className="col d-flex">
 						<span className="logo"/>
 						<h3 className="text-white">Expert systems for everybody.</h3>
@@ -97,7 +97,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 					</div>
 				</div>
 
-				<div className='section-2 bg-light py-5' id="about_block">
+				<div className='section-2 bg-light py-5 px-3' id="section-2">
 					<div className='container pt-5 d-flex'>
 						<h2 className="display-4 mb-4">What is GIMET?</h2>
 
@@ -142,36 +142,38 @@ class StartPage extends React.Component { //все this.props мы получе�
 					</div>
 				</div>
 
-        <div className='Start-contact' id="contact_block">
-          <div>
-            <h2>Contact Us:</h2>
-            <form id="form">
-              <div className="contact-inputsDiv">
-                <div className="contact-inputs">
-                  <label htmlFor="contact-name">Name: </label>
-                  <input type="text" id="contact-name" placeholder="Enter your name"/>
+        <div className='section-3 d-flex' id="section-3">
+          <div className='col d-flex'>
+            <h2 className="display-6 mb-4">Contact us:</h2>
+            <form>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputFName">First name</label>
+                  <input type="email" className="form-control" id="inputFName" placeholder="First name"/>
                 </div>
-                <div className="contact-inputs">
-                  <label htmlFor="contact-email">Email: </label>
-                  <input type="email" id="contact-email" placeholder="enter@your.email"/>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputLName">Last name</label>
+                  <input type="password" className="form-control" id="inputLName" placeholder="Last name"/>
                 </div>
               </div>
-
-              <div className="contact-inputs">
-                <label htmlFor="contact-subject">Subject: </label>
-                <input type="text" id="contact-subject" placeholder="Subject..."/>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email address</label>
+                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
               </div>
-
-              <div className="contact-inputs">
-                <label htmlFor="msgInp" >Message: </label>
-                <textarea id="msgInp" placeholder="Message..."/>
+              <div className="form-group">
+                <label htmlFor="exampleFormControlTextarea1">Message</label>
+                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
               </div>
-
+              <div className="d-flex justify-content-end">
+                <button type="submit" className="btn btn-primary">Submit</button>
+              </div>
             </form>
-            <button type="button">Send</button>
+					</div>
+          <div className='col d-flex'>
           </div>
-        </div>
-      </div>
+				</div>
+
+			</div>
     );
   }
 

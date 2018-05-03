@@ -4,12 +4,12 @@
 
   .section-1{
     min-height: 600px;
-    margin: 0;
     background: url(images/background.svg) no-repeat right fixed;
     background-size: cover;
+    margin: 66px 0 0;
 
-    div{
-      padding: 0;
+    &>div{
+      padding: 1rem;
     }
 
     div:first-child{
@@ -52,6 +52,15 @@
       }
 
     }
+
+    @media (max-width: 991.98px) {
+      flex-direction: column;
+      margin: 64px 0 0;
+
+      &>.col{
+        flex-basis: auto;
+      }
+    }
   }
 
   .section-2{
@@ -82,7 +91,50 @@
     }
   }
 
+  .section-3{
+    min-height: 600px;
+    padding: .5rem;
+    color: white;
+    background: #1e1e24 url(images/background.svg) no-repeat fixed center;
+    background-size: cover;
+    position: relative;
 
+    &:before{
+      position: absolute;
+      background-color: #ffffffb3;
+      content: '';
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.3;
+    }
+    &>div{
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3rem 2rem;
+      z-index: 1010;
+      &:first-of-type{
+        background-color: #343a40;
+        border-radius: .25rem;
+      }
+    }
+    .form-row{
+      .form-group{
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      flex-direction: column;
+
+      &>div:last-of-type{
+        display: none !important;
+      }
+    }
+
+  }
 
 }
 
@@ -90,200 +142,6 @@
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } } 
 
-.Start-contentBody-text1{
-  /* + */
-  margin: 0 0 16px 0;
-  font-size: 30px;
-  text-align: center;
-  color: white;
-}
-.Start-contentBody-text2{
-  margin: 0 0 16px 0;
-}
-.Start-contentBody p:last-of-type{
-  width: 100%;
-  font-size: 20px;
-  text-align: left;
-}
-
-/*signUpDiv*/
-.Start-signUpDiv{
-  /* + */
-  min-width: 310px;
-  height: 290px;
-  padding: 30px;
-  background-color: #1e1e24;
-  box-shadow: 1px 1px 2px 1px black;
-  margin: 0;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-}
-.Start-signUpDiv-form{
-  /* + */
-  display: flex;
-  flex-direction: column;
-}
-.Start-signUpDiv-labels{
-  /* + */
-  color: white;
-  text-align: left;
-  padding: 4px;
-}
-.Start-signUpDiv-inputs{
-  /* + */
-  padding: 8px;
-  margin-bottom: 8px;
-  border: 0;
-  border-bottom: 2px solid #92dce5;
-  background: inherit;
-  color: white;
-}
-.Start-signUpDiv-inputs::placeholder{
-  color: #d0ccd0;  
-}
-.Start-signUpDiv-inputs:last-of-type{
-  padding: 8px;
-  margin-bottom: 0;
-}
-.Start-signUpDiv p{
-  color: white;
-  font-size: 11px;
-  margin: 2px auto 8px;
-}
-
-.Start-signUpDiv-720{
-  display: none;
-}
-
-.Start-about{
-  /* + */
-  min-height: 600px;
-  position: relative;
-  background-color: #d0ccd0;
-  color: #1e1e24;
-}
-.Start-about:before{
-  position: absolute;
-  background-color: #d0ccd0;
-  content: 'In developing...';
-  color: #1e1e24;
-  text-align: center;
-  line-height: 600px;
-  font-size: 40px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0.8;
-  display:none;
-} 
-.Start-about > div{
-  padding: 5% 15%;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-} 
-.Start-about > div > div{
-  display:flex;
-  flex-direction: row;
-  align-items: center;
-}  
-.Start-about-versionBtn{
-  /* + */
-  height: 40px;
-  margin-left: 24px;
-  background-color: inherit;
-  border-radius: 5px;
-  border: solid 1px #1e1e24;
-  cursor: pointer;  
-}
-.Start-about-versionBtn:hover{
-  border: solid 1px #1e1e24;  
-  background-color: #404e5c;
-  color: #d0ccd0;  
-}  
-.Start-about-versionDiv{
-  /* + */
-  display: none;
-  position: fixed;
-  width: 400px;
-  height: 300px;
-  top:50%;
-  left:50%;
-  margin-left:-208px;
-  margin-top: -158px; 
-  box-shadow: 1px 1px 1px 1px #1e1e24;
-  z-index: 20;
-  background-color: white;
-  border-radius: 5px;
-  flex-direction: column;
-  padding: 16px;
-}
-.Start-about-versionDiv > button{
-  height: 30px;
-  width: 30px;
-  align-self: flex-end;
-  background-color: inherit;
-  //background-image: url(../images/close-black.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 20px;
-  border-radius: 5px;
-  border: solid 1px #1e1e24;
-  cursor: pointer; 
-}  
-.Start-about-versionDiv > button:hover{
-  border: solid 1px #1e1e24;
-  background-color: #e74c3c;
-  //background-image: url(../images/close-white.svg);
-}  
-.Start-about-versionDiv > button ~ h3{
-  font-weight: 500;
-}  
-.Start-about-versionDiv > button ~ p{
-  font-size: 16px;
-}  
-.Start-about > div h2{
-  font-size: 30px;
-  font-weight: 500;
-}  
-.Start-about p{
-  font-size: 22px;
-  margin: 4px 0;
-}
-
-
-.Start-contact{
-  /* + */
-  min-height: 600px;
-  background-color: #1e1e24;
-  display: flex;
-  flex-direction: row;
-  padding: 2% 15%;
-  color: white;
-  //background: url(../images/background.svg) no-repeat center center fixed;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  position: relative;
-}
-.Start-contact:before{
-  position: absolute;
-  background-color: #1e1e24;
-  content: 'In developing...';
-  color: white;
-  text-align: center;
-  line-height: 600px;
-  font-size: 40px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0.8;
-}  
 .Start-contact > div{
   width: 450px;
   height: 400px;
