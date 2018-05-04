@@ -144,7 +144,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 					</div>
 				</div>
 
-				<div className='section-3 py-5 px-3' id="section-3">
+				<div className='section-3 bg-light py-5 px-3' id="section-3">
 					<div className='container py-5'>
 						<h2 className="mb-4">Our team</h2>
 						<div className="row cards-block">
