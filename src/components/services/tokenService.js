@@ -1,4 +1,9 @@
-
+/**
+ * TOKENS:
+ * aat - should be in every request to the back-end;
+ * token - authorization token;
+ *
+ */
 export function getToken(){
     // возвращает cookie с именем token, если есть, если нет, то undefined
     let matches = document.cookie.match(new RegExp(

@@ -2,8 +2,8 @@ import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
 import './index.scss';
-import teamMember1 from './images/team/manachynskyi.jpg';
-import teamMember2 from './images/team/suprun.jpg';
+import teamMember1 from '../../data/images/team/manachynskyi.jpg';
+import teamMember2 from '../../data/images/team/suprun.jpg';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
 	constructor(props) {
@@ -84,7 +84,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 									</div>
 									<div className="form-group">
 										<label htmlFor="exampleInputEmail1">Email address</label>
-										<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+										<input type="email" className="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter email"/>
 									</div>
 									<div className="form-group">
 										<label htmlFor="exampleInputPassword1">Password</label>
@@ -148,81 +148,86 @@ class StartPage extends React.Component { //все this.props мы получе�
 					<div className='container py-5'>
 						<h2 className="mb-4">Our team</h2>
 						<div className="row cards-block">
-							<div className="card" >
-								<img className="card-img-top" src={teamMember1} alt="team-member1"/>
-									<div className="card-body d-flex">
-										<div>
-											<h5 className="card-title">Oleksii Manachynskyi</h5>
-											<p className="card-text">Software developer, solution architect</p>
-										</div>
-										<div className="row">
-											<a href="https://www.facebook.com/iamoleman" className="btn btn-link">
-												<i className="ion ion-social-facebook"></i></a>
-											<a href="https://www.instagram.com/lmanachinskiy/" className="btn btn-link">
-												<i className="ion ion-social-instagram"></i></a>
-											<a href="https://github.com/OleMan95" className="btn btn-link">
-												<i className="ion ion-social-github"></i></a>
-											<a href="https://www.linkedin.com/in/oleksii-manachynskyi-078b17137/" className="btn btn-link">
-												<i className="ion ion-social-linkedin"></i></a>
-										</div>
-									</div>
-							</div>
-							<div className="card">
-								<img className="card-img-top" src={teamMember2} alt="team-member2"/>
-								<div className="card-body d-flex">
-										<div>
-											<h5 className="card-title">Roman Suprun</h5>
-											<p className="card-text">Software developer</p>
-										</div>
-										<div className="row">
-											<a href="#" className="btn btn-link">
-												<i className="ion ion-social-facebook"></i></a>
-											<a href="#" className="btn btn-link">
-												<i className="ion ion-social-instagram"></i></a>
-											<a href="#" className="btn btn-link">
-												<i className="ion ion-social-github"></i></a>
-											<a href="#" className="btn btn-link">
-												<i className="ion ion-social-linkedin"></i></a>
-										</div>
-									</div>
-							</div>
 
-
+							<div className="d-flex" >
+								<img className="team-img" src={teamMember1} alt="team-member1"/>
+								<div className="col-6 team-body d-flex">
+									<div>
+										<h5 className="">Oleksii Manachynskyi</h5>
+										<p className="">Software developer, solution architect</p>
+									</div>
+									<div className="row">
+										<a href="https://www.facebook.com/iamoleman" className="btn btn-link">
+											<i className="ion ion-social-facebook"></i></a>
+										<a href="https://www.instagram.com/lmanachinskiy/" className="btn btn-link">
+											<i className="ion ion-social-instagram"></i></a>
+										<a href="https://github.com/OleMan95" className="btn btn-link">
+											<i className="ion ion-social-github"></i></a>
+										<a href="https://www.linkedin.com/in/oleksii-manachynskyi-078b17137/" className="btn btn-link">
+											<i className="ion ion-social-linkedin"></i></a>
+									</div>
+								</div>
+							</div>
+							<div className="d-flex">
+								<img className="team-img" src={teamMember2} alt="team-member2"/>
+								<div className="col-6 team-body d-flex">
+									<div>
+										<h5 className="">Roman Suprun</h5>
+										<p className="">Software developer</p>
+									</div>
+									<div className="row">
+										<a href="#" className="btn btn-link">
+											<i className="ion ion-social-facebook"></i></a>
+										<a href="#" className="btn btn-link">
+											<i className="ion ion-social-instagram"></i></a>
+										<a href="#" className="btn btn-link">
+											<i className="ion ion-social-github"></i></a>
+										<a href="#" className="btn btn-link">
+											<i className="ion ion-social-linkedin"></i></a>
+									</div>
+								</div>
+							</div>
 
 						</div>
 
 					</div>
 				</div>
 
-        <div className='section-4 d-flex p2' id="section-4">
-          <div className='col d-flex'>
-            <h2 className="display-6 mb-4">Contact us:</h2>
-            <form className='contact-form'>
-              <div className="form-row">
-                <div className="col-md-6">
-                  <label htmlFor="inputFName">First name</label>
-                  <input type="email" className="form-control" id="inputFName" placeholder="First name"/>
-                </div>
-                <div className="form-group col-md-6">
-                  <label htmlFor="inputLName">Last name</label>
-                  <input type="password" className="form-control" id="inputLName" placeholder="Last name"/>
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email address</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleFormControlTextarea1">Message</label>
-                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
-              </div>
-              <div className="d-flex justify-content-end">
-                <button type="submit" className="btn btn-primary">Submit</button>
-              </div>
-            </form>
+        <div className='section-4 py-5 px-3' id="section-4">
+					<div className='container py-5'>
+
+						<div className='row'>
+							<div className='col d-flex'>
+								<h2 className="display-6 mb-4">Contact us:</h2>
+								<form className='contact-form'>
+									<div className="form-row">
+										<div className="col-md-6">
+											<label htmlFor="inputFName">First name</label>
+											<input type="text" className="form-control" id="inputFName" placeholder="First name"/>
+										</div>
+										<div className="form-group col-md-6">
+											<label htmlFor="inputLName">Last name</label>
+											<input type="text" className="form-control" id="inputLName" placeholder="Last name"/>
+										</div>
+									</div>
+									<div className="form-group">
+										<label htmlFor="exampleInputEmail1">Email address</label>
+										<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+									</div>
+									<div className="form-group">
+										<label htmlFor="exampleFormControlTextarea1">Message</label>
+										<textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+									</div>
+									<div className="d-flex justify-content-end">
+										<button type="submit" className="btn btn-primary">Submit</button>
+									</div>
+								</form>
+							</div>
+							<div className='col d-flex'>
+							</div>
+						</div>
 					</div>
-          <div className='col d-flex'>
-          </div>
+
 				</div>
 
 			</div>

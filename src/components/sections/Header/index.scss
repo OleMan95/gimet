@@ -12,6 +12,13 @@
   input{
     margin-bottom: 0;
   }
+  .login-link{
+    color: white;
+    cursor: pointer;
+    &:hover{
+      color: white;
+    }
+  }
   .btn-outline-success{
     background-color: transparent;
     border-color: $primary-light-color;
