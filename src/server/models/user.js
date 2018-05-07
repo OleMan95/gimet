@@ -46,7 +46,7 @@ UserSchema.methods.comparePasswords = function(password){
 };
 
 UserSchema.statics.findOneWithPublicFields = function(params, cb){
-	return this.findOne(params, cb).select({password:0, __v: 0});
+	return this.getUser(params, cb).select({password:0, __v: 0});
 };
 
 

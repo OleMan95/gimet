@@ -1,76 +1,53 @@
-export default {
-	async singin(email, password, lc2) {
-		const res = await fetch('/v1/auth/signin', {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({email,password,lc2})
-		});
-		if(!res.ok) throw new Error('status: '+res.status);
-		const data = await res.json();
-		return {res, data};
-	},
+import {getToken} from './tokenService';
 
-	async getUserData(token, id) {
-		const query = id ? `?id=${id}` : '';
-		const res = await fetch('/v1/user'+query, {
-			method: 'get',
+export async function login (email, password){
+	const token = getToken();
+
+	try {
+		if (!token) {
+			let response = await fetch('/api/login', {
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: email,
+					password: password
+				})
+			});
+			const data = await response.json();
+
+			if (data.token) {
+				document.cookie = 'at=' + data.token;
+			}
+
+			return data;
+		} else return token;
+
+	} catch (err) {
+		console.error(err.message);
+	}
+}
+
+export async function getUser (){
+	try {
+		let token = getToken();
+		let response = await fetch('/api/user', {
+			method: 'GET',
+			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': token
 			}
 		});
-		if(!res.ok) throw new Error('status: '+res.status);
-		const data = await res.json();
-		return {res, data};
-	},
 
-	async getUsers(token, srchby, str) {
-		let query = '';
+		return await response.json();
 
-		if(str && srchby){
-			query = `?str=${str}&srchby=${srchby}`;
-		}else{
-			throw new Error('No query found');
-		}
-		console.log('query: ', query);
+	} catch (err) {
+		console.error(err.message);
+	}
+}
 
-		const res = await fetch('/v1/users'+query, {
-			method: 'get',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': token
-			}
-		});
-		if(!res.ok) throw new Error('status: '+res.status);
-		const data = await res.json();
-		console.log('data: ', data);
-		return {res, data};
-	},
 
-	async updateUser(token, userId, user) {
-		let query = '';
 
-		if(userId){
-			query = `?id=${userId}`;
-		}else{
-			throw new Error('No query found');
-		}
-
-		const res = await fetch('/v1/user'+query, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': token
-			},
-			body: JSON.stringify(user)
-		});
-		if(!res.ok) throw new Error('status: '+res.status);
-		const data = await res.json();
-
-		console.log('data: ', data);
-		return {res, data};
-	},
-
-};

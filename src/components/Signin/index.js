@@ -1,6 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {signin, getToken} from '../services/tokenService';
+import {getToken} from '../services/tokenService';
+import { login } from '../services/api-helper';
 import logo from "../../data/logo-black.svg";
 import './index.scss';
 
@@ -50,7 +51,6 @@ class SignIn extends React.Component {
 
 	async handleSubmit(event, ctx) {
 		event.preventDefault();
-		console.log('handleSubmit');
 		if(this.state.submitTimer.length){
 			await ctx.signInAction();
 		}
@@ -61,13 +61,13 @@ class SignIn extends React.Component {
 			submitDisabled: true
 		});
 
-		const data = await signin(this.state.emailValue, this.state.passwordValue);
+		const data = await login(this.state.emailValue, this.state.passwordValue);
 
 		if (data.token) {
-			this.props.history.push('/');
 			this.setState({
 				submitDisabled: false
 			});
+			this.props.history.push('/');
 		}else if(data.message){
 			console.error('signIn error: ', data.message);
 			this.alertHelper('Error: '+data.message, 'danger');
@@ -76,7 +76,6 @@ class SignIn extends React.Component {
 				const submitInterval = setInterval(()=>{
 					let count = this.state.submitTimer.length ? 11 : this.state.submitTimer;
 					count--;
-					console.log('count: ', count);
 					if(count===0){
 						this.setState({
 							submitTimer: 'Sign in',
@@ -107,11 +106,15 @@ class SignIn extends React.Component {
 						<img className="mb-4" src={logo} alt="" width="100" height="100"/>
 						<h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
 						<label htmlFor="inputEmail" className="sr-only">Email address</label>
-						<input id="inputEmail" name="email" className="form-control" placeholder="Email address" required="" autoFocus="" type="email"
-									 onKeyDown={event=>this.onEnterKeyDown(event, this)} onChange={this.handleInputChange}/>
+						<input id="inputEmail" name="email" className="form-control" placeholder="Email address" required=""
+									 autoFocus=""
+									 type="email"
+									 onChange={this.handleInputChange}/>
 						<label htmlFor="inputPassword" className="sr-only">Password</label>
-						<input id="inputPassword" name="password" className="form-control" placeholder="Password" required="" type="password"
-									 onKeyDown={event=>this.onEnterKeyDown(event, this)} onChange={this.handleInputChange}/>
+						<input id="inputPassword" name="password" className="form-control" placeholder="Password" required=""
+									 type="password"
+									 onChange={this.handleInputChange}
+									 onKeyDown={event=>this.onEnterKeyDown(event, this)}/>
 						<div className="checkbox mb-3">
 							<label>
 								<input value="remember-me" type="checkbox"/> Remember me

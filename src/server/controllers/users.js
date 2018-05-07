@@ -7,25 +7,6 @@ import pick from 'lodash/pick';
 const ObjectId = Types.ObjectId;
 
 class Users{
-	//GET /users
-	async find(req, res){
-		const {authorization} = req.headers;
-		try{
-			const payload = await jwtService.verify(authorization);
-			console.log('payload: ',payload);
-
-			const {str, srchby} = req.query;
-			if(str && srchby){
-				const filter = {[srchby]: new RegExp(str, 'ig') };
-				res.send(await User.find(filter).select({password:0, __v: 0}));
-			}else{
-				res.send(await User.find().select({password:0, __v: 0}));
-			}
-
-		}catch(err){
-			res.status(403).send({ error: err});
-		}
-	}
 	//POST /api/login
 	async login(req, res, next){
 		if(!req.cookies.aat || req.cookies.aat != 'true'){
@@ -63,7 +44,6 @@ class Users{
 			});
 			user.password = undefined;
 
-			res.cookie('token', token, {expire : 86400000, httpOnly: true});
 			res.cookie('lc', '0').send({token:token});
 
 		}catch(err){
@@ -71,21 +51,28 @@ class Users{
 		}
 		next();
 	}
-	//GET /user
+	//GET /api/user
 	async findOne(req, res){
 		try{
 			const {authorization} = req.headers;
 			const payload = await jwtService.verify(authorization);
-			const id = req.query.id || ObjectId(payload._id);
+			const id = ObjectId(payload._id);
 
-			if(req.query.populate){
-				res.send(await User.findById(id).select({password:0, __v: 0}).populate('experts'));
-			}else{
-				res.send(await User.findById(id).select({password:0, __v: 0}));
+			if(!req.cookies.at || !req.cookies.aat || req.cookies.aat != 'true'){
+				res.status(400).send({message:'Rejected'});
+				return;
 			}
 
+			let user;
+			if(req.query.populate){
+				user = await User.findById(id).select({password:0, __v: 0}).populate('experts');
+			}else{
+				user = await User.findById(id).select({password:0, __v: 0});
+			}
+
+			res.send(user);
 		}catch(err){
-			res.status(403).send({ error: err});
+			res.status(403).send({message: err.message});
 		}
 	}
 	// POST /signup

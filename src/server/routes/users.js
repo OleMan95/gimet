@@ -4,7 +4,6 @@ import Users from "../controllers/users";
 const router = express.Router();
 const users = new Users();
 
-router.get('/users', users.find);
 router.get('/user', users.findOne);
 router.post('/login', users.login);
 router.post('/signup', users.signup);

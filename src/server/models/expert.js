@@ -21,7 +21,7 @@ ExpertSchema.set('toJSON', {versionKey:false});
 ExpertSchema.statics.createFields = ['name', 'description', 'questions', 'author'];
 
 ExpertSchema.statics.findOneWithPublicFields = function(params, cb){
-	return this.findOne(params, cb).select({__v: 0});
+	return this.getUser(params, cb).select({__v: 0});
 };
 
 const Expert = mongoose.model('Expert', ExpertSchema);

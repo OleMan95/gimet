@@ -1,5 +1,4 @@
 export default {
-	// возвращает cookie с именем name, если есть, если нет, то undefined
 	getCookie(name){
 		const matches = document.cookie.match(new RegExp(
 			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

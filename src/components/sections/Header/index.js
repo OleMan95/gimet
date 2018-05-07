@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { getToken, signin } from "../../services/tokenService";
+import { getToken } from "../../services/tokenService";
+import { getUser } from "../../services/api-helper";
 import logo from "../../../data/logo.svg";
 import "./index.scss";
 
@@ -11,24 +12,60 @@ class Header extends Component {
     this.state = {
 			navStyle: 'navbar-dark bg-dark',
 			profileShow: '',
-			isAuthorized: false
+			isAuthorized: false,
+			user: {}
     };
   }
-  componentDidMount(){
-		if(getToken()){
+  async componentDidMount() {
+
+		if (getToken('token')) {
+			let data = await getUser();
 			this.setState({
-				isAuthorized: true
+				isAuthorized: true,
+				user: data
 			});
 		}
 
 		window.onscroll = () => {
 			const nav = this.nav;
-			if(window.scrollY <= 50) nav.className = "Header navbar navbar-expand-lg fixed-top navbar-dark bg-dark";
+			if (window.scrollY <= 50) nav.className = "Header navbar navbar-expand-lg fixed-top navbar-dark bg-dark";
 			else nav.className = "Header navbar navbar-expand-lg fixed-top navbar-light bg-light";
 		};
 
-  }
-	onSearchClick=()=>{
+	}
+	onSignOut=()=>{
+  	let name = 'at';
+  	let value = 'false';
+		let options = {expires: -1};
+
+		let expires = options.expires;
+
+		if (typeof expires == "number" && expires) {
+			let d = new Date();
+			d.setTime(d.getTime() + expires * 1000);
+			expires = options.expires = d;
+		}
+		if (expires && expires.toUTCString) {
+			options.expires = expires.toUTCString();
+		}
+
+		value = encodeURIComponent(value);
+
+		let updatedCookie = name + "=" + value;
+
+		for (let propName in options) {
+			updatedCookie += "; " + propName;
+			let propValue = options[propName];
+			if (propValue !== true) {
+				updatedCookie += "=" + propValue;
+			}
+		}
+
+		document.cookie = updatedCookie;
+
+		this.setState({
+			isAuthorized: false,
+		});
   };
 	toggleProfile=()=>{
 		let profileShow = this.state.profileShow.length > 0 ? '' : 'show';
@@ -71,12 +108,12 @@ class Header extends Component {
 									Profile
 								</a>
 								<div className={"dropdown-menu "+this.state.profileShow} aria-labelledby="navbarDropdown">
-									<p className="dropdown-item">Signed as <br/><b>Oleksii Manachynskyi</b></p>
+									<p className="dropdown-item">Signed as <br/><b>{this.state.user.name}</b></p>
 									<div className="dropdown-divider"></div>
-									<a className="dropdown-item" href="#">Your experts</a>
+									<NavLink className="dropdown-item" to="/profile">My experts ({this.state.user.experts.length})</NavLink>
 									<div className="dropdown-divider"></div>
-									<a className="dropdown-item" href="#">Help</a>
-									<a className="dropdown-item" href="#">Sign out</a>
+									<NavLink className="dropdown-item" to="/">Help</NavLink>
+									<button className="dropdown-item" onClick={this.onSignOut}>Sign out</button>
 								</div>
 							</li> : ''}
 

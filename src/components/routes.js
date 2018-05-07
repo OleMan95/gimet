@@ -1,6 +1,6 @@
 import StartPage from './StartPage/';
 import Signin from './Signin/';
-import HomePage from './HomePage/';
+import ProfilePage from './ProfilePage/';
 import EditorPage from './EditorPage/';
 import ConfiguratorPage from './ConfiguratorPage/';
 import ConsultationPage from './ConsultationPage/';
@@ -22,8 +22,8 @@ const routes = [
 		exact: true
 	},
 	{
-		path: '/home',
-		component: HomePage,
+		path: '/profile',
+		component: ProfilePage,
 		exact: true
 	},
 	{
