@@ -1,4 +1,6 @@
 import './bootstrap';
+import fs from "fs";
+import https from "https";
 import express from "express";
 import React from "react";
 import {renderToString} from "react-dom/server";
@@ -17,8 +19,19 @@ app.use(express.json());
 app.use(express.urlencoded({msExtendedCode: false}));
 app.use(express.static('public'));
 
-app.use('/v1', users);
+app.use('/api', users);
 app.use('/', routes);
+
+// let options = {
+// 	ca: fs.readFileSync('./src/ssl/ca_bundle.crt'),
+// 	key: fs.readFileSync('./src/ssl/private.key'),
+// 	cert: fs.readFileSync('./src/ssl/certificate.crt')
+// };
+//
+//
+// let server = https.createServer(options, app).listen(443, function(){
+// 	console.log("Express server listening on port " + 443);
+// });
 
 app.listen(process.env.PORT || 3000, ()=>{
 	console.log('Server is listening...');

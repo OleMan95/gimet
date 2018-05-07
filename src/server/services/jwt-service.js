@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-// const JWT_SECRET = require('../config').jwt.secret;
 const JWT_SECRET = "summary-secret";
 
 export default {

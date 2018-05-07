@@ -6,8 +6,8 @@ const users = new Users();
 
 router.get('/users', users.find);
 router.get('/user', users.findOne);
-router.post('/auth/signin', users.signin);
-router.post('/auth/signup', users.signup);
+router.post('/login', users.login);
+router.post('/signup', users.signup);
 router.put('/user', users.update);
 router.delete('/user', users.deleteOne);
 

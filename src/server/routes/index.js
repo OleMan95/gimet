@@ -12,7 +12,8 @@ router.get('/v1/message', async (req, res) => {
 	res.send('');
 });
 
-router.get('*', (req, res)=>{
+router.get('*', (req, res, next)=>{
+	console.log('Cookies: ', req.cookies);
 	let context = {};
 	// if above are no routes has been found - page routes searching here
 	const body = renderToString(
@@ -22,11 +23,12 @@ router.get('*', (req, res)=>{
 	);
 	const footer = renderToString(<Footer />);
 
-	res.send(template({
+	res.cookie('aat', 'true').send(template({
 		body: body,
 		footer: footer,
 		title: 'GIMET'
 	}));
+	next();
 });
 
 export default router;

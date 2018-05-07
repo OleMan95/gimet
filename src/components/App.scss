@@ -30,7 +30,7 @@ input{
 }
 
 .content{
-    padding: .5rem $default-side-padding-lg;
+  padding: .5rem $default-side-padding-lg;
 }
 
 footer{
@@ -53,6 +53,12 @@ footer{
 
 a, a:hover{
   text-decoration: none;
+}
+
+.alert{
+  position: absolute;
+  z-index: 9999;
+  top: 10px;
 }
 
 

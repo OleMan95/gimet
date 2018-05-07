@@ -15,8 +15,6 @@ class Header extends Component {
     };
   }
   componentDidMount(){
-		document.cookie = 'aat=tiaataha.oct';
-
 		if(getToken()){
 			this.setState({
 				isAuthorized: true

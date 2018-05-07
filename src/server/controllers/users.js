@@ -7,7 +7,7 @@ import pick from 'lodash/pick';
 const ObjectId = Types.ObjectId;
 
 class Users{
-	//POST /users
+	//GET /users
 	async find(req, res){
 		const {authorization} = req.headers;
 		try{
@@ -26,52 +26,55 @@ class Users{
 			res.status(403).send({ error: err});
 		}
 	}
-	//POST /auth/signin
-	async signin(req, res){
-		const { email, password, lc2 } = req.body;
+	//POST /api/login
+	async login(req, res, next){
+		if(!req.cookies.aat || req.cookies.aat != 'true'){
+			res.status(400).send({message:'Rejected'});
+			return next();
+		}
+
+		const { email, password } = req.body;
 		try{
-			if(lc2 && lc2 > 3){
-				res.status(403).send({ error: 'Forbidden!'});
-				return;
-			}else if(!lc2){
-				res.status(403).send({ error: 'Forbidden!'});
-				return;
+			let lcCookie = req.cookies.lc ? parseInt(req.cookies.lc) : 0;
+
+			if(lcCookie >= 3){
+				res.cookie('lc', lcCookie+1, {maxAge: 10000, httpOnly: true}).status(400).send({message:'Please try again later.'});
+				return next();
+			}
+			if(!email || !password){
+				res.cookie('lc', lcCookie+1, {maxAge: 10000, httpOnly: true}).status(400).send({message:'Invalid data'});
+				return next();
 			}
 
-			if(!email || !password){
-				res.status(400).send({ error: 'Invalid data' });
-				return;
-			}
 			const user = await User.findOne({email});
 
 			if(!user){
-				res.status(400).send({error:'User not found'});
-				return;
-			}
-			if(!user.isAdmin){
-				res.status(400).send({error:'User not found'});
-				return;
+				res.cookie('lc', lcCookie+1, {maxAge: 10000, httpOnly: true}).status(400).send({message:'User not found'});
+				return next();
 			}
 			if(!user.comparePasswords(password)){
-				res.status(400).send({error: 'Invalid data'});
-				return;
+				res.cookie('lc', lcCookie+1, {maxAge: 10000, httpOnly: true}).status(400).send({message:'Invalid data'});
+				return next();
 			}
 
 			const token = await jwtService.genToken({
 				_id: user._id,
-				name: user.name,
 				email: user.email
 			});
+			user.password = undefined;
 
-			res.send({data:{token}});
+			res.cookie('token', token, {expire : 86400000, httpOnly: true});
+			res.cookie('lc', '0').send({token:token});
+
 		}catch(err){
-			res.status(400).send({ error: err});
+			console.log('err: ', err.message);
 		}
+		next();
 	}
 	//GET /user
 	async findOne(req, res){
-		const {authorization} = req.headers;
 		try{
+			const {authorization} = req.headers;
 			const payload = await jwtService.verify(authorization);
 			const id = req.query.id || ObjectId(payload._id);
 
@@ -81,12 +84,11 @@ class Users{
 				res.send(await User.findById(id).select({password:0, __v: 0}));
 			}
 
-
 		}catch(err){
 			res.status(403).send({ error: err});
 		}
 	}
-	// POST /auth/signup
+	// POST /signup
 	async signup(req, res){
 		try{
 			const {_id} = await User.create(pick(req.body, User.createFields));

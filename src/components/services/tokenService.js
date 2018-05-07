@@ -20,29 +20,30 @@ export function getToken(){
 export async function signin(emailValue, passwordValue){
     const token = getToken();
 
-    if(!token){
-        let response = await fetch('/v1/auth/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: emailValue,
-                password: passwordValue
-            })
-        });
-        let data = await response.json();
+    try{
+			if(!token){
 
-        if (data.data) {
-            document.cookie = 'token='+data.data.token;
-            return data.data.token;
-        }else{
-            console.log('There has been a problem with fetch operation: ' + response);
-            return false;
-        }
-    }else{
-        return token;
+				let response = await fetch('/api/login', {
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						email: emailValue,
+						password: passwordValue
+					})
+				});
+				let data = await response.json();
+
+				return data;
+			}else{
+			  return token;
+			}
+    }catch (err){
+      console.error(err.message);
     }
+
 }
 
 /**
@@ -55,7 +56,7 @@ export async function getUser(fields, populate){
 
     if(token){
         console.log('fields: ',fields);
-        const response = await fetch(`/v1/user?fields=${fields}&populate=${populate}`, {
+        const response = await fetch(`/api/user?fields=${fields}&populate=${populate}`, {
             method: 'GET',
             headers: {
                 'Authorization' : token
