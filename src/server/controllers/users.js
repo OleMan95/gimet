@@ -75,6 +75,28 @@ class Users{
 			res.status(403).send({message: err.message});
 		}
 	}
+	//GET /api/user/:id PUBLIC
+	async findOneById(req, res){
+		try{
+			const id = ObjectId(req.params.id);
+
+			if(!req.cookies.aat || req.cookies.aat != 'true'){
+				res.status(400).send({message:'Rejected'});
+				return;
+			}
+
+			let user;
+			if(req.query.populate){
+				user = await User.findById(id).select({password:0, __v: 0}).populate('experts');
+			}else{
+				user = await User.findById(id).select({password:0, __v: 0});
+			}
+
+			res.send(user);
+		}catch(err){
+			res.status(403).send({message: err.message});
+		}
+	}
 	// POST /signup
 	async signup(req, res){
 		try{

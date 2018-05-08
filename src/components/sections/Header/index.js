@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getToken } from "../../services/tokenService";
-import { getUser } from "../../services/api-helper";
+import { getUserByToken } from "../../services/api-helper";
 import logo from "../../../data/logo.svg";
 import "./index.scss";
 
@@ -19,7 +19,7 @@ class Header extends Component {
   async componentDidMount() {
 
 		if (getToken('token')) {
-			let data = await getUser();
+			let data = await getUserByToken(false);
 			this.setState({
 				isAuthorized: true,
 				user: data
@@ -73,9 +73,7 @@ class Header extends Component {
 			profileShow
 		});
   };
-  // onSignOut=()=>{
-  //   alert("Click!");
-  // }
+
   render() {
     return (
       <nav className={"Header navbar navbar-expand-lg fixed-top navbar-dark bg-dark"} ref={elem=>this.nav=elem}>
@@ -110,7 +108,7 @@ class Header extends Component {
 								<div className={"dropdown-menu "+this.state.profileShow} aria-labelledby="navbarDropdown">
 									<p className="dropdown-item">Signed as <br/><b>{this.state.user.name}</b></p>
 									<div className="dropdown-divider"></div>
-									<NavLink className="dropdown-item" to="/profile">My experts ({this.state.user.experts.length})</NavLink>
+									<NavLink className="dropdown-item" to={"/profile/"+this.state.user._id}>My experts ({this.state.user.experts.length})</NavLink>
 									<div className="dropdown-divider"></div>
 									<NavLink className="dropdown-item" to="/">Help</NavLink>
 									<button className="dropdown-item" onClick={this.onSignOut}>Sign out</button>

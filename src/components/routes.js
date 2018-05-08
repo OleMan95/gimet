@@ -22,7 +22,7 @@ const routes = [
 		exact: true
 	},
 	{
-		path: '/profile',
+		path: '/profile/:id',
 		component: ProfilePage,
 		exact: true
 	},

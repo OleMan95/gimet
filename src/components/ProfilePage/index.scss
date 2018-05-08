@@ -1,0 +1,99 @@
+@import '../variables';
+
+.Profile{
+
+  .section-1{
+    margin: 66px 0 0;
+    padding: 40px 0 40px;
+    background: url(../../data/images/background.png) no-repeat right fixed;
+    background-size: cover;
+    color: #f8f9fa;
+    .container{
+
+      .default-profile-photo{
+        width: 90px;
+        height: 90px;
+        justify-content: center;
+        align-items: center;
+        background-color: #c2c2c266;
+        border-radius: .25rem;
+        margin-right: 1rem;
+
+        .ion-person{
+          font-size: 4rem;
+          margin-top: 1rem;
+        }
+      }
+
+      .title{
+        flex-direction: column;
+
+        .row{
+          margin-left: 1rem;
+          a{
+            color: #f8f9facc;
+            &:hover{
+              color: $default-font-color-white;
+            }
+          }
+        }
+
+      }
+
+      .btns-bar{
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: auto;
+
+        a{
+          margin-right: .5rem;
+          &:last-of-type{
+            margin-right: 0;
+          }
+        }
+      }
+
+    }
+
+    @media (max-width: 991.98px) {
+      margin: 64px 0 0;
+    }
+  }
+
+  .section-2{
+
+    .list-group{
+
+      .list-group-item{
+        flex-direction: column;
+        padding-left: 0;
+        padding-right: 0;
+
+        button{
+          margin-left: auto;
+        }
+      }
+    }
+
+    .title{
+      font-size: 1.3rem;
+      margin-bottom: .25rem;
+      color: $default-font-color-black;
+    }
+    .date{
+      font-size: .8rem;
+      color: #b7b7b7;
+    }
+    .description{
+      font-size: 1rem;
+      color: $default-font-color-gray;
+    }
+    .consultation-btn{
+      margin-right: 1rem;
+    }
+  }
+
+}
+
+
+

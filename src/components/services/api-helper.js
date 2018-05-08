@@ -30,15 +30,35 @@ export async function login (email, password){
 	}
 }
 
-export async function getUser (){
+export async function getUserByToken (populate){
 	try {
 		let token = getToken();
-		let response = await fetch('/api/user', {
+		populate = populate ? '?populate=true' : '';
+
+		let response = await fetch('/api/user'+populate, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': token
+			}
+		});
+
+		return await response.json();
+
+	} catch (err) {
+		console.error(err.message);
+	}
+}
+export async function getUserById (id, populate){
+	try {
+		populate = populate ? '?populate=true' : '';
+
+		let response = await fetch('/api/user/'+id+populate, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
 			}
 		});
 

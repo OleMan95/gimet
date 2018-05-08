@@ -44,6 +44,11 @@
   }
   .dropdown-item, .dropdown-toggle{
     cursor: pointer;
+
+
+  }
+  .dropdown-menu>p{
+    cursor: auto;
   }
 
 }
