@@ -16,13 +16,8 @@ export async function login (email, password){
 					password: password
 				})
 			});
-			const data = await response.json();
 
-			if (data.token) {
-				document.cookie = 'at=' + data.token;
-			}
-
-			return data;
+			return await response.json();
 		} else return token;
 
 	} catch (err) {
@@ -50,6 +45,7 @@ export async function getUserByToken (populate){
 		console.error(err.message);
 	}
 }
+
 export async function getUserById (id, populate){
 	try {
 		populate = populate ? '?populate=true' : '';

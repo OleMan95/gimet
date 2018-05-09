@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 import { getToken } from "../../services/tokenService";
 import { getUserByToken } from "../../services/api-helper";
 import logo from "../../../data/logo.svg";
@@ -32,10 +32,51 @@ class Header extends Component {
 			else nav.className = "Header navbar navbar-expand-lg fixed-top navbar-light bg-light";
 		};
 
+		let pathname = window.location.pathname;
+		console.log('pathname: ', pathname);
+
+		let children = this.navBar.children;
+
+		// Home
+		if(/\/{1}/.test(pathname)) {
+			for (let i = 0; i < children.length; i++) {
+				children[i].classList.remove('active');
+				if (/home/gi.test(children[i].innerText))
+					children[i].classList.add('active');
+			}
+		}
+		// Profile
+		if(/profile/gi.test(pathname)) {
+			for (let i = 0; i < children.length; i++) {
+				children[i].classList.remove('active');
+				if (/profile/gi.test(children[i].innerText))
+					children[i].classList.add('active');
+			}
+		}
+
 	}
+
+	componentWillUnmount(){
+		document.removeEventListener('click', this.handleClick, false);
+	}
+
+	handleClick=()=>{
+		if (!this.state.profileShow.length > 0) {
+			// attach/remove event handler
+			document.addEventListener('click', this.handleClick, false);
+		} else {
+			document.removeEventListener('click', this.handleClick, false);
+		}
+
+		let profileShow = this.state.profileShow.length > 0 ? '' : 'show';
+		this.setState({
+			profileShow
+		});
+	};
+
 	onSignOut=()=>{
-  	let name = 'at';
-  	let value = 'false';
+		let name = 'at';
+		let value = 'false';
 		let options = {expires: -1};
 
 		let expires = options.expires;
@@ -66,68 +107,62 @@ class Header extends Component {
 		this.setState({
 			isAuthorized: false,
 		});
-  };
-	toggleProfile=()=>{
-		let profileShow = this.state.profileShow.length > 0 ? '' : 'show';
-		this.setState({
-			profileShow
-		});
-  };
+	};
 
   render() {
     return (
-      <nav className={"Header navbar navbar-expand-lg fixed-top navbar-dark bg-dark"} ref={elem=>this.nav=elem}>
-        <img src={logo} alt={'logo'}/>
-        <a className="navbar-brand" href="#">GIMET</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+			<nav className={"Header navbar navbar-expand-lg fixed-top navbar-dark bg-dark"} ref={elem=>this.nav=elem}>
+				<img src={logo} alt={'logo'}/>
+				<a className="navbar-brand" href="/">GIMET</a>
+				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+								aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span className="navbar-toggler-icon"></span>
+				</button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Experts</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">About us</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Docs</a>
-            </li>
+				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul className="navbar-nav mr-auto" ref={elem => this.navBar = elem}>
+						<li className="nav-item">
+							<span className="nav-link"><NavLink to='/'>Home </NavLink></span>
+						</li>
+						<li className="nav-item">
+							<span className="nav-link"><NavLink to='/'>Experts</NavLink></span>
+						</li>
+						<li className="nav-item">
+							<span className="nav-link"><NavLink to='/'>About us</NavLink></span>
+						</li>
+						<li className="nav-item">
+							<span className="nav-link"><NavLink to='/'>Docs</NavLink></span>
+						</li>
 
-						{this.state.isAuthorized ?
-							<li className={"nav-item dropdown "+this.state.profileShow}>
-								<a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-									 aria-haspopup="true" aria-expanded="false" onClick={this.toggleProfile}>
-									Profile
-								</a>
-								<div className={"dropdown-menu "+this.state.profileShow} aria-labelledby="navbarDropdown">
-									<p className="dropdown-item">Signed as <br/><b>{this.state.user.name}</b></p>
-									<div className="dropdown-divider"></div>
-									<NavLink className="dropdown-item" to={"/profile/"+this.state.user._id}>My experts ({this.state.user.experts.length})</NavLink>
-									<div className="dropdown-divider"></div>
-									<NavLink className="dropdown-item" to="/">Help</NavLink>
-									<button className="dropdown-item" onClick={this.onSignOut}>Sign out</button>
-								</div>
-							</li> : ''}
+					{this.state.isAuthorized ?
+						<li className={"nav-item dropdown "+this.state.profileShow}>
+							<a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+								 aria-haspopup="true" aria-expanded="false" onClick={this.handleClick}>
+								Profile
+							</a>
+							<div className={"dropdown-menu "+this.state.profileShow} aria-labelledby="navbarDropdown" onClick={event=>event.stopPropagation()}>
+								<p className="dropdown-item">Signed as <br/><b>{this.state.user.name}</b></p>
+								<div className="dropdown-divider"></div>
+								<NavLink className="dropdown-item" to={"/profile/"+this.state.user._id}>My experts ({this.state.user.experts.length})</NavLink>
+								<div className="dropdown-divider"></div>
+								<a className="dropdown-item" href={"/"}>Help</a>
+								<a className="dropdown-item" href={"/"} onClick={this.onSignOut}>Sign out</a>
+							</div>
+						</li> : ''}
 
 
-          </ul>
-          <div className="form-inline my-2 my-lg-0">
-   	        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+					</ul>
+					<div className="form-inline my-2 my-lg-0">
+						<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
 
 						{this.state.isAuthorized ? '' :
-							<NavLink to="/login" className="login-link nav-link " >Sign in</NavLink>}
+							<a href="/login" className="login-link nav-link" >Sign in</a>}
 
-          </div>
-        </div>
-      </nav>
+					</div>
+				</div>
+ 			</nav>
     );
   }
 }
 
-export default Header;
+export default withRouter(Header);

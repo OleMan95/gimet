@@ -44,6 +44,7 @@ class Users{
 			});
 			user.password = undefined;
 
+			res.cookie('at', token, {maxAge: 86400000});
 			res.cookie('lc', '0').send({token:token});
 
 		}catch(err){
