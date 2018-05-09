@@ -103,17 +103,34 @@ class StartPage extends React.Component { //все this.props мы получе�
 					<div className='container pt-5 d-flex'>
 						<h2 className="display-4 mb-4">What is GIMET?</h2>
 
-						<p>GIMET is a platform for creating expert systems.
-							The expert system is an intelligent computer program
-							that contains the knowledge and analytical capabilities
-							of one or more experts in a particular field of application,
-							and is able to draw logical conclusions based on this knowledge,
-							thus providing specific tasks (counseling, training, diagnosis,
-							testing, designing etc.) without the participation of an expert
-							(specialist in a specific problem area). It is also defined
-							as a system that uses a knowledge base for solving problems
-							(issuing recommendations) in a particular subject area.</p>
-						<p>You can use GIMET platform to develop your own expert systems and further exploit it.</p>
+						<div className='row'>
+							<div className="card-block col-lg-4">
+								<div className="top-icons d-flex">
+									<i className='rounded-circle ion-help text-center align-middle' ></i>
+								</div>
+								<h4>What is expert system?</h4>
+								<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+								<p><NavLink className="btn btn-secondary" to="/about" role="button">View details »</NavLink></p>
+							</div>
+							<div className="card-block col-lg-4">
+								<div className="top-icons d-flex" >
+									<i className='rounded-circle ion-hammer text-center align-middle'></i>
+								</div>
+								<h4>Create your own expert</h4>
+								<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+								<p><NavLink className="btn btn-secondary" to="/about" role="button">View details »</NavLink></p>
+							</div>
+							<div className="card-block col-lg-4">
+								<div className="top-icons d-flex" >
+									<i className='rounded-circle ion-university text-center align-middle'></i>
+								</div>
+								<h4>What technologies we use?</h4>
+								<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+								<p><NavLink className="btn btn-secondary" to="/about" role="button">View details »</NavLink></p>
+							</div>
+						</div>
+
+
 
 						<button type="button" className="btn openModal btn-link" data-toggle="modal"
 										data-target="#exampleModalCenter" onClick={this.handleShow}>

@@ -71,7 +71,6 @@
       align-items: center;
       padding-bottom: 0;
 
-
       p{
         text-justify: newspaper;
       }
@@ -80,15 +79,35 @@
         margin-top: 3rem;
         margin-bottom: 1rem;
       }
-
       .modal{
         background-color: #2226;
       }
-
       .show{
         display: block;
         padding-right: 12px;
       }
+
+
+      .card-block{
+        .top-icons{
+          justify-content: center;
+        }
+        .rounded-circle{
+          background-color: #3b587b;
+          font-size: 3rem;
+          color: $default-font-color-white;
+          width: 130px;
+          height: 130px;
+
+          &:before{
+            line-height: 130px;
+          }
+        }
+        h4{
+          margin-top: 1rem;
+        }
+      }
+
 
     }
   }

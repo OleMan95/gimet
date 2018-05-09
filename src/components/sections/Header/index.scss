@@ -13,30 +13,62 @@
     margin-bottom: 0;
   }
 
-  .nav-link{
+  &.navbar-dark{
+    .nav-link{
 
-    a{
+      a{
+        color: rgba(255,255,255,.5);
+      }
+
+      &:hover a{
+        color: rgba(255,255,255,.75);
+      }
+    }
+
+    .active{
+      a{
+        color: $default-font-color-white;
+      }
+    }
+
+    .login-link{
       color: rgba(255,255,255,.5);
+      &:hover{
+        color: rgba(255,255,255,.75);
+      }
+    }
+  }
+  &.navbar-light{
+    .nav-link{
+
+      a{
+        color: rgba(0,0,0,.5);
+      }
+
+      &:hover a{
+        color: rgba(0,0,0,.75);
+      }
     }
 
-    &:hover a{
-      color: rgba(255,255,255,.75);
+    .active{
+      a{
+        color: rgba(0,0,0,.9);;
+      }
+    }
+
+    .login-link{
+      color: rgba(0,0,0,.5);
+      &:hover{
+        color: rgba(0,0,0,.75);
+      }
     }
   }
 
-  .active{
-    a{
-      color: $default-font-color-white;
-    }
-  }
 
   .login-link{
-    color: white;
     cursor: pointer;
-    &:hover{
-      color: white;
-    }
   }
+
   .btn-outline-success{
     background-color: transparent;
     border-color: $primary-light-color;
@@ -64,8 +96,14 @@
   .dropdown-item, .dropdown-toggle{
     cursor: pointer;
   }
-  .dropdown-menu>p{
-    cursor: auto;
+
+  .dropdown-menu {
+    position: absolute;
+    margin-top: .79rem;
+
+    &>p{
+      cursor: auto;
+    }
   }
 
 }
