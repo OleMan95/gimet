@@ -4,6 +4,9 @@ import Header from '../sections/Header/';
 import './index.scss';
 import teamMember1 from '../../data/images/team/manachynskyi.jpg';
 import teamMember2 from '../../data/images/team/suprun.jpg';
+import technologies from '../../data/images/icons/artificial-intelligence(2).svg';
+import createExpert from '../../data/images/icons/flask.svg';
+import whatIsES from '../../data/images/icons/technology(4).svg';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
 	constructor(props) {
@@ -106,27 +109,36 @@ class StartPage extends React.Component { //все this.props мы получе�
 						<div className='row'>
 							<div className="card-block col-lg-4">
 								<div className="top-icons d-flex">
-									<i className='rounded-circle ion-help text-center align-middle' ></i>
+									<div className="rounded-circle d-flex">
+										<img className="" src={whatIsES} alt="" width="78" height="78"/>
+									</div>
 								</div>
 								<h4>What is expert system?</h4>
-								<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-								<p><NavLink className="btn btn-secondary" to="/about" role="button">View details »</NavLink></p>
+								<p>In Gimet you can create a computer system that emulates the decision-making ability of a human expert.
+									Such systems can help anyone to solve any troubles or to give some kind of advice.
+									Pass a consultation of the one such experts <a href="/experts/id">here</a>.</p>
+								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
 							</div>
 							<div className="card-block col-lg-4">
-								<div className="top-icons d-flex" >
-									<i className='rounded-circle ion-hammer text-center align-middle'></i>
+								<div className="top-icons d-flex">
+									<div className="rounded-circle d-flex">
+										<img className="" src={createExpert} alt="" width="78" height="78"/>
+									</div>
 								</div>
 								<h4>Create your own expert</h4>
-								<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-								<p><NavLink className="btn btn-secondary" to="/about" role="button">View details »</NavLink></p>
+								<p>Are you good in a certain area? To create an expert, you do not need special skills. Learn how to create <a href="/experts/id">here</a>.
+									To find out where you can use them, read on.</p>
+								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
 							</div>
 							<div className="card-block col-lg-4">
-								<div className="top-icons d-flex" >
-									<i className='rounded-circle ion-university text-center align-middle'></i>
+								<div className="top-icons d-flex">
+									<div className="rounded-circle d-flex">
+										<img className="" src={technologies} alt="" width="70" height="70"/>
+									</div>
 								</div>
 								<h4>What technologies we use?</h4>
-								<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-								<p><NavLink className="btn btn-secondary" to="/about" role="button">View details »</NavLink></p>
+								<p></p>
+								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
 							</div>
 						</div>
 
