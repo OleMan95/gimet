@@ -1,0 +1,82 @@
+@import '../variables';
+
+.Edit{
+
+  .section-1{
+    margin: 66px 0 0;
+    padding: 40px 0 40px;
+    background: url(../../data/images/background.png) no-repeat right fixed;
+    background-size: cover;
+    color: #f8f9fa;
+    .container{
+
+      .default-profile-photo{
+        width: 90px;
+        height: 90px;
+        justify-content: center;
+        align-items: center;
+        background-color: #c2c2c266;
+        border-radius: .25rem;
+        margin-right: 1rem;
+
+        .ion-person{
+          font-size: 4rem;
+          margin-top: 1rem;
+        }
+      }
+
+      .title{
+        flex-direction: column;
+        h1{
+          font-size: 2rem;
+        }
+
+        .row{
+          margin-left: 1rem;
+          a{
+            color: #f8f9facc;
+            &:hover{
+              color: $default-font-color-white;
+            }
+          }
+        }
+
+      }
+
+      .btn-group{
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: auto;
+
+        a{
+          margin-right: .5rem;
+          &:last-of-type{
+            margin-right: 0;
+          }
+        }
+      }
+
+    }
+
+    @media (max-width: 991.98px) {
+      margin: 64px 0 0;
+    }
+  }
+
+  .section-2{
+
+    .card-header{
+      p{
+        font-size: .8rem;
+        max-width: 11rem;
+      }
+      h5, p{
+        margin: 0;
+      }
+    }
+  }
+
+}
+
+
+

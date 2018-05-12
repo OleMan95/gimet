@@ -33,26 +33,23 @@ class Header extends Component {
 		};
 
 		let pathname = window.location.pathname;
-		console.log('pathname: ', pathname);
-
 		let children = this.navBar.children;
 
 		// Home
 		if(/\/{1}/.test(pathname)) {
 			for (let i = 0; i < children.length; i++) {
 				children[i].classList.remove('active');
-				if (/home/gi.test(children[i].innerText))
-					children[i].classList.add('active');
+				this.homeNavItem.classList.add('active');
 			}
 		}
 		// Profile
-		if(/profile/gi.test(pathname)) {
+		if(/profile/gi.test(pathname) || /edit/gi.test(pathname)) {
 			for (let i = 0; i < children.length; i++) {
 				children[i].classList.remove('active');
-				if (/profile/gi.test(children[i].innerText))
-					children[i].classList.add('active');
+				this.profileNavItem.classList.add('active');
 			}
 		}
+
 
 	}
 
@@ -121,21 +118,21 @@ class Header extends Component {
 
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav mr-auto" ref={elem => this.navBar = elem}>
-						<li className="nav-item">
-							<span className="nav-link"><NavLink to='/'>Home </NavLink></span>
+						<li className="nav-item" ref={(elem=>this.homeNavItem=elem)}>
+							<span className="nav-link"><NavLink to='/'>Home</NavLink></span>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item" ref={(elem=>this.expertsNavItem=elem)}>
 							<span className="nav-link"><NavLink to='/'>Experts</NavLink></span>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item" ref={(elem=>this.aboutNavItem=elem)}>
 							<span className="nav-link"><NavLink to='/'>About us</NavLink></span>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item" ref={(elem=>this.docsNavItem=elem)}>
 							<span className="nav-link"><NavLink to='/'>Docs</NavLink></span>
 						</li>
 
 					{this.state.isAuthorized ?
-						<li className={"nav-item dropdown "+this.state.profileShow}>
+						<li className={"nav-item dropdown "+this.state.profileShow} ref={(elem=>this.profileNavItem=elem)}>
 							<a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
 								 aria-haspopup="true" aria-expanded="false" onClick={this.handleClick}>
 								Profile

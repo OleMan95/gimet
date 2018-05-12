@@ -101,7 +101,7 @@ class Profile extends React.Component{
 						</div>
 
 						<div className='btns-bar d-flex'>
-							<NavLink className='btn btn-outline-light' to={'/edit'}><i className="ion-plus-round"></i></NavLink>
+							<NavLink className='btn btn-outline-light' to={'/edit/new'}><i className="ion-plus-round"></i></NavLink>
 							<NavLink className='btn btn-outline-light' to={'/account'}><i className="ion-gear-a"></i></NavLink>
 						</div>
 
@@ -118,7 +118,7 @@ class Profile extends React.Component{
                   <p className='description'>{expert.description}</p>
 									<div className='d-flex'>
 										<NavLink className='consultation-btn btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
-										<NavLink className='btn btn-light' to={'/consultation/'+expert._id}>Edit</NavLink>
+										<NavLink className='btn btn-light' to={'/edit/'+expert._id}>Edit</NavLink>
 										<button className='btn btn-outline-danger'>Delete</button>
 									</div>
                 </li>

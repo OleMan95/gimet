@@ -1,5 +1,4 @@
 import User from '../models/user';
-import Expert from '../models/expert';
 import {Types} from 'mongoose';
 import jwtService from '../services/jwt-service';
 import pick from 'lodash/pick';

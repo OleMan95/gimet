@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 
 import routes from "./routes/index"
 import users from "./routes/users"
+import experts from "./routes/experts"
 
 const app = express();
 app.use(cookieParser());
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({msExtendedCode: false}));
 app.use(express.static('public'));
 
+app.use('/api', experts);
 app.use('/api', users);
 app.use('/', routes);
 

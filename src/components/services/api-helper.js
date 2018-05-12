@@ -65,5 +65,24 @@ export async function getUserById (id, populate){
 	}
 }
 
+export async function getExpertById (id){
+	try {
+
+		if(id == 'new') return false;
+
+		let response = await fetch('/api/expert/'+id, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		return await response.json();
+	} catch (err) {
+		console.error(err.message);
+	}
+}
+
 
 

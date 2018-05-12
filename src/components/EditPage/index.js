@@ -1,27 +1,35 @@
 import React from 'react';
 import {NavLink, withRouter } from 'react-router-dom';
-import {getUser, getToken} from '../services/tokenService';
-// import ConfigDevelop from '../config_new_expert/ConfigDevelop';
-// import EditConditionBox from './EditConditionBox';
+import {getToken} from '../services/tokenService';
+import {getExpertById} from '../services/api-helper';
+import Header from '../sections/Header/';
+
+import './index.scss';
+
 
 class Edit extends React.Component{
-  // constructor(){
-   //  super();
-   //  this.state={
-   //    expert: {},
-	// 		conditionsDOMs:[],
-	// 		questionsDOMs:[],
-	// 		name:'',
-	// 		description:'',
-	// 		editBlock: ''
-   //  };
-  // };
-  //
-  // async componentDidMount() {
-   //  await this.fetchUser();
-   //  await this.fetchExpert();
-  // };
-  //
+  constructor(){
+    super();
+    this.state={
+      expert: {},
+			questions: []
+    };
+  };
+
+  async componentDidMount() {
+
+    const expert = await getExpertById(this.props.match.params.id);
+    console.log('expert: ', expert);
+    if(expert._id){
+			this.setState({
+				expert,
+				questions: expert.questions
+			});
+		}
+
+
+  };
+
 	// fetchUser = async () => {
    //    const user = await getUser('experts name', 'true');
    //    if (!user) {
@@ -115,48 +123,53 @@ class Edit extends React.Component{
 
   render(){
     return (
-      <div>
-        {/*<header className="header" >*/}
-          {/*<div>*/}
-            {/*<NavLink to="/home" className="header-logo">*/}
-              {/*<div className="header-logo-img"/>*/}
-              {/*<p className="header-logo-title">GIMET</p>*/}
-            {/*</NavLink>*/}
-            {/*<NavLink to="/home" className="header-userName">*/}
-              {/*<h2>{this.state.expert.name}</h2>*/}
-            {/*</NavLink>*/}
-          {/*</div>*/}
-          {/*<div>*/}
-            {/*<NavLink to="/" className="signOutBtn">Sign out</NavLink>*/}
-          {/*</div>*/}
-        {/*</header>*/}
+      <div className="Edit">
+				<Header />
+				<div className="section-1 d-flex">
+					<div className="container d-flex">
+						<div className='title d-flex'>
+							<h1>{this.state.expert ? this.state.expert.name : 'No expert found'}</h1>
+						</div>
 
-        {/*<div className="Edit">*/}
-          {/*<div className="edit-content">*/}
-              {/*<div className="edit-top">*/}
-								{/*<input type="search" name="findQuestion" placeholder="Find a question"*/}
-											 {/*onChange={this.handleFilterChange} />*/}
-								{/*<div className="edit-btns d-flex justify-center">*/}
-									{/*<button onClick={()=>{this.consultationClick(this)}} className="d-flex align-items-center">Consultation</button>*/}
-									{/*<button onClick={()=>{this.addNewConditionClick(this)}} className="edit-plus-btn d-flex align-items-center">+</button>*/}
-								{/*</div>*/}
-              {/*</div>*/}
+						<div className='btn-group'>
+							<button className='btn btn-outline-light'><i className="ion-plus-round"></i></button>
+							<button className='btn btn-outline-light'><i className="ion-gear-a"></i></button>
+						</div>
 
-              {/*<div className="edit-body d-flex justify-center flex-column">*/}
-								{/*<div className="edit-description d-flex justify-center">*/}
-									{/*{this.state.expert.description}*/}
-								{/*</div>*/}
+					</div>
+				</div>
 
-								{/*<div className="edit-questions">*/}
-									{/*{this.state.questionsDOMs}*/}
-								{/*</div>*/}
+				<div className="section-2 py-5 bg-light">
+					<div className="container">
+						<div className="row">
 
-              {/*</div>*/}
+							{this.state.expert ?
+								this.state.questions.map((question, index)=>
+									<div className="col-md-4" key={question.key}>
+										<div className="card mb-4 box-shadow">
+											<div className="card-header d-flex justify-content-between align-items-center">
+												<h5 className="">Question #{index}</h5>
+												<p className="text-muted text-truncate">{question.key}</p>
+											</div>
+											<div className="card-body">
+												<p className="card-text text-truncate">{question.question}</p>
+												<div className="d-flex justify-content-between align-items-center">
+													<div className="btn-group">
+														<button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+														<button type="button" className="btn btn-sm btn-outline-danger">Delete</button>
+													</div>
+													<small className="text-muted">6 rel</small>
+												</div>
+											</div>
+										</div>
+									</div>
+								)
+								: 'No questions'}
 
-          {/*</div>*/}
-        {/*</div>*/}
 
-				{/*{this.state.editBlock}*/}
+						</div>
+					</div>
+				</div>
 
       </div>
     )};
