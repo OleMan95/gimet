@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import { getToken } from "../../services/tokenService";
-import { getUserByToken } from "../../services/api-helper";
+import { getUserById } from "../../services/api-helper";
 import logo from "../../../data/logo.svg";
 import "./index.scss";
 
@@ -18,8 +18,8 @@ class Header extends Component {
   }
   async componentDidMount() {
 
-		if (getToken('token')) {
-			let data = await getUserByToken(false);
+      if (getToken('token')) {
+			let data = await getUserById();
 			this.setState({
 				isAuthorized: true,
 				user: data
@@ -58,7 +58,7 @@ class Header extends Component {
 
 	componentWillUnmount(){
 		document.removeEventListener('click', this.handleClick, false);
-	}
+    }
 
 	handleClick=()=>{
 		if (!this.state.profileShow.length > 0) {
@@ -107,7 +107,7 @@ class Header extends Component {
 		this.setState({
 			isAuthorized: false,
 		});
-	};
+    };
 
   render() {
     return (
@@ -154,7 +154,6 @@ class Header extends Component {
 					</ul>
 					<div className="form-inline my-2 my-lg-0">
 						<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-
 						{this.state.isAuthorized ? '' :
 							<a href="/login" className="login-link nav-link" >Sign in</a>}
 
