@@ -37,8 +37,8 @@ export async function getUserById (id, populate, onSuccess, onError){
             headers: {
 				'Content-Type': 'application/json',
 				'Authorization': token
-// 			}
-		}});
+			}
+		});
 
 		if(response.status == 200) onSuccess(await response.json());
 		else onError(response);
@@ -52,9 +52,9 @@ export async function getExpertById (id, onSuccess, onError){
 	try {
 		let token = getToken();
 
-		if(id == 'new') return false;
+		if (id == 'new') return false;
 
-		let response = await fetch('/api/expert/'+id, {
+		let response = await fetch('/api/expert/' + id, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -63,5 +63,9 @@ export async function getExpertById (id, onSuccess, onError){
 			}
 		});
 
-		if(response.status == 200) onSuccess(await response.json());
+		if (response.status == 200) onSuccess(await response.json());
 		else onError(await response.json());
+	}catch (err) {
+		console.error(err.message);
+	}
+}
