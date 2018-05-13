@@ -17,10 +17,16 @@ class Experts{
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
-			const id = ObjectId(req.params.id);
-			console.log(id);
+			const {authorization} = req.headers;
+			const payload = await jwtService.verify(authorization);
+			const authorId = payload._id;
 
-			res.send(await Expert.findById(id).select({__v: 0}));
+			const id = ObjectId(req.params.id);
+			const expert = await Expert.findById(id).select({__v: 0});
+
+			if(expert.author.toString().trim() != authorId.toString().trim()) throw new Error('Forbidden');
+
+			res.send(expert);
 		}catch(err){
 			res.status(403).send({message: err.message});
 		}

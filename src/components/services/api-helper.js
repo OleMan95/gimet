@@ -25,12 +25,13 @@ export async function login (email, password){
 	}
 }
 
-export async function getUserByToken (populate){
+export async function getUserById (id, populate, onSuccess, onError){
 	try {
 		let token = getToken();
 		populate = populate ? '?populate=true' : '';
+		id = id ? '/'+id : '';
 
-		let response = await fetch('/api/user'+populate, {
+		let response = await fetch('/api/user'+id+populate, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -39,34 +40,17 @@ export async function getUserByToken (populate){
 			}
 		});
 
-		return await response.json();
+		if(response.status == 200) onSuccess(await response.json());
+		else onError(response);
 
 	} catch (err) {
 		console.error(err.message);
 	}
 }
 
-export async function getUserById (id, populate){
+export async function getExpertById (id, onSuccess, onError){
 	try {
-		populate = populate ? '?populate=true' : '';
-
-		let response = await fetch('/api/user/'+id+populate, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-
-		return await response.json();
-
-	} catch (err) {
-		console.error(err.message);
-	}
-}
-
-export async function getExpertById (id){
-	try {
+		let token = getToken();
 
 		if(id == 'new') return false;
 
@@ -74,11 +58,14 @@ export async function getExpertById (id){
 			method: 'GET',
 			credentials: 'include',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'Authorization': token
 			}
 		});
 
-		return await response.json();
+		if(response.status == 200) onSuccess(await response.json());
+		else onError(await response.json());
+
 	} catch (err) {
 		console.error(err.message);
 	}

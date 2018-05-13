@@ -18,15 +18,17 @@ class Edit extends React.Component{
 
   async componentDidMount() {
 
-    const expert = await getExpertById(this.props.match.params.id);
-    console.log('expert: ', expert);
-    if(expert._id){
-			this.setState({
-				expert,
-				questions: expert.questions
-			});
-		}
-
+    await getExpertById(this.props.match.params.id, expert=>{
+			if(expert._id){
+				this.setState({
+					expert,
+					questions: expert.questions
+				});
+			}
+		}, err=>{
+			alert('Unfortunately, there was a problem with the fetching operation.');
+    	this.props.history.push('/');
+		});
 
   };
 

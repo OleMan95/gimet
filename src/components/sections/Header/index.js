@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import { getToken } from "../../services/tokenService";
-import { getUserByToken } from "../../services/api-helper";
+import { getUserById } from "../../services/api-helper";
 import logo from "../../../data/logo.svg";
 import "./index.scss";
 
@@ -19,11 +19,16 @@ class Header extends Component {
   async componentDidMount() {
 
 		if (getToken('token')) {
-			let data = await getUserByToken(false);
-			this.setState({
-				isAuthorized: true,
-				user: data
+			await getUserById(false, false, (data)=>{
+
+				this.setState({
+					isAuthorized: true,
+					user: data
+				});
+			}, (data)=>{
+
 			});
+
 		}
 
 		window.onscroll = () => {
@@ -46,7 +51,7 @@ class Header extends Component {
 		if(/profile/gi.test(pathname) || /edit/gi.test(pathname)) {
 			for (let i = 0; i < children.length; i++) {
 				children[i].classList.remove('active');
-				this.profileNavItem.classList.add('active');
+				if(this.profileNavItem) this.profileNavItem.classList.add('active');
 			}
 		}
 

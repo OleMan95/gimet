@@ -78,14 +78,37 @@ class Users{
 	//GET /api/user/:id PUBLIC
 	async findOneById(req, res){
 		try{
-			const id = ObjectId(req.params.id);
-
 			if(!req.cookies.aat || req.cookies.aat != 'true'){
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
 
+			const {authorization} = req.headers;
+			const paramsId = req.params.id;
 			let user;
+
+			console.log('=========================================');
+
+			let id = '';
+			if(authorization.toString() != 'undefined') {
+				const payload = await jwtService.verify(authorization);
+				id = payload._id;
+			}
+
+			if(paramsId){
+				if(id.toString().trim() != paramsId.toString().trim()){
+					id = paramsId;
+					if(req.query.populate){
+						user = await User.findById(id).select({password:0, __v: 0}).populate('experts');
+					}else{
+						user = await User.findById(id).select({password:0, __v: 0});
+					}
+					res.status(401).send(user);
+					return;
+				}
+			}
+
+
 			if(req.query.populate){
 				user = await User.findById(id).select({password:0, __v: 0}).populate('experts');
 			}else{
@@ -94,7 +117,7 @@ class Users{
 
 			res.send(user);
 		}catch(err){
-			res.status(403).send({message: err.message});
+			res.status(500).send({message: err.message});
 		}
 	}
 	// POST /signup

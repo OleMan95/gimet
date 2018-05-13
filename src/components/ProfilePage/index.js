@@ -12,26 +12,37 @@ class Profile extends React.Component{
     super();
     this.state={
       user: {},
-      experts:[]
+      experts:[],
+			isPublic: true
     };
   };
 
   async componentDidMount() {
-    if(getToken()){
-			console.log(this.props.match.params.id);
-			const user = await getUserById(this.props.match.params.id, true);
-			const experts = user.experts.filter(expert=>expert._id!=null);
 
-			experts.forEach((expert)=>{
-				let date = isodate(expert.updatedAt.toString());
-				expert.updatedAt = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
-      });
+		await getUserById(this.props.match.params.id, true, (user)=>{
+			this.setUser(user, false);
+		}, async (err) => {
+			if (err.status == 401) {
+				let user = await err.json();
+				console.log('user: ', user);
+				this.setUser(user, true);
+			} else {
+				this.props.history.push('/');
+			}
+		});
 
-			this.setState({user,experts});
-    }else{
-      this.props.history.push('/');
-    }
   };
+
+  setUser=(user, isPublic)=>{
+		const experts = user.experts.filter(expert=>expert._id!=null);
+
+		experts.forEach((expert)=>{
+			let date = isodate(expert.updatedAt.toString());
+			expert.updatedAt = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+		});
+
+		this.setState({user,experts,isPublic});
+	};
 
   // handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
   //   switch (event.target.name) {
@@ -101,8 +112,8 @@ class Profile extends React.Component{
 						</div>
 
 						<div className='btns-bar d-flex'>
-							<NavLink className='btn btn-outline-light' to={'/edit/new'}><i className="ion-plus-round"></i></NavLink>
-							<NavLink className='btn btn-outline-light' to={'/account'}><i className="ion-gear-a"></i></NavLink>
+							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/edit/new'}><i className="ion-plus-round"></i></NavLink>
+							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/account'}><i className="ion-gear-a"></i></NavLink>
 						</div>
 
 
@@ -118,8 +129,8 @@ class Profile extends React.Component{
                   <p className='description'>{expert.description}</p>
 									<div className='d-flex'>
 										<NavLink className='consultation-btn btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
-										<NavLink className='btn btn-light' to={'/edit/'+expert._id}>Edit</NavLink>
-										<button className='btn btn-outline-danger'>Delete</button>
+										<NavLink className={this.state.isPublic ? 'btn btn-light d-none' : 'btn btn-light'} to={'/edit/'+expert._id}>Edit</NavLink>
+										<button className={this.state.isPublic ? 'btn btn-outline-danger d-none' : 'btn btn-outline-danger'}>Delete</button>
 									</div>
                 </li>
               )}
