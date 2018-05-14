@@ -3,6 +3,7 @@ import {NavLink, withRouter } from 'react-router-dom';
 import {getToken} from '../services/tokenService';
 import {getExpertById} from '../services/api-helper';
 import Header from '../sections/Header/';
+import EditModalWindow from '../sections/EditModalWindow/';
 
 import './index.scss';
 
@@ -12,7 +13,9 @@ class Edit extends React.Component{
     super();
     this.state={
       expert: {},
-			questions: []
+			questions: [],
+      modalQuestion: '',
+      isModalOpen: false
     };
   };
 
@@ -32,96 +35,41 @@ class Edit extends React.Component{
 
   };
 
-	// fetchUser = async () => {
-   //    const user = await getUser('experts name', 'true');
-   //    if (!user) {
-   //      this.props.history.push('/signin');
-   //    }
-  // };
-  //
-	// fetchExpert = async () => {
-	// 	const token = getToken();
-	// 	const response = await fetch(`/v1/expert/${this.props.match.params.id}`, {
-	// 		method: 'GET',
-	// 		headers: {
-	// 			'Authorization' : token
-	// 		}});
-  //
-	// 	let data = await response.json();
-	// 	console.log('data: ', data);
-  //
-	// 	if(data._id){
-	// 	  this.setState({
-	// 			expert: data
-   //    });
-	// 		this.displayExpert();
-   //  }else{
-	// 		this.props.history.push('/home');
-	// 	}
-  //
-  // };
-  //
-	// displayExpert = (filteredQuestions)=>{
-	// 	let questions = filteredQuestions ? filteredQuestions : this.state.expert.questions;
-	// 	this.setState({
-	// 		questionsDOMs:(
-	// 			<ul className="edit-list">
-	// 				{questions.map((question, index)=>
-	// 					<li key={index} className="edit-listItem">
-	// 						<h3>Question #{index+1}:</h3>
-	// 						<button onClick={()=>{this.editClick(question)}} className="edit-Condition-Btn">Edit</button>
-	// 						<hr/>
-	// 						<div className="edit-li-content">
-	// 							<p><mark><b>key</b></mark>: {question.key}</p>
-	// 							<p><mark><b>question</b></mark>: {question.question}</p>
-	// 						</div>
-	// 					</li>
-	// 				)}
-	// 			</ul>
-	// 		),
-	// 	});
-  // };
-  //
-	// handleFilterChange=(event)=>{
-  //
-	// 	switch (event.target.name) {
-	// 		case 'findQuestion':
-	// 			let newQuestions = [];
-  //
-	// 			this.state.expert.questions.forEach((elem, index)=>{
-  //
-	// 				if(elem.key.toLowerCase().includes(event.target.value.toLowerCase())){
-	// 					newQuestions.push(elem);
-	// 				}
-  //
-	// 			});
-  //
-	// 			this.displayExpert(newQuestions);
-  //
-	// 			break;
-	// 		default:
-	// 	}
-	// };
-  //
-	// consultationClick=(context)=>{
-   //  console.log('consultationClick: ',this.state.expert);
-   //  context.props.history.push('/ConsultationPage/'+this.state.expert._id);
-	// };
-  //
-	// editClick=(question)=>{
-	// 	/*<EditConditionBox/>*/
-	// 	console.log(question);
-	// };
-  //
-	// addNewConditionClick =(context)=>{
-  //
-	// 	this.setState({
-	// 		editBlock: (
-	// 			<ConfigDevelop expert={this.state.expert}/>
-	// 		)
-	// 	});
-  //
-	// };
+  onModalOpen=(question)=>{
+
+    this.setState({
+      isModalOpen: true,
+      modalQuestion: question
+    });
+
+  };
+  onModalClose=()=>{
+    this.setState({
+      isModalOpen: false
+    });
+  };
+  onModalSave=(question)=>{
+    const questions = this.state.questions;
+    let coincidence = false;
+
+    for(let i=0; i<questions.length; i++){
+      if(questions[i].key == question.key){
+        questions[i].question = question.question;
+        questions[i].answers = question.answers;
+        questions[i].results = question.results;
+        coincidence = true;
+      }
+    }
+
+    if(!coincidence){
+      questions.push(question);
+    }
+
+    this.setState({
+      isModalOpen: false,
+      questions
+    });
+  };
 
   render(){
     return (
@@ -134,7 +82,7 @@ class Edit extends React.Component{
 						</div>
 
 						<div className='btn-group'>
-							<button className='btn btn-outline-light'><i className="ion-plus-round"></i></button>
+							<button className='btn btn-outline-light' onClick={()=>this.onModalOpen()}><i className="ion-plus-round"></i></button>
 							<button className='btn btn-outline-light'><i className="ion-gear-a"></i></button>
 						</div>
 
@@ -157,10 +105,10 @@ class Edit extends React.Component{
 												<p className="card-text text-truncate">{question.question}</p>
 												<div className="d-flex justify-content-between align-items-center">
 													<div className="btn-group">
-														<button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
+														<button type="button" className="btn btn-sm btn-outline-secondary" onClick={()=>this.onModalOpen(question)}>Edit</button>
 														<button type="button" className="btn btn-sm btn-outline-danger">Delete</button>
 													</div>
-													<small className="text-muted">6 rel</small>
+													<small className="text-muted">{question.answers.length} rel</small>
 												</div>
 											</div>
 										</div>
@@ -172,6 +120,13 @@ class Edit extends React.Component{
 						</div>
 					</div>
 				</div>
+
+        {this.state.isModalOpen ?
+          <EditModalWindow question={this.state.modalQuestion}
+                           isOpen={this.state.isModalOpen}
+                           onModalSave={this.onModalSave}
+                           onModalClose={this.onModalClose}/>
+          : ''}
 
       </div>
     )};
