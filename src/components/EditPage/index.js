@@ -97,12 +97,12 @@ class Edit extends React.Component{
 								this.state.questions.map((question, index)=>
 									<div className="col-md-4" key={question.key}>
 										<div className="card mb-4 box-shadow">
-											<div className="card-header d-flex justify-content-between align-items-center">
+											<div className="card-header d-flex flex-column justify-content-between align-items-center">
 												<h5 className="">Question #{index}</h5>
-												<p className="text-muted text-truncate">{question.key}</p>
 											</div>
 											<div className="card-body">
-												<p className="card-text text-truncate">{question.question}</p>
+                        <p className="text-muted key-text text-monospace">{question.key}</p>
+                        <p className="card-text text-truncate">{question.question}</p>
 												<div className="d-flex justify-content-between align-items-center">
 													<div className="btn-group">
 														<button type="button" className="btn btn-sm btn-outline-secondary" onClick={()=>this.onModalOpen(question)}>Edit</button>

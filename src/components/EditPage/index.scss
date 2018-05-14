@@ -66,12 +66,15 @@
   .section-2{
 
     .card-header{
-      p{
-        font-size: .8rem;
-        max-width: 11rem;
-      }
       h5, p{
         margin: 0;
+      }
+    }
+    .card-body{
+
+      .key-text{
+        font-size: .8rem;
+        margin-bottom: .2rem;
       }
     }
   }
