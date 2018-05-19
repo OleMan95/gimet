@@ -9,7 +9,7 @@ body, html{
   width: device-width;
   /* height: 80%; */
   min-height: 600px;
-  background: #404e5c url(../images/background.svg) no-repeat fixed center center;
+  background: #404e5c url(../images/background.png) no-repeat fixed center center;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
@@ -303,7 +303,7 @@ body, html{
   flex-direction: row;
   padding: 2% 15%;
   color: white;
-  background: url(../images/background.svg) no-repeat center center fixed;
+  background: url(../images/background.png) no-repeat center center fixed;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;

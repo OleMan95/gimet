@@ -15,15 +15,15 @@ class SignIn extends React.Component { //все this.props мы получем �
         if(getToken()) this.props.history.push('/home');
     }
     componentWillMount(){
-        document.addEventListener("keydown", event=>{
-            if(event.keyCode === 13){
-                console.log(this.state.emailValue.length);
-                console.log(this.state.passwordValue.length);
-                if(this.state.emailValue.length > 0 && this.state.passwordValue.length > 0){
-                    this.signInAction();
-                }
-            }
-        }, false);
+        // document.addEventListener("keydown", event=>{
+        //     if(event.keyCode === 13){
+        //         console.log(this.state.emailValue.length);
+        //         console.log(this.state.passwordValue.length);
+        //         if(this.state.emailValue.length > 0 && this.state.passwordValue.length > 0){
+        //             this.signInAction();
+        //         }
+        //     }
+        // }, false);
     }
 
     handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
