@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import {getToken} from '../services/tokenService';
 import { login } from '../services/api-helper';
+import alertHelper from '../services/alert-helper';
 import logo from "../../data/logo-black.svg";
 import './index.scss';
 
@@ -70,7 +71,7 @@ class SignIn extends React.Component {
 			this.props.history.push('/');
 		}else if(data.message){
 			console.error('signIn error: ', data.message);
-			this.alertHelper('Error: '+data.message, 'danger');
+			alertHelper(this, 'Error: '+data.message, 'danger');
 
 			if(data.message.indexOf('Please try again later')>=0){
 				const submitInterval = setInterval(()=>{
@@ -134,32 +135,6 @@ class SignIn extends React.Component {
       </div>
     );
   };
-
-	alertHelper=(message, type)=>{
-		if(type === 'danger'){
-			this.setState({
-				alert: message,
-				alertDangerClass: 'alert-opacity'
-			});
-			setTimeout(()=>{
-				this.setState({
-					alert: 'Error!',
-					alertDangerClass: 'd-none'
-				});
-			}, 4000);
-		}else{
-			this.setState({
-				alert: message,
-				alertInfoClass: 'alert-opacity'
-			});
-			setTimeout(()=>{
-				this.setState({
-					alert: 'Error!',
-					alertInfoClass: 'd-none'
-				});
-			}, 4000);
-		}
-	}
 
 }
 

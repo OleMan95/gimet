@@ -38,33 +38,43 @@ class Experts{
 			res.status(403).send({message: err.message});
 		}
 	}
-	//POST /user/:id/
-	async create(req, res){
+	//POST /experts or PUT /expert/:id
+	async createOrUpdate(req, res){
 		try{
 			if(!req.cookies.aat || req.cookies.aat != 'true'){
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
+
+			const payload = await jwtService.verify(req.headers.authorization);
+			const user = await User.findById(payload._id);
 			const {id} = req.params;
 			const {name, description, questions, contributors} = req.body;
+			const author = req.body.author ? req.body.author : user._id;
 
-			const data = {
-				name: req.body.name,
-				description: req.body.description,
-				questions: req.body.questions,
-				author:id,
-			};
-			let expert = new Expert(data);
-			expert = await expert.save();
+			const data = {name, description, questions, author, contributors};
 
-			const user = await User.findById(id);
-			const userExperts = user.experts;
-			userExperts.push(ObjectId(expert._id));
-			await User.findByIdAndUpdate(id, {experts: userExperts}, {new:false});
+			let expert = {};
 
-			res.send(expert);
+			if(id){
+				Expert.findByIdAndUpdate(id, { $set: {name, description, questions, author, contributors}}, { new: true }, function (err, expert) {
+					if (err) console.log('err: ', err);
+					res.send(expert);
+				});
+			}else{
+				expert = new Expert(data);
+				expert = await expert.save();
+				user.experts.push(ObjectId(expert._id));
+
+				User.findByIdAndUpdate({_id: payload._id}, user, { new: true }, function (err, user) {
+					if (err) console.log('err: ', err);
+					res.send(expert);
+				});
+			}
+
+			// res.send(expert);
 		}catch (err){
-			res.status(403).send({message: err.message});
+			res.status(500).send({message: err.message});
 		}
 
 	}

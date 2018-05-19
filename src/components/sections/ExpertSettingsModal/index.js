@@ -19,9 +19,12 @@ class ModalWindow extends React.Component { //все this.props мы получ�
 	componentDidMount(){
     if(this.props.expert){
       const contributorNames = [];
-			this.props.expert.contributors.forEach(async contributor => {
-				contributorNames.push(await this.getContributorName(contributor));
-			});
+
+      if(this.props.expert.contributors){
+				this.props.expert.contributors.forEach(async contributor => {
+					contributorNames.push(await this.getContributorName(contributor));
+				});
+			}
 
       this.setState({
         expert: this.props.expert,
@@ -41,7 +44,7 @@ class ModalWindow extends React.Component { //все this.props мы получ�
 	handleInputChange=(event)=>{
     const expert = this.state.expert;
     switch (event.target.name) {
-      case 'expertName':
+      case 'name':
 				expert.name = event.target.value;
         this.setState({expert});
         break;
@@ -72,15 +75,15 @@ class ModalWindow extends React.Component { //все this.props мы получ�
 
             <div className="modal-body">
               <div className="form-group">
-                <label htmlFor="exampleFormControlInput1">Name</label>
-                <input type="text" className="form-control" name="expertName" value={this.props.expert.name}
-                       placeholder="Enter expert name" ref={elem=>this.nameValue=elem} onChange={(event=>this.handleInputChange(event))}/>
+                <label htmlFor="name">Name</label>
+                <input type="text" className="form-control" name="name" defaultValue={this.props.expert.name}
+                       placeholder="Enter expert name" onChange={event=>this.handleInputChange(event)}/>
               </div>
               <div className="form-group">
-                <label htmlFor="exampleFormControlTextarea1">Description</label>
-                <textarea className="form-control" name="description" value={this.props.expert.description}
-                          rows="3" ref={elem=>this.descriptionValue=elem}
-                          onChange={(event=>this.handleInputChange(event))}/>
+                <label htmlFor="description">Description</label>
+                <textarea className="form-control" name="description"
+													value={this.props.expert.description} rows="3"
+                          onChange={event=>this.handleInputChange(event)}/>
               </div>
 							{/*<div className="form-group">*/}
 								{/*<label htmlFor="exampleFormControlInput1">Contributors</label>*/}

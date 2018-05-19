@@ -1,10 +1,11 @@
 import React from 'react';
 import {NavLink, withRouter } from 'react-router-dom';
 import {getToken} from '../services/tokenService';
-import {getExpertById} from '../services/api-helper';
+import {getExpertById, createorUpdateExpert} from '../services/api-helper';
 import Header from '../sections/Header/';
 import EditModal from '../sections/EditModal/';
 import ExpertSettingsModal from '../sections/ExpertSettingsModal';
+import alertHelper from '../services/alert-helper';
 
 import './index.scss';
 
@@ -17,7 +18,10 @@ class Edit extends React.Component{
 			questions: [],
       modalQuestion: '',
       isModalOpen: false,
-      isSettingsOpen: false
+      isSettingsOpen: false,
+			alert: 'Error!',
+			alertDangerClass: 'd-none',
+			alertInfoClass: 'd-none',
     };
   };
 
@@ -92,6 +96,16 @@ class Edit extends React.Component{
 		});
 	};
 
+	onSaveExpert = async () => {
+		let id = this.props.match.params.id == 'new' ? null : this.props.match.params.id;
+
+		await createorUpdateExpert(id, this.state.expert, (data)=>{
+			alertHelper(this, 'Expert successfully saved.');
+		}, (err)=>{
+			alertHelper(this, 'Oops! An error has occurred.', 'danger');
+		});
+	};
+
   render(){
 		return (
       <div className="Edit h-100">
@@ -108,7 +122,7 @@ class Edit extends React.Component{
 								<i className="ion-plus-round"></i></button>
 							<button className='btn btn-outline-light' onClick={()=>this.onSettingsOpen()}>
 								<i className="ion-gear-a"></i></button>
-							<button className='btn btn-outline-light'>SAVE</button>
+							<button className='btn btn-outline-light' onClick={()=>this.onSaveExpert()}>SAVE</button>
 						</div>
 
 					</div>
@@ -159,6 +173,17 @@ class Edit extends React.Component{
                            onModalSave={this.onSettingsSave}
                            onModalClose={this.onSettingsClose}/>
           : ''}
+
+
+        <div className="alert-group w-100 d-flex">
+					<div className={"alert alert-danger "+this.state.alertDangerClass} role="alert">
+						{this.state.alert}
+					</div>
+					<div className={"alert alert-info "+this.state.alertInfoClass} role="alert">
+						{this.state.alert}
+					</div>
+				</div>
+
 
       </div>
     )};

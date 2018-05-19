@@ -85,6 +85,12 @@
     }
   }
 
+  .alert-group{
+    position: absolute;
+    z-index: 9999;
+    top: 10px;
+    justify-content: center
+  }
 }
 
 

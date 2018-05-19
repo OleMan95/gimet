@@ -63,8 +63,6 @@ class Users{
 			const paramsId = req.params.id;
 			let user;
 
-			console.log('=========================================');
-
 			let id = '';
 			if(authorization.toString() != 'undefined') {
 				const payload = await jwtService.verify(authorization);

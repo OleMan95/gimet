@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const ExpertSchema = new Schema({
 	name:{
 		type:String,
-		lowercase:true,
 		required:'Name is required'
 	},
 	description:String,

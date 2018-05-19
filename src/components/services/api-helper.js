@@ -69,3 +69,40 @@ export async function getExpertById (id, onSuccess, onError){
 		console.error(err.message);
 	}
 }
+
+export async function createorUpdateExpert (id, body, onSuccess, onError){
+	try {
+		let token = getToken();
+		let response = '';
+
+		if (id){
+			response = await fetch('/api/expert/' + id, {
+				method: 'PUT',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': token
+				},
+				body: JSON.stringify(body)
+			});
+		}else{
+			response = await fetch('/api/experts', {
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': token
+				},
+				body: JSON.stringify(body)
+			});
+		}
+
+
+
+		if (response.status == 200) onSuccess(await response.json());
+		else onError(await response.json());
+
+	}catch (err) {
+		console.error(err);
+	}
+}
