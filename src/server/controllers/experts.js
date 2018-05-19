@@ -1,4 +1,5 @@
 import Expert from '../models/expert';
+import User from '../models/user';
 import {Types} from 'mongoose';
 import jwtService from '../services/jwt-service';
 const ObjectId = Types.ObjectId;
@@ -6,9 +7,15 @@ const ObjectId = Types.ObjectId;
 class Experts{
 	//GET /experts
 	async find(req, res){
-		ctx.body = await Expert.find();
-		ctx.status = 200;
-		return next();
+		try{
+			if(!req.cookies.aat || req.cookies.aat != 'true'){
+				res.status(400).send({message:'Rejected'});
+				return;
+			}
+			res.send(await Expert.find());
+		}catch(err){
+			res.status(500).send({message: err.message});
+		}
 	}
 	//GET /expert/:id
 	async findById(req, res){
@@ -32,33 +39,35 @@ class Experts{
 		}
 	}
 	//POST /user/:id/
-	// async create(res, req){
-	// 	if(!ctx.user){
-	// 		ctx.throw(403, {message:'Forbidden'});
-	// 		ctx.body = ctx.user;
-	// 		return next();
-	// 	}
-	// 	const {id} = ctx.params;
-	//
-	// 	const data = {
-	// 		name: ctx.request.body.name,
-	// 		description: ctx.request.body.description,
-	// 		questions: ctx.request.body.questions,
-	// 		author:id,
-	// 	};
-	// 	const expert = new Expert(data);
-	// 	const expertFromDB = await expert.save();
-	//
-	// 	const user = await User.findById(id);
-	// 	const userExperts = user.experts;
-	// 	userExperts.push(ObjectId(expertFromDB._id));
-	//
-	// 	await User.findByIdAndUpdate(id, {experts: userExperts}, {new:false});
-	//
-	// 	ctx.status = 200;
-	// 	ctx.body = expertFromDB;
-	// 	return next();
-	// }
+	async create(req, res){
+		try{
+			if(!req.cookies.aat || req.cookies.aat != 'true'){
+				res.status(400).send({message:'Rejected'});
+				return;
+			}
+			const {id} = req.params;
+			const {name, description, questions, contributors} = req.body;
+
+			const data = {
+				name: req.body.name,
+				description: req.body.description,
+				questions: req.body.questions,
+				author:id,
+			};
+			let expert = new Expert(data);
+			expert = await expert.save();
+
+			const user = await User.findById(id);
+			const userExperts = user.experts;
+			userExperts.push(ObjectId(expert._id));
+			await User.findByIdAndUpdate(id, {experts: userExperts}, {new:false});
+
+			res.send(expert);
+		}catch (err){
+			res.status(403).send({message: err.message});
+		}
+
+	}
 	//PUT /expert/:id?expertId=<num>
 	// async update(ctx, next){
 	// 	if(!ctx.user){

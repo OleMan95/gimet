@@ -9,7 +9,6 @@ router.get('/user/:id', users.findOneById); //public
 router.post('/login', users.login);
 router.post('/signup', users.signup);
 router.put('/user', users.update);
-router.delete('/user', users.deleteOne);
 
 export default router;
 

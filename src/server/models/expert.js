@@ -9,6 +9,7 @@ const ExpertSchema = new Schema({
 	},
 	description:String,
 	questions:[],
+	contributors:[String],
 	author:{
 		type: Schema.ObjectId,
 		ref: 'User',
@@ -20,9 +21,9 @@ ExpertSchema.set('toJSON', {versionKey:false});
 
 ExpertSchema.statics.createFields = ['name', 'description', 'questions', 'author'];
 
-ExpertSchema.statics.findOneWithPublicFields = function(params, cb){
-	return this.getUser(params, cb).select({__v: 0});
-};
+// ExpertSchema.statics.findOneWithPublicFields = function(params, cb){
+// 	return this.getUser(params, cb).select({__v: 0});
+// };
 
 const Expert = mongoose.model('Expert', ExpertSchema);
 

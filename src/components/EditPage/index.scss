@@ -2,6 +2,8 @@
 
 .Edit{
 
+  display: contents;
+
   .section-1{
     margin: 66px 0 0;
     padding: 40px 0 40px;
@@ -27,6 +29,9 @@
 
       .title{
         flex-direction: column;
+        max-width: 83%;
+        word-break: break-all;
+
         h1{
           font-size: 2rem;
         }
@@ -64,6 +69,7 @@
   }
 
   .section-2{
+    display: contents;
 
     .card-header{
       h5, p{

@@ -51,7 +51,6 @@ class Users{
 		}
 		next();
 	}
-
 	//GET /api/user/:id PUBLIC
 	async findOneById(req, res){
 		try{
@@ -119,25 +118,6 @@ class Users{
 			const data = req.body;
 
 			res.send(await User.findByIdAndUpdate(id, data, {new:true}).select({password:0, __v: 0}));
-		}catch(err){
-			res.status(500).send({ error: err});
-		}
-	}
-	//DELETE /users?id=id
-	async deleteOne(req, res){
-		const {authorization} = req.headers;
-		try{
-			const payload = await jwtService.verify(authorization);
-			const {id} = req.query;
-
-			const user = await User.findById(id);
-			if(!user) res.status(204).send({error: 'User not found!'});
-
-			const userExperts = user.experts;
-			for(let i=0;i<userExperts.length;i++){
-				await Expert.deleteOne({_id: ObjectId(userExperts[i])});
-			}
-			res.send(await User.deleteOne({_id: ObjectId(id)}));
 		}catch(err){
 			res.status(500).send({ error: err});
 		}

@@ -3,7 +3,8 @@ import {NavLink, withRouter } from 'react-router-dom';
 import {getToken} from '../services/tokenService';
 import {getExpertById} from '../services/api-helper';
 import Header from '../sections/Header/';
-import EditModalWindow from '../sections/EditModalWindow/';
+import EditModal from '../sections/EditModal/';
+import ExpertSettingsModal from '../sections/ExpertSettingsModal';
 
 import './index.scss';
 
@@ -15,7 +16,8 @@ class Edit extends React.Component{
       expert: {},
 			questions: [],
       modalQuestion: '',
-      isModalOpen: false
+      isModalOpen: false,
+      isSettingsOpen: false
     };
   };
 
@@ -36,12 +38,10 @@ class Edit extends React.Component{
   };
 
   onModalOpen=(question)=>{
-
     this.setState({
       isModalOpen: true,
       modalQuestion: question
     });
-
   };
   onModalClose=()=>{
     this.setState({
@@ -71,26 +71,51 @@ class Edit extends React.Component{
     });
   };
 
+	onSettingsOpen=()=>{
+		this.setState({
+			isSettingsOpen: true
+		});
+	};
+	onSettingsClose=()=>{
+		this.setState({
+			isSettingsOpen: false
+		});
+	};
+	onSettingsSave=(newExpert)=>{
+		const expert = this.state.expert;
+		expert.name = newExpert.name;
+		expert.description = newExpert.description;
+		expert.contributors = newExpert.contributors;
+
+		this.setState({
+			isSettingsOpen: false,
+		});
+	};
+
   render(){
-    return (
-      <div className="Edit">
+		return (
+      <div className="Edit h-100">
 				<Header />
 				<div className="section-1 d-flex">
 					<div className="container d-flex">
 						<div className='title d-flex'>
-							<h1>{this.state.expert ? this.state.expert.name : 'No expert found'}</h1>
+							<h1>{this.state.expert.name ? this.state.expert.name : 'No expert found'}</h1>
+							<p>{this.state.expert.description ? this.state.expert.description : ''}</p>
 						</div>
 
 						<div className='btn-group'>
-							<button className='btn btn-outline-light' onClick={()=>this.onModalOpen()}><i className="ion-plus-round"></i></button>
-							<button className='btn btn-outline-light'><i className="ion-gear-a"></i></button>
+							<button className='btn btn-outline-light' onClick={()=>this.onModalOpen()}>
+								<i className="ion-plus-round"></i></button>
+							<button className='btn btn-outline-light' onClick={()=>this.onSettingsOpen()}>
+								<i className="ion-gear-a"></i></button>
+							<button className='btn btn-outline-light'>SAVE</button>
 						</div>
 
 					</div>
 				</div>
 
-				<div className="section-2 py-5 bg-light">
-					<div className="container">
+				<div className="section-2 h-100 bg-light">
+					<div className="container py-5">
 						<div className="row">
 
 							{this.state.expert ?
@@ -122,10 +147,17 @@ class Edit extends React.Component{
 				</div>
 
         {this.state.isModalOpen ?
-          <EditModalWindow question={this.state.modalQuestion}
+          <EditModal question={this.state.modalQuestion}
                            isOpen={this.state.isModalOpen}
                            onModalSave={this.onModalSave}
                            onModalClose={this.onModalClose}/>
+          : ''}
+
+        {this.state.isSettingsOpen ?
+          <ExpertSettingsModal expert={this.state.expert}
+                           isOpen={this.state.isSettingsOpen}
+                           onModalSave={this.onSettingsSave}
+                           onModalClose={this.onSettingsClose}/>
           : ''}
 
       </div>

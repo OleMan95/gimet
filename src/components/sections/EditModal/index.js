@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import './index.scss';
 
-class EditModalWindow extends React.Component { //все this.props мы получем как аргументы функции
+class EditModal extends React.Component { //все this.props мы получем как аргументы функции
 	constructor(props) {
 	  super(props);
 	  this.state = {
@@ -55,7 +55,7 @@ class EditModalWindow extends React.Component { //все this.props мы пол�
 
   render(){
     return (
-      <div className={this.props.isOpen ? "ModalWindow modal fade show" : "ModalWindow modal fade"} ref={(elem)=>this.modal=elem} id="exampleModalCenter"
+      <div className={this.props.isOpen ? "EditModal modal fade show" : "EditModal modal fade"} ref={(elem)=>this.modal=elem}
            tabIndex="-1" role="dialog"
            aria-labelledby="exampleModalLongTitle" aria-hidden="true"
            onClick={()=>this.props.onModalClose(this.state.question)}>
@@ -139,4 +139,4 @@ class EditModalWindow extends React.Component { //все this.props мы пол�
 }
 
 
-export default withRouter(EditModalWindow);
+export default withRouter(EditModal);

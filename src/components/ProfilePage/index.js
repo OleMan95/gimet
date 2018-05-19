@@ -112,8 +112,10 @@ class Profile extends React.Component{
 						</div>
 
 						<div className='btns-bar d-flex'>
-							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/edit/new'}><i className="ion-plus-round"></i></NavLink>
-							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/account'}><i className="ion-gear-a"></i></NavLink>
+							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/edit/new'}>
+								<i className="ion-plus-round"></i></NavLink>
+							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/account'}>
+								<i className="ion-gear-a"></i></NavLink>
 						</div>
 
 

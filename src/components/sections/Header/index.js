@@ -32,7 +32,7 @@ class Header extends Component {
 		}
 
 		window.onscroll = () => {
-			const nav = this.nav;
+			const nav = this.nav || {className:''};
 			if (window.scrollY <= 50) nav.className = "Header navbar navbar-expand-lg fixed-top navbar-dark bg-dark";
 			else nav.className = "Header navbar navbar-expand-lg fixed-top navbar-light bg-light";
 		};
