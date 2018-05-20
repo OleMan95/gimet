@@ -1,27 +1,21 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 
-// import ConsultationInit from './ConsultationInit';
-
 class ConsultationResult extends React.Component{
-  // onStartClick=()=>{
-  //   this.props.setContent(<ConsultationInit/>);
-  // };
 
   render(){
     return (
-      <div className="consultation_frame" id="result_frame">
-        {/*<div id="result_frame_header">*/}
-          {/*<h3>Result: </h3>*/}
-        {/*</div>*/}
-        {/*<p>{this.props.result}</p>*/}
+			<div className="jumbotron consultation-result mx-auto ">
+				{/*<h3 className=""></h3>*/}
+				<p className="lead">Result</p>
+				<hr className="my-4"/>
+				<p>{this.props.result}</p>
+				<p className="lead btn-group">
+					<a className="btn btn-outline-dark" href='/'>Finish</a>
+					<button className="btn btn-outline-dark" onClick={()=>{this.props.onStartClick()}}>Try again</button>
+				</p>
 
-        {/*<div className="result_frame_btns">*/}
-          {/*<button className="result_frame_repeat" */}
-            {/*onClick={this.onStartClick}>Repeat</button>*/}
-          {/*<NavLink to="/home" className="result_frame_finishBtn">Finish</NavLink>*/}
-        {/*</div>*/}
-      </div>
+			</div>
     )
   }
 }

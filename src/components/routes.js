@@ -2,7 +2,6 @@ import StartPage from './StartPage/';
 import Signin from './Signin/';
 import ProfilePage from './ProfilePage/';
 import EditorPage from './EditPage/';
-import ConfiguratorPage from './ConfiguratorPage/';
 import ConsultationPage from './ConsultationPage/';
 import NotFound from './NotFound';
 
@@ -43,7 +42,3 @@ const routes = [
 ];
 
 export default routes;
-
-
-
-{/*<Route path={"/signin"} component={SignIn}/>*/}

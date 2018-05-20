@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink, withRouter } from 'react-router-dom';
 import {getToken} from '../services/tokenService';
-import {getExpertById, createorUpdateExpert} from '../services/api-helper';
+import {getExpertById, createOrUpdateExpert} from '../services/api-helper';
 import Header from '../sections/Header/';
 import EditModal from '../sections/EditModal/';
 import ExpertSettingsModal from '../sections/ExpertSettingsModal';
@@ -99,7 +99,7 @@ class Edit extends React.Component{
 	onSaveExpert = async () => {
 		let id = this.props.match.params.id == 'new' ? null : this.props.match.params.id;
 
-		await createorUpdateExpert(id, this.state.expert, (data)=>{
+		await createOrUpdateExpert(id, this.state.expert, (data)=>{
 			alertHelper(this, 'Expert successfully saved.');
 		}, (err)=>{
 			alertHelper(this, 'Oops! An error has occurred.', 'danger');

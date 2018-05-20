@@ -70,7 +70,7 @@ export async function getExpertById (id, onSuccess, onError){
 	}
 }
 
-export async function createorUpdateExpert (id, body, onSuccess, onError){
+export async function createOrUpdateExpert (id, body, onSuccess, onError){
 	try {
 		let token = getToken();
 		let response = '';

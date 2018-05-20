@@ -1,46 +1,70 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
-// import ConsultationInit from './ConsultationInit';
+import Header from '../sections/Header/';
+import ConsultationInit from './ConsultationInit';
+import ConsultationInterview from './ConsultationInterview';
+import ConsultationResult from './ConsultationResult';
+import {getExpertById} from '../services/api-helper';
+import './index.scss';
 
 
 class Consultation extends React.Component{
+	constructor(){
+		super();
+		this.state={
+			expert: {},
+      questions:[],
+			content: 'ConsultationInit',
+			result:{}
+		};
+	};
 
-  state = {
-    content: (<ConsultationInit/>), // присваиваем перемненной content обьект ConsultationInit
-  };
+  async componentWillMount() {
+		await getExpertById(this.props.match.params.id, expert=>{
+			if(expert._id){
+				this.setState({
+					expert,
+					questions: expert.questions
+				});
+			}
+		}, err=>{
+			alert('Unfortunately, there was a problem with the fetching operation.');
+			this.props.history.push('/');
+		});
+	};
 
+	onStartClick=()=>{
+		this.setState({
+			content: 'ConsultationInterview'
+		});
+	};
 
-  componentDidMount(){ // .....
-    window.onpopstate = this.onBackButtonEvent;
-  };
-
-  onBackButtonEvent=() => { // тут происходит загрузка обьекта ConsultationInit
-    this.props.setContent(<ConsultationInit/>);
-  };
+	onResult=(result)=>{
+		this.setState({
+			content: 'ConsultationResult',
+			result
+		});
+	};
 
 
   render(){
     return (
-      <div>
-        <header className="header" >
-          <div className="header-left">
-          <NavLink to="/home" activeClassName="Start-header-logo-active" className="header-logo">
-            <div className="header-logo-img"/>
-            <p className="header-logo-title">GIMET</p>
-          </NavLink>
-          <NavLink to="/home" className="header-userName">
-            <h2>{this.props.store.accountReducer.name}</h2>
-          </NavLink>
-          </div>
-          <div className="header-right">
-            <NavLink to="/home" className="signOutBtn" >Back to Home</NavLink>
-          </div>
-        </header>
+      <div className="Consultation">
+        <Header/>
+				<div className="container py-5 mx-auto">
+					<ConsultationInit class={this.state.content == 'ConsultationInit' ? '' : 'd-none'}
+														expert={this.state.expert} onStartClick={this.onStartClick}/>
 
-        <div className="consultation-content">
-          {this.props.content ? this.props.content : this.state.content}
-        </div>
+					{this.state.content == 'ConsultationInterview' ?
+						<ConsultationInterview expert={this.state.expert} onResult={this.onResult}/>
+						: ''}
 
+					{this.state.content == 'ConsultationResult' ?
+						<ConsultationResult result={this.state.result} onStartClick={this.onStartClick}/>
+						: ''}
+
+
+				</div>
       </div>
     )
   }

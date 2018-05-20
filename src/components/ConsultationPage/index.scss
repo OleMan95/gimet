@@ -1,0 +1,28 @@
+@import '../variables';
+
+.Consultation{
+
+  &>.container{
+    margin: 66px 0 0;
+
+    @media (max-width: 991.98px) {
+      margin: 64px 0 0;
+    }
+  }
+
+  .consultation-interview{
+    .list-group-item{
+      cursor: pointer;
+    }
+  }
+
+  .consultation-result{
+
+  }
+
+
+
+}
+
+
+
