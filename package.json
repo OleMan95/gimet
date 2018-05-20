@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "NODE_ENV=development webpack --progress --profile --colors -w",
-    "dev": "NODE_ENV=development nodemon server.js"
+    "dev": "NODE_ENV=development nodemon server.js",
+    "start": "NODE_ENV=development node server.js",
+    "heroku-prebuild": "NODE_ENV=development npm i && npm i --dev && npm run build:dev"
   },
   "author": "Oleksii Manachynskyi",
   "license": "ISC",
