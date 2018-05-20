@@ -151,8 +151,23 @@
           }
         }
 
-        @media (max-width: 991.98px) {
+        @media (max-width: $sm) {
+          &>div{
+            flex-direction: column;
+            width: 18rem;
+
+            .team-body{
+              max-width: 100%;
+              justify-content: flex-start;
+            }
+          }
+
           flex-direction: column;
+        }
+        @media (max-width: $md) {
+          &>div:first-of-type{
+            margin-right: 0;
+          }
         }
 
       }
@@ -210,10 +225,13 @@
 
 
     @media (max-width: 991.98px) {
-      flex-direction: column;
-
-      &>div:last-of-type{
-        display: none !important;
+      .container{
+        &>div{
+          flex-direction: column;
+          &>div:first-of-type{
+            margin-bottom: -54rem;
+          }
+        }
       }
     }
 

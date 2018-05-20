@@ -126,15 +126,15 @@ class Header extends Component {
 						<li className="nav-item" ref={(elem=>this.homeNavItem=elem)}>
 							<span className="nav-link"><NavLink to='/'>Home</NavLink></span>
 						</li>
-						<li className="nav-item" ref={(elem=>this.expertsNavItem=elem)}>
-							<span className="nav-link"><NavLink to='/'>Experts</NavLink></span>
-						</li>
-						<li className="nav-item" ref={(elem=>this.aboutNavItem=elem)}>
-							<span className="nav-link"><NavLink to='/'>About us</NavLink></span>
-						</li>
-						<li className="nav-item" ref={(elem=>this.docsNavItem=elem)}>
-							<span className="nav-link"><NavLink to='/'>Docs</NavLink></span>
-						</li>
+						{/*<li className="nav-item" ref={(elem=>this.expertsNavItem=elem)}>*/}
+							{/*<span className="nav-link"><NavLink to='/'>Experts</NavLink></span>*/}
+						{/*</li>*/}
+						{/*<li className="nav-item" ref={(elem=>this.aboutNavItem=elem)}>*/}
+							{/*<span className="nav-link"><NavLink to='/'>About us</NavLink></span>*/}
+						{/*</li>*/}
+						{/*<li className="nav-item" ref={(elem=>this.docsNavItem=elem)}>*/}
+							{/*<span className="nav-link"><NavLink to='/'>Docs</NavLink></span>*/}
+						{/*</li>*/}
 
 					{this.state.isAuthorized ?
 						<li className={"nav-item dropdown "+this.state.profileShow} ref={(elem=>this.profileNavItem=elem)}>
