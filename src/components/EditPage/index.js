@@ -69,9 +69,13 @@ class Edit extends React.Component{
       questions.push(question);
     }
 
+    let expert = this.state.expert;
+    expert.questions = questions;
+
     this.setState({
       isModalOpen: false,
-      questions
+      questions,
+      expert
     });
   };
 
@@ -93,12 +97,14 @@ class Edit extends React.Component{
 
 		this.setState({
 			isSettingsOpen: false,
+      expert
 		});
 	};
 
 	onSaveExpert = async () => {
 		let id = this.props.match.params.id == 'new' ? null : this.props.match.params.id;
 
+		console.log('this.state.expert: ', this.state.expert);
 		await createOrUpdateExpert(id, this.state.expert, (data)=>{
 			alertHelper(this, 'Expert successfully saved.');
 		}, (err)=>{
