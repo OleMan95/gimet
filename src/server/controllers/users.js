@@ -12,7 +12,6 @@ class Users{
 			res.status(400).send({message:'Rejected'});
 			return next();
 		}
-
 		const { email, password } = req.body;
 		try{
 			let lcCookie = req.cookies.lc ? parseInt(req.cookies.lc) : 0;
@@ -97,9 +96,13 @@ class Users{
 	// POST /signup
 	async signup(req, res){
 		try{
+			if(!req.cookies.aat || req.cookies.aat != 'true'){
+				res.status(400).send({message:'Rejected'});
+				return;
+			}
 			const {_id} = await User.create(pick(req.body, User.createFields));
 			const user = await User.findById({_id}).select({password:0, __v: 0});
-			res.send({ data: user });
+			res.status(200).send(user);
 		}catch(err){
 			res.status(500).send({ error: err});
 		}

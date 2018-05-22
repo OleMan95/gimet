@@ -6,8 +6,8 @@ const users = new Users();
 
 router.get('/user', users.findOneById);
 router.get('/user/:id', users.findOneById); //public
-router.post('/login', users.login);
-router.post('/signup', users.signup);
+router.post('/login', users.login); //public
+router.post('/signup', users.signup); //public
 router.put('/user', users.update);
 
 export default router;
