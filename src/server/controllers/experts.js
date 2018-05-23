@@ -24,14 +24,15 @@ class Experts{
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
-			const {authorization} = req.headers;
-			const payload = await jwtService.verify(authorization);
-			const authorId = payload._id;
+			// const {authorization} = req.headers;
+			// const payload = await jwtService.verify(authorization);
+			// const authorId = payload._id;
 
 			const id = ObjectId(req.params.id);
 			const expert = await Expert.findById(id).select({__v: 0});
 
-			if(expert.author.toString().trim() != authorId.toString().trim()) throw new Error('Forbidden');
+			// make for creating or updating of the expert
+			// if(expert.author.toString().trim() != authorId.toString().trim()) throw new Error('Forbidden');
 
 			res.send(expert);
 		}catch(err){

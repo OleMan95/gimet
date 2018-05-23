@@ -85,7 +85,7 @@ class EditModal extends React.Component { //все this.props мы получе�
 
               <table className="table">
                 <thead>
-                  <tr>
+                  <tr className="row">
                     <th scope="col" className="col-5">Answer</th>
                     <th scope="col" className="col-1">Type</th>
                     <th scope="col" className="col-6">Result</th>
@@ -93,25 +93,25 @@ class EditModal extends React.Component { //все this.props мы получе�
                 </thead>
                 <tbody>
                   {this.state.question.answers.map((answer, index)=>
-                    <tr key={answer}>
-                      <td>{answer}</td>
-                      <td>{this.state.question.results[`${index}`].type}</td>
-                      <td>{this.state.question.results[`${index}`].value}</td>
+                    <tr key={answer} className="row">
+                      <td className="col-5">{answer}</td>
+                      <td className="col-1">{this.state.question.results[`${index}`].type}</td>
+                      <td className="col-6">{this.state.question.results[`${index}`].value}</td>
                     </tr>
                   )}
-                  <tr>
-                    <td>
+                  <tr className="row">
+                    <td className="col-5">
                       <input type="text" className="form-control" id=""
                              placeholder="Enter new answer" ref={elem=>this.answerValue=elem}/>
                     </td>
-                    <td>
+                    <td className="col-1">
                       <select className="custom-select" defaultValue="initial" ref={elem=>this.resultType=elem}>
                         <option value="initial"></option>
                         <option value="key">Key</option>
                         <option value="text">Text</option>
                       </select>
                     </td>
-                    <td>
+                    <td className="col-6">
                       <div className="input-group">
                         <input type="text" className="form-control" placeholder="Enter result value"
                                aria-label="Enter result value"
