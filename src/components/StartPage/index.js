@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
+import {signUp} from '../services/api-helper';
 import './index.scss';
 import teamMember1 from '../../data/images/team/manachynskyi.jpg';
 import teamMember2 from '../../data/images/team/suprun.jpg';
@@ -13,6 +14,9 @@ class StartPage extends React.Component { //все this.props мы получе�
 	  super(props);
 	  this.state = {
 			modalShow: '',
+			userName:'',
+			email:'',
+			password:''
 	  };
 	}
 
@@ -23,48 +27,43 @@ class StartPage extends React.Component { //все this.props мы получе�
 	handleShow=()=>{
 		this.setState({ modalShow: 'show' });
 	};
-  // handleInputChange=(event)=>{ // занесение данных с формы в локальные переменные
-  //     switch (event.target.name) {
-  //         case 'username':
-  //             this.setState({
-  //                 usernameValue:event.target.value,
-  //             });
-  //             break;
-  //         case 'email':
-  //             this.setState({
-  //               emailValue:event.target.value,
-  //             });
-  //             break;
-  //         case 'password':
-  //             this.setState({
-  //               passwordValue:event.target.value,
-  //             });
-  //             break;
-  //         default:
-  //     }
-  // };
-  // signUpClick=(context)=>{
-  //   fetch('/v1/auth/signup', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ // занесение данных в JSON
-  //       name: this.state.usernameValue,
-  //       email: this.state.emailValue,
-  //       password: this.state.passwordValue,
-  //     })
-  //   }).then((response) => {
-  //     response.json().then(function(data) {
-  //         if(data.data){
-  //           alert('User has registered.');
-  //         }
-  //     });
-  //     return response;
-  //   }).catch(function(error) {
-  //     console.log('There was a problem with fetch operation: ' + error.message);
-  //   });
-  // };
+  handleInputChange=(event)=>{
+		switch (event.target.name) {
+			case 'name':
+				this.setState({
+					userName: event.target.value,
+				});
+				break;
+			case 'email':
+				this.setState({
+					email: event.target.value,
+				});
+				break;
+			case 'password':
+				this.setState({
+					password: event.target.value,
+				});
+				break;
+			default:
+		}
+  };
+  signUpClick = async(event)=>{
+  	event.preventDefault();
+
+		await signUp(this.state.userName, this.state.email, this.state.password,
+			()=>{
+				// here must be a custom success alert. (look at ../Signin/index.js line 74)
+				alert('You are has registered! Contact administrator to confirm your account.');
+				this.setState({
+					userName: '',
+					email: '',
+					password: ''
+				});
+			}, err=>{
+				// here must be a custom danger alert. (look at ../Signin/index.js line 74)
+				console.log('registration error: ',err)
+			});
+	};
 
   render(){
     return (
@@ -80,21 +79,26 @@ class StartPage extends React.Component { //все this.props мы получе�
 
 						<div className="card text-white bg-dark">
 							<div className="card-body">
-								<form className="col d-flex">
+								<form className="col d-flex" onSubmit={this.signUpClick}>
 									<div className="form-group">
 										<label htmlFor="exampleInputEmail1">Name</label>
-										<input type="name" className="form-control" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter your full name"/>
+										<input type="name" className="form-control" id="exampleInputName1"
+													 aria-describedby="emailHelp" name="name"
+													 placeholder="Enter your full name" onChange={event=>{this.handleInputChange(event)}}/>
 									</div>
 									<div className="form-group">
 										<label htmlFor="exampleInputEmail1">Email address</label>
-										<input type="email" className="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter email"/>
+										<input type="email" className="form-control" id="exampleInputEmail"
+													 aria-describedby="emailHelp" name="email"
+													 placeholder="Enter email" onChange={event=>{this.handleInputChange(event)}}/>
 									</div>
 									<div className="form-group">
 										<label htmlFor="exampleInputPassword1">Password</label>
-										<input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+										<input type="password" className="form-control" id="exampleInputPassword1" name="password"
+													 placeholder="Password" onChange={event=>{this.handleInputChange(event)}}/>
 										<small id="emailHelp" className="form-text text-muted">Use at least one letter, one numeral, and seven characters.</small>
 									</div>
-									<button type="submit" className="btn btn-primary" onClick={()=>this.signUpClick(this)}>Sign up</button>
+									<button type="submit" className="btn btn-primary">Sign up</button>
 								</form>
 							</div>
 						</div>

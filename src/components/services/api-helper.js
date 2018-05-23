@@ -106,3 +106,22 @@ export async function createOrUpdateExpert (id, body, onSuccess, onError){
 		console.error(err);
 	}
 }
+
+export async function signUp (name, email, password, onSuccess, onError){
+	try {
+		let response = await fetch('/api/signup', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({name, email, password})
+		});
+
+		if (response.status == 200) onSuccess(await response.json());
+		else onError(await response.json());
+
+	} catch (err) {
+		console.error(err.message);
+	}
+}
