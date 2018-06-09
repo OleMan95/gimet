@@ -1100,7 +1100,7 @@ Either way, you can proxy WebSocket requests manually in `package.json`:
 {
   // ...
   "proxy": {
-    "/socket": {
+    Socket: {
       // Your compatible WebSocket server
       "target": "ws://<socket_url>",
       // Tell http-proxy-middleware that this is a WebSocket proxy.

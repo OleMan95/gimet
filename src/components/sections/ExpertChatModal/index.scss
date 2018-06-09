@@ -1,0 +1,62 @@
+@import '../../variables';
+
+.ExpertChatModal{
+
+  &.modal{
+    background-color: #3a3036b3;
+    overflow-y: auto;
+
+    &.fade.show{
+      display: block;
+      padding-right: 12px;
+    }
+
+    .modal-dialog{
+
+      .modal-body{
+        height: 60vh;
+
+        ul{
+          padding: 0;
+        }
+
+        li{
+          list-style: none;
+          background-color: #ededed;
+          padding: 1rem;
+          margin-bottom: 1rem;
+          border-radius: 3rem 3rem 3rem 0;
+
+          &.is-client{
+            border-radius: 3rem 3rem 0 3rem;
+            background-color: #007bff;
+            color: $default-font-color-white;
+          }
+        }
+
+      }
+      .modal-footer{
+        padding: 0;
+
+
+        input, button{
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+        input{
+          border-color: #ced4da00;
+        }
+
+
+        button{
+          color: $primary-accent-color;
+
+          &:hover{
+            background-color: $default-font-color-white;
+          }
+        }
+      }
+    }
+  }
+
+}
