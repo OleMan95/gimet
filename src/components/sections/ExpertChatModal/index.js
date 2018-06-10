@@ -1,5 +1,6 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
+import {getToken} from "../../services/tokenService";
 import './index.scss';
 
 class ExpertChatModal extends React.Component {
@@ -21,10 +22,11 @@ class ExpertChatModal extends React.Component {
 		console.log('WebSocket status: ',status);
 	};
 	onMessage=(response)=>{
+		let data = JSON.parse(response.data);
 		console.log('WebSocket onmessage: ',response.data);
 
 		const messages = this.state.messages;
-		messages.push(response.data);
+		messages.push(data.message);
 
 		this.setState({messages});
 
@@ -39,7 +41,9 @@ class ExpertChatModal extends React.Component {
   };
 
 	onMessageSend=()=>{
-		this.socket.send(this.input.value);
+		this.socket.send(JSON.stringify({
+			message: this.input.value
+		}));
 		this.setState({message: this.input.value = ''});
   };
 
