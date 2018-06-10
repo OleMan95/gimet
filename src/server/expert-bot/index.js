@@ -27,9 +27,10 @@ socket.on('connection', function connection(ws, req) {
 					}
 
 					ws.send(JSON.stringify({
-						message: 'echo: ' + data.message,
+						message: data.message,
 						userId: id,
-						ip: ip
+						ip: ip,
+						isClient: data.isClient
 					}));
 				}catch(err){
 					console.error('err: ', err);
@@ -42,7 +43,8 @@ socket.on('connection', function connection(ws, req) {
 
 	ws.send(JSON.stringify({
 		message: 'Hi, I am a Gimet expert-bot. Type "Help" if you need help.',
-		userId: null
+		userId: null,
+		isClient: false
 	}));
 
 	ws.on('close', function close() {

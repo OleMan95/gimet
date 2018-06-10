@@ -25,14 +25,16 @@
           background-color: #ededed;
           padding: 1rem;
           margin-bottom: 1rem;
-          border-radius: 1rem;
+          border-radius: 3rem;
           border-bottom-left-radius: 0;
+          display: inline-flex;
 
           &.is-client{
-            border-radius: 1rem;
+            border-radius: 3rem;
             border-bottom-right-radius: 0;
             background-color: #007bff;
             color: $default-font-color-white;
+            flex-direction: row-reverse;
           }
         }
 

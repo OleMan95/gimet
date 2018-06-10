@@ -18,23 +18,22 @@ class ExpertChatModal extends React.Component {
 		this.socket.onmessage=response=>this.onMessage(response);
 	}
 
+	componentDidMount(){
+
+	}
+
 	onStatus=(status)=>{
 		console.log('WebSocket status: ',status);
 	};
 	onMessage=(response)=>{
 		let data = JSON.parse(response.data);
-		console.log('WebSocket onmessage: ',response.data);
+		console.log('WebSocket onmessage: ', data);
 
 		const messages = this.state.messages;
-		messages.push(data.message);
+		messages.push(data);
 
 		this.setState({messages});
-
 	};
-
-	componentDidMount(){
-
-  }
 
 	handleInputChange=(event)=>{
 		this.setState({message: event.target.value});
@@ -42,7 +41,8 @@ class ExpertChatModal extends React.Component {
 
 	onMessageSend=()=>{
 		this.socket.send(JSON.stringify({
-			message: this.input.value
+			message: this.input.value,
+			isClient: true
 		}));
 		this.setState({message: this.input.value = ''});
   };
@@ -66,7 +66,7 @@ class ExpertChatModal extends React.Component {
 
 							<ul>
 								{this.state.messages.map((msg, index)=>
-									<li key={index} className="is-client">{msg}</li>
+									<li key={index} className={msg.isClient ? "is-client" : ""}>{msg.message}</li>
 								)}
 							</ul>
 
