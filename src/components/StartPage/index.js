@@ -141,7 +141,9 @@ class StartPage extends React.Component { //все this.props мы получе�
 									</div>
 								</div>
 								<h4>What technologies we use?</h4>
-								<p></p>
+								<p>Are you interested in the technical details of our platform?
+									You can use our experts base and our advantages in your own app.
+									If you want to learn more about the knowledge model, Gimet API, etc. - read on.</p>
 								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
 							</div>
 						</div>

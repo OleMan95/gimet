@@ -4,7 +4,7 @@ import { getToken } from "../../services/tokenService";
 import { getUserById } from "../../services/api-helper";
 import logo from "../../../data/logo.svg";
 import "./index.scss";
-import ExpertChatModal from '../../sections/ExpertChatModal';
+import ExpertChatButton from '../../sections/ExpertChatButton';
 
 
 class Header extends Component {
@@ -14,8 +14,7 @@ class Header extends Component {
 			navStyle: 'navbar-dark bg-dark',
 			profileShow: '',
 			isAuthorized: false,
-			user: {},
-			isExpertBotModalOpen: false
+			user: {}
     };
   }
 
@@ -113,12 +112,6 @@ class Header extends Component {
 		});
 	};
 
-	toggleExpertChatModal=()=>{
-		this.setState({
-			isExpertBotModalOpen: !this.state.isExpertBotModalOpen
-		});
-	};
-
   render() {
     return (
 			<nav className={"Header navbar navbar-expand-lg fixed-top navbar-dark bg-dark"} ref={elem=>this.nav=elem}>
@@ -133,9 +126,6 @@ class Header extends Component {
 					<ul className="navbar-nav mr-auto" ref={elem => this.navBar = elem}>
 						<li className="nav-item" ref={(elem=>this.homeNavItem=elem)}>
 							<span className="nav-link"><NavLink to='/'>Home</NavLink></span>
-						</li>
-						<li className={this.state.isExpertBotModalOpen ? "nav-item active" : "nav-item"}>
-							<span className="nav-link"><button onClick={this.toggleExpertChatModal}>Expert-bot</button></span>
 						</li>
 						{/*<li className="nav-item" ref={(elem=>this.expertsNavItem=elem)}>*/}
 							{/*<span className="nav-link"><NavLink to='/'>Experts</NavLink></span>*/}
@@ -171,13 +161,12 @@ class Header extends Component {
 						{this.state.isAuthorized ? '' :
 							<a href="/login" className="login-link nav-link" >Sign in</a>}
 
+
+						{this.state.isAuthorized ? <ExpertChatButton /> :
+							''}
+
 					</div>
 				</div>
-
-				{this.state.isExpertBotModalOpen ?
-					<ExpertChatModal isOpen={this.state.isExpertBotModalOpen}
-										 onClose={this.toggleExpertChatModal}/>
-					: ''}
 
  			</nav>
     );

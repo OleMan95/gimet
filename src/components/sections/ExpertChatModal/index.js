@@ -19,7 +19,6 @@ class ExpertChatModal extends React.Component {
 	}
 
 	componentDidMount(){
-
 	}
 
 	onStatus=(status)=>{
@@ -31,19 +30,17 @@ class ExpertChatModal extends React.Component {
     }
 		console.log('WebSocket status: ',status);
 	};
+
 	onMessage=(response)=>{
 		let data = JSON.parse(response.data);
 		console.log('WebSocket onmessage: ', data);
 
 		const messages = this.state.messages;
 		messages.push(data);
-
 		this.setState({messages});
-	};
 
-	handleInputChange=(event)=>{
-		this.setState({message: event.target.value});
-  };
+		this.messagesListElem.scrollTop = this.messagesListElem.scrollHeight;
+	};
 
   onClose=()=>{
     this.socket.close();
@@ -73,7 +70,7 @@ class ExpertChatModal extends React.Component {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body" ref={elem=>this.messagesListElem=elem} onScroll={(e)=>{e.preventDefault()}}>
 
 							<ul className="">
 								{this.state.messages.map((msg, index)=>

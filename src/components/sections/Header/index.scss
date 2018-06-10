@@ -12,35 +12,21 @@
   input{
     margin-bottom: 0;
   }
-  button{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    &:active{
-      border: none;
-    }
-    &:focus{
-      border: none;
-    }
-    &:hover{
-      border: none;
-    }
-  }
 
   &.navbar-dark{
     .nav-link{
-      a, button{
+      a{
         color: rgba(255,255,255,.5);
       }
 
-      &:hover a, &:hover button{
+      &:hover a{
         color: rgba(255,255,255,.75);
         border: none;
       }
     }
 
     .active{
-      a, button{
+      a{
         color: $default-font-color-white;
       }
     }
@@ -54,17 +40,17 @@
   }
   &.navbar-light{
     .nav-link{
-      a, button{
+      a{
         color: rgba(0,0,0,.5);
       }
 
-      &:hover a, button{
+      &:hover a{
         color: rgba(0,0,0,.75);
       }
     }
 
     .active{
-      a, button{
+      a{
         color: rgba(0,0,0,.9);;
       }
     }
