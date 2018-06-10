@@ -7,48 +7,40 @@ const clients = [];
 
 socket.on('connection', function connection(ws, req) {
 
-	ws.on('message', function incoming(message) {
-		const ip = req.connection.remoteAddress;
-		const cookies = req.headers.cookie;
+	ws.on('message', async function incoming(message) {
+		const data = JSON.parse(message);
+		const token = getToken(req.headers.cookie);
+		let id;
 
-		socket.clients.forEach(async (client) => {
-			if (client.readyState === WebSocket.OPEN) {
+		if (token) {
+			const payload = await jwtService.verify(token);
+			id = payload._id;
+		}
+		console.log('message', data);
 
-				console.log('message: ', message);
-
-				try{
-					const data = JSON.parse(message);
-					const token = getToken(cookies);
-					let id;
-
-					if (token && data.isInitial) {
-						const payload = await jwtService.verify(token);
-						clients.push(payload._id);
-						console.log('id: ', id);
-					}
-
-
-
-					ws.send(JSON.stringify({
-						message: data.message,
-						isClient: data.isClient
-					}));
-
-					setTimeout(()=>{
-            ws.send(JSON.stringify({
-              message: 'echo: '+data.message,
-              isClient: false,
-            }));
-          }, 5000);
-
-				}catch(err){
-					console.error('err: ', err);
+		if (data.isInitial) {
+			socket.clients.forEach(function each(client) {
+				if (client === ws && client.readyState === WebSocket.OPEN) {
+					client.id = id;
 				}
-			}
+			});
+
+			return;
+		}
+
+		sendMessage(id, {
+			message: data.message,
+			isClient: data.isClient
 		});
 
-	});
+		setTimeout(()=>{
+			sendMessage(id, {
+				message: 'echo: '+data.message,
+				isClient: false
+			});
+		}, 3000);
 
+	});
 
 	ws.send(JSON.stringify({
 		message: 'Hi, I am a Gimet expert-bot. Type "Help" if you need help.',
@@ -65,4 +57,13 @@ function getToken(cookies){
 		"(?:^|; )" + 'at'.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
 	));
 	return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function sendMessage(id, data) {
+
+	socket.clients.forEach(function each(client) {
+		if (client.id === id && client.readyState === WebSocket.OPEN) {
+			client.send(JSON.stringify(data));
+		}
+	});
 }
