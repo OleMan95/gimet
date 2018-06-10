@@ -23,6 +23,12 @@ class ExpertChatModal extends React.Component {
 	}
 
 	onStatus=(status)=>{
+	  if('ONLINE'){
+      this.socket.send(JSON.stringify({
+        isClient: true,
+        isInitial: true
+      }));
+    }
 		console.log('WebSocket status: ',status);
 	};
 	onMessage=(response)=>{
@@ -39,6 +45,11 @@ class ExpertChatModal extends React.Component {
 		this.setState({message: event.target.value});
   };
 
+  onClose=()=>{
+    this.socket.close();
+    this.props.onClose();
+  };
+
 	onMessageSend=()=>{
 		this.socket.send(JSON.stringify({
 			message: this.input.value,
@@ -52,19 +63,19 @@ class ExpertChatModal extends React.Component {
       <div className={this.props.isOpen ? "ExpertChatModal modal fade show" : "ExpertChatModal modal fade"} ref={(elem)=>this.modal=elem}
            tabIndex="-1" role="dialog"
            aria-labelledby="exampleModalLongTitle" aria-hidden="true"
-           onClick={()=>this.props.onClose()}>
+           onClick={()=>this.onClose()}>
 
         <div className="modal-dialog" role="document" onClick={(event)=>event.stopPropagation()}>
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLongTitle">Gimet Expert-bot</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>this.props.onClose()}>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>this.onClose()}>
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
 
-							<ul>
+							<ul className="">
 								{this.state.messages.map((msg, index)=>
 									<li key={index} className={msg.isClient ? "is-client" : ""}>{msg.message}</li>
 								)}

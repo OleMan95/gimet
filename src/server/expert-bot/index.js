@@ -3,6 +3,8 @@ import jwtService from '../services/jwt-service';
 
 const socket = new WebSocket.Server({ port: 5000 });
 
+const clients = [];
+
 socket.on('connection', function connection(ws, req) {
 
 	ws.on('message', function incoming(message) {
@@ -19,19 +21,26 @@ socket.on('connection', function connection(ws, req) {
 					const token = getToken(cookies);
 					let id;
 
-					console.log('token: ', token);
-					if (token) {
+					if (token && data.isInitial) {
 						const payload = await jwtService.verify(token);
-						id = payload._id;
+						clients.push(payload._id);
 						console.log('id: ', id);
 					}
 
+
+
 					ws.send(JSON.stringify({
 						message: data.message,
-						userId: id,
-						ip: ip,
 						isClient: data.isClient
 					}));
+
+					setTimeout(()=>{
+            ws.send(JSON.stringify({
+              message: 'echo: '+data.message,
+              isClient: false,
+            }));
+          }, 5000);
+
 				}catch(err){
 					console.error('err: ', err);
 				}
@@ -43,7 +52,6 @@ socket.on('connection', function connection(ws, req) {
 
 	ws.send(JSON.stringify({
 		message: 'Hi, I am a Gimet expert-bot. Type "Help" if you need help.',
-		userId: null,
 		isClient: false
 	}));
 
