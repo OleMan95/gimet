@@ -1,14 +1,8 @@
 import WebSocket from 'ws';
 import jwtService from '../services/jwt-service';
-import {Wit, log} from 'node-wit';
+import {handleMessage} from './message-handler';
 
-const wit = new Wit({
-  accessToken: process.env.WIT_TOKEN,
-  logger: new log.Logger(log.DEBUG) // optional
-});
 const socket = new WebSocket.Server({ port: 5000 });
-
-const clients = [];
 
 socket.on('connection', function connection(ws, req) {
 
@@ -20,6 +14,9 @@ socket.on('connection', function connection(ws, req) {
 		if (token) {
 			const payload = await jwtService.verify(token);
 			id = payload._id;
+		}else{
+			// TODO: close connection
+			return;
 		}
 		console.log('message', data);
 
@@ -38,22 +35,7 @@ socket.on('connection', function connection(ws, req) {
 			isClient: data.isClient
 		});
 
-
-    wit.message(data.message, {})
-      .then((res) => {
-        console.log(res.entities);
-
-        const entities = Object.keys(res.entities);
-
-        sendMessage(id, {
-          message: 'entities: '+ entities,
-          isClient: false
-        });
-
-      })
-      .catch(console.error);
-
-
+		handleMessage({message: data.message, id}, sendMessage);
 
 	});
 
