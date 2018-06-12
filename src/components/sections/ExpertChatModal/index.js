@@ -54,6 +54,11 @@ class ExpertChatModal extends React.Component {
 		}));
 		this.setState({message: this.input.value = ''});
   };
+  onInputKeyDown=(event)=>{
+  	if(event.keyCode == '13'){
+      this.onMessageSend();
+		}
+	};
 
   render(){
     return (
@@ -82,7 +87,7 @@ class ExpertChatModal extends React.Component {
             <div className="modal-footer">
 							<div className="input-group">
 								<input type="text" className="form-control" placeholder="Type a message"
-											 ref={elem=>this.input=elem}/>
+											 ref={elem=>this.input=elem} onKeyDown={event=>this.onInputKeyDown(event)}/>
 								<div className="input-group-append">
 									<button className="btn btn-light" type="button" onClick={this.onMessageSend}><i className="ion-android-send"></i></button>
 								</div>
