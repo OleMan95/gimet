@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import jwtService from '../services/jwt-service';
-import {handleMessage} from './message-handler';
+import DialogHelper from './dialog-helper';
 
 const socket = new WebSocket.Server({ port: 5000 });
 
@@ -10,39 +10,51 @@ socket.on('connection', function connection(ws, req) {
 		const data = JSON.parse(message);
 		const token = getToken(req.headers.cookie);
 		let id;
+		let Dialog = {};
 
 		if (token) {
 			const payload = await jwtService.verify(token);
 			id = payload._id;
 		}else{
-			// TODO: close connection
 			return;
 		}
-		console.log('message', data);
 
 		if (data.isInitial) {
-			socket.clients.forEach(function each(client) {
+			socket.clients.forEach(client=>{
 				if (client === ws && client.readyState === WebSocket.OPEN) {
 					client.id = id;
+					client.dialog = new DialogHelper(id);
+					client.send(JSON.stringify({
+						message: 'Hi, I am a Gimet expert-bot. Type "Help" if you need help.',
+						isClient: false
+					}));
+				}else{
+					ws.send(JSON.stringify({
+						message: 'Oops, some error has happened. Try to reconnect.',
+						isClient: false
+					}));
 				}
 			});
-
-			return;
+		}else{
+			socket.clients.forEach(client=>{
+				if (client.id === id && client.readyState === WebSocket.OPEN) {
+					client.send(JSON.stringify({
+						message: data.message,
+						isClient: data.isClient
+					}));
+					const send = (message)=>{
+						client.send(JSON.stringify(message));
+					};
+					client.dialog.handleMessage({message: data.message}, send);
+				}else{
+					ws.send(JSON.stringify({
+						message: 'Oops, some error has happened. Try to reconnect.',
+						isClient: false
+					}));
+				}
+			});
 		}
-
-		sendMessage(id, {
-			message: data.message,
-			isClient: data.isClient
-		});
-
-		handleMessage({message: data.message, id}, sendMessage);
-
 	});
-
-	ws.send(JSON.stringify({
-		message: 'Hi, I am a Gimet expert-bot. Type "Help" if you need help.',
-		isClient: false
-	}));
 
 	ws.on('close', function close() {
 		console.log('disconnected');
