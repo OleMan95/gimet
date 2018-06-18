@@ -12,6 +12,7 @@ import routes from "./routes/index"
 import users from "./routes/users"
 import experts from "./routes/experts"
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cookieParser());
 
@@ -35,6 +36,6 @@ app.use('/', routes);
 // 	console.log("Express server listening on port " + 443);
 // });
 
-app.listen(process.env.PORT || 3000, ()=>{
-	console.log('Server is listening...');
+app.listen(PORT, ()=>{
+	console.log('Server is listening on port :'+PORT);
 });
