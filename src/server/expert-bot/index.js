@@ -10,7 +10,6 @@ socket.on('connection', function connection(ws, req) {
 		const data = JSON.parse(message);
 		const token = getToken(req.headers.cookie);
 		let id;
-		let Dialog = {};
 
 		if (token) {
 			const payload = await jwtService.verify(token);

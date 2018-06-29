@@ -20,9 +20,6 @@ export default class Dialog{
 
 	handleMessage = ({message}, sendMessage)=>{
 		wit.message(message, {})
-			// .then(res => res.json())
-			// .then((res) => {
-			// })
 			.then(({entities}) => {
 				handleDialog(entities, sendMessage);
 			})
@@ -31,8 +28,6 @@ export default class Dialog{
 
 
 }
-
-
 
 const vocabulary = {
   find_expert: ['With which expert do you want to talk?', 'What specialist are you looking for?',
@@ -48,7 +43,10 @@ const vocabulary = {
 function handleDialog(entities, sendMessage){
 	const intent = firstEntity(entities, 'intent');
 	if (!intent) {
-		console.log('Try something else. I got no intent :)');
+		sendMessage({
+			message: 'Try something else. I got no intent :)',
+			isClient: false
+		});
 		return;
 	}
 
@@ -65,14 +63,36 @@ function handleDialog(entities, sendMessage){
 	}
 }
 
-function findExpertDialog(entities, sendMessage) {
+async function findExpertDialog(entities, sendMessage) {
 	const expertObject = firstEntity(entities, 'expert_object') || {};
 
-	if(expertObject.confidence>CONFIDENCE_NUM) {
-		sendMessage({
-			message: `Sorry, I can\'t find ${expertObject.value} expert. Be the first - create such expert.`,
-			isClient: false
-		});
+	if (expertObject.confidence > CONFIDENCE_NUM) {
+
+		const filter = {name: new RegExp(expertObject.value, 'ig')};
+		const experts = await Expert.find(filter);
+
+		console.log('==> expert: ', experts);
+		if(experts.length>0){
+			let names = [];
+
+			experts.forEach(expert=>{
+				names.push(expert.name);
+			});
+
+			names = names.join();
+
+			sendMessage({
+				message: `Here is what i've found: ${names}`,
+				isClient: false
+			});
+
+		}else{
+			sendMessage({
+				message: `Sorry, I can\'t find ${expertObject.value} expert. Be the first - create such expert.`,
+				isClient: false
+			});
+		}
+
 		return;
 	}
 
