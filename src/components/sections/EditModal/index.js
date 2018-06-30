@@ -53,6 +53,29 @@ class EditModal extends React.Component { //все this.props мы получе�
     }
   };
 
+	onSave=()=>{
+	  let err = false;
+	  let isNew = false;
+	  if(!this.questionValue.value.trim().length>0 ||
+      !this.keyValue.value.trim().length>0){
+			console.log('1');
+			err = 'You are have unsaved changes!';
+    }
+
+    if((this.answerValue.value.trim().length>0 ||
+			this.resultValue.value.trim().length>0) &&
+			this.resultType.value == 'initial'){
+			console.log('2');
+			err = 'You are have unsaved changes!';
+		}
+
+		if(!this.props.question){
+			isNew = true;
+		}
+
+		this.props.onModalSave(this.state.question, isNew, err);
+  };
+
   render(){
     return (
       <div className={this.props.isOpen ? "EditModal modal fade show" : "EditModal modal fade"} ref={(elem)=>this.modal=elem}
@@ -126,8 +149,8 @@ class EditModal extends React.Component { //все this.props мы получе�
               </table>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>this.props.onModalClose(this.state.question)}>Close</button>
-              <button type="button" className="btn btn-primary" onClick={()=>this.props.onModalSave(this.state.question)}>Save changes</button>
+              <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>this.props.onModalClose()}>Close</button>
+              <button type="button" className="btn btn-primary" onClick={this.onSave}>Save changes</button>
             </div>
           </div>
         </div>

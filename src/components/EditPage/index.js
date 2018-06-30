@@ -6,7 +6,6 @@ import Header from '../sections/Header/';
 import EditModal from '../sections/EditModal/';
 import ExpertSettingsModal from '../sections/ExpertSettingsModal';
 import alertHelper from '../services/alert-helper';
-
 import './index.scss';
 
 
@@ -18,7 +17,7 @@ class Edit extends React.Component{
 			questions: [],
       modalQuestion: '',
       isModalOpen: false,
-      isSettingsOpen: false,
+			isSettingsOpen: false,
 			alert: 'Error!',
 			alertDangerClass: 'd-none',
 			alertInfoClass: 'd-none',
@@ -52,17 +51,27 @@ class Edit extends React.Component{
       isModalOpen: false
     });
   };
-  onModalSave=(question)=>{
+  onModalSave=(question, isNew, err)=>{
     const questions = this.state.questions;
-    let coincidence = false;
+		let coincidence = false;
+
+    if(err){
+			alertHelper(this, err, 'danger');
+			return;
+		}
 
     for(let i=0; i<questions.length; i++){
-      if(questions[i].key == question.key){
-        questions[i].question = question.question;
-        questions[i].answers = question.answers;
-        questions[i].results = question.results;
-        coincidence = true;
-      }
+			if(questions[i].key == question.key){
+				if(isNew){
+					alertHelper(this, 'A question with the same key already exists.', 'danger');
+					return;
+				}else{
+					questions[i].question = question.question;
+					questions[i].answers = question.answers;
+					questions[i].results = question.results;
+					coincidence = true;
+				}
+			}
     }
 
     if(!coincidence){
@@ -77,6 +86,7 @@ class Edit extends React.Component{
       questions,
       expert
     });
+
   };
 
 	onSettingsOpen=()=>{
@@ -189,7 +199,6 @@ class Edit extends React.Component{
 						{this.state.alert}
 					</div>
 				</div>
-
 
       </div>
     )};
