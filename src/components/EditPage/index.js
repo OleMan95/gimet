@@ -5,6 +5,7 @@ import {getExpertById, createOrUpdateExpert} from '../services/api-helper';
 import Header from '../sections/Header/';
 import EditModal from '../sections/EditModal/';
 import ExpertSettingsModal from '../sections/ExpertSettingsModal';
+import AlertModal from '../sections/AlertModal';
 import alertHelper from '../services/alert-helper';
 import './index.scss';
 
@@ -18,6 +19,7 @@ class Edit extends React.Component{
       modalQuestion: '',
       isModalOpen: false,
 			isSettingsOpen: false,
+			isAlertOpen: false,
 			alert: 'Error!',
 			alertDangerClass: 'd-none',
 			alertInfoClass: 'd-none',
@@ -118,9 +120,41 @@ class Edit extends React.Component{
 		await createOrUpdateExpert(id, this.state.expert, (data)=>{
 			alertHelper(this, 'Expert successfully saved.');
 		}, (err)=>{
+			console.error('createOrUpdateExpert:', err);
 			alertHelper(this, 'Oops! An error has occurred.', 'danger');
 		});
 	};
+	onDeleteQuestion=(key)=>{
+		const elem =
+			<AlertModal title={'title'} text={`Are you sure you want to remove the question "${key}"?`}
+				questionKey={key}
+				onResult={this.onAlertResult}/>;
+
+		this.setState({
+			isAlertOpen: elem,
+		});
+	};
+	onAlertResult=(key)=>{
+		const questions = this.state.questions;
+		if(!key){
+			this.setState({
+				isAlertOpen: false
+			});
+			return;
+		}
+
+		for(let i=0; i<questions.length; i++){
+			if(questions[i].key == key){
+				questions.splice(i, 1);
+			}
+		}
+
+		this.setState({
+			questions,
+			isAlertOpen: false
+		});
+	};
+
 
   render(){
 		return (
@@ -161,7 +195,7 @@ class Edit extends React.Component{
 												<div className="d-flex justify-content-between align-items-center">
 													<div className="btn-group">
 														<button type="button" className="btn btn-sm btn-outline-secondary" onClick={()=>this.onModalOpen(question)}>Edit</button>
-														<button type="button" className="btn btn-sm btn-outline-danger">Delete</button>
+														<button type="button" className="btn btn-sm btn-outline-danger" onClick={()=>this.onDeleteQuestion(question.key)}>Delete</button>
 													</div>
 													<small className="text-muted">{question.answers.length} rel</small>
 												</div>
@@ -178,17 +212,19 @@ class Edit extends React.Component{
 
         {this.state.isModalOpen ?
           <EditModal question={this.state.modalQuestion}
-                           isOpen={this.state.isModalOpen}
-                           onModalSave={this.onModalSave}
-                           onModalClose={this.onModalClose}/>
+						 isOpen={this.state.isModalOpen}
+						 onModalSave={this.onModalSave}
+						 onModalClose={this.onModalClose}/>
           : ''}
 
         {this.state.isSettingsOpen ?
           <ExpertSettingsModal expert={this.state.expert}
-                           isOpen={this.state.isSettingsOpen}
-                           onModalSave={this.onSettingsSave}
-                           onModalClose={this.onSettingsClose}/>
+						 isOpen={this.state.isSettingsOpen}
+						 onModalSave={this.onSettingsSave}
+						 onModalClose={this.onSettingsClose}/>
           : ''}
+
+        {this.state.isAlertOpen ? this.state.isAlertOpen : ''}
 
 
         <div className="alert-group w-100 d-flex">
