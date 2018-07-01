@@ -1,0 +1,103 @@
+@import '../variables';
+
+.Edit{
+
+  display: contents;
+
+  .section-1{
+    margin: 66px 0 0;
+    padding: 40px 0 40px;
+    background: url(../../data/images/background.png) no-repeat right fixed;
+    background-size: cover;
+    color: #f8f9fa;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+
+    .container{
+
+      .default-profile-photo{
+        width: 90px;
+        height: 90px;
+        justify-content: center;
+        align-items: center;
+        background-color: #c2c2c266;
+        border-radius: .25rem;
+        margin-right: 1rem;
+
+        .ion-person{
+          font-size: 4rem;
+          margin-top: 1rem;
+        }
+      }
+
+      .title{
+        flex-direction: column;
+        max-width: 83%;
+        word-break: break-all;
+
+        h1{
+          font-size: 2rem;
+        }
+
+        .row{
+          margin-left: 1rem;
+          a{
+            color: #f8f9facc;
+            &:hover{
+              color: $default-font-color-white;
+            }
+          }
+        }
+
+      }
+
+      .btn-group{
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: auto;
+
+        a{
+          margin-right: .5rem;
+          &:last-of-type{
+            margin-right: 0;
+          }
+        }
+      }
+
+    }
+
+    @media (max-width: 991.98px) {
+      margin: 64px 0 0;
+    }
+  }
+
+  .section-2{
+    display: contents;
+
+
+    .card:hover{
+      box-shadow: 0 1px 4px -1px rgba(0,0,0,0.37);;
+    }
+    .card-header{
+      h5, p{
+        margin: 0;
+      }
+    }
+    .card-body{
+
+      .key-text{
+        font-size: .8rem;
+        margin-bottom: .2rem;
+      }
+    }
+  }
+
+  .alert-group{
+    position: absolute;
+    z-index: 9999;
+    top: 10px;
+    justify-content: center
+  }
+}
+
+
+

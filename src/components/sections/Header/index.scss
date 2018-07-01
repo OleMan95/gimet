@@ -1,0 +1,109 @@
+@import '../../variables';
+
+.Header{
+  transition: all .5s linear;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+
+  img{
+    width: 50px;
+    height: 50px;
+    margin-right: .5rem;
+  }
+  input{
+    margin-bottom: 0;
+  }
+
+  &.navbar-dark{
+    .nav-link{
+
+      a{
+        color: rgba(255,255,255,.5);
+      }
+
+      &:hover a{
+        color: rgba(255,255,255,.75);
+      }
+    }
+
+    .active{
+      a{
+        color: $default-font-color-white;
+      }
+    }
+
+    .login-link{
+      color: rgba(255,255,255,.5);
+      &:hover{
+        color: rgba(255,255,255,.75);
+      }
+    }
+  }
+  &.navbar-light{
+    .nav-link{
+
+      a{
+        color: rgba(0,0,0,.5);
+      }
+
+      &:hover a{
+        color: rgba(0,0,0,.75);
+      }
+    }
+
+    .active{
+      a{
+        color: rgba(0,0,0,.9);;
+      }
+    }
+
+    .login-link{
+      color: rgba(0,0,0,.5);
+      &:hover{
+        color: rgba(0,0,0,.75);
+      }
+    }
+  }
+
+
+  .login-link{
+    cursor: pointer;
+  }
+
+  .btn-outline-success{
+    background-color: transparent;
+    border-color: $primary-light-color;
+    color: $primary-light-color;
+
+    &:hover{
+      background-color: $primary-light-color;
+      border-color: $primary-light-color;
+      color: white;
+    }
+
+    &:not(:disabled):not(.disabled):active{
+      background-color: $primary-light-color;
+      border-color: $primary-light-color;
+      color: white;
+      &:focus{
+        box-shadow: 0 0 0 .2rem rgba(40, 154, 167, 0.5);
+      }
+    }
+    &:focus {
+      box-shadow: 0 0 0 .2rem rgba(40, 154, 167, 0.4);
+    }
+  }
+
+  .dropdown-item, .dropdown-toggle{
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    margin-top: .79rem;
+
+    &>p{
+      cursor: auto;
+    }
+  }
+
+}

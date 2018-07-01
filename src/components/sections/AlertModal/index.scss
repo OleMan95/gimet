@@ -1,0 +1,19 @@
+@import '../../variables';
+
+.AlertModal{
+
+  &.modal{
+    background-color: #3a3036b3;
+    overflow-y: auto;
+
+    &.fade.show{
+      display: block;
+      padding-right: 12px;
+    }
+
+    & .modal-dialog{
+      width: 30rem;
+    }
+  }
+
+}
