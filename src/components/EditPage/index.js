@@ -55,7 +55,7 @@ class Edit extends React.Component{
   };
   onModalSave=(question, isNew, err)=>{
     const questions = this.state.questions;
-		let coincidence = false;
+		let questionCount = 0;
 
     if(err){
 			alertHelper(this, err, 'danger');
@@ -68,17 +68,26 @@ class Edit extends React.Component{
 					alertHelper(this, 'A question with the same key already exists.', 'danger');
 					return;
 				}else{
+					questionCount++;
 					questions[i].question = question.question;
 					questions[i].answers = question.answers;
 					questions[i].results = question.results;
-					coincidence = true;
 				}
 			}
     }
 
-    if(!coincidence){
-      questions.push(question);
-    }
+		if(questionCount>1){
+			alertHelper(this, 'A question with the same key already exists.', 'danger');
+			return;
+		}else if(questionCount===0 && !isNew){
+			alertHelper(this, 'Oops, an error has occurred', 'danger');
+			return;
+		}
+
+    if(isNew){
+			questions.push(question);
+		}
+
 
     let expert = this.state.expert;
     expert.questions = questions;
