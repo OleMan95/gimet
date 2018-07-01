@@ -1,6 +1,6 @@
 @import '../../variables';
 
-.EditModal{
+.AlertModal{
 
   &.modal{
     background-color: #3a3036b3;
@@ -12,17 +12,7 @@
     }
 
     & .modal-dialog{
-      min-width: 80%;
-    }
-  }
-
-  tbody{
-
-    .btn-light{
-      //position: absolute;
-      //right: 1rem;
-      //top: 50%;
-      //margin-top: -19px;
+      width: 30rem;
     }
   }
 

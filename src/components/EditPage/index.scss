@@ -10,6 +10,8 @@
     background: url(../../data/images/background.png) no-repeat right fixed;
     background-size: cover;
     color: #f8f9fa;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+
     .container{
 
       .default-profile-photo{
@@ -71,6 +73,10 @@
   .section-2{
     display: contents;
 
+
+    .card:hover{
+      box-shadow: 0 1px 4px -1px rgba(0,0,0,0.37);;
+    }
     .card-header{
       h5, p{
         margin: 0;
