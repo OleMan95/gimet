@@ -120,7 +120,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 								<h4>What is expert system?</h4>
 								<p>In Gimet you can create a computer system that emulates the decision-making ability of a human expert.
 									Such systems can help anyone to solve any troubles or to give some kind of advice.
-									Pass a consultation of the one such experts <a href="/experts/id">here</a>.</p>
+									Pass a consultation of the one such experts <a href="/consultation/5ab823902271ee20b444b1bb">here</a>.</p>
 								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
 							</div>
 							<div className="card-block col-lg-4">
@@ -130,7 +130,8 @@ class StartPage extends React.Component { //все this.props мы получе�
 									</div>
 								</div>
 								<h4>Create your own expert</h4>
-								<p>Are you good in a certain area? To create an expert, you do not need special skills. Learn how to create <a href="/experts/id">here</a>.
+								<p>Are you good in a certain area? To create an expert, you do not need special skills.
+									Learn how to create <a href="/help">here</a>.
 									To find out where you can use them, read on.</p>
 								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
 							</div>
@@ -141,7 +142,9 @@ class StartPage extends React.Component { //все this.props мы получе�
 									</div>
 								</div>
 								<h4>What technologies we use?</h4>
-								<p></p>
+								<p>Are you interested in the technical details of our platform?
+									You can use our experts base and our advantages in your own app.
+									If you want to learn more about the knowledge model, Gimet API, etc. - read on.</p>
 								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
 							</div>
 						</div>
