@@ -1,8 +1,0 @@
-{
-  "name":"gimet",
-  "description":"Expert systems platform",
-  "repository":"https://github.com/OleMan95/gimet",
-  "logo":"client/src/images/logo_blue-gray_black.svg",
-  "keywords":["node", "koa", "gimet"],
-  "image":"client/src/images/logo_blue-gray_black.svg"
-}
