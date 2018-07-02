@@ -18,6 +18,16 @@ export default ({footer, body, title }) => {
 			    <link rel="shortcut icon" href="${favicon}">
 			    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 			    <link rel="stylesheet" href="/css/main.css"/>
+			    
+			    <!-- Global site tag (gtag.js) - Google Analytics -->
+					<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121723987-1"></script>
+					<script>
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'UA-121723987-1');
+					</script>
+
 			    <script src="/bundle.js" defer></script>
 	        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 	        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
