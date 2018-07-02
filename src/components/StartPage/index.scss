@@ -6,62 +6,77 @@
   }
   .section-1{
     min-height: 600px;
-    background: url(../../data/images/background.png) no-repeat right fixed;
+    background: url(../../data/images/background.png) no-repeat fixed 0 60px;
     background-size: cover;
     margin: 66px 0 0;
 
-    &>div{
-      padding: 1rem;
-    }
-
-    div:first-child{
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
+    .container{
       .logo {
-        background: url(../../data/images/logo-brain.svg) no-repeat center;
-        background-size: contain;
-        width: 300px;
-        height: 300px;
-        position: relative;
-        margin: 0 auto;
-      }
-      .logo:before {
-        background: url(../../data/images/logo-border.svg) no-repeat center;
-        background-size: contain;
-        position: absolute;
-        z-index: 1010;
-        content: '';
-        padding: 150px;
-        -webkit-animation:spin 20s linear infinite;
-        -moz-animation:spin 20s linear infinite;
-        animation:spin 20s linear infinite;
-      }
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
+        span{
+          background: url(../../data/images/logo-brain.svg) no-repeat center;
+          background-size: contain;
+          width: 300px;
+          height: 300px;
+          position: relative;
+          margin: 0 auto;
 
+          &:before{
+            background: url(../../data/images/logo-border.svg) no-repeat center;
+            background-size: contain;
+            position: absolute;
+            z-index: 1010;
+            content: '';
+            padding: 150px;
+            -webkit-animation:spin 20s linear infinite;
+            -moz-animation:spin 20s linear infinite;
+            animation:spin 20s linear infinite;
+          }
+        }
+      }
+      .banner-text{
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .btn{
+          font-size: 1.7rem;
+          background-color: #ffffff1a;
+          border-color: #ffffff1a;
+          padding: 1rem;
+
+          &:hover{
+            background-color: #fff3;
+            border-color: #ffffff80;
+          }
+          &:first-of-type{
+            margin-top: -3rem;
+          }
+        }
+      }
     }
 
-    .signup{
-      justify-content: center;
-      align-items: center;
-
-      .card{
-        padding: 1.5rem 0.5rem;
-      }
-      form{
-        flex-direction: column;
-      }
-
+    .openModal{
+      color: #FFF6;
+      position: absolute;
+      top: calc(.5rem + 66px);
+      right: .5rem;
+    }
+    .modal{
+      background-color: #2226;
+    }
+    .show{
+      display: block;
+      padding-right: 12px;
     }
 
     @media (max-width: 991.98px) {
       flex-direction: column;
       margin: 64px 0 0;
-
-      &>.col{
-        flex-basis: auto;
-      }
     }
   }
 
@@ -74,19 +89,6 @@
       p{
         text-justify: newspaper;
       }
-
-      .openModal{
-        margin-top: 3rem;
-        margin-bottom: 1rem;
-      }
-      .modal{
-        background-color: #2226;
-      }
-      .show{
-        display: block;
-        padding-right: 12px;
-      }
-
 
       .card-block{
         .top-icons{
@@ -103,7 +105,6 @@
           margin-top: 1rem;
         }
       }
-
 
     }
   }
