@@ -1,5 +1,6 @@
 import StartPage from './StartPage/';
 import Signin from './Signin/';
+import Signup from './Signup/';
 import ProfilePage from './ProfilePage/';
 import EditorPage from './EditPage/';
 import ConsultationPage from './ConsultationPage/';
@@ -18,6 +19,11 @@ const routes = [
 	{
 		path: '/login',
 		component: Signin,
+		exact: true
+	},
+	{
+		path: '/signup',
+		component: Signup,
 		exact: true
 	},
 	{

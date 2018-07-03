@@ -78,8 +78,8 @@ class StartPage extends React.Component { //все this.props мы получе�
             </div>
             <div className="col d-flex flex-column justify-content-between align-items-center">
               <div className="banner-text w-100 d-flex">
-                <button type="button" className="btn w-100 mb-3 btn-primary btn-lg">Search for virtual expert</button>
-                <button type="button" className="btn w-100 btn-primary btn-lg">Create my own expert system</button>
+                <a href='/experts' type="button" className="btn w-100 mb-3 btn-primary btn-lg">Search for virtual expert</a>
+                <a href='/signup' type="button" className="btn w-100 btn-primary btn-lg">Create my own expert system</a>
               </div>
             </div>
           </div>

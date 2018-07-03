@@ -101,33 +101,63 @@ class SignIn extends React.Component {
 
   render(){
     return (
-      <div className="SignIn">
-				<div className="container text-center">
+      <div className="Signup">
+				<div className="container">
+          <div className="d-flex flex-column">
 
-					<div className="card text-white bg-dark">
-            <div className="card-body">
-              <form className="col d-flex" onSubmit={this.signUpClick}>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Name</label>
-                  <input type="name" className="form-control" id="exampleInputName1"
-                         aria-describedby="emailHelp" name="name"
-                         placeholder="Enter your full name" onChange={event=>{this.handleInputChange(event)}}/>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Email address</label>
-                  <input type="email" className="form-control" id="exampleInputEmail"
-                         aria-describedby="emailHelp" name="email"
-                         placeholder="Enter email" onChange={event=>{this.handleInputChange(event)}}/>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Password</label>
-                  <input type="password" className="form-control" id="exampleInputPassword1" name="password"
-                         placeholder="Password" onChange={event=>{this.handleInputChange(event)}}/>
-                  <small id="emailHelp" className="form-text text-muted">Use at least one letter, one numeral, and seven characters.</small>
-                </div>
-                <button type="submit" className="btn btn-primary">Sign up</button>
-              </form>
+            <img className="mb-4" src={logo} alt="" width="100" height="100"/>
+
+            <div className="card">
+              <div className="card-header d-flex">
+                <p className="mb-0">Please sign up for Gimet</p>
+                <small className="form-text text-muted ml-2">It's free!</small>
+              </div>
+              <div className="card-body">
+                <form className="d-flex flex-column" onSubmit={this.signUpClick}>
+                  <div className="form-group d-flex">
+                    <label htmlFor="exampleInputEmail1">Full Name:</label>
+                    <input type="name" className="form-control" name="name"
+                           placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
+                  </div>
+                  <div className="form-group d-flex">
+                    <label htmlFor="exampleInputEmail1">Email Address:</label>
+                    <input type="email" className="form-control" name="email"
+                           placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
+                  </div>
+                  <hr className="my-4 w-100"/>
+                  <div className="form-group d-flex">
+                    <label htmlFor="exampleInputPassword1">Password:</label>
+                    <input type="password" className="form-control" id="exampleInputPassword1" name="password"
+                           placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
+                  </div>
+                  <div className="form-group d-flex">
+                    <label htmlFor="exampleInputPassword1">Password Confirm:</label>
+                    <div className="">
+                      <input type="password-confirm" className="form-control" id="exampleInputPassword1" name="password"
+                             placeholder="Password" onChange={event=>{this.handleInputChange(event)}}/>
+                      <small id="passwordHelp" className="form-text text-muted pl-3">Use at least one letter, one numeral, and seven characters.</small>
+                    </div>
+                  </div>
+                  <hr className="w-100"/>
+
+                  <div className="d-flex justify-content-between align-items-center p-0">
+                    <div className="socials d-flex align-items-center p-0">
+                      <p className="text-uppercase m-0">Sign up with</p>
+                      <div className="btn-group ml-3 p-0" role="group" aria-label="Basic example">
+                        <button type="submit" className="btn btn-light"><i className="ion-social-facebook"></i></button>
+                        <button type="submit" className="btn btn-light"><i className="ion-social-linkedin"></i></button>
+                        <button type="submit" className="btn btn-light"><i className="ion-social-google"></i></button>
+                        <button type="submit" className="btn btn-light"><i className="ion-social-github"></i></button>
+                      </div>
+                    </div>
+                    <p className="text-muted m-0">-or-</p>
+                    <button type="submit" className="btn btn-primary">Sign up</button>
+                  </div>
+
+                </form>
+              </div>
             </div>
+
           </div>
 
 				</div>
