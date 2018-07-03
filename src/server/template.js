@@ -30,7 +30,7 @@ export default ({footer, body, title }) => {
 
 			    <script src="/bundle.js" defer></script>
 	        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"> 
-	        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
+	        <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
 			</head>
 			<body>
 				<div id="root">${body}</div>
