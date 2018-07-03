@@ -128,13 +128,13 @@ class SignIn extends React.Component {
                   <div className="form-group d-flex">
                     <label htmlFor="exampleInputPassword1">Password:</label>
                     <input type="password" className="form-control" id="exampleInputPassword1" name="password"
-                           placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
+                           onChange={event=>{this.handleInputChange(event)}}/>
                   </div>
                   <div className="form-group d-flex">
                     <label htmlFor="exampleInputPassword1">Password Confirm:</label>
                     <div className="">
                       <input type="password-confirm" className="form-control" id="exampleInputPassword1" name="password"
-                             placeholder="Password" onChange={event=>{this.handleInputChange(event)}}/>
+                           onChange={event=>{this.handleInputChange(event)}}/>
                       <small id="passwordHelp" className="form-text text-muted pl-3">Use at least one letter, one numeral, and seven characters.</small>
                     </div>
                   </div>
