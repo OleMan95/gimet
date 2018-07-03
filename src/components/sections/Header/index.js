@@ -155,10 +155,13 @@ class Header extends Component {
 
 					</ul>
 					<div className="form-inline my-2 my-lg-0">
-						<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+						{/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>*/}
 
 						{this.state.isAuthorized ? '' :
-							<a href="/login" className="login-link nav-link" >Sign in</a>}
+              <div className="d-flex">
+                <a href="/login" className="login-link nav-link" >Sign in</a>
+                <a href="/signup" className="login-link nav-link" >Sign up</a>
+              </div>}
 
 					</div>
 				</div>

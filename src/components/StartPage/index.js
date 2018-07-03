@@ -70,40 +70,46 @@ class StartPage extends React.Component { //все this.props мы получе�
       <div className="StartPage">
         <Header />
 				<div className="section-1 d-flex">
-					<div className="col d-flex">
-						<span className="logo"/>
-						<h3 className="text-white">Expert systems for everybody.</h3>
-					</div>
 
-					<div className="col signup d-flex">
+          <div className="container d-flex">
+            <div className="logo col d-flex">
+              <span className=""/>
+              <h3 className="text-white">Expert systems for everybody.</h3>
+            </div>
+            <div className="col d-flex flex-column justify-content-between align-items-center">
+              <div className="banner-text w-100 d-flex">
+                <a href='/experts' type="button" className="btn w-100 mb-3 btn-primary btn-lg">Search for virtual expert</a>
+                <a href='/signup' type="button" className="btn w-100 btn-primary btn-lg">Create my own expert system</a>
+              </div>
+            </div>
+          </div>
 
-						<div className="card text-white bg-dark">
-							<div className="card-body">
-								<form className="col d-flex" onSubmit={this.signUpClick}>
-									<div className="form-group">
-										<label htmlFor="exampleInputEmail1">Name</label>
-										<input type="name" className="form-control" id="exampleInputName1"
-													 aria-describedby="emailHelp" name="name"
-													 placeholder="Enter your full name" onChange={event=>{this.handleInputChange(event)}}/>
-									</div>
-									<div className="form-group">
-										<label htmlFor="exampleInputEmail1">Email address</label>
-										<input type="email" className="form-control" id="exampleInputEmail"
-													 aria-describedby="emailHelp" name="email"
-													 placeholder="Enter email" onChange={event=>{this.handleInputChange(event)}}/>
-									</div>
-									<div className="form-group">
-										<label htmlFor="exampleInputPassword1">Password</label>
-										<input type="password" className="form-control" id="exampleInputPassword1" name="password"
-													 placeholder="Password" onChange={event=>{this.handleInputChange(event)}}/>
-										<small id="emailHelp" className="form-text text-muted">Use at least one letter, one numeral, and seven characters.</small>
-									</div>
-									<button type="submit" className="btn btn-primary">Sign up</button>
-								</form>
-							</div>
-						</div>
+          <button type="button" className="btn openModal btn-link" data-toggle="modal"
+                  data-target="#exampleModalCenter" onClick={this.handleShow}>
+            v-1.0.1a
+          </button>
 
-					</div>
+          <div className={"modal fade "+this.state.modalShow} id="exampleModalCenter" tabIndex="-1" role="dialog"
+               aria-labelledby="exampleModalCenterTitle" aria-hidden="true" onClick={this.handleClose}>
+            <div className="modal-dialog modal-dialog-centered" role="document" onClick={(event)=>event.stopPropagation()}>
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLongTitle">Changelog v-1.0.1a:</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleClose}>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">New design of the site</li>
+                    <li className="list-group-item">The main algorithms were optimized (creation of experts and logical output)</li>
+                    <li className="list-group-item">The work of the site was optimized</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
 				</div>
 
 				<div className='section-2 bg-light py-5 px-3' id="section-2">
@@ -146,34 +152,6 @@ class StartPage extends React.Component { //все this.props мы получе�
 									You can use our experts base and our advantages in your own app.
 									If you want to learn more about the knowledge model, Gimet API, etc. - read on.</p>
 								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
-							</div>
-						</div>
-
-
-
-						<button type="button" className="btn openModal btn-link" data-toggle="modal"
-										data-target="#exampleModalCenter" onClick={this.handleShow}>
-							v-1.0.1a
-						</button>
-
-						<div className={"modal fade "+this.state.modalShow} id="exampleModalCenter" tabIndex="-1" role="dialog"
-								 aria-labelledby="exampleModalCenterTitle" aria-hidden="true" onClick={this.handleClose}>
-							<div className="modal-dialog modal-dialog-centered" role="document" onClick={(event)=>event.stopPropagation()}>
-								<div className="modal-content">
-									<div className="modal-header">
-										<h5 className="modal-title" id="exampleModalLongTitle">Changelog v-1.0.1a:</h5>
-										<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleClose}>
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div className="modal-body">
-										<ul className="list-group list-group-flush">
-											<li className="list-group-item">New design of the site</li>
-											<li className="list-group-item">The main algorithms were optimized (creation of experts and logical output)</li>
-											<li className="list-group-item">The work of the site was optimized</li>
-										</ul>
-									</div>
-								</div>
 							</div>
 						</div>
 
