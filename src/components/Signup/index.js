@@ -21,7 +21,7 @@ class SignIn extends React.Component {
 	}
 
   componentDidMount(){
-		if(getToken()) this.props.history.push('/');
+		if(getToken()) this.props.history.push('/edit/new');
   }
 
 	onEnterKeyDown=(event, ctx)=>{

@@ -172,7 +172,7 @@ class Edit extends React.Component{
 				<div className="section-1 d-flex">
 					<div className="container d-flex">
 						<div className='title d-flex'>
-							<h1>{this.state.expert.name ? this.state.expert.name : 'No expert found'}</h1>
+							<h1>{this.state.expert.name ? this.state.expert.name : 'Enter the name of your new expert'}</h1>
 							<p>{this.state.expert.description ? this.state.expert.description : ''}</p>
 						</div>
 
