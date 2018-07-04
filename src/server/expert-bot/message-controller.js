@@ -1,5 +1,5 @@
 import Expert from '../models/expert';
-import {initDialog} from "./dialog-handler";
+import {initDialog} from "./dialog-flow";
 
 const replies = {
   find_expert: ['With which expert do you want to talk?', 'What specialist are you looking for?',
@@ -13,12 +13,20 @@ const replies = {
 };
 
 initDialog('find_expert', [
-  (send)=>{
-    send(getRandomReply('find_expert'));
+  (send, entities, next)=>{
+    if(entities.expert_object){
+			next('consultation');
+		}else{
+			send(getRandomReply('find_expert'));
+		}
   },
-  (send)=>{
-    send('Sorry, I did not found an expert name.');
-    send(getRandomReply('find_expert'));
+  (send, entities, next)=>{
+		if(entities.expert_object){
+			next('consultation');
+		}else{
+			send('Sorry, I did not understand which expert to look for.');
+			send(getRandomReply('find_expert'));
+		}
   }
 ]);
 

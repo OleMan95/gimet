@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import jwtService from '../services/jwt-service';
 import './message-controller';
-import DialogFlow, {initDialog} from "./dialog-handler";
+import DialogFlow from "./dialog-flow";
 
 const socket = new WebSocket.Server({ port: 5000 });
 

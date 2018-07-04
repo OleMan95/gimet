@@ -6,15 +6,14 @@ const wit = new Wit({
   logger: new log.Logger(log.DEBUG) // optional
 });
 
-const dialogsFlow = {};
+const dialogList = {};
 
 export default class DialogFlow{
   constructor(props) {
-    console.log(dialogsFlow);
     this.state = {
       id: props.id || '',
       expert: {},
-      history:[/*message object from client and server*/],
+      history:[/*intents from client and server*/],
       lastMessage: '',
       flow: [
         // {
@@ -25,41 +24,44 @@ export default class DialogFlow{
     };
   }
 
-  dialog = (intent, args)=>{
-    dialogsFlow[intent] = args;
-    console.log('dialog created: ', dialogsFlow);
-  };
-
   onMessage=async (message, send) => {
     const {entities} = await wit.message(message, {});
     const intent = getIntent(entities) || {};
 
-    let flow = this.state.flow;
-    const dialogs = dialogsFlow[intent.value];
+		console.log('entities: ',entities);
+
+		let flow = this.state.flow;
+    const dialogs = dialogList[intent.value];
+
+		const lastItem = flow.length-1;
+
 
     if(flow.length === 0){
-      flow.push({
+			/** if flow is empty */
+			flow.push({
         count: 0,
         intent: intent.value
       });
 
-      dialogs[flow[flow.length-1].count](send);
+      dialogs[flow[0].count](send, entities);
 
-    }else if(flow[flow.length-1].intent != intent.value){
-      flow.push({
-        count: 0,
-        intent: intent.value
-      });
+    }else if(flow[lastItem].intent != intent.value){
+      /** if the intent is not equal to the last intent in the flow */
+			flow.push({
+				count: 0,
+				intent: intent.value
+			});
 
-      dialogs[flow[flow.length-1].count](send);
-    }else{
-      const i = flow.length-1;
+			dialogs[flow[lastItem].count](send, entities);
 
-      if(++flow[i].count === dialogs.length){
-        dialogs[count-1](send);
-      }else if(++flow[i].count < dialogs.length){
-        dialogs[flow[i].count](send);
-      }
+    }else if(flow[lastItem].count+1 < dialogs.length){
+			/** continue the last dialog */
+			flow[lastItem].count = flow[lastItem].count+1;
+			dialogs[flow[lastItem].count](send, entities);
+
+    }else if(flow[lastItem].count+1 === dialogs.length){
+			/** finish the last dialog */
+			dialogs[flow[lastItem].count](send, entities);
     }
 
     this.state.flow = flow;
@@ -68,7 +70,7 @@ export default class DialogFlow{
 }
 
 export function initDialog(intent, args){
-  dialogsFlow[intent] = args;
+  dialogList[intent] = args;
   console.log('dialog created: ', intent);
 }
 
