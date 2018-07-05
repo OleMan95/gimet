@@ -4,6 +4,7 @@ import { getToken } from "../../services/tokenService";
 import { getUserById } from "../../services/api-helper";
 import logo from "../../../data/logo.svg";
 import "./index.scss";
+import ExpertChatButton from '../../sections/ExpertChatButton';
 
 
 class Header extends Component {
@@ -16,6 +17,7 @@ class Header extends Component {
 			user: {}
     };
   }
+
   async componentDidMount() {
 
 		if (getToken('token')) {
@@ -54,7 +56,6 @@ class Header extends Component {
 				if(this.profileNavItem) this.profileNavItem.classList.add('active');
 			}
 		}
-
 
 	}
 
@@ -163,8 +164,13 @@ class Header extends Component {
                 <a href="/signup" className="login-link nav-link" >Sign up</a>
               </div>}
 
+
+						{this.state.isAuthorized ? <ExpertChatButton /> :
+							''}
+
 					</div>
 				</div>
+
  			</nav>
     );
   }
