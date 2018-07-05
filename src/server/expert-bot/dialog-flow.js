@@ -6,7 +6,7 @@ const wit = new Wit({
   logger: new log.Logger(log.DEBUG) // optional
 });
 
-const dialogList = {};
+const dialogStore = {};
 
 export default class DialogFlow{
   constructor(props) {
@@ -26,51 +26,69 @@ export default class DialogFlow{
 
   onMessage=async (message, send) => {
     const {entities} = await wit.message(message, {});
-    const intent = getIntent(entities) || {};
+    const intent = getIntent(entities);
 
 		console.log('entities: ',entities);
 
-		let flow = this.state.flow;
-    const dialogs = dialogList[intent.value];
+    if(!intent){
+      send('Sorry, I did not understand you.');
+      return;
+    }
 
+		let flow = this.state.flow;
+    const dialog = dialogStore[intent.value];
 		const lastItem = flow.length-1;
 
 
     if(flow.length === 0){
-			/** if flow is empty */
+			/** If flow is empty */
 			flow.push({
         count: 0,
         intent: intent.value
       });
 
-      dialogs[flow[0].count](send, entities);
+      dialog[flow[0].count](send, entities, nextReply, closeDialog);
 
     }else if(flow[lastItem].intent != intent.value){
-      /** if the intent is not equal to the last intent in the flow */
+      /** If the intent is not equal to the last intent in the flow */
 			flow.push({
 				count: 0,
 				intent: intent.value
 			});
 
-			dialogs[flow[lastItem].count](send, entities);
+      dialog[flow[flow.length-1].count](send, entities, nextReply, closeDialog);
 
-    }else if(flow[lastItem].count+1 < dialogs.length){
-			/** continue the last dialog */
-			flow[lastItem].count = flow[lastItem].count+1;
-			dialogs[flow[lastItem].count](send, entities);
+    }else if(flow[lastItem].count+1 < dialog.length){
+			/** Continue the last dialog in the flow */
+			dialog[flow[lastItem].count](send, entities, nextReply, closeDialog);
 
-    }else if(flow[lastItem].count+1 === dialogs.length){
-			/** finish the last dialog */
-			dialogs[flow[lastItem].count](send, entities);
+    }else if(flow[lastItem].count+1 === dialog.length){
+			/** If it is the last reply. Count must be lower than number of replies in the dialog. */
+			dialog[flow[lastItem].count](send, entities, ()=>{}, closeDialog);
+    }
+
+    function nextReply() {
+      flow[flow.length-1].count = flow[flow.length-1].count+1;
+    }
+    function closeDialog(nextIntent) {
+      flow.splice(flow.length-1, 1);
+      if(nextIntent){
+        flow.push({
+          count: 0,
+          intent: nextIntent
+        });
+      }
     }
 
     this.state.flow = flow;
     this.state.lastMessage = message;
+    console.log('\n==> flow: ',this.state.flow);
   };
+
 }
 
 export function initDialog(intent, args){
-  dialogList[intent] = args;
+  dialogStore[intent] = args;
   console.log('dialog created: ', intent);
 }
 
