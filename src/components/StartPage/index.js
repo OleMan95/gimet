@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
+import Section3 from './best-experts';
 import {signUp} from '../services/api-helper';
 import './index.scss';
 import teamMember1 from '../../data/images/team/manachynskyi.jpg';
@@ -23,7 +24,6 @@ class StartPage extends React.Component { //все this.props мы получе�
 	handleClose=()=>{
 		this.setState({ modalShow: '' });
 	};
-
 	handleShow=()=>{
 		this.setState({ modalShow: 'show' });
 	};
@@ -158,54 +158,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 					</div>
 				</div>
 
-				<div className='section-3 bg-light py-5 px-3' id="section-3">
-					<div className='container py-5'>
-						<h2 className="mb-4">Our team</h2>
-						<div className="row cards-block">
-
-							<div className="d-flex" >
-								<img className="team-img" src={teamMember1} alt="team-member1"/>
-								<div className="col-6 team-body d-flex">
-									<div>
-										<h5 className="">Oleksii Manachynskyi</h5>
-										<p className="">Software developer, solution architect</p>
-									</div>
-									<div className="row">
-										<a href="https://www.facebook.com/iamoleman" className="btn btn-link">
-											<i className="ion ion-social-facebook"></i></a>
-										<a href="https://www.instagram.com/lmanachinskiy/" className="btn btn-link">
-											<i className="ion ion-social-instagram"></i></a>
-										<a href="https://github.com/OleMan95" className="btn btn-link">
-											<i className="ion ion-social-github"></i></a>
-										<a href="https://www.linkedin.com/in/oleksii-manachynskyi-078b17137/" className="btn btn-link">
-											<i className="ion ion-social-linkedin"></i></a>
-									</div>
-								</div>
-							</div>
-							<div className="d-flex">
-								<img className="team-img" src={teamMember2} alt="team-member2"/>
-								<div className="col-6 team-body d-flex">
-									<div>
-										<h5 className="">Roman Suprun</h5>
-										<p className="">Software developer</p>
-									</div>
-									<div className="row">
-										<a href="#" className="btn btn-link">
-											<i className="ion ion-social-facebook"></i></a>
-										<a href="#" className="btn btn-link">
-											<i className="ion ion-social-instagram"></i></a>
-										<a href="#" className="btn btn-link">
-											<i className="ion ion-social-github"></i></a>
-										<a href="#" className="btn btn-link">
-											<i className="ion ion-social-linkedin"></i></a>
-									</div>
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-				</div>
+				<Section3/>
 
         <div className='section-4 py-5 px-3' id="section-4">
 					<div className='container py-5'>

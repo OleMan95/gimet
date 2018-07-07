@@ -115,60 +115,18 @@
       &>h2{
         font-size: 3rem;
       }
-      .cards-block{
-        justify-content: space-between;
-        margin: 0;
+      .cards{
+        justify-content: space-around;
 
-        &>div{
-          border: 1px solid rgba(0,0,0,.125);
-          border-radius: .25rem;
-          padding: 0;
-          margin-bottom: 1rem;
-          background-color: white;
-          width: 31rem;
-
-          .team-img{
-            width: 250px;
-            height: 250px;
-            padding: 0;
-            max-width: unset;
-          }
-
-          &:first-of-type{
-            margin-right: 1rem;
-          }
-
-          .team-body{
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 1rem;
-
-            .row{
-              margin: 0;
-            }
-          }
-          .ion{
-            font-size: 1.5rem;
-          }
+        .card{
+          width: 21rem;
         }
 
         @media (max-width: $sm) {
-          &>div{
-            flex-direction: column;
-            width: 18rem;
 
-            .team-body{
-              max-width: 100%;
-              justify-content: flex-start;
-            }
-          }
-
-          flex-direction: column;
         }
         @media (max-width: $md) {
-          &>div:first-of-type{
-            margin-right: 0;
-          }
+
         }
 
       }

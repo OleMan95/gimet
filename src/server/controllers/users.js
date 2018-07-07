@@ -50,37 +50,36 @@ class Users{
 		}
 		next();
 	}
-	//GET /api/user/:id PUBLIC
+	//GET /api/user/:id
 	async findOneById(req, res){
 		try{
 			if(!req.cookies.aat || req.cookies.aat != 'true'){
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
-
-			const {authorization} = req.headers;
-			const paramsId = req.params.id;
+			const {id} = req.params;
 			let user;
 
-			let id = '';
-			if(authorization.toString() != 'undefined') {
-				const payload = await jwtService.verify(authorization);
-				id = payload._id;
-			}
+			try{
+				if(req.headers.authorization != 'undefined'){
+					let {_id} = await jwtService.verify(req.headers.authorization);
 
-			if(paramsId){
-				if(id.toString().trim() != paramsId.toString().trim()){
-					id = paramsId;
 					if(req.query.populate){
-						user = await User.findById(id).select({password:0, __v: 0}).populate('experts');
+						user = await User.findById(_id).select({password:0, __v: 0}).populate('experts');
 					}else{
-						user = await User.findById(id).select({password:0, __v: 0});
+						user = await User.findById(_id).select({password:0, __v: 0});
 					}
-					res.status(401).send(user);
+
+					res.send({
+						isAuthorized: true,
+						data: user,
+					});
 					return;
 				}
+			}catch(err){
+				res.redirect('/login');
+				return;
 			}
-
 
 			if(req.query.populate){
 				user = await User.findById(id).select({password:0, __v: 0}).populate('experts');
@@ -88,7 +87,10 @@ class Users{
 				user = await User.findById(id).select({password:0, __v: 0});
 			}
 
-			res.send(user);
+			res.send({
+				isAuthorized: false,
+				data: user,
+			});
 		}catch(err){
 			res.status(500).send({message: err.message});
 		}

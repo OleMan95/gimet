@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
-import { getToken } from "../../services/tokenService";
-import { getUserById } from "../../services/api-helper";
+import {getToken} from "../../services/tokenService";
+import {getUserById} from "../../services/api-helper";
 import "./index.scss";
 import ExpertChatModal from '../../sections/ExpertChatModal';
 
 
-class ExpertChatButton extends Component {
+class ExpertChatButton extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -17,15 +17,13 @@ class ExpertChatButton extends Component {
   async componentDidMount() {
 
 		if (getToken('token')) {
-			await getUserById(false, false, (data)=>{
+			await getUserById({token: getToken('token')}, res=>{
 
 				this.setState({
-					isAuthorized: true,
-					user: data
+					isAuthorized: res.isAuthorized,
+					user: res.data
 				});
-			}, (data)=>{
-
-			});
+			}, err=>{});
 
 		}
 

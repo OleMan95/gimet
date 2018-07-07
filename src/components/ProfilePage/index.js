@@ -2,6 +2,8 @@ import React from 'react';
 import isodate from 'isodate';
 import {NavLink, withRouter} from 'react-router-dom';
 import {getUserById} from '../services/api-helper';
+import {getToken} from '../services/tokenService';
+
 import Header from '../sections/Header/';
 
 import './index.scss';
@@ -18,17 +20,9 @@ class Profile extends React.Component{
 
   async componentDidMount() {
 
-		await getUserById(this.props.match.params.id, true, (user)=>{
-			this.setUser(user, false);
-		}, async (err) => {
-			if (err.status == 401) {
-				let user = await err.json();
-				console.log('user: ', user);
-				this.setUser(user, true);
-			} else {
-				this.props.history.push('/');
-			}
-		});
+		await getUserById({id: this.props.match.params.id, populate: true, token: getToken()}, res=>{
+			this.setUser(res.data, !res.isAuthorized);
+		}, async err=>{});
 
   };
 

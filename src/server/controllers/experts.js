@@ -46,9 +46,16 @@ class Experts{
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
+			let payload;
+			let user;
 
-			const payload = await jwtService.verify(req.headers.authorization);
-			const user = await User.findById(payload._id);
+			try{
+				payload = await jwtService.verify(req.headers.authorization);
+				user = await User.findById(payload._id);
+			}catch (err){
+				res.redirect('/login');
+			}
+
 			const {id} = req.params;
 			const {name, description, questions, contributors} = req.body;
 			const author = req.body.author ? req.body.author : user._id;

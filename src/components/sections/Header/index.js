@@ -21,15 +21,13 @@ class Header extends Component {
   async componentDidMount() {
 
 		if (getToken('token')) {
-			await getUserById(false, false, (data)=>{
+			await getUserById({token: getToken('token')}, res=>{
 
 				this.setState({
-					isAuthorized: true,
-					user: data
+					isAuthorized: res.isAuthorized,
+					user: res.data
 				});
-			}, (data)=>{
-
-			});
+			}, err=>{});
 
 		}
 

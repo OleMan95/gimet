@@ -25,25 +25,40 @@ export async function login (email, password){
 	}
 }
 
-export async function getUserById (id, populate, onSuccess, onError){
+export async function getUserById ({id, populate, token}, onSuccess, onError){
 	try {
-		let token = getToken();
 		populate = populate ? '?populate=true' : '';
 		id = id ? '/'+id : '';
 
 		let response = await fetch('/api/user'+id+populate, {
 			method: 'GET',
 			credentials: 'include',
-            headers: {
+			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': token
 			}
 		});
 
 		if(response.status == 200) onSuccess(await response.json());
-		else onError(response);
+		else onError(await response.json());
 
 	} catch (err) {
+		console.error(err.message);
+	}
+}
+
+export async function getExperts (onError){
+	try {
+		let response = await fetch('/api/experts/', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		if (response.status != 200) onError(await response.json());
+		return await response.json();
+	}catch (err) {
 		console.error(err.message);
 	}
 }

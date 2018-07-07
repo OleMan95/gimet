@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
-import { getUserById } from '../../services/api-helper';
+import { getUser } from '../../services/api-helper';
 import './index.scss';
 
 class ModalWindow extends React.Component { //все this.props мы получем как аргументы функции
@@ -35,7 +35,7 @@ class ModalWindow extends React.Component { //все this.props мы получ�
 
   getContributorName = async (id) => {
 	  let name = '';
-		await getUserById(id, false, data=>{
+		await getUser(id, false, data=>{
 			name = data.name;
     });
 		return name;
