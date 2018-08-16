@@ -1,37 +1,26 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {getToken} from '../services/tokenService';
-import { login } from '../services/api-helper';
+import { signUp } from '../services/api-helper';
 import alertHelper from '../services/alert-helper';
 import logo from "../../data/logo-black.svg";
 import './index.scss';
 
-class SignIn extends React.Component {
+class SignUp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			emailValue:'',
 			passwordValue:'',
-			alert: 'Error!',
-			alertDangerClass: 'd-none',
-			alertInfoClass: 'd-none',
-			submitTimer: 'Sign in',
-			submitDisabled: false
+      nameValue:'',
+			alert: '',
+      alertDangerClass: 'd-none',
+      alertInfoClass: 'd-none'
 		};
 	}
 
   componentDidMount(){
-		if(getToken()) this.props.history.push('/edit/new');
-  }
 
-	onEnterKeyDown=(event, ctx)=>{
-		if(event.keyCode === 13){
-			event.preventDefault();
-			if(this.state.emailValue.length > 0 && this.state.passwordValue.length > 0){
-				ctx.signInAction();
-			}
-		}
-  };
+  }
 
   handleInputChange=(event)=>{
 		switch (event.target.name) {
@@ -45,59 +34,31 @@ class SignIn extends React.Component {
 						passwordValue:event.target.value,
 				});
 				break;
+			case 'name':
+				this.setState({
+          	nameValue:event.target.value,
+				});
+				break;
 			default:
 				break;
 		}
   };
 
-	async handleSubmit(event, ctx) {
+	handleSubmit= async (event) => {
 		event.preventDefault();
-		if(this.state.submitTimer.length){
-			await ctx.signInAction();
-		}
-	}
+    const res = await signUp({
+      name: this.state.nameValue,
+      email: this.state.emailValue,
+      password: this.state.passwordValue
+    });
 
-  signInAction = async () => {
-		this.setState({
-			submitDisabled: true
-		});
+    if(res){
+      alertHelper(this, 'Registration successfully completed');
+      // this.props.history.push('/');
+    }else
+      alertHelper(this, 'Oops, some error occurred. Try again later', 'danger');
 
-		const data = await login(this.state.emailValue, this.state.passwordValue);
-
-		if (data.token) {
-			this.setState({
-				submitDisabled: false
-			});
-			this.props.history.push('/');
-		}else if(data.message){
-			console.error('signIn error: ', data.message);
-			alertHelper(this, 'Error: '+data.message, 'danger');
-
-			if(data.message.indexOf('Please try again later')>=0){
-				const submitInterval = setInterval(()=>{
-					let count = this.state.submitTimer.length ? 11 : this.state.submitTimer;
-					count--;
-					if(count===0){
-						this.setState({
-							submitTimer: 'Sign in',
-							submitDisabled: false
-						});
-						clearInterval(submitInterval);
-						return;
-					}
-					this.setState({
-						submitTimer: count,
-						submitDisabled: true
-					});
-				}, 1000);
-			}else{
-				this.setState({
-					submitDisabled: false
-				});
-			}
-
-		}
-  };
+	};
 
   render(){
     return (
@@ -113,27 +74,27 @@ class SignIn extends React.Component {
                 <small className="form-text text-muted ml-2">It's free!</small>
               </div>
               <div className="card-body">
-                <form className="d-flex flex-column" onSubmit={this.signUpClick}>
+                <form className="d-flex flex-column" onSubmit={this.handleSubmit}>
                   <div className="form-group d-flex">
-                    <label htmlFor="exampleInputEmail1">Full Name:</label>
-                    <input type="name" className="form-control" name="name"
+                    <label htmlFor="name">Full Name:</label>
+                    <input type="name" className="form-control" id="name" name="name"
                            placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
                   </div>
                   <div className="form-group d-flex">
-                    <label htmlFor="exampleInputEmail1">Email Address:</label>
-                    <input type="email" className="form-control" name="email"
+                    <label htmlFor="email">Email Address:</label>
+                    <input type="email" className="form-control" id="email" name="email"
                            placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
                   </div>
                   <hr className="my-4 w-100"/>
                   <div className="form-group d-flex">
-                    <label htmlFor="exampleInputPassword1">Password:</label>
-                    <input type="password" className="form-control" id="exampleInputPassword1" name="password"
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" className="form-control" id="password" name="password"
                            onChange={event=>{this.handleInputChange(event)}}/>
                   </div>
                   <div className="form-group d-flex">
-                    <label htmlFor="exampleInputPassword1">Password Confirm:</label>
+                    <label htmlFor="password-confirm">Password Confirm:</label>
                     <div className="">
-                      <input type="password-confirm" className="form-control" id="exampleInputPassword1" name="password"
+                      <input type="password" className="form-control" id="password-confirm" name="password"
                            onChange={event=>{this.handleInputChange(event)}}/>
                       <small id="passwordHelp" className="form-text text-muted pl-3">Use at least one letter, one numeral, and seven characters.</small>
                     </div>
@@ -176,4 +137,4 @@ class SignIn extends React.Component {
 }
 
 
-export default withRouter(SignIn);
+export default withRouter(SignUp);
