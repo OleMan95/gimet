@@ -47,7 +47,7 @@ export async function getUserById ({id, populate, token}, onSuccess, onError){
 	}
 }
 
-export async function getExperts (onError){
+export async function getExperts ({query},onError){
 	try {
 		let response = await fetch('/api/experts/', {
 			method: 'GET',

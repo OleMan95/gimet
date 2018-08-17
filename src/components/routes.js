@@ -2,6 +2,7 @@ import StartPage from './StartPage/';
 import Signin from './Signin/';
 import Signup from './Signup/';
 import ProfilePage from './ProfilePage/';
+import ExpertsPage from './ExpertsPage/';
 import EditorPage from './EditPage/';
 import ConsultationPage from './ConsultationPage/';
 import NotFound from './NotFound';
@@ -29,6 +30,11 @@ const routes = [
 	{
 		path: '/profile/:id',
 		component: ProfilePage,
+		exact: true
+	},
+	{
+		path: '/experts',
+		component: ExpertsPage,
 		exact: true
 	},
 	{
