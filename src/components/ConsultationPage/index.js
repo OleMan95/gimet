@@ -60,7 +60,7 @@ class Consultation extends React.Component{
 						: ''}
 
 					{this.state.content == 'ConsultationResult' ?
-						<ConsultationResult result={this.state.result} onStartClick={this.onStartClick}/>
+						<ConsultationResult result={this.state.result} expert={this.state.expert} onStartClick={this.onStartClick}/>
 						: ''}
 
 

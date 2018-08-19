@@ -1,0 +1,65 @@
+@import '../variables';
+
+.Experts{
+
+  .section-1{
+    margin: 66px 0 0;
+    padding: 40px 0;
+    background: url(../../data/images/background.png) no-repeat right fixed;
+    background-size: cover;
+    color: #f8f9fa;
+    .container{
+
+      .input-group{
+        button{
+          background-color: #fff3;
+          &:hover{
+            background-color: #ffffffb3;
+          }
+        }
+      }
+
+    }
+
+    @media (max-width: 991.98px) {
+      margin: 64px 0 0;
+    }
+  }
+
+  .section-2{
+
+    .list-group{
+
+      .list-group-item{
+        flex-direction: column;
+        padding-left: 0;
+        padding-right: 0;
+
+        button{
+          margin-left: auto;
+        }
+      }
+    }
+
+    .title{
+      font-size: 1.3rem;
+      margin-bottom: .25rem;
+      color: $default-font-color-black;
+    }
+    .date{
+      font-size: .8rem;
+      color: #b7b7b7;
+    }
+    .description{
+      font-size: 1rem;
+      color: $default-font-color-gray;
+    }
+    .consultation-btn{
+      margin-right: 1rem;
+    }
+  }
+
+}
+
+
+

@@ -39,7 +39,34 @@ class Experts{
 			res.status(403).send({message: err.message});
 		}
 	}
-	//POST /experts or PUT /expert/:id
+	//PUT /expert/:id/count
+	async newConsultationCount(req, res){
+		try{
+			if(!req.cookies.aat || req.cookies.aat != 'true'){
+				res.status(400).send({message:'Rejected'});
+				return;
+			}
+			// const {authorization} = req.headers;
+			// const payload = await jwtService.verify(authorization);
+			// const authorId = payload._id;
+
+			const id = ObjectId(req.params.id);
+			const expert = await Expert.findById(id).select({__v: 0});
+
+			// if(expert.author.toString() == authorId.toString())
+			// 	res.send({consultationCount: expert.consultationCount});
+			// else{
+				expert.consultationCount++;
+				await Expert.findByIdAndUpdate({_id: id}, expert, { new: true }, function (err, user) {
+					if (err) console.log('err: ', err);
+					res.send(expert);
+				})
+			// }
+		}catch(err){
+			res.status(403).send({message: err.message});
+		}
+	}
+	//POST or PUT /experts or PUT /expert/:id
 	async createOrUpdate(req, res){
 		try{
 			if(!req.cookies.aat || req.cookies.aat != 'true'){
@@ -124,6 +151,7 @@ class Experts{
 	// 		ctx.status = 200;
 	// 	}
 	// 	else ctx.status = 204;
+
 	// }
 }
 export default Experts;

@@ -1,7 +1,12 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
+import {increaseConsultationCount} from '../services/api-helper';
 
 class ConsultationResult extends React.Component{
+
+	async componentDidMount() {
+		await increaseConsultationCount(this.props.expert._id)
+	}
 
   render(){
     return (

@@ -47,7 +47,7 @@ export async function getUserById ({id, populate, token}, onSuccess, onError){
 	}
 }
 
-export async function getExperts (onError){
+export async function getExperts ({query},onError){
 	try {
 		let response = await fetch('/api/experts/', {
 			method: 'GET',
@@ -57,6 +57,32 @@ export async function getExperts (onError){
 		});
 
 		if (response.status != 200) onError(await response.json());
+		return await response.json();
+	}catch (err) {
+		console.error(err.message);
+	}
+}
+
+export async function increaseConsultationCount (id){
+	try {
+		console.log('increaseConsultationCount');
+
+		let token = getToken();
+
+		let response = await fetch(`/api/expert/${id}/count`, {
+			method: 'PUT',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': token
+			}
+		});
+
+		console.log(await response.json());
+
+		if (response.status != 200)
+			return response;
+
 		return await response.json();
 	}catch (err) {
 		console.error(err.message);
