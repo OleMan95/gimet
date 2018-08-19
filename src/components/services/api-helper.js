@@ -133,9 +133,35 @@ export async function signUp (data){
 			body: JSON.stringify(data)
 		});
 
+		return response.status == 200;
+
+	} catch (err) {
+		console.error(err.message);
+	}
+}
+
+export async function sendMail (data){
+	try {
+
+		if(!data.email || !data.message || !data.subject)
+			return {error: {message:'Wrong data.'}};
+
+		let response = await fetch('/api/mail', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				receiver: data.email,
+				subject: data.subject,
+				message: data.message
+			})
+		});
+
 		console.log(response);
 
-		return response.status == 200;
+		return response;
 
 	} catch (err) {
 		console.error(err.message);

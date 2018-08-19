@@ -2,10 +2,8 @@ import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
 import Section3 from './best-experts';
-import {signUp} from '../services/api-helper';
+import {sendMail} from '../services/api-helper';
 import './index.scss';
-import teamMember1 from '../../data/images/team/manachynskyi.jpg';
-import teamMember2 from '../../data/images/team/suprun.jpg';
 import technologies from '../../data/images/icons/artificial-intelligence(2).svg';
 import createExpert from '../../data/images/icons/flask.svg';
 import whatIsES from '../../data/images/icons/technology(4).svg';
@@ -15,9 +13,8 @@ class StartPage extends React.Component { //все this.props мы получе�
 	  super(props);
 	  this.state = {
 			modalShow: '',
-			userName:'',
-			email:'',
-			password:''
+			mailModalShow: '',
+			mailInputData: {}
 	  };
 	}
 
@@ -27,42 +24,48 @@ class StartPage extends React.Component { //все this.props мы получе�
 	handleShow=()=>{
 		this.setState({ modalShow: 'show' });
 	};
-  handleInputChange=(event)=>{
+
+	handleMailClose=()=>{
+		this.setState({ mailModalShow: '' });
+	};
+	handleMailShow=()=>{
+		this.setState({ mailModalShow: 'show' });
+	};
+	handleMailInputChange=(event)=>{
+
+		let mailInputData = this.state.mailInputData;
+
 		switch (event.target.name) {
-			case 'name':
-				this.setState({
-					userName: event.target.value,
-				});
+			case 'first-name':
+				mailInputData.firstName = event.target.value;
+				break;
+			case 'last-name':
+				mailInputData.lastName = event.target.value;
 				break;
 			case 'email':
-				this.setState({
-					email: event.target.value,
-				});
+				mailInputData.email = event.target.value;
 				break;
-			case 'password':
-				this.setState({
-					password: event.target.value,
-				});
+			case 'message':
+				mailInputData.message = event.target.value;
 				break;
 			default:
 		}
-  };
-  signUpClick = async(event)=>{
-  	event.preventDefault();
 
-		await signUp(this.state.userName, this.state.email, this.state.password,
-			()=>{
-				// here must be a custom success alert. (look at ../Signin/index.js line 74)
-				alert('You are has registered! Contact administrator to confirm your account.');
-				this.setState({
-					userName: '',
-					email: '',
-					password: ''
-				});
-			}, err=>{
-				// here must be a custom danger alert. (look at ../Signin/index.js line 74)
-				console.log('registration error: ',err)
-			});
+		this.setState({
+			mailInputData
+		});
+	};
+	handleSubmit= async (event) => {
+		event.preventDefault();
+
+		let res = await sendMail({
+			email: this.state.mailInputData.email,
+			subject: 'GIMET Feedback - '+this.state.mailInputData.firstName+' '+this.state.mailInputData.lastName,
+			message: this.state.mailInputData.message
+		});
+
+		console.log(res);
+
 	};
 
   render(){
@@ -160,41 +163,62 @@ class StartPage extends React.Component { //все this.props мы получе�
 
 				<Section3/>
 
-        <div className='section-4 py-5 px-3' id="section-4">
-					<div className='container py-5'>
+        <div className='section-4 px-3' id="section-4">
+					<div className='container'>
 
-						<div className='row'>
-							<div className='col d-flex'>
-								<h2 className="display-6 mb-4">Contact us:</h2>
-								<form className='contact-form'>
-									<div className="form-row">
-										<div className="col-md-6">
-											<label htmlFor="inputFName">First name</label>
-											<input type="text" className="form-control" id="inputFName" placeholder="First name"/>
-										</div>
-										<div className="form-group col-md-6">
-											<label htmlFor="inputLName">Last name</label>
-											<input type="text" className="form-control" id="inputLName" placeholder="Last name"/>
-										</div>
-									</div>
-									<div className="form-group">
-										<label htmlFor="exampleInputEmail1">Email address</label>
-										<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-									</div>
-									<div className="form-group">
-										<label htmlFor="exampleFormControlTextarea1">Message</label>
-										<textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
-									</div>
-									<div className="d-flex justify-content-end">
-										<button type="submit" className="btn btn-primary">Submit</button>
-									</div>
-								</form>
+						<div className='blured d-flex flex-column'>
+
+							<h2 className="display-6 mb-4 text-center">Contact us:</h2>
+
+							<div className="input-group mb-3">
+								<input type="text" className="form-control" placeholder="First name*"
+											 aria-label="Username" aria-describedby="basic-addon1" name="first-name"
+											 onChange={event=>this.handleMailInputChange(event)}/>
+								<input type="text" className="form-control" placeholder="Last name*"
+											 aria-label="Username" aria-describedby="basic-addon1" name="last-name"
+											 onChange={event=>this.handleMailInputChange(event)}/>
+								<input type="email" className="form-control" placeholder="Email*"
+											 aria-label="Username" aria-describedby="basic-addon1" name="email"
+											 onChange={event=>this.handleMailInputChange(event)}/>
+								<div className="input-group-append" id="button-addon4">
+									<button className="btn btn-outline-light" type="button"
+													onClick={this.handleMailShow}>SEND <i className="ion-email"/></button>
+								</div>
 							</div>
-							<div className='col d-flex'>
+
+							<div className={"modal fade "+this.state.mailModalShow} id="mailModal" tabIndex="-1" role="dialog"
+									 aria-labelledby="mailModalTitle" aria-hidden="true" onClick={this.handleMailClose}>
+								<div className="modal-dialog modal-dialog-centered" role="document" onClick={(event)=>event.stopPropagation()}>
+									<div className="modal-content">
+										<div className="modal-header">
+											<h5 className="modal-title" id="mailModalTitle">Contact us:</h5>
+											<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleMailClose}>
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div className="modal-body">
+
+											<p>{this.state.mailInputData.firstName} {this.state.mailInputData.lastName}</p>
+											<p>{this.state.mailInputData.email}</p>
+
+											<form className='contact-form' onSubmit={event=>this.handleSubmit(event)}>
+												<div className="form-group">
+													<label htmlFor="textarea">Message</label>
+													<textarea className="form-control" id="textarea" rows="4" name="message"
+																		onChange={event=>this.handleMailInputChange(event)}/>
+												</div>
+												<div className="d-flex justify-content-end">
+													<button type="submit" className="btn btn-primary">Submit</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
 							</div>
+
 						</div>
-					</div>
 
+					</div>
 				</div>
 
 			</div>
