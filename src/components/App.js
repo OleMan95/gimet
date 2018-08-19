@@ -2,6 +2,7 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import routes from './routes';
 import './App.scss';
+import './sections/Footer/index.scss';
 
 const App = ()=>{
 	return (

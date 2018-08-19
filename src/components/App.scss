@@ -34,24 +34,6 @@ input{
   padding: .5rem $default-side-padding-lg;
 }
 
-footer{
-    background-color: #222;
-    //padding: .5rem;
-    padding: $default-padding;
-    text-align: start;
-    font-size: small;
-    display: flex;
-    align-items: center;
-    p, a{
-        margin-right: 8px;
-        color: white;
-        text-decoration: none;
-    }
-    a:hover{
-        color: cadetblue;
-    }
-}
-
 a, a:hover{
   text-decoration: none;
 }
