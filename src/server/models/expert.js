@@ -9,6 +9,7 @@ const ExpertSchema = new Schema({
 	description:String,
 	questions:[],
 	contributors:[String],
+	consultationCount: Number,
 	author:{
 		type: Schema.ObjectId,
 		ref: 'User',

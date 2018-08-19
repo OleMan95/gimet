@@ -63,6 +63,32 @@ export async function getExperts ({query},onError){
 	}
 }
 
+export async function increaseConsultationCount (id){
+	try {
+		console.log('increaseConsultationCount');
+
+		let token = getToken();
+
+		let response = await fetch(`/api/expert/${id}/count`, {
+			method: 'PUT',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': token
+			}
+		});
+
+		console.log(await response.json());
+
+		if (response.status != 200)
+			return response;
+
+		return await response.json();
+	}catch (err) {
+		console.error(err.message);
+	}
+}
+
 export async function getExpertById (id, onSuccess, onError){
 	try {
 		let token = getToken();

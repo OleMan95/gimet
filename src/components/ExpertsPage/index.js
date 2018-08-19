@@ -17,6 +17,7 @@ class Experts extends React.Component{
 
   async componentDidMount() {
     let experts = await getExperts({}, async err=>{});
+    console.log(experts);
     experts = experts.filter(expert=>expert._id!=null);
 
     experts.forEach((expert)=>{
