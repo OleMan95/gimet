@@ -31,7 +31,7 @@ class Profile extends React.Component{
 
 		experts.forEach((expert)=>{
 			let date = isodate(expert.updatedAt.toString());
-			expert.updatedAt = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+			expert.updatedAt = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
 		});
 
 		this.setState({user,experts,isPublic});
@@ -120,7 +120,8 @@ class Profile extends React.Component{
 							{this.state.experts.map(expert =>
                 <li key={expert._id} className='list-group-item d-flex'>
                   <p className='title'><b>{expert.name}</b></p>
-                  <p className='date'>updated at: {expert.updatedAt}</p>
+									<p className='date'>updated at: {expert.updatedAt} <span className="mx-2">|</span>
+										<i className="ion-eye mr-1"/>{expert.consultationCount || 0}</p>
                   <p className='description'>{expert.description}</p>
 									<div className='d-flex'>
 										<NavLink className='consultation-btn btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>

@@ -12,7 +12,9 @@ class Experts{
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
-			res.send(await Expert.find());
+			let sort = req.query.filter ? {sort: {consultationCount: -1}} : {};
+
+			res.send(await Expert.find({}, null, sort));
 		}catch(err){
 			res.status(500).send({message: err.message});
 		}

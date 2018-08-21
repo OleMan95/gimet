@@ -47,9 +47,13 @@ export async function getUserById ({id, populate, token}, onSuccess, onError){
 	}
 }
 
-export async function getExperts ({query},onError){
+export async function getExperts (filter, onError){
 	try {
-		let response = await fetch('/api/experts/', {
+		let filterParam = filter ? `?filter=${filter}` : '';
+
+		console.log('==>',filterParam);
+
+		let response = await fetch(`/api/experts${filterParam}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'

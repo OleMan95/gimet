@@ -14,7 +14,7 @@ class Section3 extends React.Component { //все this.props мы получем
 
 	async componentDidMount() {
 
-		const data = await getExperts(err=>{
+		const data = await getExperts('views', err=>{
 			console.log(err);
 		});
 
