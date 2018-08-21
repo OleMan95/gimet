@@ -183,7 +183,6 @@ class Edit extends React.Component{
 								<i className="ion-gear-a"></i></button>
 							<button className='btn btn-outline-light' onClick={()=>this.onSaveExpert()}>SAVE</button>
 						</div>
-
 					</div>
 				</div>
 
@@ -191,7 +190,7 @@ class Edit extends React.Component{
 					<div className="container py-5">
 						<div className="row">
 
-							{this.state.expert ?
+							{this.state.expert.name || this.state.expert.questions && this.state.expert.questions.length > 0 ?
 								this.state.questions.map((question, index)=>
 									<div className="col-md-4" key={question.key}>
 										<div className="card mb-4 box-shadow">
@@ -212,7 +211,56 @@ class Edit extends React.Component{
 										</div>
 									</div>
 								)
-								: 'No questions'}
+								:
+								<div className="user-guide w-100">
+									<h2 className="mb-2 mt-3 text-center">User guide</h2>
+									<h3 className="mb-2 mt-5">Name and description:</h3>
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+											To specify expert name and description press the <button className='btn btn-outline-light font-black'>
+                      <i className="ion-gear-a"/></button> button.
+										</li>
+                    <li className="list-group-item">
+											Call and describe your expert clear, so that others can easily find what they need.
+										</li>
+                    <li className="list-group-item">
+											To save press the <button type="button" className="btn btn-primary">Save changes</button> button.
+                    </li>
+                  </ul>
+
+									<h3 className="mb-2 mt-5">Create a question:</h3>
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+											To add first question press the <button className='btn btn-outline-light font-black'>
+                      <i className="ion-plus-round"/></button> button. The consultation will begin with question #0, this is the initial question.
+										</li>
+                    <li className="list-group-item">
+											<b>Question parameters:</b>
+                      <ul>
+                        <li className="mb-2">
+													<i>key</i> - it is the question identifier. Must be unique. You can specify the key as you want: <br/>
+													<mark>"q0-br1"</mark>  - some special code, or <br/>
+													<mark>"start question"</mark>  - the meaning of the current question, or whatever you want
+												</li>
+                        <li className="mb-2">
+													<i>question</i> - the question itself.
+												</li>
+                        <li className="mb-2">
+													<i>answers</i> - it is the possible answers to current question. <br/>
+													<i>First field</i> is the answer itself, what the user must choose.
+													<i>Type</i> - must be or text, or key: <br/>
+													<mark>text</mark> returns the result ot the consultation, <br/>
+													<mark>key</mark> leads to the next section with the specified key. <br/>
+												</li>
+                      </ul>
+										</li>
+                    <li className="list-group-item">
+											To save press the <button type="button" className="btn btn-primary">Save changes</button> button.
+                    </li>
+                  </ul>
+
+								</div>
+							}
 
 
 						</div>
