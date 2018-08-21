@@ -78,8 +78,6 @@ export async function increaseConsultationCount (id){
 			}
 		});
 
-		console.log(await response.json());
-
 		if (response.status != 200)
 			return response;
 
