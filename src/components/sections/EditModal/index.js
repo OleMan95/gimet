@@ -145,7 +145,7 @@ class EditModal extends React.Component {
 
               <table className="table">
                 <thead>
-                  <tr className="row">
+                  <tr className="row bg-dark color-white">
                     <th scope="col" className="col-5">Answer</th>
                     <th scope="col" className="col-1">Type</th>
                     <th scope="col" className="col-6">Result</th>
@@ -159,7 +159,7 @@ class EditModal extends React.Component {
                       <td className="col-6 d-flex justify-content-between">
 												<p>{this.state.results[`${index}`].value}</p>
 												<button className="btn btn-light" type="button" onClick={()=>this.removeAnswer(answer)}>
-													<i className="ion-close-round"></i>
+													<i className="ion-close-round"/>
 												</button>
 											</td>
                     </tr>
@@ -183,7 +183,7 @@ class EditModal extends React.Component {
                                aria-describedby="basic-addon2" ref={elem=>this.resultValue=elem}/>
                         <div className="input-group-append">
                           <button className="btn btn-outline-secondary" type="button" onClick={this.addAnswer}>
-														<i className="ion-plus-round"></i>
+														<i className="ion-plus-round"/>
 													</button>
                         </div>
                       </div>

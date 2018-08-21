@@ -247,15 +247,24 @@ class Edit extends React.Component{
 												</li>
                         <li className="mb-2">
 													<i>answers</i> - it is the possible answers to current question. <br/>
-													<i>First field</i> is the answer itself, what the user must choose.
-													<i>Type</i> - must be or text, or key: <br/>
-													<mark>text</mark> returns the result ot the consultation, <br/>
-													<mark>key</mark> leads to the next section with the specified key. <br/>
+													<b>Answer</b> is the answer itself, what the user must choose. <br/>
+													<b>Type</b> - must be or text, or key: <br/>
+													<mark className="ml-3">text</mark> returns the result ot the consultation, <br/>
+													<mark className="ml-3">key</mark> leads to the next section with the specified key. <br/>
+													<b>Result</b> - the key of the next question or the result of the consultation<br/>
+												</li>
+												<li>
+													To add the answer and go to the next, click the <button className="btn btn-outline-secondary">
+													<i className="ion-plus-round"/></button> button.
+												</li>
+												<li>
+													To delete or edit the answer, click the <button className="btn btn-light">
+													<i className="ion-close-round"/></button> button.
 												</li>
                       </ul>
 										</li>
                     <li className="list-group-item">
-											To save press the <button type="button" className="btn btn-primary">Save changes</button> button.
+											To save the question, click the <button type="button" className="btn btn-primary">Save changes</button> button.
                     </li>
                   </ul>
 
