@@ -3,10 +3,12 @@ import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
 import Section3 from './best-experts';
 import {sendMail} from '../services/api-helper';
-import './index.scss';
 import technologies from '../../data/images/icons/artificial-intelligence(2).svg';
 import createExpert from '../../data/images/icons/flask.svg';
 import whatIsES from '../../data/images/icons/technology(4).svg';
+import AlertHelper from '../sections/AlertHelper';
+
+import './index.scss';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
 	constructor(props) {
@@ -14,7 +16,12 @@ class StartPage extends React.Component { //все this.props мы получе�
 	  this.state = {
 			modalShow: '',
 			mailModalShow: '',
-			mailInputData: {}
+			mailInputData: {},
+			alert:{
+				show: false,
+				isDanger: true,
+				message: ''
+			}
 	  };
 	}
 
@@ -58,13 +65,63 @@ class StartPage extends React.Component { //все this.props мы получе�
 	handleSubmit= async (event) => {
 		event.preventDefault();
 
-		let res = await sendMail({
+		await sendMail({
 			email: this.state.mailInputData.email,
 			subject: 'GIMET Feedback - '+this.state.mailInputData.firstName+' '+this.state.mailInputData.lastName,
 			message: this.state.mailInputData.message
-		});
+		}).then(res=>{
 
-		console.log(res);
+			this.setState({
+				mailInputData: {},
+				mailModalShow: ''
+			});
+
+			this.firstNameInput.value = '';
+			this.lastNameInput.value = '';
+			this.emailInput.value = '';
+			this.messageInput.value = '';
+
+			if(res.status === 200){
+				this.setState({
+					alert:{
+						show: true,
+						isDanger: false,
+						message: 'Message has sent successfully.'
+					}
+				});
+
+				setTimeout(()=>{
+					this.setState({
+						alert:{
+							show: false,
+							isDanger: true,
+							message: ''
+						}
+					});
+				}, 4000);
+			}
+
+			if(res.status === 500){
+				this.setState({
+					alert:{
+						show: true,
+						message: 'Unfortunately, some error has occurred.'
+					}
+				});
+
+				setTimeout(()=>{
+					this.setState({
+						alert:{
+							show: false,
+							message: ''
+						}
+					});
+				}, 4000);
+			}
+
+		}).catch(err=>{
+			console.log(err);
+		});
 
 	};
 
@@ -165,7 +222,6 @@ class StartPage extends React.Component { //все this.props мы получе�
 
         <div className='section-4 px-3' id="section-4">
 					<div className='container'>
-
 						<div className='blured d-flex flex-column'>
 
 							<h2 className="display-6 mb-4 text-center">Contact us:</h2>
@@ -173,12 +229,15 @@ class StartPage extends React.Component { //все this.props мы получе�
 							<div className="input-group mb-3">
 								<input type="text" className="form-control" placeholder="First name*"
 											 aria-label="Username" aria-describedby="basic-addon1" name="first-name"
+											 ref={elem=>this.firstNameInput = elem}
 											 onChange={event=>this.handleMailInputChange(event)}/>
 								<input type="text" className="form-control" placeholder="Last name*"
 											 aria-label="Username" aria-describedby="basic-addon1" name="last-name"
+											 ref={elem=>this.lastNameInput = elem}
 											 onChange={event=>this.handleMailInputChange(event)}/>
 								<input type="email" className="form-control" placeholder="Email*"
 											 aria-label="Username" aria-describedby="basic-addon1" name="email"
+											 ref={elem=>this.emailInput = elem}
 											 onChange={event=>this.handleMailInputChange(event)}/>
 								<div className="input-group-append" id="button-addon4">
 									<button className="btn btn-outline-light" type="button"
@@ -205,6 +264,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 												<div className="form-group">
 													<label htmlFor="textarea">Message</label>
 													<textarea className="form-control" id="textarea" rows="4" name="message"
+																		ref={elem=>this.messageInput = elem}
 																		onChange={event=>this.handleMailInputChange(event)}/>
 												</div>
 												<div className="d-flex justify-content-end">
@@ -217,14 +277,14 @@ class StartPage extends React.Component { //все this.props мы получе�
 							</div>
 
 						</div>
-
 					</div>
 				</div>
 
+				<AlertHelper show={this.state.alert.show} idDanger={this.state.alert.isDanger}
+										 message={this.state.alert.message}/>
 			</div>
     );
   }
-
 }
 
 

@@ -9,7 +9,6 @@ import AlertModal from '../sections/AlertModal';
 import alertHelper from '../services/alert-helper';
 import './index.scss';
 
-
 class Edit extends React.Component{
   constructor(){
     super();
@@ -164,7 +163,6 @@ class Edit extends React.Component{
 		});
 	};
 
-
   render(){
 		return (
       <div className="Edit h-100">
@@ -305,7 +303,5 @@ class Edit extends React.Component{
       </div>
     )};
 }
-
-
 
 export default withRouter(Edit);

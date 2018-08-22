@@ -11,25 +11,27 @@ const router = express.Router();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 router.post('/api/mail', async (req, res) => {
-	const {receiver, message, subject} = req.body;
+	const {email, message, subject} = req.body;
 
-	sgMail.send({
-		to: receiver,
-		from: 'aom-95@live.com',
+	await sgMail.send({
+		to: 'manachinskiy@gmail.com',
+		from: email,
 		subject: subject,
 		text: message
-	}, (err, res)=>{
-		if(err)
+	}, (err, responce)=>{
+		if(err) {
+			console.log('error: ', err);
 			res.status(500).send({error: {
-				message: 'Send mail error.'
-			}});
-	});
+					message: 'Send mail error.'
+				}});
+			return;
+		}
 
-	res.send('ok');
+		res.send({data: {message: 'Message has sent successfully.'}});
+	});
 });
 
 router.get('*', (req, res, next)=>{
-	console.log('Cookies: ', req.cookies);
 	let context = {};
 	// if above are no routes has been found - page routes searching here
 	const body = renderToString(

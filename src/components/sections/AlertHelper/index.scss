@@ -1,0 +1,12 @@
+@import '../../variables';
+
+.AlertHelper{
+
+  .alert-group{
+    position: fixed;
+    z-index: 9999;
+    top: 10px;
+    justify-content: center
+  }
+
+}

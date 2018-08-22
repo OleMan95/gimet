@@ -51,8 +51,6 @@ export async function getExperts (filter, onError){
 	try {
 		let filterParam = filter ? `?filter=${filter}` : '';
 
-		console.log('==>',filterParam);
-
 		let response = await fetch(`/api/experts${filterParam}`, {
 			method: 'GET',
 			headers: {
@@ -170,26 +168,17 @@ export async function signUp (data){
 
 export async function sendMail (data){
 	try {
-
 		if(!data.email || !data.message || !data.subject)
-			return {error: {message:'Wrong data.'}};
+			return {error: {message:'Wrong data'}};
 
-		let response = await fetch('/api/mail', {
+		return await fetch('/api/mail', {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
-				receiver: data.email,
-				subject: data.subject,
-				message: data.message
-			})
+			body: JSON.stringify(data)
 		});
-
-		console.log(response);
-
-		return response;
 
 	} catch (err) {
 		console.error(err.message);
