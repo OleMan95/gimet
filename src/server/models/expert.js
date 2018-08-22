@@ -10,6 +10,7 @@ const ExpertSchema = new Schema({
 	questions:[],
 	contributors:[String],
 	consultationCount: Number,
+	published: {type: Boolean, default: false},
 	author:{
 		type: Schema.ObjectId,
 		ref: 'User',

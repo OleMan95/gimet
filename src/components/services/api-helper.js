@@ -138,8 +138,6 @@ export async function createOrUpdateExpert (id, body, onSuccess, onError){
 			});
 		}
 
-
-
 		if (response.status == 200) onSuccess(await response.json());
 		else onError(await response.json());
 

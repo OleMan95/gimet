@@ -14,7 +14,11 @@ class Experts{
 			}
 			let sort = req.query.filter ? {sort: {consultationCount: -1}} : {};
 
-			res.send(await Expert.find({}, null, sort));
+			let published = {published: true};
+			if(req.query.published == 'false')
+				published = {};
+
+			res.send(await Expert.find(published, null, sort));
 		}catch(err){
 			res.status(500).send({message: err.message});
 		}
@@ -27,12 +31,12 @@ class Experts{
 				return;
 			}
 
-			const id = ObjectId(req.params.id);
-			const expert = await Expert.findById(id).select({__v: 0});
-
-			res.send(expert);
+			await Expert.findOne({_id: ObjectId(req.params.id)}, function (err, doc){
+				if(err) res.status(500).send(err);
+				res.send(doc);
+			});
 		}catch(err){
-			res.status(403).send({message: err.message});
+			res.status(500).send({message: err.message});
 		}
 	}
 	//PUT /expert/:id/count
@@ -82,6 +86,7 @@ class Experts{
 			}
 			let payload;
 			let user;
+			let expert = {};
 
 			try{
 				payload = await jwtService.verify(req.headers.authorization);
@@ -91,32 +96,43 @@ class Experts{
 			}
 
 			const {id} = req.params;
-			const {name, description, questions, contributors} = req.body;
-			const author = req.body.author ? req.body.author : user._id;
+			const data = req.body;
 
-			const data = {name, description, questions, author, contributors};
+			if(!data.name ||
+					!data.description ||
+					!data.questions ||
+					!data.consultationCount ||
+					!data.published ||
+					!data.contributors){
+				new Error('Wrong data');
+			}
 
-			let expert = {};
+			console.log(data);
 
 			if(id){
-				Expert.findByIdAndUpdate(id, { $set: {name, description, questions, author, contributors}}, { new: true }, function (err, expert) {
-					if (err) console.log('err: ', err);
+				if(!data.author || data.author != user._id){
+					res.status(403).send({error:{message: 'Rejected'}});
+					return;
+				}
+
+				Expert.findByIdAndUpdate(id, { $set: data}, { new: true }, function (err, expert) {
+					if (err) new Error('Oops! Some error occurred while updating the expert.');
 					res.send(expert);
 				});
 			}else{
+				data.author = user._id;
 				expert = new Expert(data);
 				expert = await expert.save();
 				user.experts.push(ObjectId(expert._id));
 
 				User.findByIdAndUpdate({_id: payload._id}, user, { new: true }, function (err, user) {
-					if (err) console.log('err: ', err);
+					if (err) new Error('Oops! Some error occurred while creating the expert.');
 					res.send(expert);
 				});
 			}
 
-			// res.send(expert);
 		}catch (err){
-			res.status(500).send({message: err.message});
+			res.status(500).send({error:{message: err.message}});
 		}
 
 	}
