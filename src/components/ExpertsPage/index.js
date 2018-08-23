@@ -4,6 +4,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 import {getExperts} from '../services/api-helper';
 
 import Header from '../sections/Header/';
+import PaginationHelper from '../sections/PaginationHelper/';
 
 import './index.scss';
 
@@ -11,21 +12,31 @@ class Experts extends React.Component{
   constructor(){
     super();
     this.state={
-      experts:[],
+      experts: [],
+      count: 0,
+      skip:0,
     };
   };
 
   async componentDidMount() {
-    let experts = await getExperts('views', async err=>{});
-    console.log(experts);
-    experts = experts.filter(expert=>expert._id!=null);
+    await this.fetchExperts(0);
+  };
 
-    experts.forEach((expert)=>{
+  fetchExperts = async (skip) => {
+    let data = await getExperts({sort: true, skip, published: false}, async err => {
+    });
+    let experts = data.experts.filter(expert => expert._id != null);
+
+    experts.forEach((expert) => {
       let date = isodate(expert.updatedAt.toString());
-      expert.updatedAt = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+      expert.updatedAt = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
     });
 
-		this.setState({experts});
+    this.setState({
+      experts,
+      count: experts.length
+    });
+    return data.count;
   };
 
   // handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
@@ -41,30 +52,6 @@ class Experts extends React.Component{
   //       break;
   //     default:
   //   }
-  // };
-
-  // onDeleteExpertClick= async (expert) => { // процес удаления експерта при нажатии кнопки удаления в списке експертов.
-  //     const userId = this.state.user._id;
-  //     console.log(userId);
-  //     const url = '/v1/expert/' + expert._id;
-  //     console.log('expert: ', expert._id);
-  //
-  //     const response = await fetch(url, {
-  //         method: 'DELETE',
-  //         headers: {
-  //             'Content-Type': 'application/json',
-  //             'Authorization': getToken()
-  //         }
-  //     });
-  //
-  //     if (response.status === 200) {
-  //         alert("Expert has deleted");
-  //     }else {
-  //         console.log('There was a problem with fetch operation: ' + response);
-  //         alert("Expert not found");
-  //     }
-  //
-  //     await this.fetchUser();
   // };
 
   render(){
@@ -101,6 +88,7 @@ class Experts extends React.Component{
             </ul>
           </div>
         </div>
+        <PaginationHelper count={this.state.count} fetchExperts={this.fetchExperts}/>
       </div>
     )};
 }

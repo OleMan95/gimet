@@ -47,19 +47,21 @@ export async function getUserById ({id, populate, token}, onSuccess, onError){
 	}
 }
 
-export async function getExperts (filter, onError){
+export async function getExperts ({sort, skip, published}, onError){
 	try {
-		let filterParam = filter ? `?filter=${filter}` : '';
+		let url = `/api/experts?${sort ? `sort=views` : 'sort=false'}${skip >= 0 ? `&skip=${skip}` : ''}${published == false ? `&published=false` : ''}`;
 
-		let response = await fetch(`/api/experts${filterParam}`, {
+		let response = await fetch(url, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		});
 
-		if (response.status != 200) onError(await response.json());
-		return await response.json();
+		let data = await response.json();
+
+		if (response.status != 200) onError(data);
+		return data.data;
 	}catch (err) {
 		console.error(err.message);
 	}

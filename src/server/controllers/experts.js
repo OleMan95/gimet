@@ -12,13 +12,29 @@ class Experts{
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
-			let sort = req.query.filter ? {sort: {consultationCount: -1}} : {};
+
+      let options = {sort: {consultationCount: -1}};
+      if(req.query.sort == 'false')
+        options = {};
+
+			if(req.query.skip){
+				options.limit = 7;
+				options.skip = parseInt(req.query.skip);
+			}
 
 			let published = {published: true};
 			if(req.query.published == 'false')
 				published = {};
 
-			res.send(await Expert.find(published, null, sort));
+			res.send({
+				data:{
+					experts: await Expert.find(published, null, options),
+					count: await Expert.count(published, null, {
+						sort: options.sort,
+						skip: options.skip
+					})
+				}
+			});
 		}catch(err){
 			res.status(500).send({message: err.message});
 		}
