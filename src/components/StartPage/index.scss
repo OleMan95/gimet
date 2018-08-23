@@ -120,6 +120,27 @@
 
         .card{
           width: 21rem;
+
+          .card-body{
+            overflow-y: hidden;
+
+            .btn{
+              justify-self: flex-end;
+            }
+            .justify-self-end{
+              justify-self: flex-end;
+            }
+
+            &:hover{
+              .name-block{
+                opacity: 0;
+              }
+              .description{
+                opacity: 1;
+              }
+            }
+          }
+
         }
 
         @media (max-width: $sm) {

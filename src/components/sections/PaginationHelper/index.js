@@ -63,15 +63,15 @@ class PaginationHelper extends React.Component {
             </li>
             <li className={this.state.currentPage+1 == this.state.paginationItemOne ? "page-item active" : "page-item"}>
               <button className="page-link" id="pagination-item-1"
-                      onClick={()=>this.setPage(this.state.paginationItemOne)}>{this.state.paginationItemOne}</button>
+                      onClick={()=>this.setPage(this.state.paginationItemOne-1)}>{this.state.paginationItemOne}</button>
             </li>
             <li className={this.state.currentPage+1 == this.state.paginationItemTwo ? "page-item active" : "page-item"}>
               <button className="page-link" id="pagination-item-2"
-                      onClick={()=>this.setPage(this.state.paginationItemTwo)}>{this.state.paginationItemTwo}</button>
+                      onClick={()=>this.setPage(this.state.paginationItemTwo-1)}>{this.state.paginationItemTwo}</button>
             </li>
             <li className={this.state.currentPage+1 == this.state.paginationItemThree ? "page-item active" : "page-item"}>
               <button className="page-link" id="pagination-item-3"
-                      onClick={()=>this.setPage(this.state.paginationItemThree)}>{this.state.paginationItemThree}</button>
+                      onClick={()=>this.setPage(this.state.paginationItemThree-1)}>{this.state.paginationItemThree}</button>
             </li>
             <li className={this.props.count < 7 ? "page-item disabled" : "page-item"}>
               <button className="page-link" aria-label="Next"

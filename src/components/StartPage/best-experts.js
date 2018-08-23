@@ -14,25 +14,25 @@ class Section3 extends React.Component { //все this.props мы получем
 
 	async componentDidMount() {
 
-		const data = await getExperts('views', err=>{
+		const {experts} = await getExperts({sort: true}, err=>{
 			console.log(err);
 		});
 
-		const experts = [];
+		const expertsModified = [];
 		for(let i=0; i<3; i++){
-			let date = isodate(data[i].createdAt.toString());
-			data[i].createdAt = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
+			let date = isodate(experts[i].createdAt.toString());
+      experts[i].createdAt = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
 
-			await getUserById({id: data[i].author}, res=>{
-				data[i].author = res.data.name;
+			await getUserById({id: experts[i].author}, res=>{
+        experts[i].author = res.data.name;
 			}, async (err) => {
 					console.log('err: ', err);
 			});
 
-			experts.push(data[i]);
+			expertsModified.push(experts[i]);
 		}
 
-		this.setState({experts});
+		this.setState({experts: expertsModified});
 	}
 
   render(){
@@ -44,21 +44,24 @@ class Section3 extends React.Component { //все this.props мы получем
 					<div className='cards row'>
 						{this.state.experts.map(expert=>
 							<div key={expert._id} className='card'>
-								<div className="card-body">
+								<div className="card-body d-flex flex-column">
 									<h5 className="card-title font-weight-bold">{expert.name}</h5>
-									<div className="d-flex justify-content-between">
+									<div className="d-flex w-100 justify-content-between">
 										<h6 className="card-subtitle mb-2 text-muted">{expert.author}</h6>
 										<h6 className="card-subtitle mb-2 text-muted">{expert.createdAt}</h6>
 									</div>
-									<p className='card-text description'>{expert.description}</p>
-									<NavLink className='card-link btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
+									<p className='card-text description text-justify'>{expert.description}</p>
+
+									<div className="d-flex justify-content-between align-items-center mt-auto">
+                    <NavLink className='card-link btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
+										<p className="mb-0"><i className="ion-eye mr-1"/>{expert.consultationCount || 0}</p>
+									</div>
 								</div>
 							</div>
 						)}
 					</div>
 
 					<NavLink className='card-link btn btn-outline-dark mt-4 align-self-center' to={'/experts'}>View all</NavLink>
-
 				</div>
 			</div>
     );
