@@ -6,6 +6,7 @@ import {getToken} from '../services/tokenService';
 
 import Header from '../sections/Header/';
 import Footer from '../sections/Footer/';
+import MenuMore from './MenuMore';
 
 import './index.scss';
 
@@ -36,6 +37,10 @@ class Profile extends React.Component{
 		});
 
 		this.setState({user,experts,isPublic});
+	};
+
+  toggleDropdownMore = ()=>{
+
 	};
 
   // handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
@@ -120,9 +125,15 @@ class Profile extends React.Component{
             <ul className="list-group list-group-flush">
 							{this.state.experts.map(expert =>
                 <li key={expert._id} className='list-group-item d-flex'>
-                  <p className='title'><b>{expert.name}</b></p>
+									<div className="d-flex align-items-center">
+										<p className='title'><b>{expert.name}</b></p>
+										<div className="ml-auto"><MenuMore expert={expert}/></div>
+									</div>
 									<p className='date'>updated at: {expert.updatedAt} <span className="mx-2">|</span>
-										<i className="ion-eye mr-1"/>{expert.consultationCount || 0}</p>
+										<i className="ion-eye mr-1"/>{expert.consultationCount || 0} <span className="mx-2">|</span>
+										<i className={expert.published ? "ion-android-cloud-done published-icon" : "ion-android-cloud published-icon"}
+											 title={expert.published ? "Published" : "Unpublished"}/>
+									</p>
                   <p className='description'>{expert.description}</p>
 									<div className='d-flex'>
 										<NavLink className='consultation-btn btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
