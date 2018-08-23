@@ -3,6 +3,7 @@ import {NavLink, withRouter } from 'react-router-dom';
 import {getToken} from '../services/tokenService';
 import {getExpertById, createOrUpdateExpert} from '../services/api-helper';
 import Header from '../sections/Header/';
+import Footer from '../sections/Footer/';
 import EditModal from '../sections/EditModal/';
 import ExpertSettingsModal from '../sections/ExpertSettingsModal';
 import AlertModal from '../sections/AlertModal';
@@ -300,6 +301,7 @@ class Edit extends React.Component{
 					</div>
 				</div>
 
+				<Footer/>
       </div>
     )};
 }

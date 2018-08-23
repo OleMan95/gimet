@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
+import Footer from '../sections/Footer/';
 import ConsultationInit from './ConsultationInit';
 import ConsultationInterview from './ConsultationInterview';
 import ConsultationResult from './ConsultationResult';
@@ -63,8 +64,8 @@ class Consultation extends React.Component{
 						<ConsultationResult result={this.state.result} expert={this.state.expert} onStartClick={this.onStartClick}/>
 						: ''}
 
-
 				</div>
+				<Footer/>
       </div>
     )
   }

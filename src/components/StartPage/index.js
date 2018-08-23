@@ -9,6 +9,7 @@ import whatIsES from '../../data/images/icons/technology(4).svg';
 import AlertHelper from '../sections/AlertHelper';
 
 import './index.scss';
+import Footer from "../sections/Footer";
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
 	constructor(props) {
@@ -282,6 +283,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 
 				<AlertHelper show={this.state.alert.show} idDanger={this.state.alert.isDanger}
 										 message={this.state.alert.message}/>
+				<Footer/>
 			</div>
     );
   }

@@ -1,7 +1,7 @@
 import {renderToString} from "react-dom/server";
 import favicon from "../data/logo-black.svg";
 
-export default ({footer, body, title }) => {
+export default ({body, title }) => {
 	return `
     <!DOCTYPE html>
 		<!--─────█─▄▀█──█▀▄─█─────-->
@@ -34,7 +34,6 @@ export default ({footer, body, title }) => {
 			</head>
 			<body>
 				<div id="root">${body}</div>
-				${footer}
 			</body>
 			<!--───▄▄▄-->
 			<!--─▄▀░▄░▀▄-->

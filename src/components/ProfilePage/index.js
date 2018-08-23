@@ -5,6 +5,7 @@ import {getUserById} from '../services/api-helper';
 import {getToken} from '../services/tokenService';
 
 import Header from '../sections/Header/';
+import Footer from '../sections/Footer/';
 
 import './index.scss';
 
@@ -133,7 +134,8 @@ class Profile extends React.Component{
             </ul>
           </div>
         </div>
-      </div>
+				<Footer/>
+			</div>
     )};
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {NavLink, withRouter} from 'react-router-dom';
 import logo from "../../../data/logo.svg";
 import "./index.scss";
 
@@ -11,7 +12,7 @@ class Footer extends Component {
 
 					<div className="col">
 						<img src={logo} alt='GIMET'/>
-						<a className="navbar-brand" href="/">GIMET</a>
+						<NavLink className="navbar-brand" to={"/"}>GIMET</NavLink>
 					</div>
 
 					<div className="col">
@@ -30,21 +31,21 @@ class Footer extends Component {
 						<ul>
 							<li>
 								<i className="ion-chevron-right"></i>
-								<a href="/edit/new">Create new expert</a>
+								<NavLink to={"/edit/new"}>Create new expert</NavLink>
 							</li>
 							<li>
 								<i className="ion-chevron-right"></i>
-								<a href="/experts">Search for expert</a>
+								<NavLink to={"/experts"}>Search for expert</NavLink>
 							</li>
 							<li>
 								<i className="ion-chevron-right"></i>
-								<a href="/about">About</a>
+								<NavLink to={"/about"}>About</NavLink>
 							</li>
 						</ul>
 					</div>
 
 					<div className="col">
-						<a href="/experts">Email: aom-95@live.com</a>
+						<NavLink to={"/experts"}>Email: aom-95@live.com</NavLink>
 					</div>
 
 				</div>
@@ -53,4 +54,4 @@ class Footer extends Component {
 	}
 }
 
-export default Footer;
+export default withRouter(Footer);

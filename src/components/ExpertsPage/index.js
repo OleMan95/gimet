@@ -4,6 +4,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 import {getExperts} from '../services/api-helper';
 
 import Header from '../sections/Header/';
+import Footer from '../sections/Footer/';
 import PaginationHelper from '../sections/PaginationHelper/';
 
 import './index.scss';
@@ -89,6 +90,7 @@ class Experts extends React.Component{
           </div>
         </div>
         <PaginationHelper count={this.state.count} fetchExperts={this.fetchExperts}/>
+        <Footer/>
       </div>
     )};
 }
