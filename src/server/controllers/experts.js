@@ -123,8 +123,6 @@ class Experts{
 				new Error('Wrong data');
 			}
 
-			console.log(data);
-
 			if(id){
 				if(!data.author || data.author != user._id){
 					res.status(403).send({error:{message: 'Rejected'}});
@@ -132,7 +130,10 @@ class Experts{
 				}
 
 				Expert.findByIdAndUpdate(id, { $set: data}, { new: true }, function (err, expert) {
-					if (err) new Error('Oops! Some error occurred while updating the expert.');
+					if (err){
+						res.status(500).send({error:{message: err.message}});
+						return;
+					}
 					res.send(expert);
 				});
 			}else{
@@ -142,12 +143,17 @@ class Experts{
 				user.experts.push(ObjectId(expert._id));
 
 				User.findByIdAndUpdate({_id: payload._id}, user, { new: true }, function (err, user) {
-					if (err) new Error('Oops! Some error occurred while creating the expert.');
+					if (err){
+						res.status(500).send({error:{message: err.message}});
+						return;
+					}
+
 					res.send(expert);
 				});
 			}
 
 		}catch (err){
+			console.log(err);
 			res.status(500).send({error:{message: err.message}});
 		}
 

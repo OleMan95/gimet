@@ -6,6 +6,7 @@ import {getToken} from '../services/tokenService';
 
 import Header from '../sections/Header/';
 import Footer from '../sections/Footer/';
+import AlertHelper from '../sections/AlertHelper/';
 import MenuMore from './MenuMore';
 
 import './index.scss';
@@ -16,7 +17,12 @@ class Profile extends React.Component{
     this.state={
       user: {},
       experts:[],
-			isPublic: true
+			isPublic: true,
+			alert: {
+      	show: false,
+				isDanger: true,
+				message: ''
+			}
     };
   };
 
@@ -33,16 +39,56 @@ class Profile extends React.Component{
 
 		experts.forEach((expert)=>{
 			let date = isodate(expert.updatedAt.toString());
-			expert.updatedAt = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+			expert.updatedAt = `${date.getDate() < 10 ? "0"+date.getDate() : date.getDate()}
+				.${date.getMonth()+1 < 10 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
+				 ${date.getHours()}:${date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes()}`;
 		});
 
 		this.setState({user,experts,isPublic});
 	};
 
-  toggleDropdownMore = ()=>{
+	fireSuccessAlarm = (data)=>{
+		let experts = this.state.experts;
 
+		experts.map((expert, index)=>{
+			if(expert._id === data._id){
+				let date = isodate(data.updatedAt.toString());
+				data.updatedAt = `${date.getDate() < 0 ? "0"+date.getDate() : date.getDate()}
+				.${date.getMonth()+1 < 0 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
+				 ${date.getHours()}:${date.getMinutes() < 0 ? "0"+date.getMinutes() : date.getMinutes()}`;
+
+				experts[index] = data;
+			}
+		});
+
+		this.showAlarm({
+			show: true,
+			isDanger: false,
+			message: 'Expert has updated successfully'
+		});
+		this.setState({experts});
+	};
+	fireErrorAlarm = (err)=>{
+		this.showAlarm({
+			show: true,
+			isDanger: true,
+			message: err.error.message
+		});
 	};
 
+	showAlarm = (alert)=>{
+		this.setState({alert});
+
+		setTimeout(()=>{
+			this.setState({
+				alert:{
+					show: false,
+					isDanger: true,
+					message: ''
+				}
+			});
+		}, 4000);
+	};
   // handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
   //   switch (event.target.name) {
   //     case 'findExpert':
@@ -127,9 +173,13 @@ class Profile extends React.Component{
                 <li key={expert._id} className='list-group-item d-flex'>
 									<div className="d-flex align-items-center">
 										<p className='title'><b>{expert.name}</b></p>
-										<div className="ml-auto"><MenuMore expert={expert}/></div>
+										<div className="ml-auto">
+											<MenuMore key={expert._id} expert={expert}
+																fireSuccessAlarm={this.fireSuccessAlarm}
+																fireErrorAlarm={this.fireErrorAlarm} />
+										</div>
 									</div>
-									<p className='date'>updated at: {expert.updatedAt} <span className="mx-2">|</span>
+									<p className='date'>updated: {expert.updatedAt} <span className="mx-2">|</span>
 										<i className="ion-eye mr-1"/>{expert.consultationCount || 0} <span className="mx-2">|</span>
 										<i className={expert.published ? "ion-android-cloud-done published-icon" : "ion-android-cloud published-icon"}
 											 title={expert.published ? "Published" : "Unpublished"}/>
@@ -145,6 +195,8 @@ class Profile extends React.Component{
             </ul>
           </div>
         </div>
+				<AlertHelper show={this.state.alert.show} isDanger={this.state.alert.isDanger}
+										 message={this.state.alert.message}/>
 				<Footer/>
 			</div>
     )};

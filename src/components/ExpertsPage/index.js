@@ -24,13 +24,14 @@ class Experts extends React.Component{
   };
 
   fetchExperts = async (skip) => {
-    let data = await getExperts({sort: true, skip, published: false}, async err => {
-    });
+    let data = await getExperts({sort: true, skip}, async err => {});
     let experts = data.experts.filter(expert => expert._id != null);
 
     experts.forEach((expert) => {
       let date = isodate(expert.updatedAt.toString());
-      expert.updatedAt = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+      expert.updatedAt = `${date.getDate() < 0 ? "0"+date.getDate() : date.getDate()}
+				.${date.getMonth()+1 < 0 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
+				 ${date.getHours()}:${date.getMinutes() < 0 ? "0"+date.getMinutes() : date.getMinutes()}`;
     });
 
     this.setState({
