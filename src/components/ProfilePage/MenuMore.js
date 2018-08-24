@@ -46,13 +46,43 @@ class MenuMore extends React.Component{
 					<button className="btn btn-light" onClick={this.toggleMenu}>
 						<i className="ion-more"/>
 					</button>
-					<div className={this.state.show ? "dropdown-menu show" : "dropdown-menu"}>
-						<button className="dropdown-item" onClick={this.handlePublishClick}>
-							{this.props.expert.published ? 'Unpublish' : 'Publish'}
-						</button>
-						<button className="dropdown-item">Copy link</button>
-						<button className="dropdown-item">Export knowledge base</button>
-						<button className="dropdown-item">Add contributor</button>
+					<div className={this.state.show ? "dropdown-menu py-0 show" : "dropdown-menu py-0"}>
+
+						<ul className="list-group">
+							{this.props.expert.published ?
+								<li className="list-group-item" onClick={this.handlePublishClick}>
+									<span className="">
+										<i className="ion-android-download"/>
+										Unpublish
+									</span>
+								</li>
+								:
+								<li className="list-group-item" onClick={this.handlePublishClick}>
+									<span className="">
+										<i className="ion-android-upload"/>
+										Publish
+									</span>
+								</li>
+							}
+							<li className="list-group-item disabled">
+								<span className="">
+									<i className="ion-link"/>
+									Copy link
+								</span>
+							</li>
+							<li className="list-group-item disabled">
+								<span className="">
+									<i className="ion-code-download"/>
+									Export
+								</span>
+							</li>
+							<li className="list-group-item disabled">
+								<span className="">
+									<i className="ion-person-add"/>
+									Add contributor
+								</span>
+							</li>
+						</ul>
 					</div>
 				</div>
 
