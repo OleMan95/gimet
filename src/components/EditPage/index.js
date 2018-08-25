@@ -136,14 +136,15 @@ class Edit extends React.Component{
 	onDeleteQuestion=(key)=>{
 		const elem =
 			<AlertModal title={'title'} text={`Are you sure you want to remove the question "${key}"?`}
-				questionKey={key}
+				options={{id: key}}
 				onResult={this.onAlertResult}/>;
 
 		this.setState({
 			isAlertOpen: elem,
 		});
 	};
-	onAlertResult=(key)=>{
+	onAlertResult=(options)=>{
+		const key = options.id;
 		const questions = this.state.questions;
 		if(!key){
 			this.setState({

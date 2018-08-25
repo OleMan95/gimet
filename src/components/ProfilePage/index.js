@@ -7,6 +7,7 @@ import {getToken} from '../services/tokenService';
 import Header from '../sections/Header/';
 import Footer from '../sections/Footer/';
 import AlertHelper from '../sections/AlertHelper/';
+import AlertModal from '../sections/AlertModal/';
 import MenuMore from './MenuMore';
 
 import './index.scss';
@@ -18,6 +19,10 @@ class Profile extends React.Component{
       user: {},
       experts:[],
 			isPublic: true,
+      alertModal: {
+      	show: false,
+				name: ''
+			},
 			alert: {
       	show: false,
 				isDanger: true,
@@ -35,21 +40,12 @@ class Profile extends React.Component{
   };
 
   setUser=(user, isPublic)=>{
-		// const experts = user.experts.filter(expert=>expert._id!=null);
-		// experts.forEach((expert)=>{
-		// 	let date = isodate(expert.updatedAt.toString());
-		// 	expert.updatedAt = `${date.getDate() < 10 ? "0"+date.getDate() : date.getDate()}
-		// 		.${date.getMonth()+1 < 10 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
-		// 		 ${date.getHours()}:${date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes()}`;
-		// });
-
 		this.setState({
 			user,
 			experts: this.changeDateFormat({experts: user.experts}),
 			isPublic
 		});
 	};
-
 	fireSuccessAlarm = (data)=>{
 		this.showAlarm({
 			show: true,
@@ -67,7 +63,6 @@ class Profile extends React.Component{
 			message: err.error.message
 		});
 	};
-
 	showAlarm = (alert)=>{
 		this.setState({alert});
 
@@ -99,6 +94,26 @@ class Profile extends React.Component{
 				isDanger: true,
 				message: err.error.message
 			});
+		});
+  };
+
+  showAlertModal = (expert)=>{
+  	this.setState({
+      alertModal: {
+      	show: true,
+				options: expert,
+			}
+		});
+	};
+  onAlertResult = async (expert) => {
+  	if(expert)
+    	await this.onDeleteExpertClick(expert._id);
+
+		this.setState({
+			alertModal: {
+				show: false,
+				options: {}
+			}
 		});
   };
 
@@ -182,7 +197,7 @@ class Profile extends React.Component{
 										<NavLink className='consultation-btn btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
 										{this.state.isPublic ? '' : <NavLink className='btn btn-light' to={'/edit/'+expert._id}>Edit</NavLink>}
 										{this.state.isPublic ? '' :
-											<button className='btn btn-outline-danger' onClick={()=>this.onDeleteExpertClick(expert._id)}>Delete</button>}
+											<button className='btn btn-outline-danger' onClick={()=>this.showAlertModal(expert)}>Delete</button>}
 									</div>
                 </li>
               )}
@@ -191,6 +206,14 @@ class Profile extends React.Component{
         </div>
 				<AlertHelper show={this.state.alert.show} isDanger={this.state.alert.isDanger}
 										 message={this.state.alert.message}/>
+
+				{this.state.alertModal.show ?
+          <AlertModal title={'title'} text={`Are you sure you want to remove an expert "${this.state.alertModal.options.name}"?`}
+                      options={this.state.alertModal.options}
+                      onResult={this.onAlertResult}/>
+					: ''
+				}
+
 				<Footer/>
 			</div>
     )};

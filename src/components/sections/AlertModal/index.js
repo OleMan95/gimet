@@ -10,6 +10,7 @@ class AlertModal extends React.Component {
 	}
 
   render(){
+
     return (
       <div className={"AlertModal modal fade show"} ref={(elem)=>this.modal=elem}
            tabIndex="-1" role="dialog"
@@ -28,7 +29,7 @@ class AlertModal extends React.Component {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>this.props.onResult(false)}>Close</button>
-              <button type="button" className="btn btn-primary" onClick={()=>this.props.onResult(this.props.questionKey)}>Apply</button>
+              <button type="button" className="btn btn-primary" onClick={()=>this.props.onResult(this.props.options)}>Apply</button>
             </div>
           </div>
         </div>

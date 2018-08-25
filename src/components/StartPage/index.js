@@ -1,15 +1,14 @@
 import React from 'react';
 import {NavLink, withRouter} from 'react-router-dom';
 import Header from '../sections/Header/';
-import Section3 from './best-experts';
+import Section3 from './BestExperts.js';
 import {sendMail} from '../services/api-helper';
 import technologies from '../../data/images/icons/artificial-intelligence(2).svg';
 import createExpert from '../../data/images/icons/flask.svg';
 import whatIsES from '../../data/images/icons/technology(4).svg';
 import AlertHelper from '../sections/AlertHelper';
-
-import './index.scss';
 import Footer from "../sections/Footer";
+import './index.scss';
 
 class StartPage extends React.Component { //все this.props мы получем как аргументы функции
 	constructor(props) {
@@ -26,20 +25,20 @@ class StartPage extends React.Component { //все this.props мы получе�
 	  };
 	}
 
-	handleClose=()=>{
+	handleClose = ()=>{
 		this.setState({ modalShow: '' });
 	};
-	handleShow=()=>{
+	handleShow = ()=>{
 		this.setState({ modalShow: 'show' });
 	};
 
-	handleMailClose=()=>{
+	handleMailClose = ()=>{
 		this.setState({ mailModalShow: '' });
 	};
-	handleMailShow=()=>{
+	handleMailShow = ()=>{
 		this.setState({ mailModalShow: 'show' });
 	};
-	handleMailInputChange=(event)=>{
+	handleMailInputChange = (event)=>{
 
 		let mailInputData = this.state.mailInputData;
 
@@ -63,7 +62,7 @@ class StartPage extends React.Component { //все this.props мы получе�
 			mailInputData
 		});
 	};
-	handleSubmit= async (event) => {
+	handleSubmit = async (event) => {
 		event.preventDefault();
 
 		await sendMail({
