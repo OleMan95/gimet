@@ -1,5 +1,5 @@
 import React from 'react';
-import isodate from 'isodate';
+import moment from 'moment';
 import {NavLink, withRouter} from 'react-router-dom';
 import {getExperts} from '../services/api-helper';
 
@@ -28,10 +28,7 @@ class Experts extends React.Component{
     let experts = data.experts.filter(expert => expert._id != null);
 
     experts.forEach((expert) => {
-      let date = isodate(expert.updatedAt.toString());
-      expert.updatedAt = `${date.getDate() < 0 ? "0"+date.getDate() : date.getDate()}
-				.${date.getMonth()+1 < 0 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
-				 ${date.getHours()}:${date.getMinutes() < 0 ? "0"+date.getMinutes() : date.getMinutes()}`;
+      expert.updatedAt = moment(expert.updatedAt).fromNow();
     });
 
     this.setState({
@@ -79,7 +76,7 @@ class Experts extends React.Component{
 							{this.state.experts.map(expert =>
                 <li key={expert._id} className='list-group-item d-flex'>
                   <p className='title'><b>{expert.name}</b></p>
-									<p className='date'>updated at: {expert.updatedAt} <span className="mx-2">|</span>
+									<p className='date'>{expert.updatedAt} <span className="mx-2">|</span>
                     <i className="ion-eye mr-1"/>{expert.consultationCount || 0}</p>
                   <p className='description'>{expert.description}</p>
 									<div className='d-flex'>

@@ -40,17 +40,10 @@
 
       }
 
-      .btns-bar{
+      .btn-group{
         justify-content: center;
         align-items: flex-start;
         margin-left: auto;
-
-        a{
-          margin-right: .5rem;
-          &:last-of-type{
-            margin-right: 0;
-          }
-        }
       }
 
     }
@@ -61,6 +54,7 @@
   }
 
   .section-2{
+    min-height: calc(100vh - 240px);
 
     .list-group{
 

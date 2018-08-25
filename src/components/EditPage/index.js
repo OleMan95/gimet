@@ -166,7 +166,7 @@ class Edit extends React.Component{
 
   render(){
 		return (
-      <div className="Edit h-100">
+      <div className="Edit">
 				<Header />
 				<div className="section-1 d-flex">
 					<div className="container d-flex">
@@ -185,7 +185,7 @@ class Edit extends React.Component{
 					</div>
 				</div>
 
-				<div className="section-2 h-100 bg-light">
+				<div className="section-2 bg-light">
 					<div className="container py-5">
 						<div className="row">
 

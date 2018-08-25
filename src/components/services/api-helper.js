@@ -148,6 +148,27 @@ export async function createOrUpdateExpert (id, body, onSuccess, onError){
 	}
 }
 
+export async function deleteExpert (id, onSuccess, onError){
+	try {
+		let token = getToken();
+
+		let response = await fetch('/api/expert/' + id, {
+			method: 'DELETE',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': token
+			}
+		});
+
+		if (response.status == 200) onSuccess(await response.json());
+		else onError(await response.json());
+
+	}catch (err) {
+		console.error(err);
+	}
+}
+
 export async function signUp (data){
 	try {
 		let response = await fetch('/api/signup', {

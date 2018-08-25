@@ -1,7 +1,7 @@
 import React from 'react';
-import isodate from 'isodate';
+import moment from 'moment';
 import {NavLink, withRouter} from 'react-router-dom';
-import {getUserById} from '../services/api-helper';
+import {deleteExpert, getUserById} from '../services/api-helper';
 import {getToken} from '../services/tokenService';
 
 import Header from '../sections/Header/';
@@ -35,38 +35,30 @@ class Profile extends React.Component{
   };
 
   setUser=(user, isPublic)=>{
-		const experts = user.experts.filter(expert=>expert._id!=null);
+		// const experts = user.experts.filter(expert=>expert._id!=null);
+		// experts.forEach((expert)=>{
+		// 	let date = isodate(expert.updatedAt.toString());
+		// 	expert.updatedAt = `${date.getDate() < 10 ? "0"+date.getDate() : date.getDate()}
+		// 		.${date.getMonth()+1 < 10 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
+		// 		 ${date.getHours()}:${date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes()}`;
+		// });
 
-		experts.forEach((expert)=>{
-			let date = isodate(expert.updatedAt.toString());
-			expert.updatedAt = `${date.getDate() < 10 ? "0"+date.getDate() : date.getDate()}
-				.${date.getMonth()+1 < 10 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
-				 ${date.getHours()}:${date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes()}`;
+		this.setState({
+			user,
+			experts: this.changeDateFormat({experts: user.experts}),
+			isPublic
 		});
-
-		this.setState({user,experts,isPublic});
 	};
 
 	fireSuccessAlarm = (data)=>{
-		let experts = this.state.experts;
-
-		experts.map((expert, index)=>{
-			if(expert._id === data._id){
-				let date = isodate(data.updatedAt.toString());
-				data.updatedAt = `${date.getDate() < 0 ? "0"+date.getDate() : date.getDate()}
-				.${date.getMonth()+1 < 0 ? "0"+(date.getMonth()+1) : date.getMonth()}.${date.getFullYear()}
-				 ${date.getHours()}:${date.getMinutes() < 0 ? "0"+date.getMinutes() : date.getMinutes()}`;
-
-				experts[index] = data;
-			}
-		});
-
 		this.showAlarm({
 			show: true,
 			isDanger: false,
 			message: 'Expert has updated successfully'
 		});
-		this.setState({experts});
+		this.setState({
+			experts: this.changeDateFormat({expert: data})
+		});
 	};
 	fireErrorAlarm = (err)=>{
 		this.showAlarm({
@@ -89,44 +81,45 @@ class Profile extends React.Component{
 			});
 		}, 4000);
 	};
-  // handleFilterChange=(event)=>{ // производится поиск експертов по имени, которое введет пользователь
-  //   switch (event.target.name) {
-  //     case 'findExpert':
-  //       const newExperts = this.state.experts.filter(expert => {
-  //           const name = expert.name.toLowerCase();
-  //           return name.includes(event.target.value.toLowerCase());
-  //       });
-  //
-  //       this.displayExperts(newExperts);
-  //
-  //       break;
-  //     default:
-  //   }
-  // };
 
-  // onDeleteExpertClick= async (expert) => { // процес удаления експерта при нажатии кнопки удаления в списке експертов.
-  //     const userId = this.state.user._id;
-  //     console.log(userId);
-  //     const url = '/v1/expert/' + expert._id;
-  //     console.log('expert: ', expert._id);
-  //
-  //     const response = await fetch(url, {
-  //         method: 'DELETE',
-  //         headers: {
-  //             'Content-Type': 'application/json',
-  //             'Authorization': getToken()
-  //         }
-  //     });
-  //
-  //     if (response.status === 200) {
-  //         alert("Expert has deleted");
-  //     }else {
-  //         console.log('There was a problem with fetch operation: ' + response);
-  //         alert("Expert not found");
-  //     }
-  //
-  //     await this.fetchUser();
-  // };
+  onDeleteExpertClick = async (id) => {
+		await deleteExpert(id, res=>{
+			this.setState({
+				experts: this.changeDateFormat({experts: res.data.experts})
+			});
+
+			this.showAlarm({
+				show: true,
+				isDanger: false,
+				message: res.data.message
+			});
+		}, err=>{
+			this.showAlarm({
+				show: true,
+				isDanger: true,
+				message: err.error.message
+			});
+		});
+  };
+
+  changeDateFormat = ({expert, experts})=>{
+		let newExperts = this.state.experts;
+
+		if(expert){
+			newExperts.map(item=>{
+				if(item._id === expert._id){
+					item.updatedAt = moment(expert.updatedAt).fromNow();
+				}
+			});
+		}else{
+			experts.forEach(item=>{
+				item.updatedAt = moment(item.updatedAt).fromNow();
+			});
+
+			newExperts = experts;
+		}
+		return newExperts;
+	};
 
   render(){
 
@@ -156,7 +149,7 @@ class Profile extends React.Component{
 							</div>
 						</div>
 
-						<div className='btns-bar d-flex'>
+						<div className='btn-group d-flex'>
 							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/edit/new'}>
 								<i className="ion-plus-round"></i></NavLink>
 							<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/account'}>
@@ -179,7 +172,7 @@ class Profile extends React.Component{
 																fireErrorAlarm={this.fireErrorAlarm} />
 										</div>
 									</div>
-									<p className='date'>updated: {expert.updatedAt} <span className="mx-2">|</span>
+									<p className='date'>{expert.updatedAt} <span className="mx-2">|</span>
 										<i className="ion-eye mr-1"/>{expert.consultationCount || 0} <span className="mx-2">|</span>
 										<i className={expert.published ? "ion-android-cloud-done published-icon" : "ion-android-cloud published-icon"}
 											 title={expert.published ? "Published" : "Unpublished"}/>
@@ -187,8 +180,9 @@ class Profile extends React.Component{
                   <p className='description'>{expert.description}</p>
 									<div className='d-flex'>
 										<NavLink className='consultation-btn btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
-										<NavLink className={this.state.isPublic ? 'btn btn-light d-none' : 'btn btn-light'} to={'/edit/'+expert._id}>Edit</NavLink>
-										<button className={this.state.isPublic ? 'btn btn-outline-danger d-none' : 'btn btn-outline-danger'}>Delete</button>
+										{this.state.isPublic ? '' : <NavLink className='btn btn-light' to={'/edit/'+expert._id}>Edit</NavLink>}
+										{this.state.isPublic ? '' :
+											<button className='btn btn-outline-danger' onClick={()=>this.onDeleteExpertClick(expert._id)}>Delete</button>}
 									</div>
                 </li>
               )}
