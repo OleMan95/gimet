@@ -10,7 +10,7 @@ import AlertHelper from '../sections/AlertHelper';
 import Footer from "../sections/Footer";
 import './index.scss';
 
-class StartPage extends React.Component { //все this.props мы получем как аргументы функции
+class StartPage extends React.Component {
 	constructor(props) {
 	  super(props);
 	  this.state = {

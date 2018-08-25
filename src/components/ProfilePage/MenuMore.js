@@ -31,6 +31,26 @@ class MenuMore extends React.Component{
 
 		this.toggleMenu()
 	};
+  handleCopyLink = () => {
+		let expert = this.props.expert;
+
+		const a = document.createElement('a');
+		a.href = window.location;
+
+		alert(a.origin+'/consultation/'+expert._id);
+		this.toggleMenu()
+	};
+  handleExport = () => {
+		let expert = this.props.expert;
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(expert));
+
+    this.exportLink.setAttribute("href", dataStr);
+    this.exportLink.setAttribute("download", expert.name+".json");
+		this.exportLink.click();
+
+		this.toggleMenu()
+	};
 
 
 	updateExpert = async (expert) => {
@@ -64,16 +84,17 @@ class MenuMore extends React.Component{
 									</span>
 								</li>
 							}
-							<li className="list-group-item disabled">
+							<li className="list-group-item" onClick={this.handleCopyLink}>
 								<span className="">
 									<i className="ion-link"/>
 									Copy link
 								</span>
 							</li>
-							<li className="list-group-item disabled">
+							<li className="list-group-item" onClick={this.handleExport}>
 								<span className="">
 									<i className="ion-code-download"/>
 									Export
+									<a className="d-none" href="" ref={elem=>this.exportLink = elem}/>
 								</span>
 							</li>
 							<li className="list-group-item disabled">
