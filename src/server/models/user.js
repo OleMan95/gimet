@@ -21,6 +21,14 @@ const UserSchema = new Schema({
 		type:String,
 		required:'Password is required'
 	},
+	isConfirmed:{
+		type:Boolean,
+		default: false
+	},
+	isAdmin:{
+		type:Boolean,
+		default: false
+	},
 	experts:[{
 		type: Schema.ObjectId,
 		ref: 'Expert'
