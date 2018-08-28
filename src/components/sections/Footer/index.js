@@ -45,7 +45,7 @@ class Footer extends Component {
 					</div>
 
 					<div className="col">
-						<NavLink to={"/experts"}>Email: aom-95@live.com</NavLink>
+						<NavLink to={"/experts"}>email: info@gimethub.com</NavLink>
 					</div>
 
 				</div>
