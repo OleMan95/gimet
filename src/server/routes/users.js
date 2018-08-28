@@ -10,7 +10,7 @@ router.get('/user', users.findOneById);
 router.get('/user/:id', users.findOneById);
 router.post('/login', users.login);
 router.put('/user', users.update);
-router.post('/api/mail', mailCtrl.sendMail);
+router.post('/mail', mailCtrl.sendMail);
 router.post('/signup', users.signup);
 router.get('/verify/:token', users.verifyEmail);
 
