@@ -280,7 +280,7 @@ class StartPage extends React.Component {
 					</div>
 				</div>
 
-				<AlertHelper show={this.state.alert.show} idDanger={this.state.alert.isDanger}
+				<AlertHelper show={this.state.alert.show} isDanger={this.state.alert.isDanger}
 										 message={this.state.alert.message}/>
 				<Footer/>
 			</div>

@@ -50,53 +50,5 @@ class MailController{
 			res.status(500).send({error:{message: err.message}});
 		}
 	}
-	//POST /api/signup/confirm
-	async getEmailVerificationToken(req, res){
-		// if(!req.cookies.aat || req.cookies.aat != 'true'){
-		// 	res.status(400).send({message:'Rejected'});
-		// 	return;
-		// }
-		const {email} = req.body;
-
-		const link = `localhost:3000/api/verify/${await jwtService.genToken({email})}`;
-
-		await sgMail.send({
-			to: email,
-			from: 'noreply@gimethub.com',
-			subject: 'GIMETHUB email verification',
-			html: `Link: <a href=${link}>${link}</a>`
-		}, (err, responce)=>{
-			if(err) {
-				console.log('error: ', err);
-				res.status(500).send({
-					error: {
-						message: 'Email verification error.'
-					}
-				});
-				return;
-			}
-
-			res.send({
-				data: {
-					message: 'Please, check your email for confirmation link.',
-					info: responce
-				}
-			});
-		});
-	}
-	//GET /api/verify/:token
-	async verifyEmail(req, res){
-		try{
-			const {token} = req.params;
-
-			let payload = await jwtService.verify(token);
-
-			res.send(payload);
-		}catch (err){
-			console.log(err)
-		}
-
-	}
-
 }
 export default MailController;

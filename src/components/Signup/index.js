@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import { signUp } from '../services/api-helper';
-import alertHelper from '../services/alert-helper';
+import AlertHelper from '../sections/AlertHelper';
 import logo from "../../data/logo-black.svg";
 import './index.scss';
 
@@ -12,15 +12,13 @@ class SignUp extends React.Component {
 			emailValue:'',
 			passwordValue:'',
       nameValue:'',
-			alert: '',
-      alertDangerClass: 'd-none',
-      alertInfoClass: 'd-none'
+			alert: {
+				show: false,
+				isDanger: false,
+				message: ''
+			}
 		};
 	}
-
-  componentDidMount(){
-
-  }
 
   handleInputChange=(event)=>{
 		switch (event.target.name) {
@@ -52,11 +50,45 @@ class SignUp extends React.Component {
       password: this.state.passwordValue
     });
 
-    if(res){
-      alertHelper(this, 'Registration successfully completed');
-      // this.props.history.push('/');
-    }else
-      alertHelper(this, 'Oops, some error occurred. Try again later', 'danger');
+    console.log(res);
+
+    if(res.data){
+			this.setState({
+				alert:{
+					show: true,
+					isDanger: false,
+					message: res.data.message
+				}
+			});
+
+			setTimeout(()=>{
+				this.setState({
+					alert:{
+						show: false,
+						isDanger: true,
+						message: ''
+					}
+				});
+			}, 8000);
+    }else{
+			this.setState({
+				alert:{
+					show: true,
+					isDanger: true,
+					message: res.error.message
+				}
+			});
+
+			setTimeout(()=>{
+				this.setState({
+					alert:{
+						show: false,
+						isDanger: true,
+						message: ''
+					}
+				});
+			}, 8000);
+		}
 
 	};
 
@@ -123,13 +155,8 @@ class SignUp extends React.Component {
 
 				</div>
 
-				<div className={"alert alert-danger "+this.state.alertDangerClass} role="alert">
-					{this.state.alert}
-				</div>
-				<div className={"alert alert-info "+this.state.alertInfoClass} role="alert">
-					{this.state.alert}
-				</div>
-
+				<AlertHelper show={this.state.alert.show} isDanger={this.state.alert.isDanger}
+										 message={this.state.alert.message}/>
       </div>
     );
   };

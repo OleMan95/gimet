@@ -2,8 +2,10 @@ import User from '../models/user';
 import {Types} from 'mongoose';
 import jwtService from '../services/jwt-service';
 import pick from 'lodash/pick';
+import sgMail from '@sendgrid/mail';
 
 const ObjectId = Types.ObjectId;
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 class Users{
 	//POST /api/login
@@ -102,9 +104,45 @@ class Users{
 				res.status(400).send({message:'Rejected'});
 				return;
 			}
-			const {_id} = await User.create(pick(req.body, User.createFields));
-			const user = await User.findById({_id}).select({password:0, __v: 0});
-			res.status(200).send(user);
+			await User.create(pick(req.body, User.createFields), async (err, data) => {
+				if (err) {
+					res.status(500).send({
+						error: {
+							message: err.message,
+							info: err
+						}
+					});
+					return;
+				}
+
+				const token = await jwtService.genToken({_id: data._id, email: data.email});
+
+				const link = process.env.NODE_ENV == 'development' ? `https://gimet.herokuapp.com/api/verify/${token}` : `http://gimethub.com/api/verify/${token}`;
+
+				await sgMail.send({
+					to: data.email,
+					from: 'noreply@gimethub.com',
+					subject: 'GIMETHUB email verification',
+					html: `Link: <a href=${link}>${link}</a>`
+				}, (err, responce)=>{
+					if(err) {
+						res.status(500).send({
+							error: {
+								message: 'Email verification error',
+								info: 'Unable to send email'
+							}
+						});
+						return;
+					}
+
+					res.send({
+						data: {
+							message: 'Please, check your email for confirmation link.',
+							info: responce
+						}
+					});
+				});
+			});
 		}catch(err){
 			res.status(500).send({ error: err});
 		}
@@ -124,6 +162,43 @@ class Users{
 		}catch(err){
 			res.status(500).send({ error: err});
 		}
+	}
+	//GET /api/verify/:token
+	async verifyEmail(req, res){
+		try{
+			const {token} = req.params;
+
+			let payload = await jwtService.verify(token);
+
+			User.findById(payload._id, (err, user)=>{
+				if(err) {
+					res.status(500).send({
+						error: {
+							message: 'User confirmation error',
+							info: err
+						}
+					});
+					return;
+				}
+
+				user.isConfirmed = true;
+				user.save(function (err, updatedUser) {
+					if(err) {
+						res.status(500).send({
+							error: {
+								message: 'User confirmation error',
+								info: err
+							}
+						});
+						return;
+					}
+					res.redirect('/login');
+				});
+			});
+		}catch (err){
+			console.log(err)
+		}
+
 	}
 }
 

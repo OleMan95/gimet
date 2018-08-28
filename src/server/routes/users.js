@@ -12,9 +12,6 @@ router.post('/login', users.login);
 router.put('/user', users.update);
 router.post('/api/mail', mailCtrl.sendMail);
 router.post('/signup', users.signup);
-router.post('/signup/confirm', mailCtrl.getEmailVerificationToken);
-router.get('/verify/:token', mailCtrl.verifyEmail);
-
+router.get('/verify/:token', users.verifyEmail);
 
 export default router;
-

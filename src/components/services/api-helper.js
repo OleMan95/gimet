@@ -180,8 +180,7 @@ export async function signUp (data){
 			body: JSON.stringify(data)
 		});
 
-		return response.status == 200;
-
+		return await response.json();
 	} catch (err) {
 		console.error(err.message);
 	}
