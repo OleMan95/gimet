@@ -98,7 +98,9 @@ class SignUp extends React.Component {
 				<div className="container">
           <div className="d-flex flex-column">
 
-            <img className="mb-4" src={logo} alt="" width="100" height="100"/>
+						<a href="/" className="logo-link">
+							<img className="mb-4" src={logo} alt="" width="100" height="100"/>
+						</a>
 
             <div className="card">
               <div className="card-header d-flex">
@@ -110,16 +112,18 @@ class SignUp extends React.Component {
                   <div className="form-group d-flex">
                     <label htmlFor="name">Full Name:</label>
                     <input type="name" className="form-control" id="name" name="name"
-                           placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
+													 placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
                   </div>
                   <div className="form-group d-flex">
                     <label htmlFor="email">Email Address:</label>
-                    <input type="email" className="form-control" id="email" name="email"
+										<input type="email" className="form-control" id="email" name="email"
                            placeholder="" onChange={event=>{this.handleInputChange(event)}}/>
-                  </div>
+
+									</div>
                   <hr className="my-4 w-100"/>
                   <div className="form-group d-flex">
                     <label htmlFor="password">Password:</label>
+                    <input type="password" className="form-control d-none"/>
                     <input type="password" className="form-control" id="password" name="password"
                            onChange={event=>{this.handleInputChange(event)}}/>
                   </div>

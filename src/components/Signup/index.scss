@@ -15,10 +15,17 @@
       align-content: center;
     }
 
-    img{
-      margin-top: -6.5rem;
+    .logo-link{
+      width: 100px;
+      height: 100px;
       align-self: center;
+      margin: -6.5rem 0 2rem;
+
+      img{
+        align-self: center;
+      }
     }
+
 
     .card{
       width: 650px;
