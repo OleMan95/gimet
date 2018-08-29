@@ -11,6 +11,23 @@
     .container{
 
       .input-group{
+
+        .cancel-btn{
+          margin-left: -40px;
+          z-index: 1;
+          color: #9c9c9c;
+          border: 0;
+          background-color: transparent;
+
+          &:hover{
+            background-color: transparent;
+            color: $default-font-color-black;
+          }
+          &:focus{
+            box-shadow: unset;
+          }
+        }
+
         button{
           background-color: #fff3;
           &:hover{

@@ -22,21 +22,32 @@ class Experts{
 				options.skip = parseInt(req.query.skip);
 			}
 
-			let published = {published: true};
-			if(req.query.published == 'false')
-				published = {};
+			let search = {published: true};
+			if(req.query.search){
+				search.name = new RegExp(decodeURI(req.query.search), 'ig');
+			}
 
-			res.send({
-				data:{
-					experts: await Expert.find(published, null, options),
-					count: await Expert.count(published, null, {
-						sort: options.sort,
-						skip: options.skip
-					})
+			if(req.query.published == 'false')
+				search.published = '';
+
+			await Expert.find(search, null, options, async (err, experts) => {
+				if (err) {
+					res.status(500).send({error: {message: err.message, info: err}});
+					return;
 				}
+
+				res.send({
+					data: {
+						experts,
+						count: 3
+						// count: await Expert.count(search, null, {
+						// 	skip: options.skip
+						// })
+					}
+				});
 			});
 		}catch(err){
-			res.status(500).send({message: err.message});
+			res.status(500).send({error:{message: err.message}});
 		}
 	}
 	//GET /expert/:id
