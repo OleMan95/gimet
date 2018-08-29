@@ -17,20 +17,24 @@ class Experts{
       if(req.query.sort == 'false')
         options = {};
 
-			if(req.query.skip){
-				options.limit = 7;
-				options.skip = parseInt(req.query.skip);
-			}
-
 			let search = {published: true};
 			if(req.query.search){
 				search.name = new RegExp(decodeURI(req.query.search), 'ig');
 			}
 
-			if(req.query.published == 'false')
-				search.published = '';
+			if(req.query.published == 'false'){
+				if(req.query.search){
+					search = {
+						name: new RegExp(decodeURI(req.query.search), 'ig')
+					}
+				}else{
+					search = {};
+				}
+			}
 
-			await Expert.find(search, null, options, async (err, experts) => {
+			const experts = Expert.find(search, {questions: 0, contributors: 0, createdAt: 0}, options);
+
+			experts.exec(async (err, experts) => {
 				if (err) {
 					res.status(500).send({error: {message: err.message, info: err}});
 					return;
@@ -46,6 +50,7 @@ class Experts{
 					}
 				});
 			});
+
 		}catch(err){
 			res.status(500).send({error:{message: err.message}});
 		}

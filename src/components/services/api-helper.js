@@ -51,8 +51,7 @@ export async function getExperts ({sort, skip, published, search}, onError){
 	try {
 		let url = `/api/experts?
 		${sort ? `sort=views` : 'sort=false'}
-		${skip >= 0 ? `&skip=${skip}` : ''}
-		${published == false ? `&published=false` : ''}
+		${published === false ? `&published=false` : ''}
 		${search ? `&search=${encodeURI(search)}` : ''}`;
 
 		let response = await fetch(url, {
@@ -64,8 +63,10 @@ export async function getExperts ({sort, skip, published, search}, onError){
 
 		let data = await response.json();
 
-		if (response.status != 200) onError(data);
-		return data.data;
+		if (response.status == 200)
+			return data.data;
+		else onError(data);
+
 	}catch (err) {
 		console.error(err.message);
 	}
