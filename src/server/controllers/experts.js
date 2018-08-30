@@ -8,10 +8,10 @@ class Experts{
 	//GET /experts
 	async find(req, res){
 		try{
-			// if(!req.cookies.aat || req.cookies.aat != 'true'){
-			// 	res.status(400).send({message:'Rejected'});
-			// 	return;
-			// }
+			if(!req.cookies.aat || req.cookies.aat != 'true'){
+				res.status(400).send({message:'Rejected'});
+				return;
+			}
 
       let options = {sort: {consultationCount: -1}};
       if(req.query.sort == 'false')
@@ -36,6 +36,9 @@ class Experts{
 
       if(req.query.populate){
       	experts.populate('author');
+      }
+      if(req.query.limit){
+      	experts.limit(parseInt(req.query.limit));
       }
 
       experts.exec(async (err, experts) => {

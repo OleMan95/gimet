@@ -148,10 +148,10 @@ class Experts extends React.Component{
                     <div className="expert-footer">
                       <ul>
                         <li className="published-date">{expert.updatedAt}</li>
-                        <li className="comments">
-                          <i className="ion-chatbox"/>
-                          <span className="numero">8</span>
-                        </li>
+                        {/*<li className="comments">*/}
+                          {/*<i className="ion-chatbox"/>*/}
+                          {/*<span className="numero">8</span>*/}
+                        {/*</li>*/}
                         <li className="shares">
                           <i className="ion-android-star"/>
                           <span className="numero">{expert.consultationCount || 0}</span>
@@ -207,15 +207,17 @@ class Experts extends React.Component{
 					: ''}
 
 				<div className="section-3">
-					<div className="container px-5 py-5 d-flex justify-content-between">
-						<div>
-							<h2>Didn't find the right expert?</h2>
-							<p>Begin creating your own expert</p>
-						</div>
+					<div className="container px-5 py-5 d-flex justify-content-center">
+						<div className="d-flex justify-content-between">
+							<div>
+								<h2>Didn't find the right expert?</h2>
+								<p>Begin creating your own expert</p>
+							</div>
 
-						<NavLink className="btn" to={"/edit/new"}>
-							<i className="ion-chevron-right"/>
-						</NavLink>
+							<NavLink className="btn" to={"/edit/new"}>
+								<i className="ion-chevron-right"/>
+							</NavLink>
+						</div>
 					</div>
 				</div>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {getExperts, getUserById} from '../services/api-helper';
 import './index.scss';
-import isodate from "isodate";
+import moment from "moment";
 
 class Section3 extends React.Component { //все this.props мы получем как аргументы функции
 	constructor() {
@@ -14,21 +14,13 @@ class Section3 extends React.Component { //все this.props мы получем
 
 	async componentDidMount() {
 
-		const {experts} = await getExperts({sort: true}, err=>{
+		const {experts} = await getExperts({sort: true, published: false, populate: true, limit: 3}, err=>{
 			console.log(err);
 		});
 
 		const expertsModified = [];
-		for(let i=0; i<3; i++){
-			let date = isodate(experts[i].createdAt.toString());
-      experts[i].createdAt = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
-
-			await getUserById({id: experts[i].author}, res=>{
-        experts[i].author = res.data.name;
-			}, async (err) => {
-					console.log('err: ', err);
-			});
-
+		for(let i=0; i<experts.length; i++){
+      experts[i].updatedAt = moment(experts[i].updatedAt).fromNow();
 			expertsModified.push(experts[i]);
 		}
 
@@ -41,21 +33,38 @@ class Section3 extends React.Component { //все this.props мы получем
 				<div className='container py-5 d-flex flex-column'>
 					<h2 className="display-4 mb-4">Most viewed</h2>
 
-					<div className='cards row'>
+					<div className='cards d-flex'>
 						{this.state.experts.map(expert=>
-							<div key={expert._id} className='card'>
-								<div className="card-body d-flex flex-column">
-									<h5 className="card-title font-weight-bold">{expert.name}</h5>
-									<div className="d-flex w-100 justify-content-between">
-										<h6 className="card-subtitle mb-2 text-muted">{expert.author}</h6>
-										<h6 className="card-subtitle mb-2 text-muted">{expert.createdAt}</h6>
+							<div key={expert._id} className='expert-container'>
+								<div className="expert-header">
+									<div className="expert-author d-flex">
+										<i className="ion-person"/>
+										<h3><NavLink to={"/profile/"+expert.author._id}>{expert.author.name}</NavLink></h3>
 									</div>
-									<p className='card-text description text-justify'>{expert.description}</p>
+								</div>
 
-									<div className="d-flex justify-content-between align-items-center mt-auto">
-                    <NavLink className='card-link btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
-										<p className="mb-0"><i className="ion-eye mr-1"/>{expert.consultationCount || 0}</p>
+								<div className="expert-body">
+									<div className="expert-title">
+										<h1><NavLink to={'/consultation/'+expert._id}>{expert.name}</NavLink></h1>
 									</div>
+									<div className="expert-summary">
+										<p>{expert.description}</p>
+										<hr className={expert.description.length > 200 ? '':'d-none'} />
+									</div>
+								</div>
+
+								<div className="expert-footer">
+									<ul>
+										<li className="published-date">{expert.updatedAt}</li>
+										{/*<li className="comments">*/}
+											{/*<i className="ion-chatbox"/>*/}
+											{/*<span className="numero">8</span>*/}
+										{/*</li>*/}
+										<li className="shares">
+											<i className="ion-android-star"/>
+											<span className="numero">{expert.consultationCount || 0}</span>
+										</li>
+									</ul>
 								</div>
 							</div>
 						)}
