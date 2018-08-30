@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import {NavLink, withRouter} from 'react-router-dom';
-import {getExperts} from '../services/api-helper';
+import {getExperts, getUserById} from '../services/api-helper';
 
 import Header from '../sections/Header/';
 import Footer from '../sections/Footer/';
@@ -26,7 +26,7 @@ class Experts extends React.Component{
 
   async componentDidMount() {
 		this.filterInput.value = '';
-		await this.fetchExperts(0);
+		await this.fetchExperts();
 
 		const maxPagesNum = Math.ceil(this.state.count/EXPERTS_PER_PAGE);
 
@@ -39,9 +39,11 @@ class Experts extends React.Component{
 		this.setState({maxPagesNum, pageItems});
 	};
 
-  fetchExperts = async (skip, search) => {
-    let data = await getExperts({sort: true, published: false, skip, search}, async err => {});
+  fetchExperts = async (search) => {
+    let data = await getExperts({sort: true, published: false, populate: true, search}, async err => {});
     let experts = data.experts.filter(expert => expert._id != null);
+
+    console.log(experts);
 
     experts.forEach((expert) => {
       expert.updatedAt = moment(expert.updatedAt).fromNow();
@@ -62,11 +64,11 @@ class Experts extends React.Component{
 	};
   handleFilterSubmit = async () => {
 		if (this.state.filterValue.length>0 && this.state.filterValue.length<20) {
-			await this.fetchExperts(0, this.state.filterValue);
+			await this.fetchExperts(this.state.filterValue);
 		}
 	};
   cancelFilter = async () => {
-		await this.fetchExperts(0);
+		await this.fetchExperts();
 
 		this.setState({
 			filterValue: ''
@@ -125,14 +127,38 @@ class Experts extends React.Component{
             <ul className="list-group list-group-flush">
 							{this.state.count>0 ?
 								this.state.experts.slice(this.state.currentPage*EXPERTS_PER_PAGE - EXPERTS_PER_PAGE, this.state.currentPage*EXPERTS_PER_PAGE).map(expert =>
-									<li key={expert._id} className='list-group-item d-flex'>
-										<p className='title'><b>{expert.name}</b></p>
-										<p className='date'>{expert.updatedAt} <span className="mx-2">|</span>
-											<i className="ion-eye mr-1"/>{expert.consultationCount || 0}</p>
-										<p className='description'>{expert.description}</p>
-										<div className='d-flex'>
-											<NavLink className='consultation-btn btn btn-dark' to={'/consultation/'+expert._id}>Consultation</NavLink>
-										</div>
+									<li key={expert._id} className='list-group-item expert-container d-flex'>
+                    <div className="expert-header">
+                      <div className="expert-author d-flex">
+                        <i className="ion-person"/>
+                        <h3><NavLink to={"/profile/"+expert.author._id}>{expert.author.name}</NavLink></h3>
+                      </div>
+                    </div>
+
+                    <div className="expert-body">
+                      <div className="expert-title">
+                        <h1><NavLink to={'/consultation/'+expert._id}>{expert.name}</NavLink></h1>
+                      </div>
+                      <div className="expert-summary">
+                        <p>{expert.description}</p>
+                        <hr className={expert.description.length > 200 ? '':'d-none'} />
+                      </div>
+                    </div>
+
+                    <div className="expert-footer">
+                      <ul>
+                        <li className="published-date">{expert.updatedAt}</li>
+                        <li className="comments">
+                          <i className="ion-chatbox"/>
+                          <span className="numero">8</span>
+                        </li>
+                        <li className="shares">
+                          <i className="ion-android-star"/>
+                          <span className="numero">{expert.consultationCount || 0}</span>
+                        </li>
+                      </ul>
+                    </div>
+
 									</li>
               	)
 								:
@@ -187,7 +213,7 @@ class Experts extends React.Component{
 							<p>Begin creating your own expert</p>
 						</div>
 
-						<NavLink className="btn btn-dark" to={"/edit/new"}>
+						<NavLink className="btn" to={"/edit/new"}>
 							<i className="ion-chevron-right"/>
 						</NavLink>
 					</div>
@@ -197,8 +223,5 @@ class Experts extends React.Component{
       </div>
     )};
 }
-
-
-
 
 export default withRouter(Experts);
