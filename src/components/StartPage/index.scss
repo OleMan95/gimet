@@ -84,28 +84,78 @@
     .container{
       flex-direction: column;
       align-items: center;
-      padding-bottom: 0;
+      padding: 3rem 1rem 3rem;
 
-      p{
-        text-justify: newspaper;
+      h2{
+        margin-bottom: 2rem;
       }
 
-      .card-block{
-        .top-icons{
+      .card{
+        width: 18rem;
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+        transition: all 400ms;
+        margin: 0 .25rem;
+
+        .card-img-top{
           justify-content: center;
+          padding: 1rem 2rem;
+          background: rgb(152, 47, 70);
+          background: linear-gradient(135deg, rgb(152, 47, 70) 0%, rgb(56, 120, 163) 100%);
+          overflow: hidden;
+          position: relative;
+          z-index: 1;
+
+          .rounded-circle{
+            display: flex;
+            background-color: #0000001a;
+            box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.4);
+            border-radius: 50%;
+            width: 130px;
+            height: 130px;
+            justify-content: center;
+            align-items: center;
+            transition-duration: 500ms;
+          }
         }
-        .rounded-circle{
-          background: linear-gradient(#982f46, #3878a3);
-          width: 130px;
-          height: 130px;
-          justify-content: center;
-          align-items: center;
+
+        .card-body{
+          position: relative;
+          z-index: 2;
+          height: 3rem;
+          transition: all 600ms;
+          display: flex;
+          flex-direction: column;
+          padding: 1rem 1.25rem;
+          font-weight: 100;
+
+          i{
+            width: 1rem;
+            transition: all 200ms;
+          }
         }
-        h4{
-          margin-top: 1rem;
+
+        &:hover{
+          height: 350px;
+
+          .card-img-top {
+            .rounded-circle {
+              transform: scale(1.1);
+              opacity: .6;
+            }
+          }
+          .card-body{
+            height: 100%;
+
+            i{
+              //display: none;
+              transform: translateY(50px);
+              opacity: 0;
+            }
+          }
         }
       }
-
     }
   }
 

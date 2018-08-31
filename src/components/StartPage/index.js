@@ -21,7 +21,39 @@ class StartPage extends React.Component {
 				show: false,
 				isDanger: true,
 				message: ''
-			}
+			},
+      sectionTwo: [
+        {
+          icon: whatIsES,
+          title: 'What is expert system?',
+          description:
+            <p className="card-text text-justify">
+              In Gimet you can create a computer system that emulates the decision-making ability of a human expert.
+              Such systems can help anyone to solve any troubles or to give some kind of advice.
+              Pass a consultation of the one such experts <a href="/consultation/5ab823902271ee20b444b1bb">here</a>.
+            </p>
+        },
+        {
+          icon: createExpert,
+          title: 'Create your own expert!',
+          description:
+            <p className="card-text text-justify">
+              Are you good in a certain area? To create an expert, you do not need special skills.
+              Learn how to create <a href="/help">here</a>.
+              To find out where you can use them, read on.
+            </p>
+        },
+        {
+          icon: technologies,
+          title: 'What technologies we use?',
+          description:
+            <p className="card-text text-justify">
+              Are you interested in the technical details of our platform?
+              You can use our experts base and our advantages in your own app.
+              If you want to learn more about the knowledge model, Gimet API, etc. - read on.
+            </p>
+        }
+      ]
 	  };
 	}
 
@@ -172,47 +204,26 @@ class StartPage extends React.Component {
 
 				</div>
 
-				<div className='section-2 bg-light py-5 px-3' id="section-2">
-					<div className='container pt-5 d-flex'>
-						<h2 className="display-4 mb-4">What is GIMET?</h2>
+				<div className='section-2 bg-light' id="section-2">
+					<div className='container d-flex'>
+						<h2 className="display-4">What is GIMET?</h2>
 
 						<div className='row'>
-							<div className="card-block col-lg-4">
-								<div className="top-icons d-flex">
-									<div className="rounded-circle d-flex">
-										<img className="" src={whatIsES} alt="" width="78" height="78"/>
+              {this.state.sectionTwo.map(elem=>
+                <div className="card" >
+                  <div className="card-img-top d-flex">
+										<div className="rounded-circle">
+                      <img className="" src={elem.icon} alt="" width="78" height="78"/>
+										</div>
+                  </div>
+									<div className="card-body">
+										<h5 className="card-title text-center mb-2">{elem.title}</h5>
+										<i className="ion-chevron-down mb-3 align-self-center"/>
+										{elem.description}
+                    <NavLink className="btn btn-secondary align-self-end" to="/about" role="button">Read more »</NavLink>
 									</div>
-								</div>
-								<h4>What is expert system?</h4>
-								<p>In Gimet you can create a computer system that emulates the decision-making ability of a human expert.
-									Such systems can help anyone to solve any troubles or to give some kind of advice.
-									Pass a consultation of the one such experts <a href="/consultation/5ab823902271ee20b444b1bb">here</a>.</p>
-								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
-							</div>
-							<div className="card-block col-lg-4">
-								<div className="top-icons d-flex">
-									<div className="rounded-circle d-flex">
-										<img className="" src={createExpert} alt="" width="78" height="78"/>
-									</div>
-								</div>
-								<h4>Create your own expert</h4>
-								<p>Are you good in a certain area? To create an expert, you do not need special skills.
-									Learn how to create <a href="/help">here</a>.
-									To find out where you can use them, read on.</p>
-								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
-							</div>
-							<div className="card-block col-lg-4">
-								<div className="top-icons d-flex">
-									<div className="rounded-circle d-flex">
-										<img className="" src={technologies} alt="" width="70" height="70"/>
-									</div>
-								</div>
-								<h4>What technologies we use?</h4>
-								<p>Are you interested in the technical details of our platform?
-									You can use our experts base and our advantages in your own app.
-									If you want to learn more about the knowledge model, Gimet API, etc. - read on.</p>
-								<p><NavLink className="btn btn-secondary" to="/about" role="button">Read more »</NavLink></p>
-							</div>
+                </div>
+              )}
 						</div>
 
 					</div>
