@@ -35,7 +35,7 @@ class StartPage extends React.Component {
         },
         {
           icon: createExpert,
-          title: 'Create your own expert!',
+          title: 'Create your own expert?',
           description:
             <p className="card-text text-justify">
               Are you good in a certain area? To create an expert, you do not need special skills.
@@ -218,14 +218,16 @@ class StartPage extends React.Component {
                   </div>
 									<div className="card-body">
 										<h5 className="card-title text-center mb-2">{elem.title}</h5>
-										<i className="ion-chevron-down mb-3 align-self-center"/>
+										<i className="ion-chevron-down align-self-center"/>
 										{elem.description}
-                    <NavLink className="btn btn-secondary align-self-end" to="/about" role="button">Read more »</NavLink>
+                    <NavLink className="btn btn-secondary align-self-end" to="/about" role="button">
+                      <i className="ion-arrow-right-a"/>
+										</NavLink>
 									</div>
                 </div>
               )}
 						</div>
-
+            <NavLink className="btn btn-link mt-4" to="/about" role="button">Read more about GIMET</NavLink>
 					</div>
 				</div>
 

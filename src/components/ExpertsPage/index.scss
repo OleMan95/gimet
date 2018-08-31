@@ -188,9 +188,8 @@ $bg-color-gray: darken(#fff, 5%);
         position: relative;
         top: 6px;
         width: 32px;
-        //background-color: lighten(#982f46, 50%);
         background: linear-gradient($color-top, $color-bottom);
-        color: white;
+        color: #ffffffe6;
         justify-content: center;
         align-items: center;
         font-size: 1.3rem;
@@ -202,13 +201,15 @@ $bg-color-gray: darken(#fff, 5%);
     margin: 0 auto;
     width: 80%;
 
-    .expert-title h1 a {
-      color: #333;
-      font-weight: 100;
-      font-size: 1.5rem;
-      &:hover {
-        border-color: #6c3255;
-        color: #6c3255;
+    .expert-title h1{
+      font-size: 2rem;
+      a {
+        color: #333;
+        font-size: 1.5rem;
+        &:hover {
+          border-color: #6c3255;
+          color: #6c3255;
+        }
       }
     }
     .expert-summary {
