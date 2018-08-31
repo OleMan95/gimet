@@ -5,7 +5,7 @@ import ProfilePage from './ProfilePage/';
 import ExpertsPage from './ExpertsPage/';
 import EditorPage from './EditPage/';
 import ConsultationPage from './ConsultationPage/';
-import NotFound from './NotFound';
+import NotFound from './NotFound/';
 
 /**
  * array with page routes

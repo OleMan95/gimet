@@ -1,7 +1,8 @@
+"use strict";
 import React from 'react';
-import './NotFound.scss';
+import './NotFoundOld.scss';
 
-const NotFound = () =>
+const NotFoundOld = () =>
 	<div className="not-found">
 		<h1>GIMETHUB</h1>
 		<h3>404 page not found</h3>
@@ -9,4 +10,4 @@ const NotFound = () =>
 		<span>404</span>
 	</div>;
 
-export default NotFound;
+export default NotFoundOld;
