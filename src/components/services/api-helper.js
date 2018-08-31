@@ -47,12 +47,13 @@ export async function getUserById ({id, populate, token}, onSuccess, onError){
 	}
 }
 
-export async function getExperts ({sort, populate, published, search}, onError){
+export async function getExperts ({sort, populate, published, search, limit}, onError){
 	try {
 		let url = `/api/experts?
 		${sort ? `sort=views` : 'sort=false'}
 		${published === false ? `&published=false` : ''}
 		${populate ? '&populate=true' : ''}
+		${limit ? '&limit='+limit : ''}
 		${search ? `&search=${encodeURI(search)}` : ''}`;
 
 		let response = await fetch(url, {
