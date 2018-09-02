@@ -7,6 +7,7 @@ import "./index.scss";
 import ExpertChatButton from '../../sections/ExpertChatButton';
 
 
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -160,6 +161,9 @@ class Header extends Component {
 
 
 					</ul>
+
+                    <input type="text" className="form-control" readOnly={true} id="validationCustom05" placeholder="Changes" required/>
+
 					<div className="form-inline my-2 my-lg-0">
 						{/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>*/}
 
@@ -168,8 +172,6 @@ class Header extends Component {
                 <a href="/login" className="login-link nav-link" >Sign in</a>
                 <a href="/signup" className="login-link nav-link" >Sign up</a>
               </div>}
-
-
 						{this.state.isAuthorized ? <ExpertChatButton /> :
 							''}
 

@@ -9,7 +9,8 @@ class EditModal extends React.Component {
 			question: '',
 			key: '',
 			answers: [],
-			results: []
+			results: [],
+            edited: false
 		};
 	}
 
@@ -22,12 +23,14 @@ class EditModal extends React.Component {
 				answers: [...this.props.question.answers],
 				results: [...this.props.question.results],
 	    });
+	  }
     }
-  }
 
   addAnswer=async()=>{
 
-		if ((this.answerValue.value.trim().length > 0 ||
+      this.setState({edited:this.state.edited = true});
+
+      if ((this.answerValue.value.trim().length > 0 ||
 				this.resultValue.value.trim().length > 0) &&
 			this.resultType.value == 'initial') {
 			return;
@@ -47,10 +50,13 @@ class EditModal extends React.Component {
 	};
 
 	removeAnswer=(answer)=>{
+
     const answers = this.state.answers;
     const results = this.state.results;
+    this.setState({edited:this.state.edited = true});
 
-    for(let i=0; i<answers.length; i++){
+
+        for(let i=0; i<answers.length; i++){
     	if(answers[i]==answer){
 				answers.splice(i, 1);
 				results.splice(i, 1);
@@ -61,7 +67,9 @@ class EditModal extends React.Component {
   };
 
 	handleInputChange=(event)=>{
-    switch (event.target.name) {
+        this.setState({edited:this.state.edited = true});
+
+        switch (event.target.name) {
       case 'question':
         this.setState({question: event.target.value});
         break;
@@ -84,7 +92,7 @@ class EditModal extends React.Component {
 	onSave=()=>{
 		let err = false;
 	  let isNew = false;
-	  if(!this.questionValue.value.trim().length>0 ||
+        if(!this.questionValue.value.trim().length>0 ||
       !this.keyValue.value.trim().length>0){
 			err = 'You are have unsaved changes!';
     }
@@ -111,6 +119,9 @@ class EditModal extends React.Component {
 
 	onClose=()=>{
 		this.props.onModalClose();
+		console.log(this.state.edited);
+        console.log(this.state);
+
   };
 
   render(){

@@ -40,7 +40,39 @@ class Edit extends React.Component{
     	this.props.history.push('/');
 		});
 
+      let keysInCard=[];
+      let keysInAnsvers=[];
+      let unrealizedkeys =[];
+
+      for(var i=0; i<this.state.expert.questions.length;i++) {
+        for (var j = 0; j < this.state.expert.questions[i].results.length; j++) {
+        	if(this.state.expert.questions[i].results[j].type =="key"){
+                //console.log(this.state.expert.questions[i].results[j].value);
+				keysInAnsvers.push(this.state.expert.questions[i].results[j].value);
+            }
+        }
+	  }
+
+      for(var i=1; i<this.state.expert.questions.length;i++) {
+		  keysInCard.push(this.state.expert.questions[i].key);
+      }
+
+      function diff(keysInCard, keysInAnsvers) {
+          return keysInCard.filter(i=>keysInAnsvers.indexOf(i)<0)
+              .concat(keysInAnsvers.filter(i=>keysInCard.indexOf(i)<0))
+      }
+
+      unrealizedkeys = diff(keysInCard, keysInAnsvers);
+      if(unrealizedkeys.length !=0){
+          console.log("This keys are not realized: " + unrealizedkeys);
+      }
+
+
+
+
   };
+
+
 
   onModalOpen=(question)=>{
     this.setState({
@@ -91,6 +123,9 @@ class Edit extends React.Component{
 
     let expert = this.state.expert;
     expert.questions = questions;
+
+
+
 
     this.setState({
       isModalOpen: false,
