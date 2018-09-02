@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "NODE_ENV=development webpack --progress --profile --colors -w",
+    "build:dev": "set NODE_ENV=development&webpack --progress --profile --colors -w",
     "build:prod": "NODE_ENV=development webpack --progress --profile --colors",
     "dev": "NODE_ENV=development nodemon --delay 3 server.js",
     "start": "NODE_ENV=production node server.js",
