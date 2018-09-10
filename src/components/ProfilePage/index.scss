@@ -2,13 +2,25 @@
 
 .Profile{
 
-  .section-1{
+  .Header{
+    padding-left: 0;
+
+    .navbar-brand{
+      width: 300px;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .ProfileSettings{
     margin: 66px 0 0;
-    padding: 40px 0 40px;
-    background: url(../../data/images/background.png) no-repeat right fixed;
-    background-size: cover;
-    color: #f8f9fa;
-    .container{
+    padding-left: 300px;
+
+    &>.container{
+      background-color: #edf1f5;
+      min-height: calc(100vh - 240px);
 
       .default-profile-photo{
         width: 90px;
@@ -24,28 +36,33 @@
           margin-top: 1rem;
         }
       }
-
-      .title{
-        flex-direction: column;
-
-        .row{
-          margin-left: 1rem;
-          a{
-            color: #f8f9facc;
-            &:hover{
-              color: $default-font-color-white;
-            }
+    }
+    .title{
+      h1{
+        font-weight: 100;
+      }
+      .d-flex{
+        margin-left: 1rem;
+        a{
+          color: $default-font-color-black;
+          &:hover{
+            color: lighten($default-font-color-black, 20%);
           }
         }
-
       }
 
-      .btn-group{
-        justify-content: center;
-        align-items: flex-start;
-        margin-left: auto;
-      }
+    }
 
+    .btn-group{
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: auto;
+      a{
+        color: $default-font-color-black;
+        &:hover{
+          color: lighten($default-font-color-black, 20%);
+        }
+      }
     }
 
     @media (max-width: 991.98px) {
@@ -53,8 +70,15 @@
     }
   }
 
-  .section-2{
-    min-height: calc(100vh - 240px);
+  .ProfileExperts{
+    padding-left: 300px;
+    margin: 66px 0 0;
+
+    &>.container{
+      background-color: #edf1f5;
+      padding-top: 2rem;
+      min-height: calc(100vh - 240px);
+    }
 
     .list-group{
 
@@ -85,7 +109,6 @@
     .consultation-btn{
       margin-right: 1rem;
     }
-
     .published-icon{
       font-size: 1rem;
     }

@@ -1,0 +1,39 @@
+@import '../../variables';
+
+.ProfileSidebar{
+  height: 100vh;
+  width: 300px;
+  position: fixed;
+  background-color: #e6e6e6;
+  box-shadow: 2px 1px 10px rgba(0,0,0,0.3);
+
+  .nav{
+    padding-top: 2rem;
+
+    .nav-item{
+      .nav-link{
+        padding: 1rem;
+        color: lighten($default-font-color-black, 20%);
+        border-left: .25rem solid transparent;
+        width: 100%;
+        text-align: left;
+
+        i{
+          width: 40px;
+        }
+
+        &:hover {
+          background-color: darken(#e6e6e6, 5%);
+          box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+          color: lighten($default-font-color-black, 10%);
+        }
+        &.active{
+          background-color: darken(#e6e6e6, 10%);
+          color: $default-font-color-black;
+          border-left: .25rem solid $primary-accent-color;
+        }
+      }
+    }
+  }
+
+}
