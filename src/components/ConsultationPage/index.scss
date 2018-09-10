@@ -4,6 +4,7 @@
 
   &>.container{
     margin: 66px 0 0;
+    min-height: calc(100vh - 306px);
 
     @media (max-width: 991.98px) {
       margin: 64px 0 0;
@@ -11,17 +12,18 @@
   }
 
   .consultation-interview{
+
     .list-group-item{
       cursor: pointer;
     }
   }
 
   .consultation-result{
-
   }
 
-
-
+  .footer{
+    padding-top: 4rem;
+  }
 }
 
 
