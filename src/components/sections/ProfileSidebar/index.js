@@ -9,7 +9,6 @@ class ProfileSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'profile'
     };
   }
 
@@ -19,9 +18,6 @@ class ProfileSidebar extends Component {
 
 	handleNavClick=(view)=>{
     this.props.toggleView(view);
-    this.setState({
-      activeItem: view
-    });
   };
 
   render() {
@@ -29,14 +25,14 @@ class ProfileSidebar extends Component {
       <div className="ProfileSidebar">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <button className={this.state.activeItem === 'profile' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
+            <button className={this.props.activeView === 'profile' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
                     onClick={()=>this.handleNavClick('profile')}>
               <i className="ion-person mr-3"/>
               <span className="hide-menu">Profile</span>
             </button>
           </li>
           <li className="nav-item">
-            <button className={this.state.activeItem === 'my_experts' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
+            <button className={this.props.activeView === 'my_experts' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
                     onClick={()=>this.handleNavClick('my_experts')}>
               <i className="ion-android-apps mr-3"/>
               <span className="hide-menu">My Experts</span>

@@ -22,8 +22,7 @@ class Profile extends React.Component{
       user: {},
       experts:[],
 			isPublic: true,
-      ProfileSettings: true,
-      ProfileExperts: false,
+			activeView: 'my_experts',
       alertModal: {
       	show: false,
 				name: ''
@@ -83,21 +82,9 @@ class Profile extends React.Component{
 	};
 
 	toggleView = (view)=>{
-		switch (view) {
-			case 'profile':
-        this.setState({
-          ProfileSettings: true,
-          ProfileExperts: false,
-				});
-        break;
-			case 'my_experts':
-        this.setState({
-          ProfileSettings: false,
-          ProfileExperts: true,
-				});
-        break;
-
-    }
+    this.setState({
+      activeView: view
+    });
 	};
 
   onDeleteExpertClick = async (id) => {
@@ -164,11 +151,11 @@ class Profile extends React.Component{
     return (
       <div className="Profile">
 				<Header />
-        <ProfileSidebar toggleView={this.toggleView}/>
+        <ProfileSidebar toggleView={this.toggleView} activeView={this.state.activeView}/>
 
-				{this.state.ProfileSettings ? <ProfileSettings user={this.state.user}/> : ''}
+				{this.state.activeView === 'profile' ? <ProfileSettings user={this.state.user}/> : ''}
 
-				{this.state.ProfileExperts ? <ProfileExperts experts={this.state.experts} user={this.state.user}/> : ''}
+				{this.state.activeView === 'my_experts' ? <ProfileExperts experts={this.state.experts} user={this.state.user}/> : ''}
 
 				<AlertHelper show={this.state.alert.show} isDanger={this.state.alert.isDanger}
 										 message={this.state.alert.message}/>
