@@ -14,13 +14,23 @@
     }
   }
 
-  .ProfileSettings{
+  &>.container{
+    width: 100%;
+    max-width: 100%;
     margin: 66px 0 0;
-    padding-left: 300px;
+    padding: 1rem 1rem 1rem 316px;
+    background-color: #edf1f5;
+    min-height: calc(100vh - 240px);
+  }
 
-    &>.container{
+  .ProfileSettings{
+    //margin: 66px 0 0;
+    //padding-left: 300px;
+
+    .container{
       background-color: #edf1f5;
-      min-height: calc(100vh - 240px);
+      margin: 0;
+      max-width: 100%;
 
       .default-profile-photo{
         width: 90px;
@@ -35,6 +45,12 @@
           font-size: 4rem;
           margin-top: 1rem;
         }
+      }
+
+      form{
+        max-width: 600px;
+        align-self: center;
+        width: 50%;
       }
     }
     .title{
@@ -52,7 +68,6 @@
       }
 
     }
-
     .btn-group{
       justify-content: center;
       align-items: flex-start;
@@ -71,13 +86,42 @@
   }
 
   .ProfileExperts{
-    padding-left: 300px;
-    margin: 66px 0 0;
+    //padding-left: 300px;
 
-    &>.container{
-      background-color: #edf1f5;
+    .container{
+      background-color: #fff;
       padding-top: 2rem;
-      min-height: calc(100vh - 240px);
+      padding-bottom: 1rem;
+      margin: 1rem 0 0;
+      max-width: 100%;
+
+      .table{
+
+        tr{
+          cursor: pointer;
+          position: relative;
+
+          &:hover{
+            background-color: #e9ecef;
+          }
+
+          .collapse{
+            position: relative;
+            left: 0;
+            bottom: 0;
+          }
+        }
+
+        .btn{
+          padding: 0.25rem 0.4rem;
+        }
+        .btn-link-danger{
+          color: crimson;
+          &:hover{
+            color: darken(crimson, 10%);
+          }
+        }
+      }
     }
 
     .list-group{
@@ -145,6 +189,64 @@
       }
     }
   }
+
+  .Loader{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(52, 58, 64, 0.78);
+    top: 0;
+    left:0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+
+    span{
+      background: url(../../data/images/logo-brain.svg) no-repeat center;
+      background-size: contain;
+      width: 300px;
+      height: 300px;
+      position: relative;
+      margin: 0 auto;
+
+      &:before{
+        background: url(../../data/images/logo-border.svg) no-repeat center;
+        background-size: contain;
+        position: absolute;
+        z-index: 1010;
+        content: '';
+        padding: 150px;
+        -webkit-animation:spin 20s linear infinite;
+        -moz-animation:spin 20s linear infinite;
+        animation:spin 20s linear infinite;
+      }
+    }
+
+    h1{
+      color: #fff;
+    }
+
+    &.show{
+      display: flex;
+      animation-name: fadeIn;
+      animation-delay: 200ms;
+      animation-duration: 400ms;
+      animation-fill-mode: both;
+    }
+  }
+
+  .footer{
+    padding-left: 316px;
+    padding-top: 3rem;
+  }
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }
 
 

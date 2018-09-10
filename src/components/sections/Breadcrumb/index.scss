@@ -1,0 +1,15 @@
+@import '../../variables';
+
+.Breadcrumb{
+  background-color: white;
+  margin: 0;
+
+  .breadcrumb{
+    background-color: white;
+    margin: 0;
+  }
+  .btn{
+    display: flex;
+    align-items: center;
+  }
+}

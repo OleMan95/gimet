@@ -4,7 +4,7 @@
   height: 100vh;
   width: 300px;
   position: fixed;
-  background-color: #e6e6e6;
+  background-color: #fff;
   box-shadow: 2px 1px 10px rgba(0,0,0,0.3);
 
   .nav{
@@ -23,12 +23,12 @@
         }
 
         &:hover {
-          background-color: darken(#e6e6e6, 5%);
+          background-color: #dae0e5;
           box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
           color: lighten($default-font-color-black, 10%);
         }
         &.active{
-          background-color: darken(#e6e6e6, 10%);
+          background-color: #e9ecef;
           color: $default-font-color-black;
           border-left: .25rem solid $primary-accent-color;
         }

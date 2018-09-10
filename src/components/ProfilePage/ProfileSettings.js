@@ -1,15 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import {NavLink, withRouter} from 'react-router-dom';
-import {deleteExpert, getUserById} from '../services/api-helper';
-import {getToken} from '../services/tokenService';
 
-import Header from '../sections/Header/';
-import Footer from '../sections/Footer/';
-import ProfileSidebar from '../sections/ProfileSidebar/';
-import AlertHelper from '../sections/AlertHelper/';
-import AlertModal from '../sections/AlertModal/';
-import MenuMore from './MenuMore';
+import Breadcrumb from '../sections/Breadcrumb/';
 
 import './index.scss';
 
@@ -24,29 +17,7 @@ class ProfileSettings extends React.Component{
 
     return (
       <div className="ProfileSettings">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container d-flex">
-            <div className='title d-flex'>
-              <h1>{this.props.user.name}</h1>
-              <div className="d-flex align-items-center">
-                <a href="https://www.facebook.com/iamoleman" className="btn btn-link">
-                  <i className="ion ion-social-facebook"></i></a>
-                <a href="https://www.instagram.com/lmanachinskiy/" className="btn btn-link">
-                  <i className="ion ion-social-instagram"></i></a>
-                <a href="https://github.com/OleMan95" className="btn btn-link">
-                  <i className="ion ion-social-github"></i></a>
-                <a href="https://www.linkedin.com/in/oleksii-manachynskyi-078b17137/" className="btn btn-link">
-                  <i className="ion ion-social-linkedin"></i></a>
-              </div>
-            </div>
-            {/*<div className='btn-group d-flex ml-auto'>*/}
-              {/*<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/edit/new'}>*/}
-                {/*<i className="ion-plus-round"></i></NavLink>*/}
-              {/*<NavLink className={this.state.isPublic ? 'btn btn-outline-light d-none' : 'btn btn-outline-light'} to={'/account'}>*/}
-                {/*<i className="ion-gear-a"></i></NavLink>*/}
-            {/*</div>*/}
-          </div>
-        </nav>
+				<Breadcrumb view={'Profile'}/>
 
         <div className="container d-flex flex-column">
 
@@ -118,8 +89,6 @@ class ProfileSettings extends React.Component{
           </form>
 
 				</div>
-
-				<Footer/>
 			</div>
     )};
 }

@@ -22,6 +22,7 @@ class Profile extends React.Component{
       user: {},
       experts:[],
 			isPublic: true,
+			isLoading: true,
 			activeView: 'my_experts',
       alertModal: {
       	show: false,
@@ -47,7 +48,8 @@ class Profile extends React.Component{
 		this.setState({
 			user,
 			experts: this.changeDateFormat({experts: user.experts}),
-			isPublic
+			isPublic,
+			isLoading: false
 		});
 	};
 	fireSuccessAlarm = (data)=>{
@@ -151,21 +153,39 @@ class Profile extends React.Component{
     return (
       <div className="Profile">
 				<Header />
+
         <ProfileSidebar toggleView={this.toggleView} activeView={this.state.activeView}/>
 
-				{this.state.activeView === 'profile' ? <ProfileSettings user={this.state.user}/> : ''}
+				<div className="container">
+					{this.state.activeView === 'profile' ?
+						<ProfileSettings user={this.state.user}/>
+						: ''}
 
-				{this.state.activeView === 'my_experts' ? <ProfileExperts experts={this.state.experts} user={this.state.user}/> : ''}
+					{this.state.activeView === 'my_experts' ?
+						<ProfileExperts experts={this.state.experts}
+														showAlertModal={this.showAlertModal}
+														fireSuccessAlarm={this.fireSuccessAlarm}
+														fireErrorAlarm={this.fireErrorAlarm}/>
+						: ''}
+
+				</div>
+
+				<Footer/>
 
 				<AlertHelper show={this.state.alert.show} isDanger={this.state.alert.isDanger}
 										 message={this.state.alert.message}/>
 
-				{this.state.alertModal.show ?
-          <AlertModal title={'title'} text={`Are you sure you want to remove an expert "${this.state.alertModal.options.name}"?`}
+				{this.state.alertModal.show ? <AlertModal title={'title'}
+											text={`Are you sure you want to remove an expert "${this.state.alertModal.options.name}"?`}
                       options={this.state.alertModal.options}
-                      onResult={this.onAlertResult}/>
-					: ''
-				}
+                      onResult={this.onAlertResult}/> : ''}
+
+
+					<div className={this.state.isLoading ? "Loader show" : "Loader"}>
+						<span/>
+						<h1>Loading...</h1>
+					</div>
+
 
 			</div>
     )};
