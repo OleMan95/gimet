@@ -20,7 +20,7 @@
     margin: 66px 0 0;
     padding: 1rem 1rem 1rem 316px;
     background-color: #edf1f5;
-    min-height: calc(100vh - 240px);
+    min-height: calc(100vh - 180px);
   }
 
   .ProfileSettings{
@@ -240,8 +240,57 @@
 
   .footer{
     padding-left: 316px;
-    padding-top: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .container{
+      align-items: center;
+    }
+    .logo{
+      flex: 0;
+      display: flex;
+      flex-direction: row;
+      a{
+        display: flex;
+        align-items: center;
+      }
+    }
+    .links{
+      display: none;
+    }
+    .authors{
+      ul{
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        li{
+          flex: 1;
+          flex-wrap: nowrap;
+          white-space: nowrap;
+          height: 100%;
+          &:first-of-type{
+            flex: initial;
+            margin-right: 1rem;
+          }
+        }
+      }
+      margin: 0.5rem 1rem;
+      flex: initial;
+    }
+    .email{
+      flex: initial;
+    }
   }
+}
+
+.w-5{
+  width: 5%;
+}
+.w-1{
+  width: 1%;
+}
+.w-11{
+  width: 11%;
 }
 
 @keyframes fadeIn {

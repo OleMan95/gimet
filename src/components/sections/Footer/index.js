@@ -10,13 +10,12 @@ class Footer extends Component {
 			<footer className="footer  bg-dark">
 				<div className="container d-flex py-3">
 
-					<div className="col">
+					<div className="col logo">
 						<img src={logo} alt='GIMET'/>
 						<NavLink className="navbar-brand" to={"/"}>GIMET</NavLink>
 					</div>
 
-					<div className="col">
-
+					<div className="col authors">
 						<ul>
 							<li>
 								<i className="ion-chevron-right"></i>
@@ -27,7 +26,7 @@ class Footer extends Component {
 						</ul>
 					</div>
 
-					<div className="col">
+					<div className="col links">
 						<ul>
 							<li>
 								<i className="ion-chevron-right"></i>
@@ -44,8 +43,8 @@ class Footer extends Component {
 						</ul>
 					</div>
 
-					<div className="col">
-						<NavLink to={"/experts"}>email: info@gimethub.com</NavLink>
+					<div className="col email">
+						<p>email: info@gimethub.com</p>
 					</div>
 
 				</div>

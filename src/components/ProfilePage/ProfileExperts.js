@@ -20,49 +20,46 @@ class ProfileExperts extends React.Component{
 				<Breadcrumb view={'My Experts'}/>
 
 				<div className="container">
-					<table className="table table-striped">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Title</th>
-								<th scope="col">Questions</th>
-								<th scope="col">Updated</th>
-								<th scope="col">Published</th>
-								<th scope="col">Views</th>
-								<th scope="col">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-						{this.props.experts.length>0 ?
-							this.props.experts.map((expert, index) =>
-								<tr key={expert._id}>
-									<th scope="row">{index+1}</th>
-									<td>{expert.name}</td>
-									<td>{expert.questions.length}</td>
-									<td>{expert.updatedAt}</td>
-									<td>{expert.published ? 'true':'false'}</td>
-									<td>{expert.consultationCount}</td>
-									<td className="d-flex text-nowrap">
-										<NavLink to={'/edit/'+expert._id} className="btn btn-link"><i className="ion-compose"/></NavLink>
-										<button className="btn btn-link btn-link-danger" onClick={()=>this.props.showAlertModal(expert)}>
-											<i className="ion-trash-b"/></button>
-										<MenuMore key={expert._id} expert={expert}
-															fireSuccessAlarm={this.props.fireSuccessAlarm}
-															fireErrorAlarm={this.props.fireErrorAlarm} />
-										{/*<button className="btn btn-link"><i className="ion-more"/></button>*/}
-									</td>
-								</tr>
-							)
-							:
-							<tr>
-								<th>1</th>
-								<td>Error:</td>
-								<td>No experts found</td>
-								<td>Create first!</td>
-							</tr>
-						}
-						</tbody>
-					</table>
+					{this.props.experts.length>0 ?
+            <table className="table table-striped">
+              <thead>
+              <tr>
+                <th className="w-1" scope="col">#</th>
+                <th className="" scope="col">Title</th>
+                <th className="w-5" scope="col">Questions</th>
+                <th className="w-11" scope="col">Updated</th>
+                <th className="w-5" scope="col">Published</th>
+                <th className="w-5" scope="col">Views</th>
+                <th className="w-5" scope="col">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              {this.props.experts.map((expert, index) =>
+                <tr key={expert._id}>
+                  <th scope="row">{index+1}</th>
+                  <td>
+                    <NavLink className="btn btn-link p-0" to={'/consultation/'+expert._id}>{expert.name}</NavLink>
+                  </td>
+                  <td>{expert.questions.length}</td>
+                  <td>{expert.updatedAt}</td>
+                  <td>{expert.published ? 'true':'false'}</td>
+                  <td>{expert.consultationCount ? expert.consultationCount : 0}</td>
+                  <td className="d-flex text-nowrap">
+                    <NavLink to={'/edit/'+expert._id} className="btn btn-link py-0" title="Edit expert"><i className="ion-compose"/></NavLink>
+                    <button className="btn btn-link btn-link-danger py-0" onClick={()=>this.props.showAlertModal(expert)} title="Remove expert">
+                      <i className="ion-trash-b"/></button>
+                    <MenuMore key={expert._id} expert={expert}
+                              fireSuccessAlarm={this.props.fireSuccessAlarm}
+                              fireErrorAlarm={this.props.fireErrorAlarm} />
+                  </td>
+                </tr>
+              )}
+              </tbody>
+            </table>
+						:
+						<h3 className={this.state.isLoading ? '' : 'd-none'}>No experts found. Let's create first!</h3>
+					}
+
 				</div>
 
 			</div>

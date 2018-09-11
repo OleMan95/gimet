@@ -63,7 +63,7 @@ class MenuMore extends React.Component{
       <div className="MenuMore">
 
 				<div className="dropdown dropleft" ref={elem=>{this.dropdown = elem}}>
-					<button className="btn btn-link py-1 px-2" onClick={this.toggleMenu}>
+					<button className="btn btn-link py-0 px-2" onClick={this.toggleMenu} title="More options">
 						<i className="ion-more"/>
 					</button>
 					<div className={this.state.show ? "dropdown-menu py-0 show" : "dropdown-menu py-0"}>
