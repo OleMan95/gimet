@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import {NavLink, withRouter} from 'react-router-dom';
 import {deleteExpert, getUserById} from '../services/api-helper';
-import {getToken} from '../services/tokenService';
+import { connect } from 'react-redux'
 
 import Header from '../sections/Header/';
 import Footer from '../sections/Footer/';
@@ -11,7 +11,6 @@ import ProfileSettings from './ProfileSettings';
 import ProfileExperts from './ProfileExperts';
 import AlertHelper from '../sections/AlertHelper/';
 import AlertModal from '../sections/AlertModal/';
-import MenuMore from './MenuMore';
 
 import './index.scss';
 
@@ -38,20 +37,14 @@ class Profile extends React.Component{
 
   async componentDidMount() {
 
-		await getUserById({id: this.props.match.params.id, populate: true, token: getToken()}, res=>{
-			this.setUser(res.data, !res.isAuthorized);
-		}, async err=>{});
-
+    this.setState({
+      user: this.props.store.account,
+      experts: this.changeDateFormat({experts: this.props.store.account.experts}),
+      isPublic: this.props.store.account.isAuthorized,
+      isLoading: false
+    });
   };
 
-  setUser=(user, isPublic)=>{
-		this.setState({
-			user,
-			experts: this.changeDateFormat({experts: user.experts}),
-			isPublic,
-			isLoading: false
-		});
-	};
 	fireSuccessAlarm = (data)=>{
 		this.showAlarm({
 			show: true,
@@ -83,11 +76,26 @@ class Profile extends React.Component{
 		}, 4000);
 	};
 
-	toggleView = (view)=>{
+	toggleView = (view, edit)=>{
+
+		switch(view){
+			case 'profile':
+				this.props.history.push(this.props.location.pathname+'#profile');
+				break;
+			case 'my_experts':
+				this.props.history.push(this.props.location.pathname+'#my_experts');
+				break;
+			case 'expert_edit':
+				if(edit && edit.id)
+					this.props.history.push(/edit/+edit.id+'#expert_edit');
+				break;
+		}
+
     this.setState({
       activeView: view
     });
-	};
+    console.log(this.props.location);
+  };
 
   onDeleteExpertClick = async (id) => {
 		await deleteExpert(id, res=>{
@@ -180,18 +188,33 @@ class Profile extends React.Component{
                       options={this.state.alertModal.options}
                       onResult={this.onAlertResult}/> : ''}
 
-
 					<div className={this.state.isLoading ? "Loader show" : "Loader"}>
 						<span/>
 						<h1>Loading...</h1>
 					</div>
 
-
 			</div>
     )};
 }
 
+const mapStateToProps = (state) => {
+	return {
+    todos: state.todos
+  }
+};
 
+const mapDispatchToProps = dispatch => {
+	return {
+  	toggleTodo: id => dispatch(toggleTodo(id))
+	}
+};
 
-
-export default withRouter(Profile);
+export default withRouter(
+	connect(state => ({
+		store: state
+	}),
+	dispatch => ({
+		addTodo: name => {
+			dispatch({type: 'ADD_TODO', payload: name})
+		}
+	}))(Profile));

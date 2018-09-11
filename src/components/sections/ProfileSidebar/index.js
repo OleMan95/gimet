@@ -38,6 +38,13 @@ class ProfileSidebar extends Component {
               <span className="hide-menu">My Experts</span>
             </button>
           </li>
+          <li className="nav-item">
+            <button className={this.props.activeView === 'expert_edit' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
+                    onClick={()=>this.handleNavClick('expert_edit')}>
+              <i className="ion-android-apps mr-3"/>
+              <span className="hide-menu">Expert Edit</span>
+            </button>
+          </li>
         </ul>
       </div>
     );

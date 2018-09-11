@@ -2,8 +2,10 @@ import React from 'react';
 import {NavLink, withRouter } from 'react-router-dom';
 import {getToken} from '../services/tokenService';
 import {getExpertById, createOrUpdateExpert} from '../services/api-helper';
+
 import Header from '../sections/Header/';
 import Footer from '../sections/Footer/';
+import ProfileSidebar from '../sections/ProfileSidebar/';
 import EditModal from '../sections/EditModal/';
 import ExpertSettingsModal from '../sections/ExpertSettingsModal';
 import AlertModal from '../sections/AlertModal';
@@ -165,10 +167,30 @@ class Edit extends React.Component{
 		});
 	};
 
+  toggleView = (view, edit)=>{
+
+    switch(view){
+      case 'profile':
+        this.props.history.push(this.props.location.pathname+'#profile');
+        break;
+      case 'my_experts':
+        this.props.history.push(this.props.location.pathname+'#my_experts');
+        break;
+    }
+
+    this.setState({
+      activeView: view
+    });
+    console.log(this.props.location);
+  };
+
   render(){
 		return (
       <div className="Edit">
 				<Header />
+
+        <ProfileSidebar toggleView={this.toggleView} activeView={this.state.activeView}/>
+
 				<div className="section-1 d-flex">
 					<div className="container d-flex">
 						<div className='title d-flex'>
