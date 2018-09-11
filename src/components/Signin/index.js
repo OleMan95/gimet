@@ -1,8 +1,10 @@
 import React from 'react';
+import connect from "react-redux/es/connect/connect";
 import {NavLink, withRouter} from 'react-router-dom';
 import {getToken} from '../services/tokenService';
-import { login } from '../services/api-helper';
 import alertHelper from '../services/alert-helper';
+import {login} from '../services/api-helper';
+import {initUser} from '../../actions/';
 import logo from "../../data/logo-black.svg";
 import './index.scss';
 
@@ -65,9 +67,7 @@ class SignIn extends React.Component {
 		const data = await login(this.state.emailValue, this.state.passwordValue);
 
 		if (data.token) {
-			this.setState({
-				submitDisabled: false
-			});
+			this.props.initUser(data.user);
 			this.props.history.push('/');
 		}else if(data.message){
 			alertHelper(this, 'Error: '+data.message, 'danger');
@@ -94,7 +94,6 @@ class SignIn extends React.Component {
 					submitDisabled: false
 				});
 			}
-
 		}
   };
 
@@ -141,5 +140,12 @@ class SignIn extends React.Component {
 
 }
 
-
-export default withRouter(SignIn);
+export default withRouter(
+  connect(state => ({
+      store: state
+    }),
+    dispatch => ({
+      initUser: user => {
+        dispatch(initUser(user))
+      }
+    }))(SignIn));

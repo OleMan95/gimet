@@ -1,7 +1,7 @@
 /**
  * TOKENS:
- * aat - should be in every request to the back-end;
- * token - authorization token;
+ * aat - must be in every request to the back-end;
+ * at - authorization token;
  *
  */
 export function getToken(){

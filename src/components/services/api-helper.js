@@ -47,6 +47,24 @@ export async function getUserById ({id, populate, token}, onSuccess, onError){
 	}
 }
 
+export async function getUserByToken (){
+	try {
+		let response = await fetch('/api/user?populate=true', {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': getToken()
+			}
+		});
+
+		return await response.json();
+
+	} catch (err) {
+		console.error(err.message);
+	}
+}
+
 export async function getExperts ({sort, populate, published, search, limit}, onError){
 	try {
 		let url = `/api/experts?

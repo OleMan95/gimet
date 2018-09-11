@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import {NavLink, withRouter} from 'react-router-dom';
 import {deleteExpert, getUserById} from '../services/api-helper';
+import {getToken} from '../services/tokenService';
 import { connect } from 'react-redux'
 
 import Header from '../sections/Header/';
@@ -11,6 +12,7 @@ import ProfileSettings from './ProfileSettings';
 import ProfileExperts from './ProfileExperts';
 import AlertHelper from '../sections/AlertHelper/';
 import AlertModal from '../sections/AlertModal/';
+import MenuMore from './MenuMore';
 
 import './index.scss';
 
@@ -36,15 +38,17 @@ class Profile extends React.Component{
   };
 
   async componentDidMount() {
-
-    this.setState({
-      user: this.props.store.account,
-      experts: this.changeDateFormat({experts: this.props.store.account.experts}),
-      isPublic: this.props.store.account.isAuthorized,
-      isLoading: false
-    });
+    this.setUser(this.props.store.account, this.props.store.account.isAuthorized);
   };
 
+  setUser=(user, isPublic)=>{
+		this.setState({
+			user,
+			experts: this.changeDateFormat({experts: user.experts}),
+			isPublic,
+			isLoading: false
+		});
+	};
 	fireSuccessAlarm = (data)=>{
 		this.showAlarm({
 			show: true,

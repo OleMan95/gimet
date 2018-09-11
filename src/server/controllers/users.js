@@ -27,7 +27,7 @@ class Users{
 				return next();
 			}
 
-			const user = await User.findOne({email});
+			const user = await User.findOne({email}).populate('experts');
 
 			if(!user){
 				res.cookie('lc', lcCookie+1, {maxAge: 10000, httpOnly: true}).status(400).send({message:'User not found'});
@@ -45,7 +45,10 @@ class Users{
 			user.password = undefined;
 
 			res.cookie('at', token, {maxAge: 86400000});
-			res.cookie('lc', '0').send({token:token});
+			res.cookie('lc', '0').send({
+				token,
+				user
+			});
 
 		}catch(err){
 			console.log('err: ', err.message);

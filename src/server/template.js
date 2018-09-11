@@ -27,18 +27,19 @@ export default ({body, title, preloadedState}) => {
 						gtag('js', new Date());
 						gtag('config', 'UA-121723987-1');
 					</script>
-
+					
 			    <script src="/bundle.js" defer></script>
 	        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"> 
 	        <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
 			</head>
 			<body>
 				<div id="root">${body}</div>
-				<script>
-          // WARNING: See the following for security issues around embedding JSON in HTML:
-          // http://redux.js.org/recipes/ServerRendering.html#security-considerations
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\\u003c')}
-        </script>
+				
+				<script id="state">
+					// WARNING: See the following for security issues around embedding JSON in HTML:
+					// http://redux.js.org/recipes/ServerRendering.html#security-considerations
+					window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\\\\\\\\u003c')}
+				</script>
 			</body>
 			<!--───▄▄▄-->
 			<!--─▄▀░▄░▀▄-->
