@@ -18,7 +18,11 @@ class Breadcrumb extends Component {
 				</ol>
 
 				{this.props.view === 'My Experts' ?
-					<NavLink to={'/edit/new'} className="btn btn-link ml-auto mr-2"><i className="ion-plus-round"/></NavLink>
+					<NavLink to={'/edit-expert'} className="btn btn-link ml-auto mr-2"><i className="ion-plus-round"/></NavLink>
+				:''}
+
+				{this.props.view === 'Expert Edit' ?
+					<button className="btn btn-link ml-auto mr-2" onClick={this.props.onAddClick}><i className="ion-plus-round"/></button>
 				:''}
 
 			</nav>

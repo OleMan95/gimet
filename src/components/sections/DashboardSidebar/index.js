@@ -35,7 +35,7 @@ class ProfileSidebar extends Component {
           </li>
           <li className="nav-item">
             <NavLink to={'/edit-expert'} className={this.props.dashboardOptions.isExpertEdit === true ? "nav-link btn btn-link active":"nav-link btn btn-link"}>
-              <i className="ion-android-apps mr-3"/>
+              <i className="ion-compose mr-3"/>
               <span className="hide-menu">Expert Edit</span>
             </NavLink>
           </li>

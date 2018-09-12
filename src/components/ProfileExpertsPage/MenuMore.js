@@ -52,7 +52,6 @@ class MenuMore extends React.Component{
 		this.toggleMenu()
 	};
 
-
 	updateExpert = async (expert) => {
 		await createOrUpdateExpert(expert._id, expert,
 			this.props.fireSuccessAlarm, this.props.fireErrorAlarm);

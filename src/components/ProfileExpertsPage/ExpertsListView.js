@@ -4,7 +4,7 @@ import {NavLink, withRouter} from 'react-router-dom';
 
 import './index.scss';
 import Breadcrumb from "../sections/Breadcrumb";
-import MenuMore from "../EditPage/MenuMore";
+import MenuMore from "./MenuMore";
 
 class ExpertsListView extends React.Component{
   constructor(){
@@ -50,7 +50,8 @@ class ExpertsListView extends React.Component{
                       <i className="ion-compose"/>
                     </NavLink>
                     <button className="btn btn-link btn-link-danger py-0" onClick={()=>this.props.showAlertModal(expert)} title="Remove expert">
-                      <i className="ion-trash-b"/></button>
+                      <i className="ion-trash-b"/>
+                    </button>
                     <MenuMore key={expert._id} expert={expert}
                               fireSuccessAlarm={this.props.fireSuccessAlarm}
                               fireErrorAlarm={this.props.fireErrorAlarm} />

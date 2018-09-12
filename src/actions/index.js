@@ -9,3 +9,7 @@ export function initUser (user) {
 export function editExpert (expert) {
   return {type: 'EDIT_EXPERT', payload: expert}
 }
+
+export function setExpertToAccount (expert) {
+  return {type: 'SET_EXPERT_TO_ACCOUNT', payload: expert}
+}

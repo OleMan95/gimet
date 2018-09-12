@@ -25,7 +25,6 @@ class Edit extends React.Component{
   };
 
   async componentDidMount() {
-    console.log(this.props.store.expertEdit);
 
     this.setState({
       dashboardOptions: {
@@ -38,13 +37,18 @@ class Edit extends React.Component{
 
 
   render(){
-		return (
+    console.log('EditPage',this.props.store.expertEdit);
+    return (
       <div className="Edit">
 				<Header />
         <DashboardSidebar user={this.props.store.account} dashboardOptions={this.state.dashboardOptions}/>
 
 				<div className="container">
-          <QuestionsTableView experts={this.state.experts}/>
+          {this.state.experts.length>0 ?
+            <QuestionsTableView experts={this.props.store.expertEdit}/>
+            :
+            ''
+          }
 				</div>
 
 				<Footer/>

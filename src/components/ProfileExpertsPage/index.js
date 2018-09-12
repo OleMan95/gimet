@@ -6,11 +6,13 @@ import {connect} from 'react-redux'
 
 import Header from '../sections/Header/';
 import Footer from '../sections/Footer/';
-import {editExpert} from '../../actions/index';
+import AlertHelper from '../sections/AlertHelper/';
+import {editExpert, setExpertToAccount} from '../../actions/index';
 import DashboardSidebar from '../sections/DashboardSidebar/';
 import ExpertsListView from './ExpertsListView';
 
 import './index.scss';
+import {alertHelperTimeoutError, alertHelperTimeoutSuccess} from "../services/aide";
 
 class ProfileExpertsPage extends React.Component{
   constructor(){
@@ -22,7 +24,12 @@ class ProfileExpertsPage extends React.Component{
       },
 			isPublic: true,
 			isLoading: true,
-			experts: []
+			experts: [],
+      alertHelperOptions: {
+        show: false,
+        isDanger: true,
+        message: ''
+      }
     };
   };
 
@@ -47,6 +54,14 @@ class ProfileExpertsPage extends React.Component{
     return newExperts;
   };
 
+  fireSuccessAlarm = (res) => {
+    setExpertToAccount(res.data);
+    alertHelperTimeoutSuccess(this, 'Saved');
+  };
+  fireErrorAlarm = (res) => {
+    alertHelperTimeoutError(this, res.error.message);
+  };
+
   render(){
 
     return (
@@ -56,11 +71,17 @@ class ProfileExpertsPage extends React.Component{
 
 				<div className="container">
 						<ExpertsListView experts={this.state.experts}
+                             fireSuccessAlarm={this.fireSuccessAlarm}
+                             fireErrorAlarm={this.fireErrorAlarm}
                              addExpertToEdit={this.props.addExpertToEdit}/>
 
 				</div>
 
 				<Footer/>
+
+        <AlertHelper show={this.state.alertHelperOptions.show}
+                     isDanger={this.state.alertHelperOptions.isDanger}
+                     message={this.state.alertHelperOptions.message}/>
 
 				<div className={this.state.isLoading ? "Loader show" : "Loader"}>
 					<span/>
@@ -78,6 +99,9 @@ export default withRouter(
 	}),
 	dispatch => ({
     addExpertToEdit: expert => {
+			dispatch(editExpert(expert))
+		},
+    setExpertToAccount: expert => {
 			dispatch(editExpert(expert))
 		}
 	}))(ProfileExpertsPage));
