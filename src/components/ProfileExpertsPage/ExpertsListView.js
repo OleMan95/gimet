@@ -4,9 +4,9 @@ import {NavLink, withRouter} from 'react-router-dom';
 
 import './index.scss';
 import Breadcrumb from "../sections/Breadcrumb";
-import MenuMore from "./MenuMore";
+import MenuMore from "../EditPage/MenuMore";
 
-class ProfileExperts extends React.Component{
+class ExpertsListView extends React.Component{
   constructor(){
     super();
     this.state={
@@ -16,11 +16,11 @@ class ProfileExperts extends React.Component{
   render(){
 
     return (
-      <div className="ProfileExperts">
+      <div className="ExpertsListView">
 				<Breadcrumb view={'My Experts'}/>
 
 				<div className="container">
-					{this.props.experts.length>0 ?
+					{this.props.experts.length > 0 ?
             <table className="table table-striped">
               <thead>
               <tr>
@@ -41,11 +41,14 @@ class ProfileExperts extends React.Component{
                     <NavLink className="btn btn-link p-0" to={'/consultation/'+expert._id}>{expert.name}</NavLink>
                   </td>
                   <td>{expert.questions.length}</td>
-                  <td>{expert.updatedAt}</td>
+                  <td>{expert.updated}</td>
                   <td>{expert.published ? 'true':'false'}</td>
                   <td>{expert.consultationCount ? expert.consultationCount : 0}</td>
                   <td className="d-flex text-nowrap">
-                    <NavLink to={'/edit/'+expert._id} className="btn btn-link py-0" title="Edit expert"><i className="ion-compose"/></NavLink>
+                    <NavLink to={'/edit-expert/'} className="btn btn-link py-0" title="Edit expert"
+                             onClick={()=>this.props.addExpertToEdit(expert)}>
+                      <i className="ion-compose"/>
+                    </NavLink>
                     <button className="btn btn-link btn-link-danger py-0" onClick={()=>this.props.showAlertModal(expert)} title="Remove expert">
                       <i className="ion-trash-b"/></button>
                     <MenuMore key={expert._id} expert={expert}
@@ -57,7 +60,7 @@ class ProfileExperts extends React.Component{
               </tbody>
             </table>
 						:
-						<h3 className={this.state.isLoading ? '' : 'd-none'}>No experts found. Let's create first!</h3>
+						<h3 className={this.state.isLoading ? '' : ''}>No experts found. Let's create first!</h3>
 					}
 
 				</div>
@@ -69,4 +72,4 @@ class ProfileExperts extends React.Component{
 
 
 
-export default withRouter(ProfileExperts);
+export default withRouter(ExpertsListView);

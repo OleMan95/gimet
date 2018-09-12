@@ -17,7 +17,7 @@ const store = createStore(rootReducer, preloadedState);
 console.log(store.getState());
 
 store.subscribe(() =>
-  console.log(store.getState())
+  console.log('==> STORE: ',store.getState())
 );
 
 hydrate(

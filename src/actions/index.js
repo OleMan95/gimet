@@ -5,3 +5,7 @@ export function clearStore () {
 export function initUser (user) {
   return {type: 'INIT_USER', payload: user}
 }
+
+export function editExpert (expert) {
+  return {type: 'EDIT_EXPERT', payload: expert}
+}

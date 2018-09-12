@@ -2,6 +2,7 @@ import StartPage from './StartPage/';
 import Signin from './Signin/';
 import Signup from './Signup/';
 import ProfilePage from './ProfilePage/';
+import ProfileExpertsPage from './ProfileExpertsPage/index';
 import ExpertsPage from './ExpertsPage/';
 import EditorPage from './EditPage/';
 import ConsultationPage from './ConsultationPage/';
@@ -27,9 +28,19 @@ const routes = [
 		component: Signup,
 		exact: true
 	},
+  {
+    path: '/profile-experts',
+    component: ProfileExpertsPage,
+    exact: true
+  },
 	{
 		path: '/profile/:id',
 		component: ProfilePage,
+		exact: true
+	},
+	{
+		path: '/edit-expert',
+		component: EditorPage,
 		exact: true
 	},
 	{
@@ -37,12 +48,13 @@ const routes = [
 		component: ExpertsPage,
 		exact: true
 	},
+	// {
+	// 	path: '/edit/:id',
+	// 	component: EditorPage,
+  //   exact: true
+  // },
 	{
-		path: '/edit/:id',
-		component: EditorPage,
-    exact: true
-  },
-	{
+	  //ToDo: change consultation route to /experts/:id
 		path: '/consultation/:id',
 		component: ConsultationPage,
     exact: true

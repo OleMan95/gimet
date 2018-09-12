@@ -21,6 +21,10 @@ const UserSchema = new Schema({
 		type:String,
 		required:'Password is required'
 	},
+	facebookLink:{type:String},
+	instagramLink:{type:String},
+	githubLink:{type:String},
+	linkedinLink:{type:String},
 	isConfirmed:{
 		type:Boolean,
 		default: false

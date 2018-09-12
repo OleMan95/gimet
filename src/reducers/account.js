@@ -1,8 +1,10 @@
+import moment from "moment";
+
 let initialState = {
   isAuthorized: false
 };
 
-const todoList = (state = initialState, action) => {
+const account = (state = initialState, action) => {
   if(action.type === 'INIT_USER'){
     const newState = action.payload;
     newState.isAuthorized = true;
@@ -14,4 +16,4 @@ const todoList = (state = initialState, action) => {
   return state;
 };
 
-export default todoList;
+export default account;

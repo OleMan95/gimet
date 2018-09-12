@@ -210,7 +210,7 @@ class StartPage extends React.Component {
 
 						<div className='row'>
               {this.state.sectionTwo.map(elem=>
-                <div className="card" >
+                <div className="card" key={elem.icon}>
                   <div className="card-img-top d-flex">
 										<div className="rounded-circle">
                       <img className="" src={elem.icon} alt="" width="78" height="78"/>

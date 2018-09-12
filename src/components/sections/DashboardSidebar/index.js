@@ -12,38 +12,32 @@ class ProfileSidebar extends Component {
     };
   }
 
-  async componentDidMount() {
-
-	}
-
-	handleNavClick=(view)=>{
-    this.props.toggleView(view);
-  };
+  componentDidMount() {
+  }
+  componentWillUnmount() {
+  }
 
   render() {
     return (
       <div className="ProfileSidebar">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <button className={this.props.activeView === 'profile' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
-                    onClick={()=>this.handleNavClick('profile')}>
+            <NavLink to={'/profile/'+this.props.user._id} className={this.props.dashboardOptions.isProfile === true ? "nav-link btn btn-link active":"nav-link btn btn-link"}>
               <i className="ion-person mr-3"/>
               <span className="hide-menu">Profile</span>
-            </button>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <button className={this.props.activeView === 'my_experts' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
-                    onClick={()=>this.handleNavClick('my_experts')}>
+            <NavLink to={'/profile-experts'} className={this.props.dashboardOptions.isProfileExperts === true ? "nav-link btn btn-link active":"nav-link btn btn-link"}>
               <i className="ion-android-apps mr-3"/>
               <span className="hide-menu">My Experts</span>
-            </button>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <button className={this.props.activeView === 'expert_edit' ? "nav-link btn btn-link active":"nav-link btn btn-link"}
-                    onClick={()=>this.handleNavClick('expert_edit')}>
+            <NavLink to={'/edit-expert'} className={this.props.dashboardOptions.isExpertEdit === true ? "nav-link btn btn-link active":"nav-link btn btn-link"}>
               <i className="ion-android-apps mr-3"/>
               <span className="hide-menu">Expert Edit</span>
-            </button>
+            </NavLink>
           </li>
         </ul>
       </div>
