@@ -1,38 +1,38 @@
 [
   {
-    "text":"get expert",
-    "intent":"find_expert"
+    "text": "get expert",
+    "intent": "find_expert"
   },
   {
-    "text":"show expert",
-    "intent":"find_expert"
+    "text": "show expert",
+    "intent": "find_expert"
   },
   {
-    "text":"find experts",
-    "intent":"find_expert"
+    "text": "find experts",
+    "intent": "find_expert"
   },
   {
-    "text":"show me an expert",
-    "intent":"find_expert"
+    "text": "show me an expert",
+    "intent": "find_expert"
   },
   {
-    "text":"i need help",
-    "intent":"find_expert"
+    "text": "i need help",
+    "intent": "find_expert"
   },
   {
-    "text":"tell me about you",
-    "intent":"about"
+    "text": "tell me about you",
+    "intent": "about"
   },
   {
-    "text":"tell me about expert bot",
-    "intent":"about"
+    "text": "tell me about expert bot",
+    "intent": "about"
   },
   {
-    "text":"what you can",
-    "intent":"about"
+    "text": "what you can",
+    "intent": "about"
   },
   {
-    "text":"what are your capabilities",
-    "intent":"about"
+    "text": "what are your capabilities",
+    "intent": "about"
   }
 ]
