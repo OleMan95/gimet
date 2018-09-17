@@ -20,19 +20,18 @@
     "intent": "find_expert"
   },
   {
-    "text": "tell me about you",
-    "intent": "about"
+    "text": "get computer expert",
+    "intent": "find_expert",
+    "entity": "computer"
   },
   {
-    "text": "tell me about expert bot",
-    "intent": "about"
+    "text": "find computer expert",
+    "intent": "find_expert",
+    "entity": "computer"
   },
   {
-    "text": "what you can",
-    "intent": "about"
-  },
-  {
-    "text": "what are your capabilities",
-    "intent": "about"
+    "text": "search computer expert",
+    "intent": "find_expert",
+    "entity": "computer"
   }
 ]
